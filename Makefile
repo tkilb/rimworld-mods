@@ -3,6 +3,7 @@ SHELL := /usr/bin/env bash
 
 .PHONY: help check-deps status fetch-mods update-mods update-mods-dry-run \
         link link-dry-run unlink unlink-dry-run rollback rollback-dry-run \
+        build-load-order build-order-mods order-mods order-mods-dry-run \
         sync-deck sync-deck-dry-run sync-deck-check sync-deck-link
 
 ##@ General
@@ -48,6 +49,19 @@ rollback: ## Rollback a mod to a previous version (Usage: make rollback MOD=<nam
 
 rollback-dry-run: ## Preview rollback of a mod (Usage: make rollback-dry-run MOD=<name> VERSION=<ver>)
 	@bash ./scripts/rollback-mod.sh $(MOD) $(VERSION) --dry-run
+
+##@ Mod Load Order
+build-load-order: ## Compile the Go load order resolver into bin/load-order
+	@mkdir -p bin
+	@go -C tools/load-order build -o ../../bin/load-order .
+
+build-order-mods: build-load-order ## Alias for build-load-order
+
+order-mods: ## Resolve and sort active mods into valid load order
+	+@bash ./scripts/order-mods.sh $(MAKE_DRY_RUN)
+
+order-mods-dry-run: ## Preview computed mod load order without modifying files
+	@bash ./scripts/order-mods.sh --dry-run
 
 ##@ Remote Synchronization
 sync-deck: ## Sync mods and lockfile to Steam Deck via SSH/rsync

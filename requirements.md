@@ -164,7 +164,7 @@ To maintain high quality and reliability across Linux environments:
 
 ### Phase 5: Mod Load Order & Active Config Engine (`ModsConfig.xml`)
 
-- [ ] **Task 5.1: Mod Dependency & Topological Load Order Sorter**
+- [x] **Task 5.1: Mod Dependency & Topological Load Order Sorter**
   - **Goal:** Implement an automated topological load order resolver inspired by RimSort/RimPy principles, sorting active mods into a valid dependency graph.
   - **Deliverables:**
     - `scripts/order-mods.sh` implementing:
