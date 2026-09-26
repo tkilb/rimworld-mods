@@ -1,5 +1,6 @@
 # RimWorld Monorepo - Mod Manifest Specification
 # Declares 3rd-party community mods, sources, and desired versions/pins.
+# Synchronized to reflect active mods from Steam Deck (ModsConfig-on-deck.xml).
 version: 1
 
 mods:
@@ -7,21 +8,86 @@ mods:
     name: "Harmony"
     source: steam_workshop
     workshop_id: "2009463077"
+    package_id: "brrainz.harmony"
     enabled: true
     description: "A library for patching, replacing and decorating .NET and Mono methods during runtime."
 
-  hugslib:
-    name: "HugsLib"
-    source: github_release
-    repo: "UnlimitedHugs/RimworldHugsLib"
-    tag: "master"
+  laboratory:
+    name: "ilyvion's Laboratory"
+    source: steam_workshop
+    workshop_id: "3296362231"
+    package_id: "ilyvion.laboratory"
     enabled: true
-    description: "Shared library mod for RimWorld containing utility classes and shared functionality."
+    description: "Library and framework mod providing shared utilities for ilyvion mods."
 
-  # Direct Git repository example
-  # example_git_mod:
-  #   name: "Example Git Mod"
-  #   source: git
-  #   url: "https://github.com/example/rimworld-mod.git"
-  #   branch: "main"
-  #   enabled: false
+  colonymanagerredux:
+    name: "Colony Manager Redux"
+    source: steam_workshop
+    workshop_id: "3310027356"
+    package_id: "ilyvion.colonymanagerredux"
+    enabled: true
+    description: "Automate tedious managerial tasks such as hunting, forestry, and livestock management."
+
+  recyclethis:
+    name: "Recycle This (Continued)"
+    source: steam_workshop
+    workshop_id: "3253550009"
+    package_id: "Mlie.RecycleThis"
+    enabled: true
+    description: "Recycle or destroy unwanted weapons and apparel directly via order commands."
+
+  cloning:
+    name: "Biotech Cloning (Continued)"
+    source: steam_workshop
+    workshop_id: "3348781223"
+    package_id: "zal.cloning"
+    enabled: true
+    description: "Clone pawns and manage artificial human gestation in growth vats."
+
+  enhancedvatlearning:
+    name: "Enhanced Vat Learning"
+    source: steam_workshop
+    workshop_id: "3551263267"
+    package_id: "ninagoblin.enhancedvatlearning"
+    enabled: true
+    description: "Adds learning machines to boost skill acquisition for vat-grown children."
+
+  injectgene:
+    name: "Inject Genes"
+    source: steam_workshop
+    workshop_id: "2918091446"
+    package_id: "Zaf.InjectGene"
+    enabled: true
+    description: "Allows injecting individual genes without requiring xenotype creation."
+
+  hcgenefabrication:
+    name: "Gene Fabrication"
+    source: steam_workshop
+    workshop_id: "3352773112"
+    package_id: "AmCh.Eragon.HCGeneFabrication"
+    enabled: true
+    description: "Craft and synthesize custom genepacks using specialized gene fabrication benches."
+
+  generipper:
+    name: "Gene Ripper"
+    source: steam_workshop
+    workshop_id: "3524806362"
+    package_id: "Defi.GeneRipper"
+    enabled: true
+    description: "Lethally extract specific desired genes from pawns with guaranteed success."
+
+  genebankplus:
+    name: "Gene Bank Plus"
+    source: steam_workshop
+    workshop_id: "2889919154"
+    package_id: "lowli.genebankplus"
+    enabled: true
+    description: "Expanded gene banks with higher genepack storage capacities."
+
+  minifyeverything:
+    name: "MinifyEverything"
+    source: steam_workshop
+    workshop_id: "872762753"
+    package_id: "erdelf.MinifyEverything"
+    enabled: true
+    description: "Allows minifying and reinstalling nearly all buildings and furniture."

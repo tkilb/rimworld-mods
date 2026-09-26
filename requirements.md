@@ -33,11 +33,12 @@ This monorepo serves as a centralized control center for managing a custom RimWo
 │   ├── common.sh                # Shared bash utilities (logging, path resolution, OS check)
 │   ├── fetch-mods.sh            # Download/fetch 3rd-party mods (SteamCMD / GitHub releases)
 │   ├── link-mods.sh             # Idempotent symlinker to RimWorld Mods directory
+│   ├── order-mods.sh            # Topological load order sorter & ModsConfig.xml generator
 │   ├── update-mods.sh           # Check for updates, update lockfile
 │   └── status.sh                # Inspect active mod versions vs installed RimWorld state
 ├── mods/
 │   ├── vendor/                  # Stored/cached 3rd-party mods (git-ignored or LFS if large)
-│   └── custom/                  # (Phase 5) Personal private mods under active development
+│   └── custom/                  # (Phase 6) Personal private mods under active development
 └── docs/
     ├── steamdeck-setup.md       # SSH setup, path configuration, and remote sync guide
     └── mod-management.md        # User guide for adding, pinning, and updating mods
@@ -161,16 +162,43 @@ To maintain high quality and reliability across Linux environments:
 
 ---
 
-### Phase 5: Personal Mod Development Scaffolding (Future Phase)
+### Phase 5: Mod Load Order & Active Config Engine (`ModsConfig.xml`)
 
-- [ ] **Task 5.1: Private Mod Project Template (XML / C#)**
+- [ ] **Task 5.1: Mod Dependency & Topological Load Order Sorter**
+  - **Goal:** Implement an automated topological load order resolver inspired by RimSort/RimPy principles, sorting active mods into a valid dependency graph.
+  - **Deliverables:**
+    - `scripts/order-mods.sh` implementing:
+      - Extraction of `<packageId>`, `<loadAfter>`, `<loadBefore>`, `<forceLoadAfter>`, `<forceLoadBefore>`, and `<modDependencies>` from `About/About.xml` across all active mods (`mods/vendor` and `mods/custom`).
+      - Support for user-defined ordering overrides and priority pinning in `manifests/mods.yaml` (e.g. `order_after: [...]`, `order_before: [...]`, or priority weights).
+      - Strict anchor tier enforcement: Harmony (`brrainz.harmony`) -> Core (`ludeon.rimworld`) -> Official DLCs (`royalty`, `ideology`, `biotech`, `anomaly`) -> standard mods (topologically sorted via Kahn's / Tarjan's DAG algorithm with cycle detection) -> late/trailing mods.
+      - CLI flags supporting `--dry-run` to preview the computed load order and report any circular dependencies or missing requirements.
+      - Makefile integration: `order-mods` and companion `order-mods-dry-run`.
+  - **QA Step:** Run `make order-mods-dry-run` and verify that calculated order respects Harmony first, Core, DLCs, and all `About.xml` constraints without graph cycles.
+
+- [ ] **Task 5.2: `ModsConfig.xml` Generator & Cross-Platform Deployment**
+  - **Goal:** Render the resolved load order into RimWorld's native `ModsConfig.xml` and deploy it idempotently to Arch Linux desktop and Steam Deck targets.
+  - **Deliverables:**
+    - XML generation in `scripts/order-mods.sh` outputting well-formed `ModsConfig.xml` with `<activeMods>` and `<knownExpansions>`.
+    - Integration with environment configuration (`config/env.*.env`) to identify RimWorld config locations:
+      - Arch Desktop native path (`~/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config/ModsConfig.xml`).
+      - Steam Deck Proton prefix path (`~/.local/share/Steam/steamapps/compatdata/294100/pfx/...`).
+    - Automatic backup of existing `ModsConfig.xml` before overwriting.
+    - Remote deployment support in `scripts/sync-deck.sh` to sync the generated `ModsConfig.xml` to Steam Deck.
+    - Makefile targets: `sync-config`, `sync-config-dry-run`, and integration hook into `make link`.
+  - **QA Step:** Execute `make sync-config-dry-run` and live `make sync-config`; inspect the generated `ModsConfig.xml` and verify RimWorld launches with the active mod list in the exact expected order.
+
+---
+
+### Phase 6: Personal Mod Development Scaffolding (Future Phase)
+
+- [ ] **Task 6.1: Private Mod Project Template (XML / C#)**
   - **Goal:** Create starter templates and build scripts for private mods in `mods/custom/`.
   - **Deliverables:**
     - Template directory with `About/About.xml`, `Defs/`, and optional `.csproj` for C# patches with RimWorld assembly references.
     - Integration with `make link` so private mods are symlinked alongside vendor mods.
   - **QA Step:** Scaffold a test custom XML mod and verify it loads in RimWorld.
 
-- [ ] **Task 5.2: Embryo Gene Editor Mod Implementation (Biotech Expansion)**
+- [ ] **Task 6.2: Embryo Gene Editor Mod Implementation (Biotech Expansion)**
   - **Goal:** Implement the Embryo Gene Editor mod based on the detailed specification at `mods/custom/eugenics-program/spec.md`.
   - **Deliverables:**
     - Optimizer genes with bundled Cellular Instability penalties (`GeneDef`s, research projects, Gene Fabrication mod compatibility).

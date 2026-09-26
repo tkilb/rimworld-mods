@@ -1,20 +1,70 @@
-# RimWorld Monorepo - Mod Lockfile Specification
-# Generated and synchronized automatically. Tracks exact resolved versions and artifact locations.
 version: 1
-generated_at: "2026-09-26T12:00:00Z"
-machine: "linux-box"
-
+generated_at: '2026-09-26T22:42:28.898862+00:00'
+machine: linux-box
 mods:
   harmony:
     source: steam_workshop
-    workshop_id: "2009463077"
-    resolved_version: "2.3.1.0"
-    workshop_time_updated: 1700000000
-    download_path: "mods/vendor/harmony"
-
-  hugslib:
-    source: github_release
-    repo: "UnlimitedHugs/RimWorld-HugsLib"
-    resolved_tag: "v11.0.0"
-    asset_name: "HugsLib-11.0.0.zip"
-    download_path: "mods/vendor/hugslib"
+    workshop_id: '2009463077'
+    workshop_time_updated: 1756914561
+    workshop_title: Harmony
+    download_path: mods/vendor/harmony
+  laboratory:
+    source: steam_workshop
+    workshop_id: '3296362231'
+    workshop_time_updated: 1789312967
+    workshop_title: ilyvion's Laboratory
+    download_path: mods/vendor/laboratory
+  colonymanagerredux:
+    source: steam_workshop
+    workshop_id: '3310027356'
+    workshop_time_updated: 1789881525
+    workshop_title: Colony Manager Redux
+    download_path: mods/vendor/colonymanagerredux
+  recyclethis:
+    source: steam_workshop
+    workshop_id: '3253550009'
+    workshop_time_updated: 1757700442
+    workshop_title: Recycle This (Continued)
+    download_path: mods/vendor/recyclethis
+  cloning:
+    source: steam_workshop
+    workshop_id: '3348781223'
+    workshop_time_updated: 1787705984
+    workshop_title: Biotech Cloning (Continued)
+    download_path: mods/vendor/cloning
+  enhancedvatlearning:
+    source: steam_workshop
+    workshop_id: '3551263267'
+    workshop_time_updated: 1757220096
+    workshop_title: Enhanced Vat Learning
+    download_path: mods/vendor/enhancedvatlearning
+  injectgene:
+    source: steam_workshop
+    workshop_id: '2918091446'
+    workshop_time_updated: 1752603567
+    workshop_title: Inject Genes
+    download_path: mods/vendor/injectgene
+  hcgenefabrication:
+    source: steam_workshop
+    workshop_id: '3352773112'
+    workshop_time_updated: 1790313328
+    workshop_title: Gene Fabrication
+    download_path: mods/vendor/hcgenefabrication
+  generipper:
+    source: steam_workshop
+    workshop_id: '3524806362'
+    workshop_time_updated: 1755011920
+    workshop_title: Gene Ripper
+    download_path: mods/vendor/generipper
+  genebankplus:
+    source: steam_workshop
+    workshop_id: '2889919154'
+    workshop_time_updated: 1753223386
+    workshop_title: Gene Bank Plus
+    download_path: mods/vendor/genebankplus
+  minifyeverything:
+    source: steam_workshop
+    workshop_id: '872762753'
+    workshop_time_updated: 1755347385
+    workshop_title: MinifyEverything
+    download_path: mods/vendor/minifyeverything
