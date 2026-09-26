@@ -87,7 +87,7 @@ To maintain high quality and reliability across Linux environments:
 
 ### Phase 2: Mod Manifest & Acquisition Engine
 
-- [ ] **Task 2.1: Mod Manifest Schema & Lockfile Specification**
+- [x] **Task 2.1: Mod Manifest Schema & Lockfile Specification**
   - **Goal:** Define schema for declaring mods and their sources (Steam Workshop ID, GitHub release, or Git repo).
   - **Deliverables:**
     - `manifests/mods.yaml` specification with sample entries supporting:
@@ -96,7 +96,7 @@ To maintain high quality and reliability across Linux environments:
     - Initial lockfile format (`manifests/mods.lock.yaml`).
   - **QA Step:** Validate `mods.yaml` structure using `yq` or validation helper.
 
-- [ ] **Task 2.2: Mod Downloader / Fetcher Script**
+- [x] **Task 2.2: Mod Downloader / Fetcher Script**
   - **Goal:** Download community mods without running the Steam desktop client.
   - **Deliverables:**
     - `scripts/fetch-mods.sh` implementing:
@@ -105,7 +105,7 @@ To maintain high quality and reliability across Linux environments:
       - Pinned version caching.
   - **QA Step:** Download a small test community mod via `scripts/fetch-mods.sh` and verify files are extracted cleanly to `mods/vendor/`.
 
-- [ ] **Task 2.3: Mod Update & Lockfile Synchronization**
+- [x] **Task 2.3: Mod Update & Lockfile Synchronization**
   - **Goal:** Provide a controlled mechanism to update all 3rd-party mods to latest or to a specific target version.
   - **Deliverables:**
     - `scripts/update-mods.sh` (wired to `make update-mods`).
@@ -166,3 +166,14 @@ To maintain high quality and reliability across Linux environments:
     - Template directory with `About/About.xml`, `Defs/`, and optional `.csproj` for C# patches with RimWorld assembly references.
     - Integration with `make link` so private mods are symlinked alongside vendor mods.
   - **QA Step:** Scaffold a test custom XML mod and verify it loads in RimWorld.
+
+- [ ] **Task 5.2: Embryo Gene Editor Mod Implementation (Biotech Expansion)**
+  - **Goal:** Implement the Embryo Gene Editor mod based on the detailed specification at `mods/custom/embryo-gene-editor/spec.md`.
+  - **Deliverables:**
+    - Optimizer genes with bundled Cellular Instability penalties (`GeneDef`s, research projects, Gene Fabrication mod compatibility).
+    - Physical Genome Blueprint Discs (`ThingDef: GenomeBlueprintDisk`, `CompGenomeBlueprint`) and encoding recipes.
+    - Custom UI (`Dialog_EditEmbryoGenes`) for adding/removing embryo genes via connected Gene Banks.
+    - Job drivers, workgivers, and batch assembly bills for applying blueprints to natural and cloned embryos.
+    - Integration testing with *Biotech Cloning Continued* and vanilla `Building_GrowthVat`.
+  - **QA Step:** Build C# assembly, deploy via `make link`, and verify embryo genetic modifications, disc burning, and growth vat gestation in-game.
+
