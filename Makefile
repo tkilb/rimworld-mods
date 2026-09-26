@@ -23,14 +23,17 @@ fetch-mods: ## Download/fetch declared mods from Steam Workshop and Git
 update-mods: ## Update 3rd-party mods and synchronize lockfile
 	@bash ./scripts/update-mods.sh
 
+# Detect if make was invoked with -n / --dry-run
+MAKE_DRY_RUN := $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
+
 link: ## Create idempotent symlinks to RimWorld Mods directory
-	@bash ./scripts/link-mods.sh --link
+	+@bash ./scripts/link-mods.sh --link $(MAKE_DRY_RUN) $(ARGS)
 
 unlink: ## Remove symlinks from RimWorld Mods directory
-	@bash ./scripts/link-mods.sh --unlink
+	+@bash ./scripts/link-mods.sh --unlink $(MAKE_DRY_RUN) $(ARGS)
 
 rollback: ## Rollback a mod to a previous version (Usage: make rollback MOD=<name> VERSION=<ver>)
-	@bash ./scripts/rollback-mod.sh $(MOD) $(VERSION)
+	+@bash ./scripts/rollback-mod.sh $(MOD) $(VERSION) $(MAKE_DRY_RUN) $(ARGS)
 
 ##@ Remote Synchronization
 sync-deck: ## Sync mods and lockfile to Steam Deck target via SSH/rsync

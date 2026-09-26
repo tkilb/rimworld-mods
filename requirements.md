@@ -52,6 +52,7 @@ To maintain high quality and reliability across Linux environments:
 - **Small, atomic chunks:** Each task produces a single self-contained deliverable.
 - **Idempotent CLI scripts:** Bash scripts must use `#!/usr/bin/env bash`, `set -euo pipefail`, and support `--dry-run` where applicable.
 - **Zero unconfirmed mutations:** Scripts must preview changes before modifying directories.
+- **Documentation Standards:** Keep the root `README.md` clean, accessible, and focused on quickstart usage; store all in-depth reference documentation and detailed workflows in `/docs` (e.g., `docs/mod-management.md`, `docs/steamdeck-setup.md`). Future agents must follow this ask.
 - **Human Verification Checkpoints:** After each chunk, execution halts for manual review and validation by the user before proceeding to the next chunk.
 - **Manual Commits:** The agent will not perform git commits; all git commits are made manually by the user.
 
@@ -116,7 +117,7 @@ To maintain high quality and reliability across Linux environments:
 
 ### Phase 3: Deployment, Symlinking, & Rollback Engine
 
-- [ ] **Task 3.1: Idempotent Mod Linker Script**
+- [x] **Task 3.1: Idempotent Mod Linker Script**
   - **Goal:** Deploy mods to RimWorld's local `Mods` folder using clean symlinks or rsync.
   - **Deliverables:**
     - `scripts/link-mods.sh` (wired to `make link` and `make unlink`).
@@ -124,14 +125,14 @@ To maintain high quality and reliability across Linux environments:
     - Safety checks avoiding overwriting game core files.
   - **QA Step:** Run `make link --dry-run` and inspect planned symlinks; execute `make link` and confirm links in RimWorld's mod folder.
 
-- [ ] **Task 3.2: Status & Integrity Inspection Tool**
+- [x] **Task 3.2: Status & Integrity Inspection Tool**
   - **Goal:** Compare manifest declarations, locked versions, cached vendor mods, and deployed symlinks.
   - **Deliverables:**
     - `scripts/status.sh` (wired to `make status`).
     - Output showing: declared mods, downloaded status, active symlink status, and version drift.
   - **QA Step:** Run `make status` under various states (unlinked, linked, missing mod) and verify accurate reporting.
 
-- [ ] **Task 3.3: Version Rollback Workflow**
+- [x] **Task 3.3: Version Rollback Workflow**
   - **Goal:** Allow rolling back individual mods or all mods to previous versions using lockfile snapshots or cached versions.
   - **Deliverables:**
     - `scripts/rollback-mod.sh` (wired to `make rollback MOD=<name> VERSION=<ver>`).
@@ -174,6 +175,5 @@ To maintain high quality and reliability across Linux environments:
     - Physical Genome Blueprint Discs (`ThingDef: GenomeBlueprintDisk`, `CompGenomeBlueprint`) and encoding recipes.
     - Custom UI (`Dialog_EditEmbryoGenes`) for adding/removing embryo genes via connected Gene Banks.
     - Job drivers, workgivers, and batch assembly bills for applying blueprints to natural and cloned embryos.
-    - Integration testing with *Biotech Cloning Continued* and vanilla `Building_GrowthVat`.
+    - Integration testing with _Biotech Cloning Continued_ and vanilla `Building_GrowthVat`.
   - **QA Step:** Build C# assembly, deploy via `make link`, and verify embryo genetic modifications, disc burning, and growth vat gestation in-game.
-
