@@ -66,7 +66,7 @@ Monorepo mods (`mods/vendor/` and authoring mods in `mods/custom/`) are deployed
 
 ### Preview Deployment (Dry-Run)
 ```bash
-make link --dry-run
+make link-dry-run
 ```
 
 ### Deploy Symlinks
@@ -76,8 +76,8 @@ make link
 
 ### Remove Monorepo Symlinks
 ```bash
-make unlink --dry-run   # Preview links to remove
-make unlink             # Remove symlinks safely
+make unlink-dry-run   # Preview links to remove
+make unlink           # Remove symlinks safely
 ```
 
 > **Safety Guarantee:** The linker guards official DLC/core directories (`Core`, `Royalty`, `Ideology`, `Biotech`, `Anomaly`) and will never overwrite pre-existing regular directories in your `Mods` folder.
@@ -90,13 +90,13 @@ To check upstream sources for updates and re-synchronize `manifests/mods.lock.ya
 
 ```bash
 # Preview updates without modifying lockfile or downloading
-make update-mods ARGS="--dry-run"
+make update-mods-dry-run
 
 # Update all mods to latest resolved upstream version
 make update-mods
 
-# Update a single mod
-make update-mods ARGS="harmony"
+# Update a single mod (call script directly)
+bash ./scripts/update-mods.sh harmony
 ```
 
 ---
@@ -107,7 +107,7 @@ If an updated mod causes game crashes, save-game incompatibilities, or breaking 
 
 ### Preview Rollback (Dry-Run)
 ```bash
-make rollback --dry-run MOD=hugslib VERSION=v11.0.0
+make rollback-dry-run MOD=hugslib VERSION=v11.0.0
 ```
 
 ### Execute Rollback
@@ -120,3 +120,32 @@ make rollback MOD=hugslib VERSION=v11.0.0
 2. **Deterministic Fetch:** `scripts/fetch-mods.sh` downloads and extracts the exact targeted archive into `mods/vendor/<mod_id>`.
 3. **Lockfile Synchronization:** `manifests/mods.lock.yaml` records the resolved rollback version and timestamp.
 4. **Active Deployment:** Since the mod is symlinked, the updated vendor folder is immediately live in RimWorld without needing to recreate symlinks (or verify via `make link`).
+
+---
+
+## 6. Remote Deployment to Steam Deck
+
+Sync the monorepo (vendor mods, manifests, lockfile, scripts) to a remote Steam Deck via SSH/rsync.
+
+### Test SSH Connectivity
+```bash
+make sync-deck-check
+```
+
+### Preview Sync (Dry-Run)
+```bash
+make sync-deck-dry-run
+```
+
+### Sync Repository to Steam Deck
+```bash
+make sync-deck
+```
+
+### Sync and Automatically Deploy Symlinks on Deck
+Sync files and immediately run `make link` on the Steam Deck in one step:
+```bash
+make sync-deck-link
+```
+
+> For complete setup instructions (enabling SSH on SteamOS, key-based auth, storage path detection for internal SSD vs MicroSD), see [Steam Deck Setup Guide](steamdeck-setup.md).

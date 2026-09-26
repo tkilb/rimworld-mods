@@ -55,6 +55,8 @@ To maintain high quality and reliability across Linux environments:
 - **Documentation Standards:** Keep the root `README.md` clean, accessible, and focused on quickstart usage; store all in-depth reference documentation and detailed workflows in `/docs` (e.g., `docs/mod-management.md`, `docs/steamdeck-setup.md`). Future agents must follow this ask.
 - **Human Verification Checkpoints:** After each chunk, execution halts for manual review and validation by the user before proceeding to the next chunk.
 - **Manual Commits:** The agent will not perform git commits; all git commits are made manually by the user.
+- **Model Recommendations:** The default model is Gemini Flash (low tier). Before starting a chunk, the agent must assess its complexity. If a chunk involves multi-step logic, non-trivial bash scripting, C# code generation, intricate YAML schema design, or any scenario where a simpler model is likely to introduce subtle defects, the agent **must** prompt the user to consider switching to a medium-tier model (e.g., Gemini Flash Medium) or Claude Sonnet before proceeding. The agent should briefly explain _why_ the chunk warrants a stronger model.
+- **No `ARGS=` in Makefile targets:** Makefile targets must never use a generic `ARGS=` variable for passing flags. Each distinct operation must be an explicit named target (e.g., `sync-deck`, `sync-deck-check`, `sync-deck-link`). Mutating targets must provide explicit companion dry-run targets (e.g., `link-dry-run`, `unlink-dry-run`, `update-mods-dry-run`, `rollback-dry-run`, `sync-deck-dry-run`), while also detecting make's native `-n` flag via `MAKE_DRY_RUN`. Named semantic variables like `MOD=` and `VERSION=` are acceptable for targets that genuinely require parameterization. Scripts may accept arbitrary flags when invoked directly.
 
 ---
 
@@ -143,14 +145,14 @@ To maintain high quality and reliability across Linux environments:
 
 ### Phase 4: Steam Deck Remote Deployment & Automation
 
-- [ ] **Task 4.1: Remote Sync Script for Steam Deck**
+- [x] **Task 4.1: Remote Sync Script for Steam Deck**
   - **Goal:** Allow syncing mods and lockfiles from the desktop to the Steam Deck via SSH/rsync.
   - **Deliverables:**
     - `scripts/sync-deck.sh` (wired to `make sync-deck`).
     - Support for executing remote `make link` over SSH on the Steam Deck.
   - **QA Step:** Test SSH connectivity and dry-run rsync against Steam Deck or local mock target.
 
-- [ ] **Task 4.2: Comprehensive Documentation & Onboarding Guides**
+- [x] **Task 4.2: Comprehensive Documentation & Onboarding Guides**
   - **Goal:** Document daily workflows for mod management, updating, and multi-machine sync.
   - **Deliverables:**
     - `docs/steamdeck-setup.md` (SSH setup, path discovery on SteamOS).
@@ -169,7 +171,7 @@ To maintain high quality and reliability across Linux environments:
   - **QA Step:** Scaffold a test custom XML mod and verify it loads in RimWorld.
 
 - [ ] **Task 5.2: Embryo Gene Editor Mod Implementation (Biotech Expansion)**
-  - **Goal:** Implement the Embryo Gene Editor mod based on the detailed specification at `mods/custom/embryo-gene-editor/spec.md`.
+  - **Goal:** Implement the Embryo Gene Editor mod based on the detailed specification at `mods/custom/eugenics-program/spec.md`.
   - **Deliverables:**
     - Optimizer genes with bundled Cellular Instability penalties (`GeneDef`s, research projects, Gene Fabrication mod compatibility).
     - Physical Genome Blueprint Discs (`ThingDef: GenomeBlueprintDisk`, `CompGenomeBlueprint`) and encoding recipes.

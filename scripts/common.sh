@@ -23,10 +23,8 @@ export STEAMCMD_BIN="${STEAMCMD_BIN:-steamcmd}"
 case "$MACHINE" in
   "linux-box")
     export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-/mnt/gaming/SteamLibrary/steamapps/common/RimWorld/Mods}"
-    export DECK_HOST="${DECK_HOST:-steam-deck}"
-    export DECK_USER="${DECK_USER:-deck}"
-    export DECK_PORT="${DECK_PORT:-22}"
-    export DECK_REMOTE_DIR="${DECK_REMOTE_DIR:-~/rimworld-mods}"
+    export DECK_HOST="${DECK_HOST:-steamdeck}"
+    export DECK_REMOTE_DIR="${DECK_REMOTE_DIR:-~/.local/share/rimworld-mods}"
     ;;
   "steam-deck")
     export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
@@ -37,13 +35,28 @@ case "$MACHINE" in
     ;;
 esac
 
-# Allow optional local override if config/local.env exists
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export REPO_ROOT
-if [[ -f "$REPO_ROOT/config/local.env" ]]; then
-  # shellcheck source=/dev/null
-  source "$REPO_ROOT/config/local.env"
+
+# Require config/local.env to be present on all machines
+if [[ ! -f "$REPO_ROOT/config/local.env" ]]; then
+  echo "" >&2
+  log_err "======================================================================"
+  log_err "MISSING REQUIRED CONFIGURATION: config/local.env"
+  log_err "----------------------------------------------------------------------"
+  log_err "This monorepo requires a machine-specific 'config/local.env' file."
+  log_err ""
+  log_err "To fix this, create it from the provided template:"
+  log_err "  cp config/config.env.example config/local.env"
+  log_err ""
+  log_err "Then review and adjust paths/settings for this machine."
+  log_err "======================================================================"
+  echo "" >&2
+  exit 1
 fi
+
+# shellcheck source=/dev/null
+source "$REPO_ROOT/config/local.env"
 
 # Dependency checker helper
 check_cmd() {

@@ -43,13 +43,13 @@ bash ./scripts/fetch-mods.sh hugslib
 Deploy vendor and custom mods into RimWorld's active `Mods` folder:
 ```bash
 # Preview links before applying
-make link --dry-run
+make link-dry-run
 
 # Deploy symlinks
 make link
 
 # Remove monorepo symlinks
-make unlink --dry-run
+make unlink-dry-run
 make unlink
 ```
 
@@ -57,7 +57,7 @@ make unlink
 Check upstream sources for updates and re-sync `manifests/mods.lock.yaml`:
 ```bash
 # Preview updates without modifying files
-make update-mods ARGS="--dry-run"
+make update-mods-dry-run
 
 # Update and re-fetch all mods
 make update-mods
@@ -67,10 +67,19 @@ make update-mods
 Roll back an individual mod to a specific version or tag:
 ```bash
 # Preview rollback
-make rollback --dry-run MOD=hugslib VERSION=v11.0.0
+make rollback-dry-run MOD=hugslib VERSION=v11.0.0
 
 # Execute rollback
 make rollback MOD=hugslib VERSION=v11.0.0
+```
+
+### 7. Sync to Steam Deck
+Transfer mods and lockfile to your Steam Deck and optionally deploy symlinks remotely:
+```bash
+make sync-deck-check          # Test SSH connectivity
+make sync-deck-dry-run        # Preview rsync transfer
+make sync-deck                # Sync files to Deck
+make sync-deck-link           # Sync and immediately run 'make link' on the Deck
 ```
 
 ---
@@ -98,4 +107,4 @@ make rollback MOD=hugslib VERSION=v11.0.0
 For detailed step-by-step guides, refer to the documentation in [`docs/`](docs/):
 
 - [**Mod Management Guide**](docs/mod-management.md): In-depth guide for declaring new mods, source schemas (Workshop, GitHub releases, Git), updating lockfiles, rollback mechanics, and troubleshooting.
-- [**Steam Deck Setup**](docs/steamdeck-setup.md): Remote synchronization, SSH setup, and paths across SteamOS targets *(Phase 4)*.
+- [**Steam Deck Setup**](docs/steamdeck-setup.md): Remote synchronization, SSH setup, storage path detection, and running monorepo tools natively on SteamOS.
