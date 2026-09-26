@@ -1,0 +1,27 @@
+# RimWorld Monorepo - Mod Manifest Specification
+# Declares 3rd-party community mods, sources, and desired versions/pins.
+version: 1
+
+mods:
+  harmony:
+    name: "Harmony"
+    source: steam_workshop
+    workshop_id: "2009463077"
+    enabled: true
+    description: "A library for patching, replacing and decorating .NET and Mono methods during runtime."
+
+  hugslib:
+    name: "HugsLib"
+    source: github_release
+    repo: "UnlimitedHugs/RimworldHugsLib"
+    tag: "master"
+    enabled: true
+    description: "Shared library mod for RimWorld containing utility classes and shared functionality."
+
+  # Direct Git repository example
+  # example_git_mod:
+  #   name: "Example Git Mod"
+  #   source: git
+  #   url: "https://github.com/example/rimworld-mod.git"
+  #   branch: "main"
+  #   enabled: false
