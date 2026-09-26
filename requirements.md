@@ -61,7 +61,7 @@ To maintain high quality and reliability across Linux environments:
 
 ### Phase 1: Foundation, Configuration, & Shared Tooling
 
-- [ ] **Task 1.1: Project Directory Structure & Baseline Makefile**
+- [x] **Task 1.1: Project Directory Structure & Baseline Makefile**
   - **Goal:** Establish standard monorepo folder layout and baseline `Makefile` with help/discovery targets.
   - **Deliverables:**
     - Directory scaffold (`config/`, `manifests/`, `scripts/`, `mods/vendor/`, `mods/custom/`, `docs/`).
@@ -69,14 +69,14 @@ To maintain high quality and reliability across Linux environments:
     - `.gitignore` for vendor cache and temporary download directories.
   - **QA Step:** Run `make help` and verify clean output and proper directory layout.
 
-- [ ] **Task 1.2: Environment Configuration & Path Resolver**
+- [x] **Task 1.2: Environment Configuration & Path Resolver**
   - **Goal:** Support environment-specific path detection for Arch Linux and Steam Deck.
   - **Deliverables:**
-    - `config/config.env.example` defining `RIMWORLD_MODS_DIR`, `STEAMCMD_PATH`, and target profile (`desktop` vs `steamdeck`).
-    - `scripts/common.sh` containing shell helper functions (`log_info`, `log_err`, `load_config`, `check_required_tools`).
+    - Self-contained `$MACHINE` path resolver in `scripts/common.sh` (detects `linux-box`, `steam-deck`, etc.).
+    - `scripts/common.sh` containing shell helper functions (`log_info`, `log_err`, `check_cmd`).
   - **QA Step:** Source `scripts/common.sh` with a test environment file and verify path validations and error handling.
 
-- [ ] **Task 1.3: Dependency Checker Script**
+- [x] **Task 1.3: Dependency Checker Script**
   - **Goal:** Verify required host dependencies on Arch Linux and SteamOS (`steamcmd`, `curl`, `jq` / `yq`, `rsync`, etc.).
   - **Deliverables:**
     - `scripts/check-deps.sh` integrated into `make check-deps`.

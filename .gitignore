@@ -1,0 +1,15 @@
+# Environment configurations (keep examples)
+config/*.env
+!config/*.example
+.env
+
+# Vendor mod cache and downloads
+mods/vendor/*
+!mods/vendor/.gitkeep
+.cache/
+tmp/
+
+# OS / Editor artifacts
+.DS_Store
+*.swp
+*~
