@@ -6,7 +6,8 @@ SHELL := /usr/bin/env bash
         build-load-order build-order-mods order-mods order-mods-dry-run \
         sync-config sync-config-dry-run \
         sync-deck sync-deck-dry-run sync-deck-check sync-deck-link \
-        sync-deck-config sync-deck-config-dry-run
+        sync-deck-config sync-deck-config-dry-run \
+        scaffold-mod scaffold-mod-dry-run build-mod build-mod-dry-run
 
 ##@ General
 help: ## Display this help message
@@ -89,3 +90,16 @@ sync-deck-config: ## Sync to Steam Deck and deploy ModsConfig.xml remotely
 
 sync-deck-config-dry-run: ## Preview remote ModsConfig.xml deployment on Steam Deck
 	@bash ./scripts/sync-deck.sh --config --dry-run
+
+##@ Private Mod Development
+scaffold-mod: ## Scaffold a private mod (Usage: make scaffold-mod MOD=<name> [TYPE=xml|csharp])
+	+@bash ./scripts/scaffold-mod.sh $(if $(MOD),--name $(MOD),) $(if $(TYPE),--type $(TYPE),) $(MAKE_DRY_RUN)
+
+scaffold-mod-dry-run: ## Preview scaffolding a private mod (Usage: make scaffold-mod-dry-run MOD=<name> [TYPE=xml|csharp])
+	@bash ./scripts/scaffold-mod.sh $(if $(MOD),--name $(MOD),) $(if $(TYPE),--type $(TYPE),) --dry-run
+
+build-mod: ## Compile C# assemblies for a custom mod (Usage: make build-mod MOD=<name>)
+	+@bash ./scripts/build-mod.sh $(if $(MOD),--mod $(MOD),) $(MAKE_DRY_RUN)
+
+build-mod-dry-run: ## Preview compiling C# assemblies (Usage: make build-mod-dry-run MOD=<name>)
+	@bash ./scripts/build-mod.sh $(if $(MOD),--mod $(MOD),) --dry-run

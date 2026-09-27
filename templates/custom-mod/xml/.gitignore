@@ -1,0 +1,5 @@
+# Custom Mod gitignore
+*.bak
+*~
+.DS_Store
+Thumbs.db

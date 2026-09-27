@@ -179,3 +179,54 @@ make sync-deck-link
 ```
 
 > For complete setup instructions (enabling SSH on SteamOS, key-based auth, storage path detection for internal SSD vs MicroSD), see [Steam Deck Setup Guide](steamdeck-setup.md).
+
+---
+
+## 8. Authoring Private Mods (`mods/custom/`)
+
+Private mods under active development reside in `mods/custom/` and can be scaffolded using the starter templates.
+
+### Scaffolding a New Mod
+
+To scaffold a new mod:
+
+```bash
+# Preview scaffolding (dry-run)
+make scaffold-mod-dry-run MOD=my-mod TYPE=xml
+make scaffold-mod-dry-run MOD=my-mod TYPE=csharp
+
+# Scaffold an XML mod (default)
+make scaffold-mod MOD=my-mod
+
+# Scaffold a C# mod with project files and assembly references
+make scaffold-mod MOD=my-mod TYPE=csharp
+```
+
+The scaffolding script creates standard RimWorld layouts in `mods/custom/<mod_name>`:
+- `About/About.xml`: Valid metadata, `supportedVersions` (1.5, 1.6), and load dependencies.
+- `Defs/`: Sample XML definitions.
+- `Source/`: (C# mods) SDK-style `.csproj` configured for `net472` with dynamic references to RimWorld's `RimWorldLinux_Data/Managed/` game assemblies.
+- `Assemblies/`: (C# mods) Build target directory.
+
+### Building C# Mods
+
+To compile assemblies for a custom C# mod:
+
+```bash
+# Preview compilation command
+make build-mod-dry-run MOD=my-mod
+
+# Compile assembly to mods/custom/<mod_name>/Assemblies/
+make build-mod MOD=my-mod
+```
+
+*Note:* Compiling C# mods requires the .NET SDK (`sudo pacman -S dotnet-sdk` on Arch Linux).
+
+### Deploying & Testing
+
+Custom mods with a valid `About/About.xml` are automatically recognized by `make link`, `make status`, and `make order-mods`. To activate them in RimWorld:
+
+```bash
+make link
+```
+

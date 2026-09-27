@@ -1,0 +1,13 @@
+# C# Mod build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/
+.idea/
+*.bak
+*~
+.DS_Store
+Thumbs.db

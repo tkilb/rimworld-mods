@@ -97,10 +97,10 @@ EOF
 )
 fi
 
-# 2. Custom authoring mods in mods/custom/
+# 2. Custom authoring mods in mods/custom/ (must contain About/About.xml)
 if [[ -d "$CUSTOM_DIR" ]]; then
   for custom_path in "$CUSTOM_DIR"/*; do
-    if [[ -d "$custom_path" ]]; then
+    if [[ -d "$custom_path" && -f "$custom_path/About/About.xml" ]]; then
       custom_id="$(basename "$custom_path")"
       CANDIDATE_MODS["$custom_id"]="$custom_path"
     fi

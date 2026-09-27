@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- Example XML Def. Replace or expand with your mod's Defs. -->
+  <!--
+  <ThingDef ParentName="ResourceBase">
+    <defName>{{MOD_NAME_PASCAL}}_SampleResource</defName>
+    <label>sample resource</label>
+    <description>A sample resource introduced by {{MOD_NAME}}.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/SampleResource</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>1.0</MarketValue>
+      <Mass>0.1</Mass>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+  -->
+</Defs>

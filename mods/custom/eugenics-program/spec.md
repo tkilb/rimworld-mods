@@ -1,8 +1,8 @@
-# Feature Specification: Embryo Gene Editor & Eugenics Blueprints
+# Feature Specification: Eugenics Program & Eugenics Blueprints
 
 ## 1. Overview & Vision
 
-**Embryo Gene Editor** is a RimWorld Biotech expansion mod that enables colonists to genetically engineer and neuro-imprint human embryos prior to growth vat gestation.
+**Eugenics Program** is a RimWorld Biotech expansion mod that enables colonists to genetically engineer and neuro-imprint human embryos prior to growth vat gestation.
 
 Inspired by dystopian eugenics and the _"Construct / SecUnit"_ concept from _The Murderbot Diaries_, players can mass-produce specialized, combat-ready, or industrial clone castes using physical **Genome Blueprint Discs** and **Neural Imprint Doctrines**. Spliced constructs are engineered for hyper-efficiency: sterile, psychically deaf, emotionally blunted, and treated as living property. Stripping these human functions yields a massive **Metabolic Dividend** that naturally finances extreme combat and physical augmentations.
 
@@ -39,7 +39,7 @@ Constructs are biologically optimized by stripping superfluous human faculties, 
 - Very Unattractive (stock game gene)
   - Carriers of this gene have misshapen, asymmetrical facial structures and blotchy skin. They're hard to look at.
 - Deathrest (stock gene)
-  - High unit needs to recoupreate from time to time. This allows the contstruct to be placed in stasis when not used
+  - Construct unit needs to recuperate from time to time. This allows them to be placed in stasis when not used.
 - Slow Study (stock gene)
   - Features have been pre-programmed, and learning new routines is not a primary specification for the construct
 - **Metabolically Efficient (+5 Free `biostatMet`)**: (custom gene)

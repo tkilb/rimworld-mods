@@ -191,15 +191,15 @@ To maintain high quality and reliability across Linux environments:
 
 ### Phase 6: Personal Mod Development Scaffolding (Future Phase)
 
-- [ ] **Task 6.1: Private Mod Project Template (XML / C#)**
+- [x] **Task 6.1: Private Mod Project Template (XML / C#)**
   - **Goal:** Create starter templates and build scripts for private mods in `mods/custom/`.
   - **Deliverables:**
     - Template directory with `About/About.xml`, `Defs/`, and optional `.csproj` for C# patches with RimWorld assembly references.
     - Integration with `make link` so private mods are symlinked alongside vendor mods.
   - **QA Step:** Scaffold a test custom XML mod and verify it loads in RimWorld.
 
-- [ ] **Task 6.2: Embryo Gene Editor Mod Implementation (Biotech Expansion)**
-  - **Goal:** Implement the Embryo Gene Editor mod based on the detailed specification at `mods/custom/eugenics-program/spec.md`.
+- [ ] **Task 6.2: Eugenics Program Mod Implementation (Biotech Expansion)**
+  - **Goal:** Implement the Eugenics Program mod based on the detailed specification at `mods/custom/eugenics-program/spec.md`.
   - **Deliverables:**
     - Optimizer genes with bundled Cellular Instability penalties (`GeneDef`s, research projects, Gene Fabrication mod compatibility).
     - Physical Genome Blueprint Discs (`ThingDef: GenomeBlueprintDisk`, `CompGenomeBlueprint`) and encoding recipes.
