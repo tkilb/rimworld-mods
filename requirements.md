@@ -212,7 +212,7 @@ To maintain high quality and reliability across Linux environments:
     - [x] **Task 6.2.2: Blueprint Discs & Embryo Comps (Phase 2)**
       - `ThingDef: GenomeBlueprintDisk`, `ThingDef: NeuralBlueprintDisk`, and `CompGenomeBlueprint`.
       - `CompEmbryoQuality` (defect tracking, prenatal screening state).
-    - [ ] **Task 6.2.3: Neural Scanner & Vat Imprinting Engine (Phase 3)**
+    - [x] **Task 6.2.3: Neural Scanner & Vat Imprinting Engine (Phase 3)**
       - `Building_NeuralScanner` and colonist brain-scanning job.
       - `CompGrowthVatImprinter` to stream skills and passions during vat acceleration.
     - [ ] **Task 6.2.4: Splicing UI, Diagnostics & Biomass Recycling (Phase 4)**

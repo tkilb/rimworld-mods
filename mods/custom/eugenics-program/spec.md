@@ -160,8 +160,8 @@ The user will need a runbook to allow for quick QA instead of needing to play th
 
 ### Phase 3: Neural Scanner & Growth Vat Imprinting Engine
 
-- [ ] Implement `Building_NeuralScanner` and colonist brain-scanning job.
-- [ ] Implement `CompGrowthVatImprinter` to inject skills and passions directly during vat acceleration.
+- [x] Implement `Building_NeuralScanner` and colonist brain-scanning job.
+- [x] Implement `CompGrowthVatImprinter` to inject skills and passions directly during vat acceleration.
 
 ### Phase 4: Splicing UI, Diagnostics & Biomass Recycling
 

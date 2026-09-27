@@ -15,6 +15,37 @@ namespace EugenicsProgram
         public Dictionary<SkillDef, int> skillLevels = new Dictionary<SkillDef, int>();
         public Dictionary<SkillDef, Passion> passions = new Dictionary<SkillDef, Passion>();
 
+        public bool IsEncoded => (skillLevels != null && skillLevels.Count > 0) || !string.IsNullOrEmpty(donorName);
+
+        public void EncodePawnProfile(Pawn donor, string customTitle = null)
+        {
+            if (donor == null || donor.skills == null) return;
+
+            donorName = donor.LabelShortCap;
+            doctrineTitle = !string.IsNullOrEmpty(customTitle)
+                ? customTitle
+                : $"{donor.LabelShortCap}'s Combat Doctrine";
+
+            skillLevels.Clear();
+            passions.Clear();
+
+            int cap = Props?.defaultSkillCap ?? 14;
+            int minSkill = Props?.minSkillToEncode ?? 6;
+
+            foreach (SkillRecord skill in donor.skills.skills)
+            {
+                if (skill.Level >= minSkill)
+                {
+                    int encodedLevel = Mathf.Min(skill.Level, cap);
+                    skillLevels[skill.def] = encodedLevel;
+                    if (skill.passion != Passion.None)
+                    {
+                        passions[skill.def] = skill.passion;
+                    }
+                }
+            }
+        }
+
         private List<SkillDef> skillKeysWorkingList;
         private List<int> skillValuesWorkingList;
         private List<SkillDef> passionKeysWorkingList;

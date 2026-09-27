@@ -27,4 +27,18 @@
     <researchViewY>3.5</researchViewY>
   </ResearchProjectDef>
 
+  <ResearchProjectDef>
+    <defName>Eugenics_NeuralImprinting</defName>
+    <label>neural imprinting</label>
+    <description>Construct biometric scanning pods and growth vat neuro-imprinting transceivers to stream combat and technical proficiencies directly into developing construct brains.</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Eugenics_ConstructFoundations</li>
+      <li>GrowthVats</li>
+    </prerequisites>
+    <researchViewX>15.5</researchViewX>
+    <researchViewY>4.5</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

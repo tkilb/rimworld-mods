@@ -6,6 +6,7 @@ namespace EugenicsProgram
     {
         public string defaultDoctrineTitle = "Standard Combat Doctrine";
         public int defaultSkillCap = 14;
+        public int minSkillToEncode = 6;
         public int maxPassions = 3;
         public float marketValuePerSkillPoint = 40f;
 

@@ -20,7 +20,7 @@
     <customEffectDescriptions>
       <li>Incapable of romance, marriage proposals, and social chatter.</li>
       <li>Suppresses social loneliness and recreation decay.</li>
-      <li>Colonists suffer zero mood penalties when this pawn dies or is lost.</li>
+      <li>Colonists suffer zero mood penalties when this construct dies or is lost.</li>
     </customEffectDescriptions>
     <modExtensions>
       <li Class="EugenicsProgram.GeneExtension_ConstructPsychology">
