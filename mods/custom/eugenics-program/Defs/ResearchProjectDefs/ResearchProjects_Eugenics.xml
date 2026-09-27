@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>Eugenics_ConstructFoundations</defName>
+    <label>construct genetics</label>
+    <description>Study methods of purging emotional volatility and social friction from human germlines, harnessing the resulting metabolic dividend to bio-engineer high-efficiency labor and security castes.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Xenogetics</li>
+    </prerequisites>
+    <researchViewX>14.0</researchViewX>
+    <researchViewY>3.5</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Eugenics_GeneOptimization</defName>
+    <label>genomic overdrive</label>
+    <description>Develop extreme biological limit-breakers, trading long-term cellular stability and cancer vulnerability for unprecedented metabolic output and compressed genetic complexity.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Eugenics_ConstructFoundations</li>
+    </prerequisites>
+    <researchViewX>15.5</researchViewX>
+    <researchViewY>3.5</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

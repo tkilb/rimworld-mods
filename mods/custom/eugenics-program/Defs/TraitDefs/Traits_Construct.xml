@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <TraitDef>
+    <defName>Trait_ConstructAsset</defName>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li>
+        <label>construct asset</label>
+        <description>{PAWN_nameDef} is a genetically engineered construct caste asset. Free from social sentimentality and emotional frailty, {PAWN_pronoun} is viewed by natural colonists as colony property rather than an equal peer.</description>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+
+</Defs>

@@ -58,6 +58,7 @@ To maintain high quality and reliability across Linux environments:
 - **Manual Commits:** The agent will not perform git commits; all git commits are made manually by the user.
 - **Model Recommendations:** The default model is Gemini Flash (low tier). Before starting a chunk, the agent must assess its complexity. If a chunk involves multi-step logic, non-trivial bash scripting, C# code generation, intricate YAML schema design, or any scenario where a simpler model is likely to introduce subtle defects, the agent **must** prompt the user to consider switching to a medium-tier model (e.g., Gemini Flash Medium) or Claude Sonnet before proceeding. The agent should briefly explain _why_ the chunk warrants a stronger model.
 - **No `ARGS=` in Makefile targets:** Makefile targets must never use a generic `ARGS=` variable for passing flags. Each distinct operation must be an explicit named target (e.g., `sync-deck`, `sync-deck-check`, `sync-deck-link`). Mutating targets must provide explicit companion dry-run targets (e.g., `link-dry-run`, `unlink-dry-run`, `update-mods-dry-run`, `rollback-dry-run`, `sync-deck-dry-run`), while also detecting make's native `-n` flag via `MAKE_DRY_RUN`. Named semantic variables like `MOD=` and `VERSION=` are acceptable for targets that genuinely require parameterization. Scripts may accept arbitrary flags when invoked directly.
+- **XML-Driven Configuration:** Custom genes, numerical balance values, skill gates, time intervals, and tuning factors must be defined in XML (e.g., standard Def fields, `DefModExtension`s, or custom `Def` classes) rather than hardcoded in C# logic, allowing clean balance tweaking and mod compatibility.
 
 ---
 
@@ -200,10 +201,26 @@ To maintain high quality and reliability across Linux environments:
 
 - [ ] **Task 6.2: Eugenics Program Mod Implementation (Biotech Expansion)**
   - **Goal:** Implement the Eugenics Program mod based on the detailed specification at `mods/custom/eugenics-program/spec.md`.
-  - **Deliverables:**
-    - Optimizer genes with bundled Cellular Instability penalties (`GeneDef`s, research projects, Gene Fabrication mod compatibility).
-    - Physical Genome Blueprint Discs (`ThingDef: GenomeBlueprintDisk`, `CompGenomeBlueprint`) and encoding recipes.
-    - Custom UI (`Dialog_EditEmbryoGenes`) for adding/removing embryo genes via connected Gene Banks.
-    - Job drivers, workgivers, and batch assembly bills for applying blueprints to natural and cloned embryos.
-    - Integration testing with _Biotech Cloning Continued_ and vanilla `Building_GrowthVat`.
+  - **Model Recommendations:**
+    - Sub-Tasks 6.2.1 – 6.2.3: Medium Tier (e.g. Gemini Flash Medium) for XML schema, standard C# data comps, and basic JobDrivers.
+    - Sub-Task 6.2.4: High Tier (e.g. Claude Sonnet / Gemini Pro) for custom Unity IMGUI `Dialog_EditEmbryoGenes` layout and event handling.
+    - Sub-Task 6.2.5: Medium Tier for batch bills and QA runbook; High Tier if deep third-party mod IL transpiling is required.
+  - **Sub-Tasks:**
+    - [x] **Task 6.2.1: Project Scaffold & Foundation Genes/Traits (Phase 1)**
+      - Mod structure (`About/About.xml`, `Defs/`, `Source/`, `Assemblies/`, `.csproj`).
+      - Optimizer and construct foundation genes (`GeneDef`s, `TraitDef`, `ThoughtWorker`).
+    - [x] **Task 6.2.2: Blueprint Discs & Embryo Comps (Phase 2)**
+      - `ThingDef: GenomeBlueprintDisk`, `ThingDef: NeuralBlueprintDisk`, and `CompGenomeBlueprint`.
+      - `CompEmbryoQuality` (defect tracking, prenatal screening state).
+    - [ ] **Task 6.2.3: Neural Scanner & Vat Imprinting Engine (Phase 3)**
+      - `Building_NeuralScanner` and colonist brain-scanning job.
+      - `CompGrowthVatImprinter` to stream skills and passions during vat acceleration.
+    - [ ] **Task 6.2.4: Splicing UI, Diagnostics & Biomass Recycling (Phase 4)**
+      - `Dialog_EditEmbryoGenes` with conditional gene removal and disc burning.
+      - Skill-gated prenatal screening bills and liquefaction into `GeneticNutrientPaste`.
+    - [ ] **Task 6.2.5: Batch Automation & Ecosystem Validation (Phase 5)**
+      - Batch assembly bills on `Building_GeneAssembler`.
+      - Integration validation with vanilla `Building_GrowthVat` and *Biotech Cloning Continued*.
+      - Dev-mode QA runbook.
   - **QA Step:** Build C# assembly, deploy via `make link`, and verify embryo genetic modifications, disc burning, and growth vat gestation in-game.
+

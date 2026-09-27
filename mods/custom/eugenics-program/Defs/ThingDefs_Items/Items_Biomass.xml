@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MealBase">
+    <defName>GeneticNutrientPaste</defName>
+    <label>genetic nutrient paste</label>
+    <description>Nutrient-dense biological slurry reclaimed from defective or culled embryonic material. Highly concentrated fuel formulated specifically for Growth Vats and bioreactors.</description>
+    <graphicData>
+      <texPath>Things/Item/Meal/NutrientPaste</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>12</MarketValue>
+      <Nutrition>0.9</Nutrition>
+      <Mass>0.3</Mass>
+      <FoodPoisoningChanceFactor>0</FoodPoisoningChanceFactor>
+    </statBases>
+    <ingestible>
+      <preferability>MealAwful</preferability>
+      <tasteThought>AteNutrientPaste</tasteThought>
+      <foodType>Meal, Processed</foodType>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>14</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -4,7 +4,7 @@
 
 **Eugenics Program** is a RimWorld Biotech expansion mod that enables colonists to genetically engineer and neuro-imprint human embryos prior to growth vat gestation.
 
-Inspired by dystopian eugenics and the _"Construct / SecUnit"_ concept from _The Murderbot Diaries_, players can mass-produce specialized, combat-ready, or industrial clone castes using physical **Genome Blueprint Discs** and **Neural Imprint Doctrines**. Spliced constructs are engineered for hyper-efficiency: sterile, psychically deaf, emotionally blunted, and treated as living property. Stripping these human functions yields a massive **Metabolic Dividend** that naturally finances extreme combat and physical augmentations.
+Inspired by dystopian eugenics and the _"Construct / SecUnit"_ concept from _The Murderbot Diaries_, players can mass-produce specialized, combat-ready, or industrial clone castes using physical **Genome Blueprint Discs** and **Neural Imprint Doctrines**. Spliced constructs are engineered for hyper-efficiency: sterile, psychically deaf, emotionally blunted, and treated as living property. Stripping these human functions yields a massive **Metabolic Dividend** that naturally finances augmentations.
 
 ---
 
@@ -128,6 +128,11 @@ sequenceDiagram
 - `TraitDef`: `VatBred_Construct`
 - `RecipeDef`: `EncodeGenomeBlueprintDisc`, `ScanNeuralDoctrine`, `ScreenEmbryoGenetics`, `LiquefyEmbryoBiomass`
 
+### 4.3 XML-Driven Configuration Standards
+
+- All tuning factors, skill thresholds, tick intervals, and numerical balances must be exposed in XML via standard Def fields, `DefModExtension`s, or custom `CompProperties`.
+- Avoid hardcoded magic numbers in C# logic to allow user-level balance tuning and third-party mod compatibility.
+
 ---
 
 ## User QA
@@ -138,12 +143,20 @@ The user will need a runbook to allow for quick QA instead of needing to play th
 
 ### Phase 1: Construct Foundation Genes & Metabolic Balance
 
-- [ ] AI Agent to define tasks
+- [x] Scaffold mod directory structure (`About/About.xml`, `Source/`, `Assemblies/`, `Defs/`, `.csproj`).
+- [x] Implement construct foundation genes (`Gene_ConstructPsychology`, `Construct_MetabolicallyEfficient`, `Gene_MandatorySterility`).
+- [x] Implement optimizer genes (`Gene_MitochondrialOverdrive`, `Gene_GenomicCompression`).
+- [x] Implement construct trait (`Trait_ConstructAsset`) and situational thought (`Construct_ColdEfficiency`).
+- [x] Implement Harmony patches suppressing romance, marriage proposals, deep talk, and colonist grief thoughts for construct pawns.
+- [x] Implement research projects (`Eugenics_ConstructFoundations`, `Eugenics_GeneOptimization`).
+
 
 ### Phase 2: Blueprint & Neural Discs Data Model
 
-- [ ] Implement `GenomeBlueprintDisk` and `NeuralBlueprintDisk` items with serialized data comps.
-- [ ] Implement `CompEmbryoQuality` (defect tracking, screening status).
+- [x] Implement `GenomeBlueprintDisk` and `NeuralBlueprintDisk` items with serialized data comps.
+- [x] Implement `CompEmbryoQuality` (defect tracking, screening status) and XML patch attaching it to `HumanEmbryo`.
+- [x] Implement `GeneticNutrientPaste` item for culled embryo biomass recycling.
+- [x] Ensure all tuning parameters and thresholds are exposed via XML `CompProperties`.
 
 ### Phase 3: Neural Scanner & Growth Vat Imprinting Engine
 
