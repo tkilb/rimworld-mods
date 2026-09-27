@@ -38,4 +38,44 @@
     <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
   </WorkGiverDef>
 
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Do Bills at Embryo Splicing Bench (Research / Intellectual)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>DoBillsEmbryoSplicingBench</defName>
+    <label>splice embryos at workbench</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Research</workType>
+    <priorityInType>60</priorityInType>
+    <fixedBillGiverDefs>
+      <li>EmbryoSplicingBench</li>
+    </fixedBillGiverDefs>
+    <verb>splice</verb>
+    <gerund>splicing at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Do Bills at Embryo Splicing Bench (Doctor / Medical)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>DoBillsEmbryoSplicingBenchDoctor</defName>
+    <label>operate embryo splicing bench</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>45</priorityInType>
+    <fixedBillGiverDefs>
+      <li>EmbryoSplicingBench</li>
+    </fixedBillGiverDefs>
+    <verb>operate</verb>
+    <gerund>operating at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
 </Defs>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EugenicsProgram")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0a00efbdceb33ec7f14c0e27f72a0327b5fbf45")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c03ed83fffcf05de0d0fd88c29b21eef414db2a7")]
 [assembly: System.Reflection.AssemblyProductAttribute("EugenicsProgram")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EugenicsProgram")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

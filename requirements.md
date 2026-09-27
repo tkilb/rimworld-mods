@@ -199,7 +199,7 @@ To maintain high quality and reliability across Linux environments:
     - Integration with `make link` so private mods are symlinked alongside vendor mods.
   - **QA Step:** Scaffold a test custom XML mod and verify it loads in RimWorld.
 
-- [ ] **Task 6.2: Eugenics Program Mod Implementation (Biotech Expansion)**
+- [x] **Task 6.2: Eugenics Program Mod Implementation (Biotech Expansion)**
   - **Goal:** Implement the Eugenics Program mod based on the detailed specification at `mods/custom/eugenics-program/spec.md`.
   - **Model Recommendations:**
     - Sub-Tasks 6.2.1 – 6.2.3: Medium Tier (e.g. Gemini Flash Medium) for XML schema, standard C# data comps, and basic JobDrivers.
@@ -218,7 +218,7 @@ To maintain high quality and reliability across Linux environments:
     - [x] **Task 6.2.4: Splicing UI, Diagnostics & Biomass Recycling (Phase 4)**
       - `Dialog_EditEmbryoGenes` with conditional gene removal and disc burning.
       - Skill-gated prenatal screening bills and liquefaction into `GeneticNutrientPaste`.
-    - [ ] **Task 6.2.5: Batch Automation & Ecosystem Validation (Phase 5)**
+    - [x] **Task 6.2.5: Batch Automation & Ecosystem Validation (Phase 5)**
       - Dedicated `EmbryoSplicingBench` (`Building_WorkTable`, visual copy of Gene Assembler) with native bills support.
       - Batch assembly recipe `Recipe_BatchApplyBlueprint` (preserving `GenomeBlueprintDisk` master matrix) and screening/recycling bills.
       - Integration validation with vanilla `Building_GrowthVat` and *Biotech Cloning Continued* (`zal.cloning`).

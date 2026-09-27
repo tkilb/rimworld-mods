@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Recipe: Batch Apply Genome Blueprint
+       Slices/imprints endogenes from the bench's loaded master blueprint disc
+       onto an embryo.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef>
+    <defName>Eugenics_BatchApplyBlueprint</defName>
+    <label>splice embryo with loaded blueprint disc</label>
+    <description>Applies the endogenetic caste matrix encoded on the bench's loaded Genome Blueprint Disc to a human embryo. The master disc remains safely installed in the bench for subsequent batch production.</description>
+    <jobString>Splicing embryo genetics.</jobString>
+    <workAmount>2500</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Intellectual</workSkill>
+    <workSkillLearnFactor>0.15</workSkillLearnFactor>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <workerClass>EugenicsProgram.Recipe_BatchApplyBlueprint</workerClass>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>HumanEmbryo</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>HumanEmbryo</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <skillRequirements>
+      <Intellectual>6</Intellectual>
+    </skillRequirements>
+    <researchPrerequisite>Eugenics_ConstructFoundations</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Recipe: Batch Prenatal Genomic Screening
+       Screens an embryo for defects.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef>
+    <defName>Eugenics_BatchScreenEmbryo</defName>
+    <label>screen embryo genetics</label>
+    <description>Systematically sequences and screens embryonic DNA for congenital defects and cellular instabilities introduced during splicing.</description>
+    <jobString>Screening embryo genetics.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>MedicalOperationSpeed</workSpeedStat>
+    <workSkill>Medicine</workSkill>
+    <workSkillLearnFactor>0.15</workSkillLearnFactor>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <workerClass>EugenicsProgram.Recipe_BatchScreenEmbryo</workerClass>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>HumanEmbryo</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>HumanEmbryo</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <skillRequirements>
+      <Medicine>8</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Recipe: Batch Biomass Liquefaction
+       Recycles an embryo into Genetic Nutrient Paste.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef>
+    <defName>Eugenics_BatchRecycleEmbryo</defName>
+    <label>liquefy embryo biomass</label>
+    <description>Liquefies defective or culled embryonic biomass into concentrated genetic nutrient paste for growth vats.</description>
+    <jobString>Liquefying embryo biomass.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Medicine</workSkill>
+    <workSkillLearnFactor>0.1</workSkillLearnFactor>
+    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
+    <workerClass>EugenicsProgram.Recipe_BatchRecycleEmbryo</workerClass>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>HumanEmbryo</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>HumanEmbryo</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <GeneticNutrientPaste>3</GeneticNutrientPaste>
+    </products>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
+  </RecipeDef>
+
+</Defs>

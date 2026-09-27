@@ -18,6 +18,12 @@ namespace EugenicsProgram
 
         // ── Buildings ─────────────────────────────────────────────────────────────
         public static ThingDef NeuralScanner;
+        public static ThingDef EmbryoSplicingBench;
+
+        // ── Recipes ───────────────────────────────────────────────────────────────
+        public static RecipeDef Eugenics_BatchApplyBlueprint;
+        public static RecipeDef Eugenics_BatchScreenEmbryo;
+        public static RecipeDef Eugenics_BatchRecycleEmbryo;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef Eugenics_NeuralFatigue;

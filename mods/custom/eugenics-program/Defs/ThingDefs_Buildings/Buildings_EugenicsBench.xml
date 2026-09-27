@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BenchBase">
+    <defName>EmbryoSplicingBench</defName>
+    <label>embryo splicing bench</label>
+    <description>A dedicated advanced genetic synthesis workstation designed for batch embryo genetic engineering, prenatal genomic diagnostics, and biomass recycling. Features an integrated master genome blueprint disc drive and facility linking connectors for Gene Banks and Gene Processors.</description>
+    <thingClass>EugenicsProgram.Building_EmbryoSplicingBench</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/GeneAssembler/GeneAssembler</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.2, 2.2)</drawSize>
+      <shadowData>
+        <volume>(2.9, 0.75, 1.8)</volume>
+        <offset>(0, 0, 0)</offset>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <castEdgeShadows>true</castEdgeShadows>
+    <staticSunShadows>true</staticSunShadows>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>4500</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <size>(3, 2)</size>
+    <costList>
+      <Steel>200</Steel>
+      <Plasteel>50</Plasteel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>600</basePowerConsumption>
+        <idlePowerConsumption>50</idlePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_AffectedByFacilities">
+        <linkableFacilities>
+          <li>GeneBank</li>
+          <li>GeneProcessor</li>
+          <li MayRequire="Farxmai2.GeneBanksExapnded">GBE_GeneBankLarge</li>
+          <li MayRequire="Farxmai2.GeneBanksExapnded">GBE_GeneBankHuge</li>
+        </linkableFacilities>
+      </li>
+    </comps>
+    <recipes>
+      <li>Eugenics_BatchApplyBlueprint</li>
+      <li>Eugenics_BatchScreenEmbryo</li>
+      <li>Eugenics_BatchRecycleEmbryo</li>
+    </recipes>
+    <designationCategory>Biotech</designationCategory>
+    <uiOrder>2600</uiOrder>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0, 0, -1)</interactionCellOffset>
+    <researchPrerequisites>
+      <li>Eugenics_ConstructFoundations</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>
