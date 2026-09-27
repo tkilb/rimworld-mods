@@ -168,7 +168,9 @@ The user will need a runbook to allow for quick QA instead of needing to play th
 - [x] Create `Dialog_EditEmbryoGenes` with conditional gene removal and "Burn Disc" actions.
 - [x] Implement skill-gated prenatal screening and biomass liquefaction into `GeneticNutrientPaste`.
 
-### Phase 5: Batch Automation & Mod Ecosystem Validation
+### Phase 5: Batch Automation & Mod Ecosystem Validation (Design: `docs/eugenics-phase5-design.md`)
 
-- [ ] Batch assembly bills on `Building_GeneAssembler`.
-- [ ] Integration validation with _Biotech Cloning Continued_ and vanilla `Building_GrowthVat`.
+- [ ] Implement dedicated `EmbryoSplicingBench` (`Building_WorkTable`, visual copy of Gene Assembler) with native bills support.
+- [ ] Implement `Recipe_BatchApplyBlueprint` (preserving `GenomeBlueprintDisk` master matrix) and companion screening/recycling bills.
+- [ ] Ecosystem compatibility validation with _Biotech Cloning Continued_ (`zal.cloning`) and vanilla `Building_GrowthVat`.
+- [ ] Dev-mode QA runbook (`docs/eugenics-qa-runbook.md`).

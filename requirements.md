@@ -219,8 +219,9 @@ To maintain high quality and reliability across Linux environments:
       - `Dialog_EditEmbryoGenes` with conditional gene removal and disc burning.
       - Skill-gated prenatal screening bills and liquefaction into `GeneticNutrientPaste`.
     - [ ] **Task 6.2.5: Batch Automation & Ecosystem Validation (Phase 5)**
-      - Batch assembly bills on `Building_GeneAssembler`.
-      - Integration validation with vanilla `Building_GrowthVat` and *Biotech Cloning Continued*.
-      - Dev-mode QA runbook.
+      - Dedicated `EmbryoSplicingBench` (`Building_WorkTable`, visual copy of Gene Assembler) with native bills support.
+      - Batch assembly recipe `Recipe_BatchApplyBlueprint` (preserving `GenomeBlueprintDisk` master matrix) and screening/recycling bills.
+      - Integration validation with vanilla `Building_GrowthVat` and *Biotech Cloning Continued* (`zal.cloning`).
+      - Dev-mode QA runbook (`docs/eugenics-qa-runbook.md`). Detailed design in `docs/eugenics-phase5-design.md`.
   - **QA Step:** Build C# assembly, deploy via `make link`, and verify embryo genetic modifications, disc burning, and growth vat gestation in-game.
 
