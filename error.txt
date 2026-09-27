@@ -1,0 +1,13 @@
+[34m[INFO][0m Target C# project: /home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/EugenicsProgram.csproj
+[34m[INFO][0m Using RimWorld Managed assembly dir: /home/tylerkilburn/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed
+[34m[INFO][0m Compiling eugenics-program (Release)...
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  EugenicsProgram -> /home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Assemblies/EugenicsProgram.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.85
+[32m[OK][0m Build succeeded for eugenics-program

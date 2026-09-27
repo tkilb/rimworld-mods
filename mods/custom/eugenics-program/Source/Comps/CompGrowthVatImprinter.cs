@@ -19,7 +19,7 @@ namespace EugenicsProgram
 
         public Thing LoadedDisc => discContainer.Count > 0 ? discContainer[0] : null;
         public CompNeuralBlueprint LoadedBlueprint => LoadedDisc?.TryGetComp<CompNeuralBlueprint>();
-        public IThingHolder ParentHolder => parent;
+        public new IThingHolder ParentHolder => (IThingHolder)parent;
 
         public override void PostExposeData()
         {
@@ -34,7 +34,7 @@ namespace EugenicsProgram
 
         public void GetChildHolders(List<IThingHolder> outChildren)
         {
-            ThingOwnerUtility.AppendThingHoldersFromOwner(outChildren, discContainer);
+            ThingOwnerUtility.AppendThingHoldersFromThings(outChildren, discContainer);
         }
 
         public ThingOwner GetDirectlyHeldThings()

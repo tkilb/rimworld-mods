@@ -33,9 +33,9 @@ namespace EugenicsProgram
         public bool CanAcceptDisc => LoadedDisc == null && Occupant == null;
         public float ScanProgress => scanTicks > 0 ? Mathf.Clamp01((float)ticksScanning / scanTicks) : 0f;
 
-        public override void PostExposeData()
+        public override void ExposeData()
         {
-            base.PostExposeData();
+            base.ExposeData();
             Scribe_Deep.Look(ref innerContainer, "innerContainer", this);
             Scribe_Deep.Look(ref discContainer, "discContainer", this);
             Scribe_Values.Look(ref ticksScanning, "ticksScanning", 0);
@@ -49,8 +49,8 @@ namespace EugenicsProgram
 
         public void GetChildHolders(List<IThingHolder> outChildren)
         {
-            ThingOwnerUtility.AppendThingHoldersFromOwner(outChildren, innerContainer);
-            ThingOwnerUtility.AppendThingHoldersFromOwner(outChildren, discContainer);
+            ThingOwnerUtility.AppendThingHoldersFromThings(outChildren, innerContainer);
+            ThingOwnerUtility.AppendThingHoldersFromThings(outChildren, discContainer);
         }
 
         public ThingOwner GetDirectlyHeldThings()
@@ -115,7 +115,7 @@ namespace EugenicsProgram
             }
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
 

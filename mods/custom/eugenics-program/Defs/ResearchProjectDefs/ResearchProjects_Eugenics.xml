@@ -41,4 +41,18 @@
     <researchViewY>4.5</researchViewY>
   </ResearchProjectDef>
 
+  <ResearchProjectDef>
+    <defName>Eugenics_GeneticDiagnostics</defName>
+    <label>prenatal genetic diagnostics</label>
+    <description>Develop skill-gated prenatal genomic screening protocols and biomass liquefaction techniques. Allows high-skilled doctors to detect hidden embryonic defects before vat insertion and recycle culled embryos into Genetic Nutrient Paste.</description>
+    <baseCost>800</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Eugenics_ConstructFoundations</li>
+      <li>GrowthVats</li>
+    </prerequisites>
+    <researchViewX>15.5</researchViewX>
+    <researchViewY>2.5</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

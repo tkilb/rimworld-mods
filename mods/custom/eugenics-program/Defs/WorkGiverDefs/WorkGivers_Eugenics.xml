@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Prenatal Genomic Screening
+       Assigned to Doctors work type. Requires Medical 8+.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>Eugenics_ScreenEmbryo</defName>
+    <label>screen embryo genetics</label>
+    <giverClass>EugenicsProgram.WorkGiver_ScreenEmbryo</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>50</priorityInType>
+    <verb>screen</verb>
+    <gerund>screening embryos</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
+  </WorkGiverDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Embryo Biomass Liquefaction
+       Assigned to Doctors work type. Auto-queues for screened+defective embryos.
+       Manual designation gizmo available for any embryo.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>Eugenics_RecycleEmbryo</defName>
+    <label>liquefy embryo biomass</label>
+    <giverClass>EugenicsProgram.WorkGiver_RecycleEmbryo</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>40</priorityInType>
+    <verb>liquefy</verb>
+    <gerund>liquefying embryo biomass</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
+  </WorkGiverDef>
+
+</Defs>

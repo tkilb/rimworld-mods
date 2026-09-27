@@ -165,8 +165,8 @@ The user will need a runbook to allow for quick QA instead of needing to play th
 
 ### Phase 4: Splicing UI, Diagnostics & Biomass Recycling
 
-- [ ] Create `Dialog_EditEmbryoGenes` with conditional gene removal and "Burn Disc" actions.
-- [ ] Implement skill-gated prenatal screening and biomass liquefaction into `GeneticNutrientPaste`.
+- [x] Create `Dialog_EditEmbryoGenes` with conditional gene removal and "Burn Disc" actions.
+- [x] Implement skill-gated prenatal screening and biomass liquefaction into `GeneticNutrientPaste`.
 
 ### Phase 5: Batch Automation & Mod Ecosystem Validation
 

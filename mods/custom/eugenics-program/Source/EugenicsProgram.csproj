@@ -9,11 +9,26 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
+    <Nullable>disable</Nullable>
 
-    <!-- Path resolution for RimWorld managed assemblies -->
+    <!-- ── RimWorld managed DLL directory ──────────────────────────────────── -->
+    <!-- Priority 1: explicit env override -->
     <RimWorldManagedDir Condition="'$(RIMWORLD_MANAGED_DIR)' != ''">$(RIMWORLD_MANAGED_DIR)</RimWorldManagedDir>
+    <!-- Priority 2: /mnt/gaming Steam library -->
     <RimWorldManagedDir Condition="'$(RimWorldManagedDir)' == '' And Exists('/mnt/gaming/SteamLibrary/steamapps/common/RimWorld/RimWorldLinux_Data/Managed')">/mnt/gaming/SteamLibrary/steamapps/common/RimWorld/RimWorldLinux_Data/Managed</RimWorldManagedDir>
+    <!-- Priority 3: default Steam library -->
     <RimWorldManagedDir Condition="'$(RimWorldManagedDir)' == '' And Exists('$(HOME)/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed')">$(HOME)/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed</RimWorldManagedDir>
+
+    <!-- ── 0Harmony.dll location ────────────────────────────────────────────
+         Harmony ships as a Steam Workshop mod, not with the base game.
+         Workshop item 2009463077 — resolve Current/ then 1.5/ fallback.
+    -->
+    <HarmonyWorkshopBase>$(HOME)/.local/share/Steam/steamapps/workshop/content/294100/2009463077</HarmonyWorkshopBase>
+    <HarmonyDllPath Condition="Exists('$(HarmonyWorkshopBase)/Current/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/Current/Assemblies/0Harmony.dll</HarmonyDllPath>
+    <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(HarmonyWorkshopBase)/1.5/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/1.5/Assemblies/0Harmony.dll</HarmonyDllPath>
+    <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(HarmonyWorkshopBase)/1.4/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/1.4/Assemblies/0Harmony.dll</HarmonyDllPath>
+    <!-- Fallback: user placed 0Harmony.dll alongside game managed DLLs -->
+    <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(RimWorldManagedDir)/0Harmony.dll')">$(RimWorldManagedDir)/0Harmony.dll</HarmonyDllPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,8 +44,16 @@
       <HintPath>$(RimWorldManagedDir)/UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="0Harmony" Condition="Exists('$(RimWorldManagedDir)/0Harmony.dll')">
-      <HintPath>$(RimWorldManagedDir)/0Harmony.dll</HintPath>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(RimWorldManagedDir)/UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(RimWorldManagedDir)/UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony" Condition="'$(HarmonyDllPath)' != ''">
+      <HintPath>$(HarmonyDllPath)</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
