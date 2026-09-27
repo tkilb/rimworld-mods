@@ -4,7 +4,9 @@ SHELL := /usr/bin/env bash
 .PHONY: help check-deps status fetch-mods update-mods update-mods-dry-run \
         link link-dry-run unlink unlink-dry-run rollback rollback-dry-run \
         build-load-order build-order-mods order-mods order-mods-dry-run \
-        sync-deck sync-deck-dry-run sync-deck-check sync-deck-link
+        sync-config sync-config-dry-run \
+        sync-deck sync-deck-dry-run sync-deck-check sync-deck-link \
+        sync-deck-config sync-deck-config-dry-run
 
 ##@ General
 help: ## Display this help message
@@ -63,6 +65,12 @@ order-mods: ## Resolve and sort active mods into valid load order
 order-mods-dry-run: ## Preview computed mod load order without modifying files
 	@bash ./scripts/order-mods.sh --dry-run
 
+sync-config: ## Generate and deploy ModsConfig.xml to RimWorld config directory
+	+@bash ./scripts/order-mods.sh --write-config $(MAKE_DRY_RUN)
+
+sync-config-dry-run: ## Preview ModsConfig.xml generation without modifying filesystem
+	@bash ./scripts/order-mods.sh --write-config --dry-run
+
 ##@ Remote Synchronization
 sync-deck: ## Sync mods and lockfile to Steam Deck via SSH/rsync
 	+@bash ./scripts/sync-deck.sh $(MAKE_DRY_RUN)
@@ -75,3 +83,9 @@ sync-deck-check: ## Test SSH connectivity to Steam Deck
 
 sync-deck-link: ## Sync to Steam Deck and deploy symlinks remotely
 	+@bash ./scripts/sync-deck.sh --link $(MAKE_DRY_RUN)
+
+sync-deck-config: ## Sync to Steam Deck and deploy ModsConfig.xml remotely
+	+@bash ./scripts/sync-deck.sh --config $(MAKE_DRY_RUN)
+
+sync-deck-config-dry-run: ## Preview remote ModsConfig.xml deployment on Steam Deck
+	@bash ./scripts/sync-deck.sh --config --dry-run

@@ -175,7 +175,7 @@ To maintain high quality and reliability across Linux environments:
       - Makefile integration: `order-mods` and companion `order-mods-dry-run`.
   - **QA Step:** Run `make order-mods-dry-run` and verify that calculated order respects Harmony first, Core, DLCs, and all `About.xml` constraints without graph cycles.
 
-- [ ] **Task 5.2: `ModsConfig.xml` Generator & Cross-Platform Deployment**
+- [x] **Task 5.2: `ModsConfig.xml` Generator & Cross-Platform Deployment**
   - **Goal:** Render the resolved load order into RimWorld's native `ModsConfig.xml` and deploy it idempotently to Arch Linux desktop and Steam Deck targets.
   - **Deliverables:**
     - XML generation in `scripts/order-mods.sh` outputting well-formed `ModsConfig.xml` with `<activeMods>` and `<knownExpansions>`.

@@ -1,6 +1,7 @@
-# Environment configurations (keep examples)
+# Environment configurations (keep templates and examples)
 config/*.env
 !config/*.example
+!config/env.*.env
 .env
 
 # Vendor mod cache and downloads

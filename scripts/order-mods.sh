@@ -7,6 +7,8 @@ source "$SCRIPT_DIR/common.sh"
 
 BIN_PATH="$REPO_ROOT/bin/load-order"
 DRY_RUN=false
+WRITE_CONFIG=false
+OUTPUT_XML=""
 EXTRA_ARGS=()
 
 while [[ $# -gt 0 ]]; do
@@ -15,12 +17,23 @@ while [[ $# -gt 0 ]]; do
       DRY_RUN=true
       shift
       ;;
+    --write-config|-w)
+      WRITE_CONFIG=true
+      shift
+      ;;
+    --output|-o)
+      OUTPUT_XML="$2"
+      WRITE_CONFIG=true
+      shift 2
+      ;;
     --help|-h)
-      echo "Usage: $0 [--dry-run]"
+      echo "Usage: $0 [--dry-run] [--write-config] [--output PATH]"
       echo ""
       echo "Options:"
-      echo "  --dry-run   Preview the computed mod load order without modifying any files"
-      echo "  --help, -h  Display this help message"
+      echo "  --dry-run          Preview the computed mod load order without modifying any files"
+      echo "  --write-config, -w Generate and deploy ModsConfig.xml to RimWorld config directory"
+      echo "  --output, -o PATH  Write ModsConfig.xml to a specific output path"
+      echo "  --help, -h         Display this help message"
       exit 0
       ;;
     *)
@@ -30,8 +43,20 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Build binary if not already present
+# Build binary if not present or if sources are newer
+needs_build=false
 if [[ ! -x "$BIN_PATH" ]]; then
+  needs_build=true
+else
+  for src in "$REPO_ROOT/tools/load-order"/*.go; do
+    if [[ "$src" -nt "$BIN_PATH" ]]; then
+      needs_build=true
+      break
+    fi
+  done
+fi
+
+if $needs_build; then
   log_info "Building load-order Go binary..."
   mkdir -p "$REPO_ROOT/bin"
   go -C "$REPO_ROOT/tools/load-order" build -o "$BIN_PATH" .
@@ -48,6 +73,21 @@ if [[ -n "${RIMWORLD_MODS_DIR:-}" ]]; then
   RIMWORLD_DIR="$(dirname "$RIMWORLD_MODS_DIR")"
   if [[ -d "$RIMWORLD_DIR" ]]; then
     RUN_ARGS+=("-rimworld-dir" "$RIMWORLD_DIR")
+  fi
+fi
+
+if $WRITE_CONFIG; then
+  if [[ -z "$OUTPUT_XML" ]]; then
+    OUTPUT_XML="${RIMWORLD_CONFIG_FILE:-}"
+    if [[ -z "$OUTPUT_XML" && -n "${RIMWORLD_CONFIG_DIR:-}" ]]; then
+      OUTPUT_XML="$RIMWORLD_CONFIG_DIR/ModsConfig.xml"
+    fi
+  fi
+  if [[ -n "$OUTPUT_XML" ]]; then
+    RUN_ARGS+=("-output-xml" "$OUTPUT_XML")
+  else
+    log_err "No destination config path specified and RIMWORLD_CONFIG_FILE is unset."
+    exit 1
   fi
 fi
 

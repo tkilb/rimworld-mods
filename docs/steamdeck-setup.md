@@ -48,19 +48,24 @@ Once this works, the monorepo needs no further SSH configuration.
 
 ## 3. RimWorld Mod Directory Paths on Steam Deck
 
-The correct `RIMWORLD_MODS_DIR` depends on where RimWorld is installed on the Deck:
+The correct `RIMWORLD_MODS_DIR` and `RIMWORLD_CONFIG_DIR` depend on whether RimWorld is installed on internal storage or MicroSD, and whether it runs via Proton or native Linux:
 
-| Location | Path |
-|---|---|
-| Internal Storage (default) | `~/.local/share/Steam/steamapps/common/RimWorld/Mods` |
-| MicroSD Card | `/run/media/mmcblk0p1/steamapps/common/RimWorld/Mods` |
+| Resource | Environment | Default Path |
+|---|---|---|
+| Mods Directory | Internal Storage | `~/.local/share/Steam/steamapps/common/RimWorld/Mods` |
+| Mods Directory | MicroSD Card | `/run/media/mmcblk0p1/steamapps/common/RimWorld/Mods` |
+| Config Directory | Proton Prefix (Default) | `~/.local/share/Steam/steamapps/compatdata/294100/pfx/drive_c/users/steamuser/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Config` |
+| Config Directory | Native Linux | `~/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config` |
 
-The `steam-deck` machine profile in `scripts/common.sh` uses the internal path by default. If you're on a MicroSD, create `config/local.env` **on the Deck** with the correct path:
+The `steam-deck` machine profile in `scripts/common.sh` detects the Proton configuration path automatically and falls back to native Linux if Proton is not present. If you need custom paths, create `config/local.env` **on the Deck**:
 
 ```bash
 # On the Deck, after syncing the repo
-echo 'RIMWORLD_MODS_DIR="/run/media/mmcblk0p1/steamapps/common/RimWorld/Mods"' \
-  > ~/rimworld-mods/config/local.env
+cat << 'EOF' > ~/rimworld-mods/config/local.env
+MACHINE="steam-deck"
+RIMWORLD_MODS_DIR="$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods"
+RIMWORLD_CONFIG_DIR="$HOME/.local/share/Steam/steamapps/compatdata/294100/pfx/drive_c/users/steamuser/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Config"
+EOF
 ```
 
 > `config/local.env` is gitignored — it won't be overwritten on subsequent syncs.
@@ -99,10 +104,16 @@ Transfers `manifests/`, `mods/vendor/`, `mods/custom/`, `scripts/`, `Makefile`, 
 make sync-deck
 ```
 
-### Sync + Automatically Deploy Symlinks
-Sync files, then run `make link` on the Deck in one step:
+### Sync + Automatically Deploy Symlinks & Load Order
+Sync files, then run `make link` (which automatically updates symlinks and generates `ModsConfig.xml`) on the Deck in one step:
 ```bash
 make sync-deck-link
+```
+
+### Sync + Deploy `ModsConfig.xml` Only
+Sync files and regenerate the remote `ModsConfig.xml` without re-linking mods:
+```bash
+make sync-deck-config
 ```
 
 ---

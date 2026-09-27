@@ -24,6 +24,8 @@ func main() {
 	vendorDir := flag.String("vendor-dir", "mods/vendor", "Path to mods/vendor directory")
 	customDir := flag.String("custom-dir", "mods/custom", "Path to mods/custom directory")
 	rimworldDir := flag.String("rimworld-dir", "", "Path to RimWorld game directory (to detect Data/ DLCs)")
+	outputXML := flag.String("output-xml", "", "Path to write generated ModsConfig.xml")
+	existingConfig := flag.String("existing-config", "", "Path to existing ModsConfig.xml to preserve version tag (defaults to output-xml)")
 	dryRun := flag.Bool("dry-run", false, "Preview computed load order without modifying filesystem")
 	flag.Parse()
 
@@ -199,6 +201,48 @@ func main() {
 		fmt.Println()
 		for _, w := range result.Warnings {
 			fmt.Printf("%s[WARN]%s %s\n", colorYellow, colorReset, w)
+		}
+	}
+
+	if *outputXML != "" {
+		var activeMods []string
+		for _, m := range result.OrderedMods {
+			activeMods = append(activeMods, strings.ToLower(m.PackageID))
+		}
+
+		var knownExpansions []string
+		for _, dlc := range availableDLCs {
+			knownExpansions = append(knownExpansions, strings.ToLower(dlc))
+		}
+
+		configPath := *outputXML
+		readPath := *existingConfig
+		if readPath == "" {
+			readPath = configPath
+		}
+		version := ReadExistingVersion(readPath)
+
+		xmlBytes, err := GenerateModsConfigXML(activeMods, knownExpansions, version)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%s[ERROR]%s Failed to generate ModsConfig.xml: %v\n", colorRed, colorReset, err)
+			os.Exit(1)
+		}
+
+		if *dryRun {
+			fmt.Printf("\n%s[DRY-RUN]%s Would write ModsConfig.xml to: %s\n", colorCyan, colorReset, configPath)
+			if fi, err := os.Stat(configPath); err == nil && !fi.IsDir() {
+				fmt.Printf("%s[DRY-RUN]%s Would backup existing config: %s -> %s.bak\n", colorCyan, colorReset, configPath, configPath)
+			}
+		} else {
+			backupPath, err := DeployModsConfig(configPath, xmlBytes, false)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "%s[ERROR]%s Failed to deploy ModsConfig.xml: %v\n", colorRed, colorReset, err)
+				os.Exit(1)
+			}
+			if backupPath != "" {
+				fmt.Printf("%s[OK]%s Backed up previous configuration to: %s\n", colorGreen, colorReset, backupPath)
+			}
+			fmt.Printf("%s[OK]%s Deployed active ModsConfig.xml to: %s\n", colorGreen, colorReset, configPath)
 		}
 	}
 }

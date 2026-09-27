@@ -7,6 +7,7 @@ source "$SCRIPT_DIR/common.sh"
 
 ACTION="link"
 DRY_RUN=false
+SKIP_CONFIG=false
 TARGET_MOD=""
 
 # Official Core / DLC directory names that must NEVER be overwritten or unlinked
@@ -27,14 +28,19 @@ while [[ $# -gt 0 ]]; do
       DRY_RUN=true
       shift
       ;;
+    --skip-config)
+      SKIP_CONFIG=true
+      shift
+      ;;
     --help|-h)
-      echo "Usage: $0 [--link|--unlink] [MOD_NAME] [--dry-run]"
+      echo "Usage: $0 [--link|--unlink] [MOD_NAME] [--dry-run] [--skip-config]"
       echo ""
       echo "Options:"
-      echo "  --link      Deploy symlinks for enabled mods into RimWorld Mods folder (default)"
-      echo "  --unlink    Remove symlinks targeting monorepo mods from RimWorld Mods folder"
-      echo "  MOD_NAME    Optional specific mod identifier to link/unlink"
-      echo "  --dry-run   Preview link/unlink operations without modifying filesystem"
+      echo "  --link         Deploy symlinks for enabled mods into RimWorld Mods folder (default)"
+      echo "  --unlink       Remove symlinks targeting monorepo mods from RimWorld Mods folder"
+      echo "  MOD_NAME       Optional specific mod identifier to link/unlink"
+      echo "  --dry-run      Preview link/unlink operations without modifying filesystem"
+      echo "  --skip-config  Skip automatic ModsConfig.xml synchronization"
       exit 0
       ;;
     *)
@@ -163,6 +169,15 @@ if [[ "$ACTION" == "link" ]]; then
   done
 
   log_succ "Link completed: $linked_count mod(s) processed, $skipped_count skipped."
+ 
+  if [[ "$SKIP_CONFIG" != "true" ]]; then
+    log_info "Synchronizing active load order and ModsConfig.xml..."
+    SYNC_ARGS=("--write-config")
+    if $DRY_RUN; then
+      SYNC_ARGS+=("--dry-run")
+    fi
+    "$SCRIPT_DIR/order-mods.sh" "${SYNC_ARGS[@]}"
+  fi
 
 elif [[ "$ACTION" == "unlink" ]]; then
   log_info "Checking RimWorld Mods directory for links to remove: $RIMWORLD_MODS_DIR"

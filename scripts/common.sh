@@ -19,21 +19,37 @@ log_succ()  { echo -e "\033[32m[OK]\033[0m $*"; }
 export RIMWORLD_APP_ID="294100"
 export STEAMCMD_BIN="${STEAMCMD_BIN:-steamcmd}"
 
-# Machine-specific paths
-case "$MACHINE" in
-  "linux-box")
-    export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-/mnt/gaming/SteamLibrary/steamapps/common/RimWorld/Mods}"
-    export DECK_HOST="${DECK_HOST:-steamdeck}"
-    export DECK_REMOTE_DIR="${DECK_REMOTE_DIR:-~/.local/share/rimworld-mods}"
-    ;;
-  "steam-deck")
-    export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
-    ;;
-  *)
-    # Default fallback
-    export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
-    ;;
-esac
+# Machine-specific paths resolver function
+resolve_machine_paths() {
+  case "$MACHINE" in
+    "linux-box")
+      export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-/mnt/gaming/SteamLibrary/steamapps/common/RimWorld/Mods}"
+      export RIMWORLD_CONFIG_DIR="${RIMWORLD_CONFIG_DIR:-$HOME/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config}"
+      export DECK_HOST="${DECK_HOST:-steamdeck}"
+      export DECK_REMOTE_DIR="${DECK_REMOTE_DIR:-~/.local/share/rimworld-mods}"
+      ;;
+    "steam-deck")
+      export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
+      local _proton_cfg="$HOME/.local/share/Steam/steamapps/compatdata/294100/pfx/drive_c/users/steamuser/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Config"
+      local _native_cfg="$HOME/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config"
+      if [[ -d "$_proton_cfg" ]]; then
+        export RIMWORLD_CONFIG_DIR="${RIMWORLD_CONFIG_DIR:-$_proton_cfg}"
+      elif [[ -d "$_native_cfg" ]]; then
+        export RIMWORLD_CONFIG_DIR="${RIMWORLD_CONFIG_DIR:-$_native_cfg}"
+      else
+        export RIMWORLD_CONFIG_DIR="${RIMWORLD_CONFIG_DIR:-$_proton_cfg}"
+      fi
+      ;;
+    *)
+      # Default fallback
+      export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
+      export RIMWORLD_CONFIG_DIR="${RIMWORLD_CONFIG_DIR:-$HOME/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config}"
+      ;;
+  esac
+  export RIMWORLD_CONFIG_FILE="${RIMWORLD_CONFIG_FILE:-$RIMWORLD_CONFIG_DIR/ModsConfig.xml}"
+}
+
+resolve_machine_paths
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export REPO_ROOT
@@ -57,6 +73,9 @@ fi
 
 # shellcheck source=/dev/null
 source "$REPO_ROOT/config/local.env"
+
+# Re-resolve paths if local.env modified MACHINE or overrides
+resolve_machine_paths
 
 # Dependency checker helper
 check_cmd() {

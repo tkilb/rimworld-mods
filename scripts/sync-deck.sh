@@ -7,6 +7,7 @@ source "$SCRIPT_DIR/common.sh"
 
 DRY_RUN=false
 TRIGGER_REMOTE_LINK=false
+TRIGGER_REMOTE_CONFIG=false
 CHECK_CONN_ONLY=false
 
 while [[ $# -gt 0 ]]; do
@@ -19,16 +20,21 @@ while [[ $# -gt 0 ]]; do
       TRIGGER_REMOTE_LINK=true
       shift
       ;;
+    --config|--remote-config)
+      TRIGGER_REMOTE_CONFIG=true
+      shift
+      ;;
     --check)
       CHECK_CONN_ONLY=true
       shift
       ;;
     --help|-h)
-      echo "Usage: $0 [--dry-run] [--link] [--check]"
+      echo "Usage: $0 [--dry-run] [--link] [--config] [--check]"
       echo ""
       echo "Options:"
       echo "  --dry-run    Preview rsync operations without transferring files"
       echo "  --link       Run 'make link' on Steam Deck via SSH after sync"
+      echo "  --config     Run 'make sync-config' on Steam Deck via SSH after sync"
       echo "  --check      Test SSH connection to Steam Deck and exit"
       echo "  --help, -h   Show this help message"
       echo ""
@@ -114,5 +120,17 @@ if $TRIGGER_REMOTE_LINK; then
     log_info "Running 'make link' on $DECK_HOST..."
     ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && make link"
     log_succ "Remote link complete."
+  fi
+fi
+
+# Optional: trigger remote sync-config
+if $TRIGGER_REMOTE_CONFIG; then
+  if $DRY_RUN; then
+    log_info "[DRY-RUN] Would run 'make sync-config-dry-run' on $DECK_HOST in $DECK_REMOTE_DIR"
+    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && make sync-config-dry-run"
+  else
+    log_info "Running 'make sync-config' on $DECK_HOST..."
+    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && make sync-config"
+    log_succ "Remote sync-config complete."
   fi
 fi

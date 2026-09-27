@@ -123,7 +123,37 @@ make rollback MOD=hugslib VERSION=v11.0.0
 
 ---
 
-## 6. Remote Deployment to Steam Deck
+## 6. Mod Load Order & `ModsConfig.xml` Synchronization
+
+The monorepo includes an automated topological load order resolver and `ModsConfig.xml` generator inspired by RimSort and RimPy. It resolves dependencies and ordering constraints from mod `About.xml` metadata, manifest priority/after/before rules, and strict canonical tiers:
+1. **Harmony** (`brrainz.harmony`)
+2. **Core** (`ludeon.rimworld`)
+3. **Official DLCs** (`royalty`, `ideology`, `biotech`, `anomaly`)
+4. **Standard Mods** (topologically sorted via Kahn's DAG algorithm)
+5. **Trailing Mods** (e.g. `RocketMan`)
+
+### Preview Computed Load Order
+```bash
+make order-mods-dry-run
+```
+
+### Preview `ModsConfig.xml` Generation
+```bash
+make sync-config-dry-run
+```
+
+### Generate & Deploy `ModsConfig.xml`
+```bash
+make sync-config
+```
+
+> **Automated Integration:** `make link` automatically triggers `sync-config`, deploying both the symlinks and the updated `ModsConfig.xml` in a single command. If you only want to symlink without touching `ModsConfig.xml`, pass `--skip-config` directly to `scripts/link-mods.sh`.
+>
+> **Automatic Backup:** When `sync-config` runs, any existing `ModsConfig.xml` at the target path is automatically backed up to `ModsConfig.xml.bak` before atomic replacement, and the game version tag (e.g., `<version>1.6.4871 rev600</version>`) is preserved.
+
+---
+
+## 7. Remote Deployment to Steam Deck
 
 Sync the monorepo (vendor mods, manifests, lockfile, scripts) to a remote Steam Deck via SSH/rsync.
 

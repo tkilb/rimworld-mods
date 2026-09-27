@@ -30,14 +30,20 @@ Inspired by dystopian eugenics and the _"Construct / SecUnit"_ concept from _The
 
 Constructs are biologically optimized by stripping superfluous human faculties, converting those debuffs directly into positive metabolic efficiency (`biostatMet`) budget:
 
-- **Psychic Deafness (`PsychicSensitivity_Deaf` / `+2 Met`):**
+- **Psychic Deafness (`PsychicSensitivity_Deaf` / `+2 Met`):** (stock game gene)
   - Immune to psychic drones, psychic attacks, and psychic suppression; unable to use psycasts or bond with anima trees.
-- **Universal Sterility (`Gene_MandatorySterility` / `+1 Met`):**
+- **Universal Sterility (`Gene_MandatorySterility` / `+1 Met`):** (stock game gene)
   - Prevents unauthorized reproduction and gene drift, securing corporate/colony biological ownership.
 - **Social Apathy & Emotional Blunting (`Gene_ConstructPsychology` / `+2 Met`):**
   - Completely incapable of romance, no social recreation need, no loneliness/solitude debuffs, immune to social insults and insults others with cold indifference.
-- **Net Metabolic Dividend (+5 Free `biostatMet`):**
-  - The baseline Construct template starts with a significant metabolic surplus (+5), allowing players to stack high-cost combat, armor, or speed genes without starving the pawn or relying on unstable optimizer genes.
+- Very Unattractive (stock game gene)
+  - Carriers of this gene have misshapen, asymmetrical facial structures and blotchy skin. They're hard to look at.
+- Deathrest (stock gene)
+  - High unit needs to recoupreate from time to time. This allows the contstruct to be placed in stasis when not used
+- Slow Study (stock gene)
+  - Features have been pre-programmed, and learning new routines is not a primary specification for the construct
+- **Metabolically Efficient (+5 Free `biostatMet`)**: (custom gene)
+  - Grants the vanilla Psychopath and Bloodlust traits, reflecting the removal of empathy and inhibition, while converting those behavioral changes into a clean metabolic surplus.
 
 ### 2.4 Social & Property Dynamics (The Murderbot Model)
 
@@ -124,13 +130,15 @@ sequenceDiagram
 
 ---
 
-## 5. Phased Implementation Roadmap
+## User QA
+
+The user will need a runbook to allow for quick QA instead of needing to play the game for hours to unlock mechanics naturally. Dev tools are a good fit, but user does not know how to use them.
+
+## 6. Phased Implementation Roadmap
 
 ### Phase 1: Construct Foundation Genes & Metabolic Balance
 
-- [ ] Define `Gene_ConstructPsychology` (+2 Met, romance/social lockout) and `Gene_MandatorySterility` (+1 Met).
-- [ ] Wire vanilla `PsychicSensitivity_Deaf` (+2 Met) into the default Construct Blueprint template.
-- [ ] Define high-tier optimizer genes with bundled `CellInstability_Major`.
+- [ ] AI Agent to define tasks
 
 ### Phase 2: Blueprint & Neural Discs Data Model
 
