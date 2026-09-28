@@ -180,13 +180,13 @@ Open the **Debug actions menu** (gear icon) and type the following in the top se
 
 ---
 
-### Test Flow 5: Ecosystem & Third-Party Mod Compatibility (Optional)
+### Test Flow 5: Native Blank Matrix Synthesis (No Cloning Mods Needed)
 
-**Biotech Cloning Continued (`zal.cloning`):**
-
-1. Extract a clone embryo using `CloneExtractor`.
-2. Verify that `CompEmbryoQuality` attaches to the cloned embryo.
-3. Load the cloned embryo into `EmbryoSplicingBench` batch bills; confirm it can be spliced, screened, or recycled identically to vanilla embryos.
+1. Go to `EmbryoSplicingBench` -> **Bills** -> Add `Synthesize Blank Embryo (Fresh Organics)`.
+2. Haul 40 Meat, 40 Plants, 10 Neutroamine, and 2 Medicine.
+3. Doctor crafts the bill.
+4. _Result Check:_ A `HumanEmbryo` spawns with `Father = null` and `Mother = null`. Inspect string confirms: *"Origin: Synthetic Construct Matrix"*.
+5. Third-party cloning mods (`zal.cloning`) are **not required**.
 
 ---
 

@@ -1,185 +1,154 @@
-# Feature Specification: Eugenics Program & Eugenics Blueprints
+# Feature Specification: Eugenics Program
 
-## 1. Overview & Vision
+> [!IMPORTANT]
+> **Target Environment: RimWorld 1.6 (Biotech)**
+> All features, C# code, API signatures, and XML Defs are authored specifically for **RimWorld 1.6**. Developers and agents must ensure method signatures (especially around `RecipeWorker`, `CompGenepackContainer`, and `Building_GrowthVat`) conform strictly to RimWorld 1.6 `Assembly-CSharp.dll`.
 
-**Eugenics Program** is a RimWorld Biotech expansion mod that enables colonists to genetically engineer and neuro-imprint human embryos prior to growth vat gestation.
-
-Inspired by dystopian eugenics and the _"Construct / SecUnit"_ concept from _The Murderbot Diaries_, players can mass-produce specialized, combat-ready, or industrial clone castes using physical **Genome Blueprint Discs** and **Neural Imprint Doctrines**. Spliced constructs are engineered for hyper-efficiency: sterile, psychically deaf, emotionally blunted, and treated as living property. Stripping these human functions yields a massive **Metabolic Dividend** that naturally finances augmentations.
-
----
-
-## 2. Core Mechanics & Requirements
-
-### 2.1 Embryo Editing Vehicle
-
-- **Facility:** Vanilla `Building_GeneAssembler` connected to `Building_GeneBank` facilities.
-- **Work Type:** Assembly work performed by researchers / doctors (utilizing Research or Medical skills).
-- **Input Target:** Any unfertilized/fertilized `HumanEmbryo` item (or cloned embryo).
-
-### 2.2 Gene Splicing Operations
-
-- **Gene Addition:**
-  - Any `GeneDef` contained within the connected `GeneBank`s can be added to the embryo.
-  - Subject to standard or expanded complexity and metabolic efficiency limits.
-- **Gene Removal:**
-  - A gene present on the embryo can only be removed if that exact `GeneDef` is currently available in the connected `GeneBank` (acting as a targeted molecular template).
-- **Genetic Layer:**
-  - Modifications apply to the embryo's inheritable **Endogenes** (germline DNA).
-
-### 2.3 The "Construct" Package & Metabolic Dividends
-
-Constructs are biologically optimized by stripping superfluous human faculties, converting those debuffs directly into positive metabolic efficiency (`biostatMet`) budget:
-
-- **Psychic Deafness (`PsychicSensitivity_Deaf` / `+2 Met`):** (stock game gene)
-  - Immune to psychic drones, psychic attacks, and psychic suppression; unable to use psycasts or bond with anima trees.
-- **Universal Sterility (`Gene_MandatorySterility` / `+1 Met`):** (stock game gene)
-  - Prevents unauthorized reproduction and gene drift, securing corporate/colony biological ownership.
-- **Social Apathy & Emotional Blunting (`Gene_ConstructPsychology` / `+2 Met`):**
-  - Completely incapable of romance, no social recreation need, no loneliness/solitude debuffs, immune to social insults and insults others with cold indifference.
-- Very Unattractive (stock game gene)
-  - Carriers of this gene have misshapen, asymmetrical facial structures and blotchy skin. They're hard to look at.
-- Deathrest (stock gene)
-  - Construct unit needs to recuperate from time to time. This allows them to be placed in stasis when not used.
-- Slow Study (stock gene)
-  - Features have been pre-programmed, and learning new routines is not a primary specification for the construct
-- **Metabolically Efficient (+5 Free `biostatMet`)**: (custom gene)
-  - Grants the vanilla Psychopath and Bloodlust traits, reflecting the removal of empathy and inhibition, while converting those behavioral changes into a clean metabolic surplus.
-
-### 2.4 Social & Property Dynamics (The Murderbot Model)
-
-- **Property Status:**
-  - Natural-born colonists view vat-bred constructs as company/colony assets rather than human peers.
-  - Colonists suffer zero mood penalties when a construct dies in combat or is subjected to grueling conditions.
-- **Behavioral Directives:**
-  - Constructs do not engage in idle banter or recreation drama, operating with single-minded devotion to their assigned work and security protocols.
-
-### 2.5 Hybrid Neural Imprinting (Growth Vat Skill Injection)
-
-- **Vat Maturation Without Penalties:**
-  - Overcomes vanilla's vat-growth skill penalties by streaming combat and labor doctrines directly into the developing brain from age 0 to 18.
-- **Hybrid Neural Doctrine Acquisition:**
-  - **Researchable Base Doctrines (Levels 4–6):** Standard corporate packages unlocked via tech tree (_Basic Security Unit_, _Standard Field Medic_, _Industrial Drone_).
-  - **Elite Mentor Scanning (Levels 8–14+):** Veteran colonists sit in a **Neural Scanner** to export their personal skills and combat passions into a high-tier doctrine disc.
-  - **Ancient SecUnit Discs:** Ultra-rare, uncraftable military combat doctrines recovered from ancient complexes.
-
-### 2.6 Optimizer Genes & Targeted Cellular Instability
-
-- **High-Yield Limit Breakers:**
-  - _Mitochondrial Overdrive (+8 Met)_: Overclocks metabolic energy at the cost of `CellInstability_Major` (0.5x lifespan, high cancer rate).
-  - _Genomic Compression (-10 Cpx)_: Compresses DNA complexity at the cost of chronic cellular degradation.
-- **Targeted Balance:** Cellular instability applies **only** when using artificial optimizer genes to exceed normal biological thresholds.
-
-### 2.7 Splicing Complications & Skill-Based Diagnostics
-
-- **Splicing Complications:** Low-skill doctors or dirty rooms risk introducing hidden mutations or congenital defects.
-- **Skill-Based Screening:** Hidden defects can only be discovered prior to vat insertion by high-skill doctors running a _"Prenatal Genomic Screening"_ bill.
-- **Biomass Liquefaction:** Defective or culled embryos are liquefied into **Nutritive Genetic Paste** to fuel growth vats for the next batch.
-
-### 2.8 Physical Blueprint Discs (`GenomeBlueprintDisk` & `NeuralBlueprintDisk`)
-
-- Physical data discs stored in Gene Banks, tradeable with orbital factions, or loaded into Growth Vats to automate mass construct manufacturing.
+This document serves as the authoritative architectural and functional blueprint for the **Eugenics Program** mod, representing the completed convergence of germline gene editing and artificial construct manufacturing.
 
 ---
 
-## 3. User Experience & Flow
+## 1. Architectural Philosophy: The Two Pillars
+
+The mod is architected around two fundamentally distinct biological systems:
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    actor Player
-    participant Assembler as Gene Assembler
-    participant Bank as Gene Bank
-    participant Vat as Growth Vat + Neural Imprinter
-    participant Construct as Decanted SecUnit
+flowchart TD
+    subgraph SplicingBench["Embryo Splicing Bench"]
+        direction TB
+        Pillar1["<b>Pillar 1: Germline Gene Editing</b><br/>• Up to 2 gene edits per embryo<br/>• Botched edit = Instant 1x Paste<br/>• Parents: -8 debuff / Body Modders: +6 buff"]
+        Pillar2["<b>Pillar 2: Construct Matrix Synthesis</b><br/>• Fresh Organics or Recycled Biomass<br/>• Creates donorless blank embryo<br/>• Marked as IsConstruct = true"]
+    end
 
-    Note over Player,Assembler: 1. Construct Genome Assembly (+5 Net Met Dividend)
-    Player->>Assembler: Apply Construct Package (Psychic Deaf + Sterile + Social Apathy = +5 Met)
-    Player->>Assembler: Add Heavy Combat Genes (Super Strength + Unstoppable + Fast Runner = -5 Met)
-    Note over Assembler: Perfectly balanced at 0 net Met (Normal hunger rate!)
+    subgraph Maturation["Growth Vat Gestation & Imprinting"]
+        Vat["<b>Growth Vat + Neural Imprinter</b><br/>• Reusable Neural Blueprint Disc<br/>• 50% Scanned Skills, 0 Passions<br/>• Default skills if blank: 4/4/2/2/0/3"]
+    end
 
-    Note over Player,Vat: 2. Vat Imprinting & Gestation
-    Player->>Vat: Insert Embryo + "Elite SecUnit Doctrine" (Shooting 10, Melee 8)
-    Vat->>Vat: Gestate & stream combat engrams (Age 0 -> 18)
-    Vat->>Construct: Decant combat-ready, psy-immune, emotionally cold SecUnit
+    subgraph DecantedPawn["Decanted Pawn"]
+        NaturalHuman["<b>Natural Human Colonist</b><br/>• Edited endogenes<br/>• Normal human psychology & passions"]
+        ConstructUnit["<b>Construct (SecUnit)</b><br/>• Aloof, cold property (zero death grief)<br/>• Immune to romance, deaf, slow study<br/>• Compatible with Bionic Augment Packages"]
+    end
+
+    subgraph Enhancement["Bionic Augment Packages (Constructs Only)"]
+        Packages["<b>Modular Cyberware Packages</b><br/>• Combat, Medical, Industrial, Laborer<br/>• Tiers: Basic (+2/+3), Inter (+4/+5), Adv (+6/+7)<br/>• 2h success / 4h failure reboot coma<br/>• 20% + (Skill * 5%) salvage chance on fail"]
+    end
+
+    Pillar1 --> NaturalHuman
+    Pillar2 --> Vat --> ConstructUnit --> Enhancement
 ```
 
 ---
 
-## 4. Technical Architecture
+## 2. Pillar 1: Germline Gene Editing
 
-### 4.1 C# Components & Harmony Patches
+Germline gene editing allows colonies to refine inheritable endogenes in natural colonist embryos or construct matrices.
 
-- **Construct Social & Property System:**
-  - `Gene_ConstructPsychology`: Suppresses social recreation, romance, and banter while awarding +2 `biostatMet`.
-  - `TraitDef: Trait_ConstructAsset`: Enforces property status and social isolation.
-  - `ThoughtWorker_ConstructProperty`: Suppresses colonist death/suffering mood debuffs for construct pawns.
-- **Neural Imprinting Engine:**
-  - `ThingDef: NeuralBlueprintDisk` storing encoded skills and passion distributions.
-  - `Building_NeuralScanner`: Facility for capturing colonist neural engrams.
-  - `CompGrowthVatImprinter`: Infuses skills and passions during vat growth cycles.
-- **Data Structures & Jobs:**
-  - `CompGenomeBlueprint`, `CompEmbryoQuality`.
-  - `JobDriver_EditEmbryoGenes`, `JobDriver_ScanNeuralProfile`, `JobDriver_ScreenEmbryo`, `JobDriver_RecycleEmbryo`.
+### 2.1 Editing Rules & Balancing
+* **Work Location:** [`Building_EmbryoSplicingBench`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/Buildings/Building_EmbryoSplicingBench.cs).
+* **Edit Cap:** Strict maximum of **2 gene edits** per embryo. Tracked on the embryo component (`CompEmbryoQuality.editCount`).
+* **Inheritance:** All edits modify the embryo's `geneSet`, ensuring all changes manifest as inheritable **endogenes**.
 
-### 4.2 Data & XML Definitions
+### 2.2 Splicing Failure (Instant Biomass Collapse)
+* **Mechanic:** Splicing failure chance scales with doctor Medicine skill, Manipulation, and clean room factor.
+* **Outcome on Failure:** The embryo collapses into **1× [`GeneticNutrientPaste`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Defs/ThingDefs_Items/Items_Biomass.xml)** on the worktable.
+* **Elimination of Busywork:** No hidden defects, no prenatal genomic sequencing bills, and no separate embryo culling bills.
 
-- `ThingDef`: `GenomeBlueprintDisk`, `NeuralBlueprintDisk`, `GeneticNutrientPaste`, `NeuralScanner`
-- `GeneDef`: `Gene_MandatorySterility`, `Gene_ConstructPsychology`, `Gene_MitochondrialOverdrive`, `Gene_HyperDenseGenome`
-- `TraitDef`: `VatBred_Construct`
-- `RecipeDef`: `EncodeGenomeBlueprintDisc`, `ScanNeuralDoctrine`, `ScreenEmbryoGenetics`, `LiquefyEmbryoBiomass`
-
-### 4.3 XML-Driven Configuration Standards
-
-- All tuning factors, skill thresholds, tick intervals, and numerical balances must be exposed in XML via standard Def fields, `DefModExtension`s, or custom `CompProperties`.
-- Avoid hardcoded magic numbers in C# logic to allow user-level balance tuning and third-party mod compatibility.
+### 2.3 Parental & Ideological Social Reactions
+Tracked via `CompEmbryo.Father` and `CompEmbryo.Mother` when a natural embryo edit completes:
+* **Standard Parents:** **-8 mood debuff for 10 days** (`ThoughtDef: ChildGeneticallyAltered`).
+  * *Hover Text:* *"Someone manipulated my unborn child's DNA in a laboratory. Splicing natural flesh like industrial material is an abhorrent violation of our family."*
+* **Body Modder / Transhumanist Parents:** **+6 mood buff for 10 days** (`ThoughtDef: ChildBiologicallyUpgraded`).
+  * *Hover Text:* *"My unborn child was engineered at the splicing bench to transcend weak baseline genetics. True perfection begins before birth."*
+* **Construct Embryos:** Have no parents (`Father = null, Mother = null`); zero parental thoughts generated.
 
 ---
 
-## User QA
+## 3. Pillar 2: Constructs (Artificial Humans / SecUnits)
 
-The user will need a runbook to allow for quick QA instead of needing to play the game for hours to unlock mechanics naturally. Dev tools are a good fit, but user does not know how to use them.
-
-## 6. Phased Implementation Roadmap
-
-### Phase 1: Construct Foundation Genes & Metabolic Balance
-
-- [x] Scaffold mod directory structure (`About/About.xml`, `Source/`, `Assemblies/`, `Defs/`, `.csproj`).
-- [x] Implement construct foundation genes (`Gene_ConstructPsychology`, `Construct_MetabolicallyEfficient`, `Gene_MandatorySterility`).
-- [x] Implement optimizer genes (`Gene_MitochondrialOverdrive`, `Gene_GenomicCompression`).
-- [x] Implement construct trait (`Trait_ConstructAsset`) and situational thought (`Construct_ColdEfficiency`).
-- [x] Implement Harmony patches suppressing romance, marriage proposals, deep talk, and colonist grief thoughts for construct pawns.
-- [x] Implement research projects (`Eugenics_ConstructFoundations`, `Eugenics_GeneOptimization`).
-
-
-### Phase 2: Blueprint & Neural Discs Data Model
-
-- [x] Implement `GenomeBlueprintDisk` and `NeuralBlueprintDisk` items with serialized data comps.
-- [x] Implement `CompEmbryoQuality` (defect tracking, screening status) and XML patch attaching it to `HumanEmbryo`.
-- [x] Implement `GeneticNutrientPaste` item for culled embryo biomass recycling.
-- [x] Ensure all tuning parameters and thresholds are exposed via XML `CompProperties`.
-
-### Phase 3: Neural Scanner & Growth Vat Imprinting Engine
-
-- [x] Implement `Building_NeuralScanner` and colonist brain-scanning job.
-- [x] Implement `CompGrowthVatImprinter` to inject skills and passions directly during vat acceleration.
-
-### Phase 4: Splicing UI, Diagnostics & Biomass Recycling
-
-- [x] Create `Dialog_EditEmbryoGenes` with conditional gene removal and "Burn Disc" actions.
-- [x] Implement skill-gated prenatal screening and biomass liquefaction into `GeneticNutrientPaste`.
-
-### Phase 5: Batch Automation & Mod Ecosystem Validation (Design: `docs/eugenics-phase5-design.md`)
-
-- [x] Implement dedicated `EmbryoSplicingBench` (`Building_WorkTable`, visual copy of Gene Assembler) with native bills support.
-- [x] Implement `Recipe_BatchApplyBlueprint` (preserving `GenomeBlueprintDisk` master matrix) and companion screening/recycling bills.
-- [x] Ecosystem compatibility validation with _Biotech Cloning Continued_ (`zal.cloning`) and vanilla `Building_GrowthVat`.
-- [x] Dev-mode QA runbook (`docs/eugenics-qa-runbook.md`).
+### 3.1 Innate Biology & Murderbot Psychology
+Constructs are biologically engineered corporate property designed for cold, unfeeling labor and security:
+* **`Gene_ConstructPsychology` (+2 Met):** Cold indifference, immune to insults, incapable of romance, no social recreation decay.
+* **`Trait_ConstructAsset`:** Property status; colonists suffer **zero mood penalties** when a construct dies or suffers.
+* **Psychic Deafness (`PsychicSensitivity_Deaf` / +2 Met):** Immune to drones, psychic suppression, and psycasts.
+* **Universal Sterility (`Gene_MandatorySterility` / +1 Met):** Completely sterile; cannot reproduce.
+* **Very Unattractive (`Beauty_VeryUgly` / +2 Met):** Misshapen synthetic appearance; yields a positive metabolic surplus.
+* **Deathrest:** Capable of dormant stasis shutdown when unneeded.
+* **Slow Study:** Pre-programmed firmware; slow at acquiring new routine skills organically.
+* **Metabolically Efficient (`Construct_MetabolicallyEfficient` / +5 Met):** Excision of empathy and inhibition yields a high metabolic dividend. Automatically forces **Psychopath** and **Bloodlust** traits.
+* **Strict Xenogerm Rejection (Biological DRM):** Constructs cannot receive vanilla or modded Xenogerms. Standard gene implantation is blocked via Harmony patch (`Recipe_ImplantXenogerm`: *"Cannot implant xenogerm: Synthetic construct genetic architecture is locked by corporate biological DRM"*). Constructs must rely exclusively on modular Bionic Augment Packages.
 
 ---
 
-## 7. Future Polish & Asset Enhancements
+### 3.2 Blank Matrix Synthesis (Zero External Cloning Dependency)
+Constructs bypass the need for biological donors or third-party cloning mods (such as *Biotech Cloning Continued* / `zal.cloning`). The mod is **100% self-contained**, requiring only vanilla Biotech and Harmony.
 
-- [ ] **Dedicated Cropped Neural Scanner Architect Icon (`uiIconPath`):**
-  - *Context:* `NeuralScanner` currently uses vanilla `SubcoreSoftscanner` multi-tile graphics scaled down via XML `<uiIconScale>0.75</uiIconScale>` to fit inside architect button slots.
-  - *Goal:* Author/crop a dedicated 1:1 square icon texture at `Textures/UI/Icons/Buildings/NeuralScanner.png` and reference via `<uiIconPath>` for crisp, unscaled architect menu presentation.
+Synthesized directly at the `EmbryoSplicingBench`:
 
+| Bill Name | Required Ingredients | Output |
+| :--- | :--- | :--- |
+| **Synthesize Blank Embryo (Fresh Organics)** | 40 Raw Meat, 40 Raw Plants, 10 Neutroamine, 2 Medicine | 1× `HumanEmbryo` (`IsConstruct = true`) |
+| **Synthesize Blank Embryo (Recycled Biomass)** | 1× `GeneticNutrientPaste`, 10 Raw Meat, 10 Raw Plants, 5 Neutroamine, 2 Medicine | 1× `HumanEmbryo` (`IsConstruct = true`) |
+
+---
+
+### 3.3 Storage Compatibility: Gene Banks
+Vanilla `Building_GeneBank` facilities natively store, manage, and refrigerate both:
+1. **`GenomeBlueprintDisk`:** Master biological caste discs.
+2. **`NeuralBlueprintDisk`:** Encoded neural doctrine discs.
+
+*(Implemented via a Harmony postfix patch on `CompGenepackContainer.CanStore` and container acceptance logic).*
+
+---
+
+### 3.4 Bionic Augment Packages (Construct-Exclusive Cyberware)
+Modular hardware packages installed and uninstalled via standard surgical operations at medical beds.
+
+#### Surgery Rules & Safeguards
+* **Construct-Exclusive:** Surgical bill checks for `Trait_ConstructAsset` or `Gene_ConstructPsychology`. Baseline humans reject the neural bus and cannot receive the bill (*"Cannot install: Incompatible proprietary neural bus (Requires Construct)"*).
+* **Doctor Skill Gates:**
+  * **Basic Tiers:** Medical 4+
+  * **Intermediate Tiers:** Medical 7+
+  * **Advanced Tiers:** Medical 10+
+* **Reboot Coma (`Hediff_ConstructRebooting`):**
+  * **On Successful Surgery:** 2 in-game hours (5,000 ticks).
+  * **On Failed Surgery:** 4 in-game hours (10,000 ticks) + minor surgical cuts.
+* **Hardware Salvage on Failure:**
+  $$\text{Salvage Chance} = 20\% + (\text{Doctor's Medical Skill} \times 5\%)$$
+  * *Success:* Package drops safely to the floor undamaged.
+  * *Failure:* Package burns out and is destroyed.
+
+#### Package Catalog & Skill Offsets
+| Package Def | Tier | Skill Offsets | Work / Tech Level |
+| :--- | :--- | :--- | :--- |
+| **`ConstructAugment_CombatBasic`** | Basic | +2 Shooting, +2 Melee | Machining |
+| **`ConstructAugment_CombatInter`** | Intermediate | +4 Shooting, +4 Melee | Microelectronics |
+| **`ConstructAugment_CombatAdv`** | Advanced | +6 Shooting, +6 Melee | Fabrication |
+| **`ConstructAugment_MedicalBasic`** | Basic | +3 Medical | Machining |
+| **`ConstructAugment_MedicalInter`** | Intermediate | +5 Medical | Microelectronics |
+| **`ConstructAugment_MedicalAdv`** | Advanced | +7 Medical | Fabrication |
+| **`ConstructAugment_IndustrialBasic`** | Basic | +3 Construction, +3 Mining | Machining |
+| **`ConstructAugment_IndustrialInter`** | Intermediate | +5 Construction, +5 Mining | Microelectronics |
+| **`ConstructAugment_IndustrialAdv`** | Advanced | +7 Construction, +7 Mining | Fabrication |
+| **`ConstructAugment_LaborerBasic`** | Basic | +2 Cooking, +2 Plants, +2 Animals | Machining |
+| **`ConstructAugment_LaborerInter`** | Intermediate | +4 Cooking, +4 Plants, +4 Animals | Microelectronics |
+| **`ConstructAugment_LaborerAdv`** | Advanced | +6 Cooking, +6 Plants, +6 Animals | Fabrication |
+
+---
+
+### 3.5 Construct Skills & Neural Imprinting
+
+#### Growth Vat Imprinting Engine
+* **Reusable Master Discs:** The [`NeuralBlueprintDisk`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Defs/ThingDefs_Items/Items_Blueprints.xml) is **never consumed** upon vat decanting. It remains loaded in the vat's imprinter comp until manually ejected.
+* **Loading Window:** Discs can be loaded before or during gestation/acceleration.
+* **Skill Transfer Multiplier:** Constructs inherit **50% of the scanned mentor's skill levels**.
+* **Zero Passions:** Constructs **never possess passions**. All injected and generated passions are forced to `Passion.None`.
+* **Scanner Block:** `Building_NeuralScanner` blocks constructs from being scanned as mentors.
+
+#### Baseline Decanting (Without Neural Disc)
+Constructs decanted from a vat without any neural imprint disc receive factory firmware skills:
+* **Shooting:** 4
+* **Melee:** 4
+* **Social:** 2
+* **Intellectual:** 2
+* **Artistic:** 0
+* **All Other Skills:** 3
