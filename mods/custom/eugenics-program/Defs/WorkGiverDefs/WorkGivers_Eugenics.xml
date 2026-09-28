@@ -16,7 +16,6 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
-    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
   </WorkGiverDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
@@ -35,7 +34,6 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
-    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
   </WorkGiverDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
@@ -76,6 +74,48 @@
       <li>Manipulation</li>
     </requiredCapacities>
     <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGivers: Haul Blueprint Discs to Eugenics Facilities (Hauling)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>HaulToNeuralScanner</defName>
+    <label>haul to neural scanner</label>
+    <giverClass>EugenicsProgram.WorkGiver_HaulToNeuralScanner</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>25</priorityInType>
+    <verb>load</verb>
+    <gerund>loading</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulToEmbryoSplicingBench</defName>
+    <label>haul to embryo splicing bench</label>
+    <giverClass>EugenicsProgram.WorkGiver_HaulToEmbryoSplicingBench</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>25</priorityInType>
+    <verb>load</verb>
+    <gerund>loading</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulToGrowthVatImprinter</defName>
+    <label>haul to growth vat imprinter</label>
+    <giverClass>EugenicsProgram.WorkGiver_HaulToGrowthVatImprinter</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>25</priorityInType>
+    <verb>load</verb>
+    <gerund>loading</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
   </WorkGiverDef>
 
 </Defs>

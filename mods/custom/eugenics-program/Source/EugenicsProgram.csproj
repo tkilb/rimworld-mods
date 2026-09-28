@@ -23,7 +23,8 @@
          Harmony ships as a Steam Workshop mod, not with the base game.
          Workshop item 2009463077 — resolve Current/ then 1.5/ fallback.
     -->
-    <HarmonyWorkshopBase>$(HOME)/.local/share/Steam/steamapps/workshop/content/294100/2009463077</HarmonyWorkshopBase>
+    <HarmonyWorkshopBase Condition="Exists('/mnt/gaming/SteamLibrary/steamapps/workshop/content/294100/2009463077')">/mnt/gaming/SteamLibrary/steamapps/workshop/content/294100/2009463077</HarmonyWorkshopBase>
+    <HarmonyWorkshopBase Condition="'$(HarmonyWorkshopBase)' == ''">$(HOME)/.local/share/Steam/steamapps/workshop/content/294100/2009463077</HarmonyWorkshopBase>
     <HarmonyDllPath Condition="Exists('$(HarmonyWorkshopBase)/Current/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/Current/Assemblies/0Harmony.dll</HarmonyDllPath>
     <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(HarmonyWorkshopBase)/1.5/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/1.5/Assemblies/0Harmony.dll</HarmonyDllPath>
     <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(HarmonyWorkshopBase)/1.4/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/1.4/Assemblies/0Harmony.dll</HarmonyDllPath>

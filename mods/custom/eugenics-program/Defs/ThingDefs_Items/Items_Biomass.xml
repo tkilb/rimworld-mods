@@ -7,17 +7,16 @@
     <description>Nutrient-dense biological slurry reclaimed from defective or culled embryonic material. Highly concentrated fuel formulated specifically for Growth Vats and bioreactors.</description>
     <graphicData>
       <texPath>Things/Item/Meal/NutrientPaste</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_MealVariants</graphicClass>
     </graphicData>
     <statBases>
       <MarketValue>12</MarketValue>
       <Nutrition>0.9</Nutrition>
       <Mass>0.3</Mass>
-      <FoodPoisoningChanceFactor>0</FoodPoisoningChanceFactor>
     </statBases>
     <ingestible>
       <preferability>MealAwful</preferability>
-      <tasteThought>AteNutrientPaste</tasteThought>
+      <ateEvent>AteNutrientPaste</ateEvent>
       <foodType>Meal, Processed</foodType>
     </ingestible>
     <comps>

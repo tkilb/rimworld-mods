@@ -4,7 +4,7 @@
   <GeneCategoryDef>
     <defName>Eugenics_Construct</defName>
     <label>construct genetics</label>
-    <displayPriorityInXenotype>500</displayPriorityInXenotype>
+    <displayPriorityInXenotype>640</displayPriorityInXenotype>
   </GeneCategoryDef>
 
   <GeneDef>
@@ -62,7 +62,7 @@
     <displayOrderInCategory>30</displayOrderInCategory>
     <biostatCpx>0</biostatCpx>
     <biostatMet>1</biostatMet>
-    <sterility>true</sterility>
+    <sterilize>true</sterilize>
     <statFactors>
       <Fertility>0</Fertility>
     </statFactors>

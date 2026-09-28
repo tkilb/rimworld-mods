@@ -3,6 +3,7 @@ using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace EugenicsProgram
 {
@@ -133,6 +134,58 @@ namespace EugenicsProgram
                     Find.WindowStack.Add(new Dialog_MessageBox(sb.ToString(), "Close", title: parent?.LabelCap ?? "Genome Blueprint"));
                 }
             };
+        }
+
+        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+        {
+            foreach (FloatMenuOption opt in base.CompFloatMenuOptions(selPawn))
+            {
+                yield return opt;
+            }
+
+            if (!parent.Spawned || parent.Destroyed || parent.Map == null) yield break;
+
+            if (selPawn.WorkTypeIsDisabled(WorkTypeDefOf.Hauling))
+            {
+                yield return new FloatMenuOption("Cannot haul (Hauling disabled)", null);
+                yield break;
+            }
+
+            if (!selPawn.CanReach(parent, PathEndMode.ClosestTouch, Danger.Some))
+            {
+                yield return new FloatMenuOption($"Cannot haul {parent.Label} (Unreachable)", null);
+                yield break;
+            }
+
+            if (!selPawn.CanReserve(parent, 1, 1, null, false))
+            {
+                yield return new FloatMenuOption($"Cannot haul {parent.Label} (Reserved)", null);
+                yield break;
+            }
+
+            Building_EmbryoSplicingBench bench = (Building_EmbryoSplicingBench)GenClosest.ClosestThingReachable(
+                parent.Position,
+                parent.Map,
+                ThingRequest.ForDef(EugenicsDefOf.EmbryoSplicingBench),
+                PathEndMode.Touch,
+                TraverseParms.For(selPawn),
+                validator: t => t is Building_EmbryoSplicingBench b && b.CanAcceptDisc && selPawn.CanReserve(b)
+            );
+
+            if (bench != null)
+            {
+                yield return new FloatMenuOption($"Insert {parent.Label} into {bench.LabelShort}", () =>
+                {
+                    bench.targetDisc = parent;
+                    Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, parent, bench);
+                    job.count = 1;
+                    selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                });
+            }
+            else
+            {
+                yield return new FloatMenuOption($"Cannot insert {parent.Label} into embryo splicing bench (No machine available)", null);
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ namespace EugenicsProgram
 {
     public class Building_EmbryoSplicingBench : Building_WorkTable, IThingHolder
     {
+        public Thing targetDisc;
         protected ThingOwner discContainer;
 
         public Building_EmbryoSplicingBench()
@@ -19,11 +20,13 @@ namespace EugenicsProgram
         public Thing LoadedDisc => discContainer?.Count > 0 ? discContainer[0] : null;
         public CompGenomeBlueprint LoadedBlueprintComp => LoadedDisc?.TryGetComp<CompGenomeBlueprint>();
         public bool HasLoadedBlueprint => LoadedBlueprintComp != null && (LoadedBlueprintComp.genes?.Count ?? 0) > 0;
+        public bool CanAcceptDisc => LoadedDisc == null;
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Deep.Look(ref discContainer, "discContainer", this);
+            Scribe_References.Look(ref targetDisc, "targetDisc");
             if (discContainer == null)
             {
                 discContainer = new ThingOwner<Thing>(this, oneStackOnly: true);
@@ -44,15 +47,26 @@ namespace EugenicsProgram
         {
             if (disc == null || LoadedDisc != null) return false;
 
-            if (disc.holdingOwner != null)
+            bool added = false;
+            if (disc.Spawned)
             {
-                disc.holdingOwner.TryTransferToContainer(disc, discContainer, 1);
+                Thing split = disc.SplitOff(1);
+                added = discContainer.TryAdd(split);
+            }
+            else if (disc.holdingOwner != null)
+            {
+                added = disc.holdingOwner.TryTransferToContainer(disc, discContainer, 1) > 0;
             }
             else
             {
-                discContainer.TryAdd(disc.SplitOff(1));
+                added = discContainer.TryAdd(disc.SplitOff(1));
             }
-            return true;
+
+            if (added)
+            {
+                targetDisc = null;
+            }
+            return added;
         }
 
         public void EjectDisc()
@@ -60,6 +74,15 @@ namespace EugenicsProgram
             if (LoadedDisc != null)
             {
                 discContainer.TryDrop(LoadedDisc, InteractionCell, Map, ThingPlaceMode.Near, out _);
+            }
+        }
+
+        protected override void Tick()
+        {
+            base.Tick();
+            if (targetDisc != null && (targetDisc.Destroyed || LoadedDisc != null || (!targetDisc.Spawned && !(targetDisc.holdingOwner?.Owner is Pawn_CarryTracker || targetDisc.holdingOwner?.Owner is Pawn))))
+            {
+                targetDisc = null;
             }
         }
 
@@ -74,7 +97,12 @@ namespace EugenicsProgram
             var sb = new StringBuilder();
             sb.Append(base.GetInspectString());
 
-            if (LoadedDisc != null)
+            if (targetDisc != null && LoadedDisc == null)
+            {
+                sb.AppendLine();
+                sb.Append($"Waiting for blueprint delivery: {targetDisc.Label}");
+            }
+            else if (LoadedDisc != null)
             {
                 sb.AppendLine();
                 CompGenomeBlueprint bp = LoadedBlueprintComp;
@@ -111,6 +139,16 @@ namespace EugenicsProgram
                     action = EjectDisc
                 };
             }
+            else if (targetDisc != null)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "Cancel Blueprint Delivery",
+                    defaultDesc = $"Cancel waiting for delivery of {targetDisc.Label}.",
+                    icon = ContentFinder<Texture2D>.Get("UI/Designators/Cancel", true) ?? def?.uiIcon,
+                    action = () => targetDisc = null
+                };
+            }
             else
             {
                 yield return new Command_Action
@@ -134,7 +172,7 @@ namespace EugenicsProgram
                                         : $"{d.Label} (Empty)";
                                     options.Add(new FloatMenuOption(title, () =>
                                     {
-                                        TryAcceptDisc(d);
+                                        targetDisc = d;
                                     }));
                                 }
                             }
@@ -147,6 +185,53 @@ namespace EugenicsProgram
                         Find.WindowStack.Add(new FloatMenu(options));
                     }
                 };
+            }
+        }
+
+        public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
+        {
+            foreach (FloatMenuOption opt in base.GetFloatMenuOptions(selPawn))
+            {
+                yield return opt;
+            }
+
+            if (LoadedDisc == null && !selPawn.WorkTypeIsDisabled(WorkTypeDefOf.Hauling))
+            {
+                if (targetDisc != null && targetDisc.Spawned && !targetDisc.Destroyed)
+                {
+                    if (selPawn.CanReserveAndReach(targetDisc, PathEndMode.ClosestTouch, Danger.Some) &&
+                        selPawn.CanReserveAndReach(this, PathEndMode.Touch, Danger.Some))
+                    {
+                        yield return new FloatMenuOption($"Haul {targetDisc.Label} to {LabelShort}", () =>
+                        {
+                            Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, targetDisc, this);
+                            job.count = 1;
+                            selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                        });
+                    }
+                }
+                else if (targetDisc == null && selPawn.CanReserveAndReach(this, PathEndMode.Touch, Danger.Some))
+                {
+                    Thing availableDisc = GenClosest.ClosestThingReachable(
+                        Position,
+                        Map,
+                        ThingRequest.ForDef(EugenicsDefOf.GenomeBlueprintDisk),
+                        PathEndMode.ClosestTouch,
+                        TraverseParms.For(selPawn),
+                        validator: d => d.Spawned && !d.IsForbidden(Faction.OfPlayer) && !d.Destroyed && selPawn.CanReserve(d)
+                    );
+
+                    if (availableDisc != null)
+                    {
+                        yield return new FloatMenuOption($"Load {availableDisc.Label} into {LabelShort}", () =>
+                        {
+                            targetDisc = availableDisc;
+                            Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, availableDisc, this);
+                            job.count = 1;
+                            selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                        });
+                    }
+                }
             }
         }
     }

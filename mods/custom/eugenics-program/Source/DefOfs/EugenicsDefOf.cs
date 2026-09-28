@@ -10,6 +10,7 @@ namespace EugenicsProgram
         public static JobDef Eugenics_ScanNeuralProfile;
         public static JobDef Eugenics_ScreenEmbryo;
         public static JobDef Eugenics_RecycleEmbryo;
+        public static JobDef Eugenics_HaulDiscToContainer;
 
         // ── Items ─────────────────────────────────────────────────────────────────
         public static ThingDef NeuralBlueprintDisk;

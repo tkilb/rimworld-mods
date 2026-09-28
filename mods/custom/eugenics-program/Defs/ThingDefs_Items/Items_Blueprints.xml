@@ -7,7 +7,7 @@
     <description>A high-density optical data storage cartridge formatted with complete genomic sequencing data for a human construct caste. Can be stored in Gene Banks, inserted into Gene Assemblers to replicate gene sequences, or loaded into Growth Vats.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
-      <texPath>Things/Item/Special/Genepack</texPath>
+      <texPath>Things/Item/Resource/SubcoreRegular</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(0.7, 0.7)</drawSize>
     </graphicData>
@@ -20,7 +20,7 @@
       <Flammability>0.2</Flammability>
     </statBases>
     <thingCategories>
-      <li>Genepacks</li>
+      <li>ItemsMisc</li>
     </thingCategories>
     <tradeTags>
       <li>ExoticMisc</li>
@@ -42,7 +42,7 @@
     <description>A cryogenic neural imprint disc containing encoded synaptic pathways, combat reflexes, and skill doctrines extracted from a veteran colonist or corporate neural template. Used in Growth Vats to impart high-tier proficiencies during construct gestation.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
-      <texPath>Things/Item/Special/Genepack</texPath>
+      <texPath>Things/Item/Resource/SubcoreHigh</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(0.7, 0.7)</drawSize>
     </graphicData>
@@ -55,7 +55,7 @@
       <Flammability>0.2</Flammability>
     </statBases>
     <thingCategories>
-      <li>Genepacks</li>
+      <li>ItemsMisc</li>
     </thingCategories>
     <tradeTags>
       <li>ExoticMisc</li>

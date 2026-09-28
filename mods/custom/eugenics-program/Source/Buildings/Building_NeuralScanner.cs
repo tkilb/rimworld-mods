@@ -8,11 +8,13 @@ using Verse.AI;
 
 namespace EugenicsProgram
 {
-    public class Building_NeuralScanner : Building, IThingHolder
+    public class Building_NeuralScanner : Building, IThingHolder, IThingHolderWithDrawnPawn
     {
         public int scanTicks = 15000;
         public float powerConsumptionScanning = 1500f;
         public float powerConsumptionIdle = 200f;
+
+        public Thing targetDisc;
 
         protected ThingOwner innerContainer;
         protected ThingOwner discContainer;
@@ -22,6 +24,28 @@ namespace EugenicsProgram
         {
             innerContainer = new ThingOwner<Thing>(this);
             discContainer = new ThingOwner<Thing>(this);
+        }
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+            NeuralScannerExtension ext = def?.GetModExtension<NeuralScannerExtension>();
+            if (ext != null)
+            {
+                scanTicks = ext.scanTicks;
+                powerConsumptionScanning = ext.powerConsumptionScanning;
+                powerConsumptionIdle = ext.powerConsumptionIdle;
+            }
+        }
+
+        public float HeldPawnDrawPos_Y => DrawPos.y + 0.03658537f;
+        public float HeldPawnBodyAngle => Rotation.AsAngle;
+        public PawnPosture HeldPawnPosture => PawnPosture.LayingOnGroundFaceUp;
+
+        public override void DynamicDrawPhaseAt(DrawPhase phase, Vector3 drawLoc, bool flip = false)
+        {
+            base.DynamicDrawPhaseAt(phase, drawLoc, flip);
+            Occupant?.Drawer.renderer.DynamicDrawPhaseAt(phase, drawLoc, null, neverAimWeapon: true);
         }
 
         public Pawn Occupant => innerContainer.Count > 0 ? (innerContainer[0] as Pawn) : null;
@@ -38,6 +62,7 @@ namespace EugenicsProgram
             base.ExposeData();
             Scribe_Deep.Look(ref innerContainer, "innerContainer", this);
             Scribe_Deep.Look(ref discContainer, "discContainer", this);
+            Scribe_References.Look(ref targetDisc, "targetDisc");
             Scribe_Values.Look(ref ticksScanning, "ticksScanning", 0);
             Scribe_Values.Look(ref scanTicks, "scanTicks", 15000);
             Scribe_Values.Look(ref powerConsumptionScanning, "powerConsumptionScanning", 1500f);
@@ -62,6 +87,7 @@ namespace EugenicsProgram
         {
             if (!CanAcceptPawn || pawn == null) return false;
 
+            pawn.DeSpawnOrDeselect();
             if (pawn.holdingOwner != null)
             {
                 pawn.holdingOwner.TryTransferToContainer(pawn, innerContainer, pawn.stackCount);
@@ -83,15 +109,26 @@ namespace EugenicsProgram
         {
             if (!CanAcceptDisc || disc == null) return false;
 
-            if (disc.holdingOwner != null)
+            bool added = false;
+            if (disc.Spawned)
             {
-                disc.holdingOwner.TryTransferToContainer(disc, discContainer, 1);
+                Thing split = disc.SplitOff(1);
+                added = discContainer.TryAdd(split);
+            }
+            else if (disc.holdingOwner != null)
+            {
+                added = disc.holdingOwner.TryTransferToContainer(disc, discContainer, 1) > 0;
             }
             else
             {
-                discContainer.TryAdd(disc.SplitOff(1));
+                added = discContainer.TryAdd(disc.SplitOff(1));
             }
-            return true;
+
+            if (added)
+            {
+                targetDisc = null;
+            }
+            return added;
         }
 
         public void EjectOccupant()
@@ -118,6 +155,11 @@ namespace EugenicsProgram
         protected override void Tick()
         {
             base.Tick();
+
+            if (targetDisc != null && (targetDisc.Destroyed || LoadedDisc != null || (!targetDisc.Spawned && !(targetDisc.holdingOwner?.Owner is Pawn_CarryTracker || targetDisc.holdingOwner?.Owner is Pawn))))
+            {
+                targetDisc = null;
+            }
 
             if (Occupant != null && LoadedDisc != null)
             {
@@ -201,6 +243,11 @@ namespace EugenicsProgram
                     sb.Append(" - SUSPENDED (NO POWER)");
                 }
             }
+            else if (targetDisc != null && LoadedDisc == null)
+            {
+                sb.AppendLine();
+                sb.Append($"Waiting for disc delivery: {targetDisc.Label}");
+            }
             else if (LoadedDisc != null)
             {
                 sb.AppendLine();
@@ -226,11 +273,13 @@ namespace EugenicsProgram
 
             if (Occupant != null)
             {
+                yield return Building_Casket.SelectContainedItemGizmo(this, Occupant);
+
                 yield return new Command_Action
                 {
                     defaultLabel = "Abort Scan",
                     defaultDesc = "Eject the current subject from the neural scanner and cancel the scanning operation.",
-                    icon = ContentFinder<Texture2D>.Get("UI/Commands/Cancel", true) ?? def?.uiIcon,
+                    icon = ContentFinder<Texture2D>.Get("UI/Designators/Cancel", true) ?? def?.uiIcon,
                     action = EjectOccupant
                 };
             }
@@ -274,6 +323,16 @@ namespace EugenicsProgram
                         }
                     };
                 }
+                else if (targetDisc != null)
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "Cancel Disc Delivery",
+                        defaultDesc = $"Cancel waiting for delivery of {targetDisc.Label}.",
+                        icon = ContentFinder<Texture2D>.Get("UI/Designators/Cancel", true) ?? def?.uiIcon,
+                        action = () => targetDisc = null
+                    };
+                }
                 else
                 {
                     yield return new Command_Action
@@ -295,7 +354,7 @@ namespace EugenicsProgram
                                         string label = bp?.IsEncoded == true ? $"{d.Label} ({bp.doctrineTitle})" : $"{d.Label} (Blank)";
                                         options.Add(new FloatMenuOption(label, () =>
                                         {
-                                            TryAcceptDisc(d);
+                                            targetDisc = d;
                                         }));
                                     }
                                 }
@@ -325,6 +384,45 @@ namespace EugenicsProgram
                 yield break;
             }
 
+            if (LoadedDisc == null && !selPawn.WorkTypeIsDisabled(WorkTypeDefOf.Hauling))
+            {
+                if (targetDisc != null && targetDisc.Spawned && !targetDisc.Destroyed)
+                {
+                    if (selPawn.CanReserveAndReach(targetDisc, PathEndMode.ClosestTouch, Danger.Some) &&
+                        selPawn.CanReserveAndReach(this, PathEndMode.Touch, Danger.Some))
+                    {
+                        yield return new FloatMenuOption($"Haul {targetDisc.Label} to {LabelShort}", () =>
+                        {
+                            Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, targetDisc, this);
+                            job.count = 1;
+                            selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                        });
+                    }
+                }
+                else if (targetDisc == null && selPawn.CanReserveAndReach(this, PathEndMode.Touch, Danger.Some))
+                {
+                    Thing availableDisc = GenClosest.ClosestThingReachable(
+                        Position,
+                        Map,
+                        ThingRequest.ForDef(EugenicsDefOf.NeuralBlueprintDisk),
+                        PathEndMode.ClosestTouch,
+                        TraverseParms.For(selPawn),
+                        validator: d => d.Spawned && !d.IsForbidden(Faction.OfPlayer) && !d.Destroyed && selPawn.CanReserve(d)
+                    );
+
+                    if (availableDisc != null)
+                    {
+                        yield return new FloatMenuOption($"Load {availableDisc.Label} into {LabelShort}", () =>
+                        {
+                            targetDisc = availableDisc;
+                            Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, availableDisc, this);
+                            job.count = 1;
+                            selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                        });
+                    }
+                }
+            }
+
             if (CanAcceptPawn)
             {
                 yield return new FloatMenuOption($"Enter {LabelShort}", () =>
@@ -332,6 +430,10 @@ namespace EugenicsProgram
                     Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_ScanNeuralProfile, this);
                     selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
                 });
+            }
+            else if (targetDisc != null && LoadedDisc == null)
+            {
+                yield return new FloatMenuOption($"Cannot enter {LabelShort} (Waiting for disc delivery)", null);
             }
             else if (LoadedDisc == null)
             {

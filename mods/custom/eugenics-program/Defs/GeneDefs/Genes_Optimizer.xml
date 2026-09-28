@@ -4,7 +4,7 @@
   <GeneCategoryDef>
     <defName>Eugenics_Optimizer</defName>
     <label>optimizer genetics</label>
-    <displayPriorityInXenotype>510</displayPriorityInXenotype>
+    <displayPriorityInXenotype>650</displayPriorityInXenotype>
   </GeneCategoryDef>
 
   <GeneDef>
@@ -18,7 +18,7 @@
     <biostatMet>8</biostatMet>
     <statFactors>
       <LifespanFactor>0.5</LifespanFactor>
-      <CancerRateFactor>5.0</CancerRateFactor>
+      <CancerRate>5.0</CancerRate>
     </statFactors>
     <customEffectDescriptions>
       <li>+8 Metabolic Efficiency budget.</li>

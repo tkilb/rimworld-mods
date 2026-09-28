@@ -8,4 +8,11 @@
     <casualInterruptible>false</casualInterruptible>
   </JobDef>
 
+  <JobDef>
+    <defName>Eugenics_HaulDiscToContainer</defName>
+    <driverClass>EugenicsProgram.JobDriver_HaulDiscToContainer</driverClass>
+    <reportString>hauling TargetA to TargetB.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
 </Defs>

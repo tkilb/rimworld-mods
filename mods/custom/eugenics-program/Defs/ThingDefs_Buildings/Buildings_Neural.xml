@@ -6,23 +6,27 @@
     <label>neural scanner</label>
     <description>An enclosed biometric scanning pod engineered to record and digitize human synaptic topologies. Allows veteran mentors to export their combat and labor doctrines directly onto high-density neural imprint discs for growth vat injection.</description>
     <thingClass>EugenicsProgram.Building_NeuralScanner</thingClass>
+    <containedPawnsSelectable>true</containedPawnsSelectable>
     <graphicData>
-      <texPath>Things/Building/Production/SubcoreScanner</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Building/Production/SubcoreSoftscanner</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1.5, 2.5)</drawSize>
       <shadowData>
         <volume>(1.3, 0.6, 2.3)</volume>
       </shadowData>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
-    <passability>Impassable</passability>
-    <fillPercent>0.85</fillPercent>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.5</fillPercent>
     <pathCost>50</pathCost>
     <blockWind>true</blockWind>
     <castEdgeShadows>true</castEdgeShadows>
     <rotatable>true</rotatable>
     <size>(1, 2)</size>
+    <uiIconScale>0.56</uiIconScale>
     <canOverlapZones>false</canOverlapZones>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
     <statBases>
       <MaxHitPoints>250</MaxHitPoints>
       <WorkToBuild>3000</WorkToBuild>
@@ -53,6 +57,13 @@
     <researchPrerequisites>
       <li>Eugenics_NeuralImprinting</li>
     </researchPrerequisites>
+    <modExtensions>
+      <li Class="EugenicsProgram.NeuralScannerExtension">
+        <scanTicks>15000</scanTicks>
+        <powerConsumptionScanning>1500</powerConsumptionScanning>
+        <powerConsumptionIdle>200</powerConsumptionIdle>
+      </li>
+    </modExtensions>
   </ThingDef>
 
 </Defs>

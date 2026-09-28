@@ -3,6 +3,7 @@ using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace EugenicsProgram
 {
@@ -156,6 +157,96 @@ namespace EugenicsProgram
                     Find.WindowStack.Add(new Dialog_MessageBox(sb.ToString(), "Close", title: parent?.LabelCap ?? "Neural Blueprint Disc"));
                 }
             };
+        }
+
+        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+        {
+            foreach (FloatMenuOption opt in base.CompFloatMenuOptions(selPawn))
+            {
+                yield return opt;
+            }
+
+            if (!parent.Spawned || parent.Destroyed || parent.Map == null) yield break;
+
+            if (selPawn.WorkTypeIsDisabled(WorkTypeDefOf.Hauling))
+            {
+                yield return new FloatMenuOption("Cannot haul (Hauling disabled)", null);
+                yield break;
+            }
+
+            if (!selPawn.CanReach(parent, PathEndMode.ClosestTouch, Danger.Some))
+            {
+                yield return new FloatMenuOption($"Cannot haul {parent.Label} (Unreachable)", null);
+                yield break;
+            }
+
+            if (!selPawn.CanReserve(parent, 1, 1, null, false))
+            {
+                yield return new FloatMenuOption($"Cannot haul {parent.Label} (Reserved)", null);
+                yield break;
+            }
+
+            if (!IsEncoded)
+            {
+                Building_NeuralScanner scanner = (Building_NeuralScanner)GenClosest.ClosestThingReachable(
+                    parent.Position,
+                    parent.Map,
+                    ThingRequest.ForDef(EugenicsDefOf.NeuralScanner),
+                    PathEndMode.Touch,
+                    TraverseParms.For(selPawn),
+                    validator: t => t is Building_NeuralScanner s && s.CanAcceptDisc && selPawn.CanReserve(s)
+                );
+
+                if (scanner != null)
+                {
+                    yield return new FloatMenuOption($"Insert {parent.Label} into {scanner.LabelShort}", () =>
+                    {
+                        scanner.targetDisc = parent;
+                        Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, parent, scanner);
+                        job.count = 1;
+                        selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                    });
+                }
+                else
+                {
+                    yield return new FloatMenuOption($"Cannot insert {parent.Label} into neural scanner (No machine available)", null);
+                }
+            }
+            else
+            {
+                Thing vat = GenClosest.ClosestThingReachable(
+                    parent.Position,
+                    parent.Map,
+                    ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial),
+                    PathEndMode.Touch,
+                    TraverseParms.For(selPawn),
+                    validator: t =>
+                    {
+                        if (t is ThingWithComps twc)
+                        {
+                            CompGrowthVatImprinter imprinter = twc.GetComp<CompGrowthVatImprinter>();
+                            return imprinter != null && imprinter.CanAcceptDisc && selPawn.CanReserve(t);
+                        }
+                        return false;
+                    }
+                );
+
+                if (vat != null)
+                {
+                    yield return new FloatMenuOption($"Insert {parent.Label} into {vat.LabelShort}", () =>
+                    {
+                        CompGrowthVatImprinter imprinter = ((ThingWithComps)vat).GetComp<CompGrowthVatImprinter>();
+                        if (imprinter != null) imprinter.targetDisc = parent;
+                        Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, parent, vat);
+                        job.count = 1;
+                        selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                    });
+                }
+                else
+                {
+                    yield return new FloatMenuOption($"Cannot insert {parent.Label} into growth vat (No machine available)", null);
+                }
+            }
         }
     }
 }

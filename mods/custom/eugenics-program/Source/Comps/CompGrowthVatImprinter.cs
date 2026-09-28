@@ -3,6 +3,7 @@ using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace EugenicsProgram
 {
@@ -10,6 +11,7 @@ namespace EugenicsProgram
     {
         public CompProperties_GrowthVatImprinter Props => (CompProperties_GrowthVatImprinter)props;
 
+        public Thing targetDisc;
         protected ThingOwner discContainer;
 
         public CompGrowthVatImprinter()
@@ -19,12 +21,14 @@ namespace EugenicsProgram
 
         public Thing LoadedDisc => discContainer.Count > 0 ? discContainer[0] : null;
         public CompNeuralBlueprint LoadedBlueprint => LoadedDisc?.TryGetComp<CompNeuralBlueprint>();
+        public bool CanAcceptDisc => LoadedDisc == null;
         public new IThingHolder ParentHolder => (IThingHolder)parent;
 
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Deep.Look(ref discContainer, "discContainer", this);
+            Scribe_References.Look(ref targetDisc, "targetDisc");
 
             if (discContainer == null)
             {
@@ -46,15 +50,26 @@ namespace EugenicsProgram
         {
             if (LoadedDisc != null || disc == null) return false;
 
-            if (disc.holdingOwner != null)
+            bool added = false;
+            if (disc.Spawned)
             {
-                disc.holdingOwner.TryTransferToContainer(disc, discContainer, 1);
+                Thing split = disc.SplitOff(1);
+                added = discContainer.TryAdd(split);
+            }
+            else if (disc.holdingOwner != null)
+            {
+                added = disc.holdingOwner.TryTransferToContainer(disc, discContainer, 1) > 0;
             }
             else
             {
-                discContainer.TryAdd(disc.SplitOff(1));
+                added = discContainer.TryAdd(disc.SplitOff(1));
             }
-            return true;
+
+            if (added)
+            {
+                targetDisc = null;
+            }
+            return added;
         }
 
         public void EjectDisc()
@@ -90,6 +105,11 @@ namespace EugenicsProgram
             base.CompTick();
 
             if (!parent.Spawned) return;
+
+            if (targetDisc != null && (targetDisc.Destroyed || LoadedDisc != null || (!targetDisc.Spawned && !(targetDisc.holdingOwner?.Owner is Pawn_CarryTracker || targetDisc.holdingOwner?.Owner is Pawn))))
+            {
+                targetDisc = null;
+            }
 
             CompPowerTrader power = parent.TryGetComp<CompPowerTrader>();
             if (power != null && !power.PowerOn) return;
@@ -143,7 +163,11 @@ namespace EugenicsProgram
         public override string CompInspectStringExtra()
         {
             StringBuilder sb = new StringBuilder();
-            if (LoadedDisc != null)
+            if (targetDisc != null && LoadedDisc == null)
+            {
+                sb.Append($"Neural Imprinter: Waiting for disc delivery ({targetDisc.Label})");
+            }
+            else if (LoadedDisc != null)
             {
                 CompNeuralBlueprint bp = LoadedBlueprint;
                 string title = bp?.doctrineTitle ?? LoadedDisc.Label;
@@ -221,6 +245,16 @@ namespace EugenicsProgram
                     };
                 }
             }
+            else if (targetDisc != null)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "Cancel Neural Disc Delivery",
+                    defaultDesc = $"Cancel waiting for delivery of {targetDisc.Label}.",
+                    icon = ContentFinder<Texture2D>.Get("UI/Designators/Cancel", true) ?? parent.def.uiIcon,
+                    action = () => targetDisc = null
+                };
+            }
             else
             {
                 yield return new Command_Action
@@ -243,7 +277,7 @@ namespace EugenicsProgram
                                     {
                                         options.Add(new FloatMenuOption($"{d.Label} ({bp.doctrineTitle})", () =>
                                         {
-                                            TryLoadDisc(d);
+                                            targetDisc = d;
                                         }));
                                     }
                                 }
@@ -257,6 +291,28 @@ namespace EugenicsProgram
                         Find.WindowStack.Add(new FloatMenu(options));
                     }
                 };
+            }
+        }
+
+        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+        {
+            foreach (FloatMenuOption opt in base.CompFloatMenuOptions(selPawn))
+            {
+                yield return opt;
+            }
+
+            if (targetDisc != null && targetDisc.Spawned && !targetDisc.Destroyed && LoadedDisc == null)
+            {
+                if (selPawn.CanReserveAndReach(targetDisc, PathEndMode.ClosestTouch, Danger.Some) &&
+                    selPawn.CanReserveAndReach(parent, PathEndMode.Touch, Danger.Some))
+                {
+                    yield return new FloatMenuOption($"Haul {targetDisc.Label} to {parent.LabelShort}", () =>
+                    {
+                        Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_HaulDiscToContainer, targetDisc, parent);
+                        job.count = 1;
+                        selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                    });
+                }
             }
         }
 

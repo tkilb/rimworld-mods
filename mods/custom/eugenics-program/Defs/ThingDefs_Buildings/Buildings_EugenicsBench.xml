@@ -7,7 +7,7 @@
     <description>A dedicated advanced genetic synthesis workstation designed for batch embryo genetic engineering, prenatal genomic diagnostics, and biomass recycling. Features an integrated master genome blueprint disc drive and facility linking connectors for Gene Banks and Gene Processors.</description>
     <thingClass>EugenicsProgram.Building_EmbryoSplicingBench</thingClass>
     <graphicData>
-      <texPath>Things/Building/Production/GeneAssembler/GeneAssembler</texPath>
+      <texPath>Things/Building/Misc/GeneAssembler/GeneAssembler</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(3.2, 2.2)</drawSize>
       <shadowData>
@@ -19,7 +19,6 @@
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <castEdgeShadows>true</castEdgeShadows>
-    <staticSunShadows>true</staticSunShadows>
     <fillPercent>0.5</fillPercent>
     <canOverlapZones>false</canOverlapZones>
     <statBases>
@@ -37,7 +36,7 @@
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <basePowerConsumption>600</basePowerConsumption>
-        <idlePowerConsumption>50</idlePowerConsumption>
+        <idlePowerDraw>50</idlePowerDraw>
         <shortCircuitInRain>true</shortCircuitInRain>
       </li>
       <li Class="CompProperties_Flickable"/>

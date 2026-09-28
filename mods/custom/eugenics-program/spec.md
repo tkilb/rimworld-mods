@@ -174,3 +174,12 @@ The user will need a runbook to allow for quick QA instead of needing to play th
 - [x] Implement `Recipe_BatchApplyBlueprint` (preserving `GenomeBlueprintDisk` master matrix) and companion screening/recycling bills.
 - [x] Ecosystem compatibility validation with _Biotech Cloning Continued_ (`zal.cloning`) and vanilla `Building_GrowthVat`.
 - [x] Dev-mode QA runbook (`docs/eugenics-qa-runbook.md`).
+
+---
+
+## 7. Future Polish & Asset Enhancements
+
+- [ ] **Dedicated Cropped Neural Scanner Architect Icon (`uiIconPath`):**
+  - *Context:* `NeuralScanner` currently uses vanilla `SubcoreSoftscanner` multi-tile graphics scaled down via XML `<uiIconScale>0.75</uiIconScale>` to fit inside architect button slots.
+  - *Goal:* Author/crop a dedicated 1:1 square icon texture at `Textures/UI/Icons/Buildings/NeuralScanner.png` and reference via `<uiIconPath>` for crisp, unscaled architect menu presentation.
+
