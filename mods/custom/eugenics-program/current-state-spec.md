@@ -53,7 +53,7 @@ The current mod is focused on mass-producing vat-bred soldiers and laborers ("Co
 
 ## 4. Architectural Limitations & Pain Points (The "Why We Are Amending")
 
-1. **Blurred Identity:** Natural embryos and synthetic constructs were treated under the same umbrella. There was no clean distinction between a colonist baby being gene-edited versus an artificial corporate unit being manufactured.
+1. **Blurred Identity:** Natural embryos and synthetic constructs were treated under the same umbrella. There was no clean distinction between a colonist baby being gene-edited versus an artificial synthetic unit being manufactured.
 2. **Excessive Micromanagement:** Splicing defects required a multi-step loop: splice embryo $\rightarrow$ run prenatal screening bill $\rightarrow$ inspect defect $\rightarrow$ manually queue liquefy embryo bill.
 3. **No Synthetic Embryo Bootstrapping:** Embryos had to originate from natural colonist ovum extraction / fertilization. Players could not synthesize donorless blank construct matrices.
 4. **Data Disc Inconvenience:** Blueprint and Neural discs could not be stored in vanilla Gene Banks.

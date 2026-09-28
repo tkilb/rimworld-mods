@@ -14,7 +14,7 @@ This document serves as the formal specification amendment to clarify, separate,
 ## 1. System Separation: The Core Distinction
 
 - **Natural Embryos:** Spliced for colony genetic refinement. Biological parents react emotionally to genetic tampering. Retain normal human psychology, passions, and social relationships.
-- **Constructs (Artificial Humans):** Synthesized from blank biological matrices. Treated as company/colony property. Emotionally blunted, incapable of romance, generate zero colonist grief on death, possess no natural passions, and interface exclusively with specialized Bionic Augment Packages.
+- **Constructs (Artificial Humans):** Synthesized from blank biological matrices. Treated as company/colony property. Emotionally blunted, incapable of romance, generate zero colonist grief on death, possess no natural passions, and interface exclusively with specialized Bio-Augment Packages.
 
 ---
 
@@ -49,7 +49,7 @@ When a natural embryo's genetics are edited, its biological parents receive memo
 
 ### 3.1 Innate Biology & Murderbot Psychology
 
-Constructs gestated from synthetic matrices possess locked baseline traits and genes reflecting corporate mass-production:
+Constructs gestated from synthetic matrices possess locked baseline traits and genes reflecting artificial mass-production:
 
 - **`Gene_ConstructPsychology` (+2 Met):** Cold indifference, immune to insults, incapable of romance or marriage, no social recreation need.
 - **`Trait_ConstructAsset`:** Property status; natural-born colonists suffer **zero mood penalties** when a construct dies, suffers, or is organ-harvested.
@@ -59,7 +59,7 @@ Constructs gestated from synthetic matrices possess locked baseline traits and g
 - **Deathrest:** Capable of long-term dormant stasis.
 - **Slow Study:** Feature set is pre-programmed; slow at learning new routines organically.
 - **Metabolically Efficient (`Construct_MetabolicallyEfficient` / +5 Met Dividend):** Eliminates empathy and fear, converting psychological removal directly into a metabolic surplus. Automatically enforces the **Psychopath** and **Bloodlust** traits in XML (`forcedTraits`).
-- **Strict Xenogerm Rejection (Biological DRM):** Constructs cannot be implanted with vanilla or modded Xenogerms (`Recipe_ImplantXenogerm` blocked: *"Synthetic construct genetic architecture is locked by corporate biological DRM"*). All post-gestation upgrades must come via modular Bionic Augment Packages.
+- **Strict Xenogerm Rejection (Locked Genome):** Constructs cannot be implanted with vanilla or modded Xenogerms (`Recipe_ImplantXenogerm` blocked: *"Synthetic construct genetic architecture is permanently locked"*). All post-gestation upgrades must come via modular Bio-Augment Packages.
 
 ---
 
@@ -87,25 +87,25 @@ Both data disc types can be stored and refrigerated directly inside vanilla `Bui
 
 ---
 
-### 3.4 Bionic Augment Packages (Construct-Exclusive Cyberware)
+### 3.4 Bio-Augment Packages (Construct-Exclusive Bioware)
 
-Constructs utilize modular hardware packages installed and uninstalled via standard medical surgery bills.
+Constructs utilize modular bio-augment packages grafted and excised via standard medical surgery bills.
 
 #### Restrictions & Rules
 
-- **Target Restriction:** **Constructs only.** Standard humans reject the proprietary neural bus and cannot install these packages. The surgical recipe checks for `Trait_ConstructAsset` or `Gene_ConstructPsychology`; operations on baseline humans are blocked with the message: *"Cannot install: Incompatible proprietary neural bus (Requires Construct)."*
+- **Target Restriction:** **Constructs only.** Standard humans reject the biological neural bus and cannot receive these packages. The surgical recipe checks for `Trait_ConstructAsset` or `Gene_ConstructPsychology`; operations on baseline humans are blocked with the message: *"Cannot graft: Incompatible biological neural bus (Requires Construct)."*
 - **Surgical Skill Requirements:**
   - **Basic Tiers:** Medical skill 4+
   - **Intermediate Tiers:** Medical skill 7+
   - **Advanced Tiers:** Medical skill 10+
-- **Reboot State (`ConstructRebooting` Hediff):**
-  - **Successful Install:** Construct enters a dormant reboot state for **2 in-game hours** (5,000 ticks).
-  - **Failed Install:** Construct suffers minor surgical lacerations and a forced safety reboot for **4 in-game hours** (10,000 ticks).
-- **Hardware Salvage on Surgery Failure:**
-  - To prevent immediate destruction of expensive modules, an installation failure rolls for component salvage:
+- **Neural Assimilation State (`ConstructAssimilation` Hediff):**
+  - **Successful Install:** Construct enters a dormant neural assimilation state for **2 in-game hours** (5,000 ticks) as synapses integrate.
+  - **Failed Install:** Construct suffers minor surgical lacerations and neurogenic shock for **4 in-game hours** (10,000 ticks).
+- **Bio-Package Salvage on Surgery Failure:**
+  - To prevent immediate destruction of expensive modules, an installation failure rolls for package salvage:
     $$\text{Salvage Chance} = 20\% + (\text{Doctor's Medical Skill} \times 5\%)$$
-  - _Salvaged:_ The augment package ejects safely onto the floor undamaged.
-  - _Unsalvaged:_ The module burns out and is destroyed.
+  - _Salvaged:_ The bio-augment package ejects safely onto the floor undamaged.
+  - _Unsalvaged:_ The organic tissue tears and is ruined.
 
 #### Package Catalog & Skill Offsets
 
@@ -113,16 +113,16 @@ Constructs utilize modular hardware packages installed and uninstalled via stand
 | :---------------------------------- | :----------- | :-------------------------------- | :-------------------- |
 | **Basic Combat Package**            | Basic        | +2 Shooting, +2 Melee             | Machining             |
 | **Intermediate Combat Package**     | Intermediate | +4 Shooting, +4 Melee             | Microelectronics      |
-| **Advanced Combat Package**         | Advanced     | +6 Shooting, +6 Melee             | Fabrication / Bionics |
+| **Advanced Combat Package**         | Advanced     | +6 Shooting, +6 Melee             | Fabrication           |
 | **Basic Medical Package**           | Basic        | +3 Medical                        | Machining             |
 | **Intermediate Medical Package**    | Intermediate | +5 Medical                        | Microelectronics      |
-| **Advanced Medical Package**        | Advanced     | +7 Medical                        | Fabrication / Bionics |
+| **Advanced Medical Package**        | Advanced     | +7 Medical                        | Fabrication           |
 | **Basic Industrial Package**        | Basic        | +3 Construction, +3 Mining        | Machining             |
 | **Intermediate Industrial Package** | Intermediate | +5 Construction, +5 Mining        | Microelectronics      |
-| **Advanced Industrial Package**     | Advanced     | +7 Construction, +7 Mining        | Fabrication / Bionics |
+| **Advanced Industrial Package**     | Advanced     | +7 Construction, +7 Mining        | Fabrication           |
 | **Basic Laborer Package**           | Basic        | +2 Cooking, +2 Plants, +2 Animals | Machining             |
 | **Intermediate Laborer Package**    | Intermediate | +4 Cooking, +4 Plants, +4 Animals | Microelectronics      |
-| **Advanced Laborer Package**        | Advanced     | +6 Cooking, +6 Plants, +6 Animals | Fabrication / Bionics |
+| **Advanced Laborer Package**        | Advanced     | +6 Cooking, +6 Plants, +6 Animals | Fabrication           |
 
 ---
 
@@ -132,7 +132,7 @@ Constructs utilize modular hardware packages installed and uninstalled via stand
 
 - Constructs (not humans) incubated in a Growth Vat can optionally have a single [`NeuralBlueprintDisk`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Defs/ThingDefs_Items/Items_Blueprints.xml) loaded into the vat.
 - **Disc Reusability:** Discs are **reusable master media and are never consumed** upon decanting. The disc remains securely seated in the vat's imprinter for subsequent construct gestations until manually ejected.
-- **Loading Window:** Discs can be loaded into the vat at any point before or during gestation/maturation. If loaded, skill engrams stream into the developing brain; if decanted without a disc, default firmware skills apply.
+- **Loading Window:** Discs can be loaded into the vat at any point before or during gestation/maturation. If loaded, skill engrams stream into the developing brain; if decanted without a disc, innate baseline neural reflexes apply.
 - **Skill Transfer Multiplier:** Constructs receive **50% of the scanned donor's skill levels**.
 - **Passions Disabled:** Constructs **never possess passions**. All injected and generated passions are forced to `Passion.None` (emotions and intrinsic motivation are manufactured away).
 - **No Stacking:** Constructs cannot receive multiple neural disc imprints.
@@ -143,7 +143,7 @@ Constructs utilize modular hardware packages installed and uninstalled via stand
 
 #### Baseline Decanting (No Neural Data)
 
-Constructs decanted from a vat without any neural blueprint disc initialized possess a flat factory firmware skill distribution:
+Constructs decanted from a vat without any neural blueprint disc initialized possess flat innate baseline neural reflexes:
 
 - **Shooting:** 4
 - **Melee:** 4

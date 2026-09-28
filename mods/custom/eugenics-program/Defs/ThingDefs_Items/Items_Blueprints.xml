@@ -39,7 +39,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>NeuralBlueprintDisk</defName>
     <label>neural imprint disc</label>
-    <description>A cryogenic neural imprint disc containing encoded synaptic pathways, combat reflexes, and skill doctrines extracted from a veteran colonist or corporate neural template. Used in Growth Vats to impart high-tier proficiencies during construct gestation.</description>
+    <description>A cryogenic neural imprint disc containing encoded synaptic pathways, combat reflexes, and skill doctrines extracted from a veteran colonist or master neural template. Used in Growth Vats to impart high-tier proficiencies during construct gestation.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Things/Item/Resource/SubcoreHigh</texPath>
