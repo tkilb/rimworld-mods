@@ -7,7 +7,10 @@
 		<li>1.5</li>
 		<li>1.6</li>
 	</supportedVersions>
-	<description>A dystopian Biotech expansion enabling colonists to genetically optimize, neuro-imprint, and mass-produce human construct castes using physical Genome Blueprint Discs and Neural Doctrines.</description>
+	<description>A dystopian RimWorld Biotech expansion centered on two distinct systems:
+
+1. Germline Gene Editing: Precision laboratory editing of natural human embryos (capped at 2 edits per embryo) with instant cellular collapse on failure and emotional reactions from biological parents.
+2. Constructs (SecUnits): Industrial synthesis of donorless artificial human matrices, modular bio-augment packages across four technical disciplines, stasis hibernation cycles, and reusable neural imprint doctrines streamed directly into growth vats.</description>
 	<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>

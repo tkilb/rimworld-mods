@@ -51,7 +51,8 @@
     </comps>
     <recipes>
       <li>Eugenics_BatchApplyBlueprint</li>
-      <li>Eugenics_BatchScreenEmbryo</li>
+      <li>Recipe_SynthesizeBlankEmbryoFresh</li>
+      <li>Recipe_SynthesizeBlankEmbryoRecycled</li>
       <li>Eugenics_BatchRecycleEmbryo</li>
     </recipes>
     <designationCategory>Biotech</designationCategory>

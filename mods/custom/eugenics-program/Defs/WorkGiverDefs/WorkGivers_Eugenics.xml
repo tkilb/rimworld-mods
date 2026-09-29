@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <!-- ════════════════════════════════════════════════════════════════════════
-       WorkGiver: Prenatal Genomic Screening
-       Assigned to Doctors work type. Requires Medical 8+.
-       ════════════════════════════════════════════════════════════════════════ -->
-  <WorkGiverDef>
-    <defName>Eugenics_ScreenEmbryo</defName>
-    <label>screen embryo genetics</label>
-    <giverClass>EugenicsProgram.WorkGiver_ScreenEmbryo</giverClass>
-    <workType>Doctor</workType>
-    <priorityInType>50</priorityInType>
-    <verb>screen</verb>
-    <gerund>screening embryos</gerund>
-    <requiredCapacities>
-      <li>Manipulation</li>
-    </requiredCapacities>
-  </WorkGiverDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
        WorkGiver: Embryo Biomass Liquefaction

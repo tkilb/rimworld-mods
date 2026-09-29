@@ -8,7 +8,6 @@ namespace EugenicsProgram
     {
         // ── Jobs ──────────────────────────────────────────────────────────────────
         public static JobDef Eugenics_ScanNeuralProfile;
-        public static JobDef Eugenics_ScreenEmbryo;
         public static JobDef Eugenics_RecycleEmbryo;
         public static JobDef Eugenics_HaulDiscToContainer;
 
@@ -23,7 +22,6 @@ namespace EugenicsProgram
 
         // ── Recipes ───────────────────────────────────────────────────────────────
         public static RecipeDef Eugenics_BatchApplyBlueprint;
-        public static RecipeDef Eugenics_BatchScreenEmbryo;
         public static RecipeDef Eugenics_BatchRecycleEmbryo;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────

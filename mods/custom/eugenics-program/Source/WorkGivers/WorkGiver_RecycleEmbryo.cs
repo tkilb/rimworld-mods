@@ -31,11 +31,7 @@ namespace EugenicsProgram
             CompEmbryoQuality comp = embryo.TryGetComp<CompEmbryoQuality>();
             if (comp == null) return false;
 
-            // Auto-recycle only defective screened embryos; pristine ones require manual designation
-            bool autoEligible = comp.isScreened && comp.hasDefects;
-            bool manualDesignated = comp.designatedForRecycling;
-
-            if (!autoEligible && !manualDesignated) return false;
+            if (!comp.designatedForRecycling) return false;
             if (embryo.IsForbidden(pawn)) return false;
             if (!pawn.CanReserve(embryo)) return false;
 

@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <!-- ════════════════════════════════════════════════════════════════════════
-       Prenatal Genomic Screening
-       Skill gate: Medical 8+ (enforced in WorkGiver_ScreenEmbryo)
-       ════════════════════════════════════════════════════════════════════════ -->
-  <JobDef>
-    <defName>Eugenics_ScreenEmbryo</defName>
-    <driverClass>EugenicsProgram.JobDriver_ScreenEmbryo</driverClass>
-    <reportString>performing prenatal genomic screening.</reportString>
-    <casualInterruptible>false</casualInterruptible>
-    <playerInterruptible>true</playerInterruptible>
-  </JobDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
        Biomass Liquefaction

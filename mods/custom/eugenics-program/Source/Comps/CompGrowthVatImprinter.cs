@@ -129,14 +129,24 @@ namespace EugenicsProgram
             Pawn occupant = GetVatOccupant();
             if (occupant == null || occupant.skills == null) return;
 
+            bool isConstruct = IsConstruct(occupant);
+
+            // Construct check: prevent stacking if already imprinted
+            if (isConstruct && GameComponent_NeuralImprintTracker.Instance?.HasBeenImprinted(occupant) == true)
+            {
+                WipePassions(occupant);
+                return;
+            }
+
             float xp = Props?.xpPerImprintInterval ?? 15f;
+            float skillMult = isConstruct ? 0.5f : 1.0f;
 
             if (blueprint.skillLevels != null)
             {
                 foreach (var kvp in blueprint.skillLevels)
                 {
                     SkillDef skillDef = kvp.Key;
-                    int targetLevel = kvp.Value;
+                    int targetLevel = Mathf.RoundToInt(kvp.Value * skillMult);
                     SkillRecord record = occupant.skills.GetSkill(skillDef);
                     if (record != null && record.Level < targetLevel)
                     {
@@ -145,7 +155,12 @@ namespace EugenicsProgram
                 }
             }
 
-            if (Props != null && Props.imprintPassions && blueprint.passions != null)
+            if (isConstruct)
+            {
+                // Explicitly wipe passions for constructs
+                WipePassions(occupant);
+            }
+            else if (Props != null && Props.imprintPassions && blueprint.passions != null)
             {
                 foreach (var kvp in blueprint.passions)
                 {
@@ -158,6 +173,154 @@ namespace EugenicsProgram
                     }
                 }
             }
+        }
+
+        public void OnPawnDecanted(Pawn pawn, bool fromEmbryo, HumanEmbryo embryo = null)
+        {
+            if (pawn == null) return;
+
+            bool isConstruct = IsConstruct(pawn, embryo);
+            if (!isConstruct)
+            {
+                // Non-construct: standard human gestation / maturation, no synthetic neural overrides
+                return;
+            }
+
+            // Ensure construct property trait is attached if missing
+            TraitDef traitAsset = NeuralImprintDefOf.Trait_ConstructAsset ?? DefDatabase<TraitDef>.GetNamedSilentFail("Trait_ConstructAsset");
+            if (traitAsset != null && pawn.story?.traits != null && !pawn.story.traits.HasTrait(traitAsset))
+            {
+                pawn.story.traits.GainTrait(new Trait(traitAsset));
+            }
+
+            CompNeuralBlueprint bp = LoadedBlueprint;
+            bool hasValidBlueprint = bp != null && bp.IsEncoded;
+
+            if (hasValidBlueprint)
+            {
+                bool alreadyImprinted = GameComponent_NeuralImprintTracker.Instance?.HasBeenImprinted(pawn) == true;
+                if (!alreadyImprinted)
+                {
+                    // Apply baseline reflexes first so unencoded skills are not left at 0 if decanted from embryo
+                    if (fromEmbryo)
+                    {
+                        ApplyBaselineSkills(pawn);
+                    }
+
+                    // Transfer skills at 50% multiplier (0.5 of scanned donor skills)
+                    if (bp.skillLevels != null)
+                    {
+                        foreach (var kvp in bp.skillLevels)
+                        {
+                            SkillDef skillDef = kvp.Key;
+                            int targetLevel = Mathf.RoundToInt(kvp.Value * 0.5f);
+                            SkillRecord record = pawn.skills?.GetSkill(skillDef);
+                            if (record != null)
+                            {
+                                record.Level = Mathf.Max(record.Level, targetLevel);
+                                record.xpSinceLastLevel = 0f;
+                            }
+                        }
+                    }
+
+                    // Explicitly wipe passions for constructs: record.passion = Passion.None
+                    WipePassions(pawn);
+
+                    GameComponent_NeuralImprintTracker.Instance?.RegisterImprint(pawn);
+
+                    Messages.Message(
+                        $"Construct {pawn.LabelShortCap} decanted with imprinted neural profile ({bp.doctrineTitle ?? LoadedDisc.Label}): 50% donor skills transferred, passions neutralized.",
+                        pawn,
+                        MessageTypeDefOf.PositiveEvent);
+                }
+                else
+                {
+                    WipePassions(pawn);
+                }
+            }
+            else
+            {
+                // Baseline decanting (no neural data):
+                // Shooting: 4, Melee: 4, Social: 2, Intellectual: 2, Artistic: 0, all other skills: 3.
+                // Passions forced to Passion.None.
+                ApplyBaselineSkills(pawn);
+                WipePassions(pawn);
+
+                Messages.Message(
+                    $"Construct {pawn.LabelShortCap} decanted with innate baseline neural reflexes (no neural blueprint loaded).",
+                    pawn,
+                    MessageTypeDefOf.NeutralEvent);
+            }
+        }
+
+        public static void ApplyBaselineSkills(Pawn pawn)
+        {
+            if (pawn?.skills == null) return;
+
+            foreach (SkillDef skill in DefDatabase<SkillDef>.AllDefs)
+            {
+                SkillRecord record = pawn.skills.GetSkill(skill);
+                if (record == null) continue;
+
+                int level;
+                if (skill == SkillDefOf.Shooting) level = 4;
+                else if (skill == SkillDefOf.Melee) level = 4;
+                else if (skill == SkillDefOf.Social) level = 2;
+                else if (skill == SkillDefOf.Intellectual) level = 2;
+                else if (skill == SkillDefOf.Artistic) level = 0;
+                else level = 3;
+
+                record.Level = level;
+                record.xpSinceLastLevel = 0f;
+                record.passion = Passion.None;
+            }
+        }
+
+        public static void WipePassions(Pawn pawn)
+        {
+            if (pawn?.skills?.skills == null) return;
+
+            foreach (SkillRecord record in pawn.skills.skills)
+            {
+                record.passion = Passion.None;
+            }
+        }
+
+        public static bool IsConstruct(Pawn pawn, HumanEmbryo embryo = null)
+        {
+            if (pawn != null)
+            {
+                if (Gene_ConstructPsychology.IsConstruct(pawn)) return true;
+                if (pawn.story?.traits != null)
+                {
+                    TraitDef traitAsset = NeuralImprintDefOf.Trait_ConstructAsset ?? DefDatabase<TraitDef>.GetNamedSilentFail("Trait_ConstructAsset");
+                    if (traitAsset != null && pawn.story.traits.HasTrait(traitAsset)) return true;
+                }
+                if (pawn.genes != null)
+                {
+                    GeneDef geneDef = NeuralImprintDefOf.Gene_ConstructPsychology ?? DefDatabase<GeneDef>.GetNamedSilentFail("Gene_ConstructPsychology");
+                    if (geneDef != null && pawn.genes.HasActiveGene(geneDef)) return true;
+                }
+            }
+
+            if (embryo != null)
+            {
+                if (embryo.GeneSet != null && embryo.GeneSet.GenesListForReading != null)
+                {
+                    foreach (var g in embryo.GeneSet.GenesListForReading)
+                    {
+                        if (g != null && (g.defName == "Gene_ConstructPsychology" || g.geneClass == typeof(Gene_ConstructPsychology)))
+                            return true;
+                    }
+                }
+                var comp = embryo.TryGetComp<CompEmbryoQuality>();
+                if (comp != null && comp.isConstruct)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override string CompInspectStringExtra()
@@ -176,12 +339,19 @@ namespace EugenicsProgram
                 Pawn occupant = GetVatOccupant();
                 if (occupant != null && bp?.IsEncoded == true)
                 {
-                    sb.Append(" - Streaming proficiencies");
+                    if (IsConstruct(occupant))
+                    {
+                        sb.Append(" - Imprinting construct (50% skill rate, passions neutralized)");
+                    }
+                    else
+                    {
+                        sb.Append(" - Streaming proficiencies");
+                    }
                 }
             }
             else
             {
-                sb.Append("Neural Imprinter: None (Empty)");
+                sb.Append("Neural Imprinter: None (Empty - Innate baseline reflexes on construct decant)");
             }
 
             return sb.ToString();
@@ -221,6 +391,19 @@ namespace EugenicsProgram
                                 sb.AppendLine($"Mentor / Source: {bp.donorName}");
                             }
                             sb.AppendLine();
+
+                            Pawn occupant = GetVatOccupant();
+                            bool isConstruct = IsConstruct(occupant);
+                            if (isConstruct)
+                            {
+                                sb.AppendLine("Target: Construct (50% Transfer Multiplier, Passions Disabled)");
+                            }
+                            else
+                            {
+                                sb.AppendLine("Target: Standard Pawn (100% Transfer Multiplier)");
+                            }
+                            sb.AppendLine();
+
                             sb.AppendLine("Streaming Skills & Passions:");
                             if (bp.skillLevels == null || bp.skillLevels.Count == 0)
                             {
@@ -231,12 +414,14 @@ namespace EugenicsProgram
                                 foreach (var kvp in bp.skillLevels)
                                 {
                                     string passionStr = "";
-                                    if (bp.passions != null && bp.passions.TryGetValue(kvp.Key, out Passion p))
+                                    if (!isConstruct && bp.passions != null && bp.passions.TryGetValue(kvp.Key, out Passion p))
                                     {
                                         if (p == Passion.Major) passionStr = " (Burning Passion 🔥🔥)";
                                         else if (p == Passion.Minor) passionStr = " (Interested Passion 🔥)";
                                     }
-                                    sb.AppendLine($"  • {kvp.Key.label.CapitalizeFirst()}: Target Level {kvp.Value}{passionStr}");
+                                    int effective = isConstruct ? Mathf.RoundToInt(kvp.Value * 0.5f) : kvp.Value;
+                                    string constructNote = isConstruct ? $" [Construct 50%: {effective}]" : "";
+                                    sb.AppendLine($"  • {kvp.Key.label.CapitalizeFirst()}: Scanned Level {kvp.Value}{constructNote}{passionStr}");
                                 }
                             }
 

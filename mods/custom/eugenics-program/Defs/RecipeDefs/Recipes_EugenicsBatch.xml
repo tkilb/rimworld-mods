@@ -39,39 +39,150 @@
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
-       Recipe: Batch Prenatal Genomic Screening
-       Screens an embryo for defects.
+       Recipe: Synthesize Blank Embryo (Fresh Organics)
+       Synthesizes a blank construct embryo from fresh organic stock.
        ════════════════════════════════════════════════════════════════════════ -->
   <RecipeDef>
-    <defName>Eugenics_BatchScreenEmbryo</defName>
-    <label>screen embryo genetics</label>
-    <description>Systematically sequences and screens embryonic DNA for congenital defects and cellular instabilities introduced during splicing.</description>
-    <jobString>Screening embryo genetics.</jobString>
-    <workAmount>1200</workAmount>
-    <workSpeedStat>MedicalOperationSpeed</workSpeedStat>
-    <workSkill>Medicine</workSkill>
+    <defName>Recipe_SynthesizeBlankEmbryoFresh</defName>
+    <label>synthesize blank embryo (fresh organics)</label>
+    <description>Synthesizes a blank synthetic embryo matrix from raw organic biomass, neutroamine, and medicine. Yields a donorless construct embryo matrix with locked construct baseline endogenes.</description>
+    <jobString>Synthesizing blank construct embryo.</jobString>
+    <workAmount>2000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Intellectual</workSkill>
     <workSkillLearnFactor>0.15</workSkillLearnFactor>
     <soundWorking>Recipe_Machining</soundWorking>
-    <workerClass>EugenicsProgram.Recipe_BatchScreenEmbryo</workerClass>
+    <workerClass>EugenicsProgram.Recipe_SynthesizeBlankEmbryo</workerClass>
+    <recipeUsers>
+      <li>EmbryoSplicingBench</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Neutroamine</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Neutroamine</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <skillRequirements>
+      <Intellectual>6</Intellectual>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>Eugenics_ConstructFoundations</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Recipe: Synthesize Blank Embryo (Recycled Biomass)
+       Synthesizes a blank construct embryo using recycled Genetic Nutrient Paste.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef>
+    <defName>Recipe_SynthesizeBlankEmbryoRecycled</defName>
+    <label>synthesize blank embryo (recycled biomass)</label>
+    <description>Synthesizes a blank synthetic embryo matrix utilizing recovered genetic nutrient paste, drastically reducing the raw biomass needed. Yields a donorless construct embryo matrix with locked construct baseline endogenes.</description>
+    <jobString>Synthesizing blank construct embryo.</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Intellectual</workSkill>
+    <workSkillLearnFactor>0.15</workSkillLearnFactor>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <workerClass>EugenicsProgram.Recipe_SynthesizeBlankEmbryo</workerClass>
+    <recipeUsers>
+      <li>EmbryoSplicingBench</li>
+    </recipeUsers>
     <ingredients>
       <li>
         <filter>
           <thingDefs>
-            <li>HumanEmbryo</li>
+            <li>GeneticNutrientPaste</li>
           </thingDefs>
         </filter>
         <count>1</count>
       </li>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Neutroamine</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
     <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+        <li>Medicine</li>
+      </categories>
       <thingDefs>
-        <li>HumanEmbryo</li>
+        <li>GeneticNutrientPaste</li>
+        <li>Neutroamine</li>
       </thingDefs>
     </fixedIngredientFilter>
     <skillRequirements>
-      <Medicine>8</Medicine>
+      <Intellectual>6</Intellectual>
+      <Medicine>4</Medicine>
     </skillRequirements>
-    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
+    <researchPrerequisite>Eugenics_ConstructFoundations</researchPrerequisite>
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
@@ -81,7 +192,7 @@
   <RecipeDef>
     <defName>Eugenics_BatchRecycleEmbryo</defName>
     <label>liquefy embryo biomass</label>
-    <description>Liquefies defective or culled embryonic biomass into concentrated genetic nutrient paste for growth vats.</description>
+    <description>Liquefies culled embryonic biomass into concentrated genetic nutrient paste for growth vats.</description>
     <jobString>Liquefying embryo biomass.</jobString>
     <workAmount>800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -89,6 +200,9 @@
     <workSkillLearnFactor>0.1</workSkillLearnFactor>
     <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
     <workerClass>EugenicsProgram.Recipe_BatchRecycleEmbryo</workerClass>
+    <recipeUsers>
+      <li>EmbryoSplicingBench</li>
+    </recipeUsers>
     <ingredients>
       <li>
         <filter>
@@ -105,12 +219,12 @@
       </thingDefs>
     </fixedIngredientFilter>
     <products>
-      <GeneticNutrientPaste>3</GeneticNutrientPaste>
+      <GeneticNutrientPaste>1</GeneticNutrientPaste>
     </products>
     <skillRequirements>
       <Medicine>4</Medicine>
     </skillRequirements>
-    <researchPrerequisite>Eugenics_GeneticDiagnostics</researchPrerequisite>
+    <researchPrerequisite>Eugenics_ConstructFoundations</researchPrerequisite>
   </RecipeDef>
 
 </Defs>

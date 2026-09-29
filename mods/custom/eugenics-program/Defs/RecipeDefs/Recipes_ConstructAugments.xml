@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallBasicCombatPackage</defName>
+    <label>install basiccombat augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_BasicCombatPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_BasicCombatPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_BasicCombatPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveBasicCombatPackage</defName>
+    <label>remove basiccombat augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_BasicCombatPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallIntermediateCombatPackage</defName>
+    <label>install intermediatecombat augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_IntermediateCombatPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_IntermediateCombatPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_IntermediateCombatPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveIntermediateCombatPackage</defName>
+    <label>remove intermediatecombat augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_IntermediateCombatPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallAdvancedCombatPackage</defName>
+    <label>install advancedcombat augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_AdvancedCombatPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_AdvancedCombatPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_AdvancedCombatPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveAdvancedCombatPackage</defName>
+    <label>remove advancedcombat augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_AdvancedCombatPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallBasicMedicalPackage</defName>
+    <label>install basicmedical augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_BasicMedicalPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_BasicMedicalPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_BasicMedicalPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveBasicMedicalPackage</defName>
+    <label>remove basicmedical augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_BasicMedicalPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallIntermediateMedicalPackage</defName>
+    <label>install intermediatemedical augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_IntermediateMedicalPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_IntermediateMedicalPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_IntermediateMedicalPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveIntermediateMedicalPackage</defName>
+    <label>remove intermediatemedical augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_IntermediateMedicalPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallAdvancedMedicalPackage</defName>
+    <label>install advancedmedical augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_AdvancedMedicalPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_AdvancedMedicalPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_AdvancedMedicalPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveAdvancedMedicalPackage</defName>
+    <label>remove advancedmedical augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_AdvancedMedicalPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallBasicIndustrialPackage</defName>
+    <label>install basicindustrial augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_BasicIndustrialPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_BasicIndustrialPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_BasicIndustrialPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveBasicIndustrialPackage</defName>
+    <label>remove basicindustrial augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_BasicIndustrialPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallIntermediateIndustrialPackage</defName>
+    <label>install intermediateindustrial augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_IntermediateIndustrialPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_IntermediateIndustrialPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_IntermediateIndustrialPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveIntermediateIndustrialPackage</defName>
+    <label>remove intermediateindustrial augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_IntermediateIndustrialPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallAdvancedIndustrialPackage</defName>
+    <label>install advancedindustrial augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_AdvancedIndustrialPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_AdvancedIndustrialPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_AdvancedIndustrialPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveAdvancedIndustrialPackage</defName>
+    <label>remove advancedindustrial augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_AdvancedIndustrialPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallBasicLaborerPackage</defName>
+    <label>install basiclaborer augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_BasicLaborerPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_BasicLaborerPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_BasicLaborerPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveBasicLaborerPackage</defName>
+    <label>remove basiclaborer augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_BasicLaborerPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallIntermediateLaborerPackage</defName>
+    <label>install intermediatelaborer augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_IntermediateLaborerPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_IntermediateLaborerPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_IntermediateLaborerPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveIntermediateLaborerPackage</defName>
+    <label>remove intermediatelaborer augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_IntermediateLaborerPackage</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_InstallAdvancedLaborerPackage</defName>
+    <label>install advancedlaborer augment</label>
+    <description>Install a bio-augment package.</description>
+    <workerClass>EugenicsProgram.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bio-augment package.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eugenics_AdvancedLaborerPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <thingDefs>
+        <li>Eugenics_AdvancedLaborerPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Eugenics_AdvancedLaborerPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Eugenics_RemoveAdvancedLaborerPackage</defName>
+    <label>remove advancedlaborer augment</label>
+    <description>Remove a bio-augment package safely.</description>
+    <workerClass>EugenicsProgram.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bio-augment package.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <removesHediff>Eugenics_AdvancedLaborerPackage</removesHediff>
+  </RecipeDef>
+
+</Defs>

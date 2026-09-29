@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Parental Thoughts: Germline Embryo Modification
+       Triggered upon completion of embryo gene splicing operations.
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <ThoughtDef>
+    <defName>ChildGeneticallyAltered</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>10</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>child genetically altered</label>
+        <description>Someone manipulated my unborn child's DNA in a laboratory. Splicing natural flesh like industrial material is an abhorrent violation of our family.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>ChildBiologicallyUpgraded</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>10</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>child biologically upgraded</label>
+        <description>My unborn child was engineered at the splicing bench to transcend weak baseline genetics. True perfection begins before birth.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

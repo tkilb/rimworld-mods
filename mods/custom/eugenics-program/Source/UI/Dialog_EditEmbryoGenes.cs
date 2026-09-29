@@ -12,11 +12,13 @@ namespace EugenicsProgram
     /// Custom IMGUI dialog for editing the endogenes on a HumanEmbryo.
     ///
     /// Rules enforced:
+    ///   - Operation Limit: Maximum of 2 gene edits per embryo.
     ///   - Gene ADDITION: any GeneDef available in the connected GeneBanks.
     ///   - Gene REMOVAL : a gene may only be removed if its exact GeneDef is currently
     ///     stored in one of the connected GeneBanks (acts as a molecular template).
     ///   - "Burn Disc"  : consume a GenomeBlueprintDisk from the map and apply its
-    ///     stored gene list to the embryo's endogenes (overwrites all genes).
+    ///     stored gene list to the embryo's endogenes (overwrites all genes, counts as 1 edit).
+    ///   - Splicing Failure: rolls for botch; on failure embryo collapses into 1x GeneticNutrientPaste.
     /// </summary>
     public class Dialog_EditEmbryoGenes : Window
     {
@@ -200,10 +202,13 @@ namespace EugenicsProgram
         // ── Panel: burn blueprint disc ─────────────────────────────────────────────
         private void DrawBurnDiscPanel(Rect rect)
         {
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            bool maxEditsReached = quality != null && quality.editCount >= 2;
+
             // Warning header
             Rect hdr = new Rect(rect.x, rect.y, rect.width, 36f);
             GUI.color = new Color(1f, 0.85f, 0.3f);
-            Widgets.Label(hdr, "⚠  Burning a disc OVERWRITES all current embryo endogenes and DESTROYS the disc.");
+            Widgets.Label(hdr, "⚠  Burning a disc OVERWRITES all current embryo endogenes, counts as 1 edit, and DESTROYS the disc.");
             GUI.color = Color.white;
 
             Rect listRect = new Rect(rect.x, rect.y + 40f, rect.width, rect.height - 40f);
@@ -251,10 +256,17 @@ namespace EugenicsProgram
                         Widgets.Label(btnRect, "(Empty)");
                         GUI.color = Color.white;
                     }
+                    else if (maxEditsReached)
+                    {
+                        GUI.color = Color.gray;
+                        Widgets.Label(btnRect, "(Max edits)");
+                        GUI.color = Color.white;
+                        TooltipHandler.TipRegion(row, "Embryo has already reached the maximum allowed genetic edits (2).");
+                    }
                     else if (Widgets.ButtonText(btnRect, "Burn Disc"))
                     {
                         Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
-                            $"Burn '{title}' onto this embryo? This will overwrite all existing genes and destroy the disc.",
+                            $"Burn '{title}' onto this embryo? This will overwrite all existing genes, count as 1 edit, and destroy the disc.",
                             () => BurnDisc(disc, comp)));
                     }
 
@@ -284,11 +296,20 @@ namespace EugenicsProgram
 
             // Action button
             Rect btnRect = new Rect(row.xMax - 80f, row.y + 3f, 76f, RowHeight - 6f);
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            bool maxEditsReached = quality != null && quality.editCount >= 2;
 
             if (isRemoveMode)
             {
                 bool canRemove = bankGenes.Contains(gene);
-                if (canRemove)
+                if (maxEditsReached)
+                {
+                    GUI.color = Color.gray;
+                    Widgets.Label(btnRect, "(max edits)");
+                    GUI.color = Color.white;
+                    TooltipHandler.TipRegion(row, "Embryo has reached the maximum allowed genetic edits (2).");
+                }
+                else if (canRemove)
                 {
                     if (Widgets.ButtonText(btnRect, "Remove"))
                         TryRemoveGene(gene);
@@ -303,8 +324,17 @@ namespace EugenicsProgram
             }
             else
             {
-                if (Widgets.ButtonText(btnRect, "Add"))
+                if (maxEditsReached)
+                {
+                    GUI.color = Color.gray;
+                    Widgets.Label(btnRect, "(max edits)");
+                    GUI.color = Color.white;
+                    TooltipHandler.TipRegion(row, "Embryo has reached the maximum allowed genetic edits (2).");
+                }
+                else if (Widgets.ButtonText(btnRect, "Add"))
+                {
                     TryAddGene(gene);
+                }
             }
 
             // Description tooltip
@@ -317,31 +347,107 @@ namespace EugenicsProgram
         {
             int cpx = embryoGenes.Sum(g => g?.biostatCpx ?? 0);
             int met = embryoGenes.Sum(g => g?.biostatMet ?? 0);
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            int edits = quality?.editCount ?? 0;
             Widgets.Label(new Rect(rect.x, rect.y + 10f, rect.width - 110f, rect.height),
-                $"Genes: {embryoGenes.Count}   |   Total Complexity: {cpx}   |   Net Metabolic Efficiency: {(met >= 0 ? "+" : "")}{met}");
+                $"Genes: {embryoGenes.Count}   |   Edits: {edits}/2   |   Total Complexity: {cpx}   |   Net Metabolic Efficiency: {(met >= 0 ? "+" : "")}{met}");
 
             if (Widgets.ButtonText(new Rect(rect.xMax - 100f, rect.y + 6f, 96f, 34f), "Close"))
                 Close();
         }
 
-        // ── Gene mutation ──────────────────────────────────────────────────────────
+        // ── Gene mutation & failure roll ───────────────────────────────────────────
+
+        private bool PreEditCheckAndRollFailure()
+        {
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            if (quality != null && quality.editCount >= 2)
+            {
+                Messages.Message(
+                    "Cannot edit embryo genetics: Maximum genetic edit operations (2) reached for this embryo.",
+                    embryo,
+                    MessageTypeDefOf.RejectInput);
+                return false;
+            }
+
+            // Roll for failure/botch based on room cleanliness
+            float roomCleanliness = assembler?.GetRoom()?.GetStat(RoomStatDefOf.Cleanliness) ?? 0f;
+            float botchChance = Mathf.Clamp(0.08f - (roomCleanliness * 0.05f), 0.02f, 0.50f);
+
+            if (Rand.Chance(botchChance))
+            {
+                // Splicing botch: Cellular structure collapses, spawn 1x Genetic Nutrient Paste
+                Map map = embryo.MapHeld ?? assembler?.Map;
+                IntVec3 pos = embryo.PositionHeld.IsValid ? embryo.PositionHeld : (assembler?.Position ?? IntVec3.Invalid);
+
+                if (!embryo.Destroyed)
+                {
+                    embryo.Destroy(DestroyMode.Vanish);
+                }
+
+                if (map != null && pos.IsValid)
+                {
+                    Thing paste = ThingMaker.MakeThing(EugenicsDefOf.GeneticNutrientPaste);
+                    paste.stackCount = 1;
+                    GenPlace.TryPlaceThing(paste, pos, map, ThingPlaceMode.Near);
+                }
+
+                Messages.Message(
+                    "Embryo gene splicing botched! Cellular structure collapsed due to genetic instability. 1x Genetic Nutrient Paste recovered.",
+                    new TargetInfo(pos, map),
+                    MessageTypeDefOf.NegativeEvent);
+
+                SoundStarter.PlayOneShotOnCamera(SoundDefOf.Crunch);
+                Close();
+                return false;
+            }
+
+            return true;
+        }
+
+        private void PostSuccessfulEdit(string message)
+        {
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            if (quality != null)
+            {
+                quality.editCount++;
+            }
+
+            EugenicsParentalUtility.ApplyParentalThoughts(embryo);
+            RefreshLists();
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                Messages.Message(message, embryo, MessageTypeDefOf.PositiveEvent);
+            }
+        }
+
         private void TryAddGene(GeneDef gene)
         {
+            if (!PreEditCheckAndRollFailure()) return;
+
             embryo.GeneSet?.AddGene(gene);
-            RefreshLists();
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            int currentEdits = (quality?.editCount ?? 0) + 1;
+            PostSuccessfulEdit($"Added gene '{gene.label}'. Edits: {currentEdits}/2.");
             SoundStarter.PlayOneShotOnCamera(SoundDefOf.Tick_High);
         }
 
         private void TryRemoveGene(GeneDef gene)
         {
-            // Debug_RemoveGene is the only public remove method on GeneSet in RimWorld 1.6
+            if (!PreEditCheckAndRollFailure()) return;
+
             embryo.GeneSet?.Debug_RemoveGene(gene);
-            RefreshLists();
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            int currentEdits = (quality?.editCount ?? 0) + 1;
+            PostSuccessfulEdit($"Removed gene '{gene.label}'. Edits: {currentEdits}/2.");
             SoundStarter.PlayOneShotOnCamera(SoundDefOf.Tick_Low);
         }
 
         private void BurnDisc(Thing disc, CompGenomeBlueprint comp)
         {
+            if (!PreEditCheckAndRollFailure()) return;
+
             // Clear all current endogenes
             if (embryo.GeneSet != null)
             {
@@ -356,12 +462,7 @@ namespace EugenicsProgram
             // Consume the disc
             disc.Destroy(DestroyMode.Vanish);
 
-            Messages.Message(
-                $"Genome blueprint '{comp.templateLabel ?? disc.Label}' burned onto embryo. Disc consumed.",
-                embryo,
-                MessageTypeDefOf.PositiveEvent);
-
-            RefreshLists();
+            PostSuccessfulEdit($"Genome blueprint '{comp.templateLabel ?? disc.Label}' burned onto embryo. Disc consumed.");
             SoundStarter.PlayOneShotOnCamera(SoundDefOf.PsychicPulseGlobal);
         }
 
@@ -379,7 +480,10 @@ namespace EugenicsProgram
         {
             int cpx = embryoGenes.Sum(g => g?.biostatCpx ?? 0);
             int met = embryoGenes.Sum(g => g?.biostatMet ?? 0);
-            return $"{embryo.LabelCap}  |  Genes: {embryoGenes.Count}  |  Complexity: {cpx}  |  Net Met: {(met >= 0 ? "+" : "")}{met}";
+            CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
+            string constructTag = (quality != null && quality.isConstruct) ? " [Construct Matrix]" : "";
+            int edits = quality?.editCount ?? 0;
+            return $"{embryo.LabelCap}{constructTag}  |  Genes: {embryoGenes.Count}  |  Edits: {edits}/2  |  Complexity: {cpx}  |  Net Met: {(met >= 0 ? "+" : "")}{met}";
         }
 
         private static string BuildDiscTooltip(CompGenomeBlueprint comp)

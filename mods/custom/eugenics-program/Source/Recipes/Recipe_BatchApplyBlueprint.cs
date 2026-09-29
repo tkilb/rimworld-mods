@@ -50,6 +50,66 @@ namespace EugenicsProgram
             CompGenomeBlueprint blueprint = bench?.LoadedBlueprintComp;
             if (blueprint == null || blueprint.genes.NullOrEmpty()) return;
 
+            CompEmbryoQuality comp = embryo.TryGetComp<CompEmbryoQuality>();
+
+            // 1. Enforce 2-edit limit: block further editing if already at 2 edits
+            if (comp != null && comp.editCount >= 2)
+            {
+                Messages.Message(
+                    "Batch splicing aborted: Embryo has already undergone the maximum allowed genetic edits (2).",
+                    embryo,
+                    MessageTypeDefOf.RejectInput);
+                DropEmbryo(billDoer, bench, embryo);
+                return;
+            }
+
+            // 2. Failure roll on botch based on doctor skill and room cleanliness
+            int doctorSkill = billDoer?.skills?.GetSkill(SkillDefOf.Medicine)?.Level
+                           ?? (billDoer?.skills?.GetSkill(SkillDefOf.Intellectual)?.Level ?? 6);
+            float roomCleanliness = billDoer?.GetRoom()?.GetStat(RoomStatDefOf.Cleanliness) ?? 0f;
+
+            float cleanlinessAdjustment = roomCleanliness < 0f
+                ? Mathf.Abs(roomCleanliness) * 0.15f
+                : -roomCleanliness * 0.05f;
+
+            float failureChance = Mathf.Clamp(0.15f - (doctorSkill * 0.01f) + cleanlinessAdjustment, 0.02f, 0.80f);
+
+            if (Rand.Chance(failureChance))
+            {
+                // Splicing botch: Cellular structure collapses, destroy embryo and spawn 1x GeneticNutrientPaste
+                IntVec3 dropLoc = billDoer?.Position ?? bench?.Position ?? IntVec3.Invalid;
+                Map map = billDoer?.Map ?? bench?.Map;
+
+                if (billDoer?.carryTracker?.CarriedThing == embryo)
+                {
+                    billDoer.carryTracker.TryDropCarriedThing(billDoer.Position, ThingPlaceMode.Near, out _);
+                }
+                else if (embryo.holdingOwner != null)
+                {
+                    embryo.holdingOwner.Remove(embryo);
+                }
+
+                if (!embryo.Destroyed)
+                {
+                    embryo.Destroy(DestroyMode.Vanish);
+                }
+
+                if (map != null && dropLoc.IsValid)
+                {
+                    Thing paste = ThingMaker.MakeThing(EugenicsDefOf.GeneticNutrientPaste);
+                    paste.stackCount = 1;
+                    GenPlace.TryPlaceThing(paste, dropLoc, map, ThingPlaceMode.Near);
+                }
+
+                Messages.Message(
+                    $"Embryo splicing botched by {billDoer?.LabelShort ?? "operator"}! Cellular structure collapsed into 1x Genetic Nutrient Paste.",
+                    new TargetInfo(dropLoc, map),
+                    MessageTypeDefOf.NegativeEvent);
+
+                return;
+            }
+
+            // 3. Successful splicing: apply blueprint endogenes
             if (embryo.GeneSet != null)
             {
                 List<GeneDef> currentGenes = embryo.GeneSet.GenesListForReading.ToList();
@@ -68,20 +128,27 @@ namespace EugenicsProgram
                 }
             }
 
-            CompEmbryoQuality comp = embryo.TryGetComp<CompEmbryoQuality>();
-            if (comp != null && billDoer != null)
+            // 4. Increment editCount
+            if (comp != null)
             {
-                float roomCleanliness = billDoer.GetRoom()?.GetStat(RoomStatDefOf.Cleanliness) ?? 1f;
-                if (roomCleanliness < 0f && !comp.hasDefects)
-                {
-                    float defectChance = (comp.Props?.dirtyRoomDefectMultiplier ?? 2f) * 0.04f;
-                    if (Rand.Chance(defectChance))
-                    {
-                        comp.IntroduceComplication("Laboratory contamination (dirty environment)", 0.35f);
-                    }
-                }
+                comp.editCount++;
             }
 
+            // 5. Apply parental thoughts to biological parents (if natural embryo)
+            EugenicsParentalUtility.ApplyParentalThoughts(embryo);
+
+            // 6. Drop embryo safely
+            DropEmbryo(billDoer, bench, embryo);
+
+            string templateName = !string.IsNullOrEmpty(blueprint.templateLabel) ? blueprint.templateLabel : "genome blueprint";
+            Messages.Message(
+                $"Batch splicing complete: Embryo spliced with '{templateName}' ({blueprint.genes.Count} genes). Edits: {comp?.editCount ?? 1}/2.",
+                embryo,
+                MessageTypeDefOf.PositiveEvent);
+        }
+
+        private static void DropEmbryo(Pawn billDoer, Building_EmbryoSplicingBench bench, HumanEmbryo embryo)
+        {
             if (billDoer?.carryTracker?.CarriedThing == embryo)
             {
                 billDoer.carryTracker.TryDropCarriedThing(billDoer.Position, ThingPlaceMode.Near, out _);
@@ -90,12 +157,6 @@ namespace EugenicsProgram
             {
                 embryo.holdingOwner.TryDrop(embryo, billDoer?.Position ?? bench?.Position ?? IntVec3.Invalid, billDoer?.Map ?? bench?.Map, ThingPlaceMode.Near, out _);
             }
-
-            string templateName = !string.IsNullOrEmpty(blueprint.templateLabel) ? blueprint.templateLabel : "genome blueprint";
-            Messages.Message(
-                $"Batch splicing complete: Embryo spliced with '{templateName}' ({blueprint.genes.Count} genes).",
-                embryo,
-                MessageTypeDefOf.PositiveEvent);
         }
     }
 }

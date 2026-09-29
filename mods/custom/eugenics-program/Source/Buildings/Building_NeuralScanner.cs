@@ -83,9 +83,32 @@ namespace EugenicsProgram
             return innerContainer;
         }
 
+        public static bool IsConstruct(Pawn pawn)
+        {
+            if (pawn == null) return false;
+            if (Gene_ConstructPsychology.IsConstruct(pawn)) return true;
+            if (pawn.story?.traits != null)
+            {
+                TraitDef traitAsset = NeuralImprintDefOf.Trait_ConstructAsset ?? DefDatabase<TraitDef>.GetNamedSilentFail("Trait_ConstructAsset");
+                if (traitAsset != null && pawn.story.traits.HasTrait(traitAsset)) return true;
+            }
+            if (pawn.genes != null)
+            {
+                GeneDef geneDef = NeuralImprintDefOf.Gene_ConstructPsychology ?? DefDatabase<GeneDef>.GetNamedSilentFail("Gene_ConstructPsychology");
+                if (geneDef != null && pawn.genes.HasActiveGene(geneDef)) return true;
+            }
+            return false;
+        }
+
         public bool TryAcceptPawn(Pawn pawn)
         {
             if (!CanAcceptPawn || pawn == null) return false;
+
+            if (IsConstruct(pawn))
+            {
+                Messages.Message("Constructs cannot be scanned: Synthetic neural architecture incompatible with scanner.", pawn, MessageTypeDefOf.RejectInput, false);
+                return false;
+            }
 
             pawn.DeSpawnOrDeselect();
             if (pawn.holdingOwner != null)
@@ -308,6 +331,14 @@ namespace EugenicsProgram
                                 if (p.Dead || p.Downed || !p.CanReach(this, PathEndMode.InteractionCell, Danger.Some))
                                     continue;
 
+                                if (IsConstruct(p))
+                                {
+                                    options.Add(new FloatMenuOption(
+                                        $"{p.LabelShortCap} (Cannot scan constructs: Synthetic neural architecture incompatible)",
+                                        () => Messages.Message("Constructs cannot be scanned: Synthetic neural architecture incompatible with scanner.", p, MessageTypeDefOf.RejectInput, false)));
+                                    continue;
+                                }
+
                                 options.Add(new FloatMenuOption(p.LabelShortCap, () =>
                                 {
                                     Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_ScanNeuralProfile, this);
@@ -425,11 +456,18 @@ namespace EugenicsProgram
 
             if (CanAcceptPawn)
             {
-                yield return new FloatMenuOption($"Enter {LabelShort}", () =>
+                if (IsConstruct(selPawn))
                 {
-                    Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_ScanNeuralProfile, this);
-                    selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                });
+                    yield return new FloatMenuOption($"Cannot enter {LabelShort} (Constructs cannot be scanned: Synthetic neural architecture incompatible with scanner)", null);
+                }
+                else
+                {
+                    yield return new FloatMenuOption($"Enter {LabelShort}", () =>
+                    {
+                        Job job = JobMaker.MakeJob(EugenicsDefOf.Eugenics_ScanNeuralProfile, this);
+                        selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                    });
+                }
             }
             else if (targetDisc != null && LoadedDisc == null)
             {

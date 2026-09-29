@@ -19,7 +19,7 @@ namespace EugenicsProgram
     public class JobDriver_RecycleEmbryo : JobDriver
     {
         private const int DefaultLiquefactionTicks = 1200;
-        private const int BaseNutrientYield        = 3;
+        private const int BaseNutrientYield        = 1;
 
         private Building Assembler => (Building)job.GetTarget(TargetIndex.A).Thing;
         private Thing    Embryo    => job.GetTarget(TargetIndex.B).Thing;
