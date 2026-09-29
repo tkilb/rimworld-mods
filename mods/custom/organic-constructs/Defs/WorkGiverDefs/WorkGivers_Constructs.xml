@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Embryo Biomass Liquefaction
+       Assigned to Doctors work type. Auto-queues for screen/recycled embryos.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>Construct_RecycleEmbryo</defName>
+    <label>liquefy embryo biomass</label>
+    <giverClass>OrganicConstructs.WorkGiver_RecycleEmbryo</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>40</priorityInType>
+    <verb>liquefy</verb>
+    <gerund>liquefying embryo biomass</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Do Bills at Construct Synthesizer (Research / Intellectual)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>DoBillsConstructSynthesizer</defName>
+    <label>synthesize constructs at workstation</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Research</workType>
+    <priorityInType>60</priorityInType>
+    <fixedBillGiverDefs>
+      <li>ConstructSynthesizer</li>
+    </fixedBillGiverDefs>
+    <verb>synthesize</verb>
+    <gerund>synthesizing at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Do Bills at Construct Synthesizer (Doctor / Medical)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>DoBillsConstructSynthesizerDoctor</defName>
+    <label>operate construct synthesizer</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>45</priorityInType>
+    <fixedBillGiverDefs>
+      <li>ConstructSynthesizer</li>
+    </fixedBillGiverDefs>
+    <verb>operate</verb>
+    <gerund>operating at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGivers: Haul Blueprint Discs to Construct Facilities (Hauling)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>HaulToNeuralScanner</defName>
+    <label>haul to neural scanner</label>
+    <giverClass>OrganicConstructs.WorkGiver_HaulToNeuralScanner</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>25</priorityInType>
+    <verb>load</verb>
+    <gerund>loading</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulToConstructSynthesizer</defName>
+    <label>haul to construct synthesizer</label>
+    <giverClass>OrganicConstructs.WorkGiver_HaulToConstructSynthesizer</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>25</priorityInType>
+    <verb>load</verb>
+    <gerund>loading</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulToGrowthVatImprinter</defName>
+    <label>haul to growth vat imprinter</label>
+    <giverClass>OrganicConstructs.WorkGiver_HaulToGrowthVatImprinter</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>25</priorityInType>
+    <verb>load</verb>
+    <gerund>loading</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+</Defs>

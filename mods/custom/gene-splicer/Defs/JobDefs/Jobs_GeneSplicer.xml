@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <JobDef>
+    <defName>LoadEmbryoToBench</defName>
+    <driverClass>GeneSplicer.JobDriver_LoadEmbryoToBench</driverClass>
+    <reportString>loading TargetA into TargetB.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
+  <JobDef>
+    <defName>SpliceEmbryo</defName>
+    <driverClass>GeneSplicer.JobDriver_SpliceEmbryo</driverClass>
+    <reportString>performing embryonic gene splicing at TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+  </JobDef>
+
+</Defs>

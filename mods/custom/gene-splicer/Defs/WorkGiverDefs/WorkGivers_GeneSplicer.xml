@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- WorkGiver: Load Designated Embryo into Bench (Doctor / Hauling) -->
+  <WorkGiverDef>
+    <defName>LoadEmbryoToBench</defName>
+    <label>load embryo into splicing bench</label>
+    <giverClass>GeneSplicer.WorkGiver_LoadEmbryoToBench</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>30</priorityInType>
+    <verb>load</verb>
+    <gerund>loading embryo into</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <!-- WorkGiver: Perform Embryo Splice Operation (Doctor) -->
+  <WorkGiverDef>
+    <defName>SpliceEmbryo</defName>
+    <label>perform embryo gene splicing</label>
+    <giverClass>GeneSplicer.WorkGiver_SpliceEmbryo</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>50</priorityInType>
+    <verb>splice</verb>
+    <gerund>splicing embryo at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+</Defs>

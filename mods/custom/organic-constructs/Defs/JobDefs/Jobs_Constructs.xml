@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Biomass Liquefaction
+       Converts defective/designated embryos into GeneticNutrientPaste
+       ════════════════════════════════════════════════════════════════════════ -->
+  <JobDef>
+    <defName>Construct_RecycleEmbryo</defName>
+    <driverClass>OrganicConstructs.JobDriver_RecycleEmbryo</driverClass>
+    <reportString>liquefying embryo biomass.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+  </JobDef>
+
+  <JobDef>
+    <defName>Construct_EnterConstructStasis</defName>
+    <driverClass>OrganicConstructs.JobDriver_ConstructStasis</driverClass>
+    <reportString>entering stasis.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+  </JobDef>
+
+</Defs>

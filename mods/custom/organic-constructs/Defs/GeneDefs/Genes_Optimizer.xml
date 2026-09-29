@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <GeneCategoryDef>
+    <defName>Construct_Optimizer</defName>
+    <label>optimizer genetics</label>
+    <displayPriorityInXenotype>650</displayPriorityInXenotype>
+  </GeneCategoryDef>
+
+  <GeneDef>
+    <defName>Gene_MitochondrialOverdrive</defName>
+    <label>mitochondrial overdrive</label>
+    <description>Overclocks cellular metabolic efficiency to extreme limits (+8 Metabolic Efficiency) by force-multiplying ATP synthesis, but imposes catastrophic cellular instability, halving natural lifespan and multiplying cancer occurrence.</description>
+    <iconPath>UI/Icons/Genes/Gene_TotalHealing</iconPath>
+    <displayCategory>Construct_Optimizer</displayCategory>
+    <displayOrderInCategory>10</displayOrderInCategory>
+    <biostatCpx>3</biostatCpx>
+    <biostatMet>8</biostatMet>
+    <statFactors>
+      <LifespanFactor>0.5</LifespanFactor>
+      <CancerRate>5.0</CancerRate>
+    </statFactors>
+    <customEffectDescriptions>
+      <li>+8 Metabolic Efficiency budget.</li>
+      <li>0.5x natural lifespan (Cellular Instability).</li>
+      <li>5.0x cancer incidence rate.</li>
+    </customEffectDescriptions>
+  </GeneDef>
+
+  <GeneDef>
+    <defName>Gene_GenomicCompression</defName>
+    <label>genomic compression</label>
+    <description>Artificially compresses DNA complexity (-10 Complexity) to allow extreme gene stacking, but strains cellular repair mechanisms, reducing natural immunity and general longevity.</description>
+    <iconPath>UI/Icons/Genes/Gene_WoundHealing_Fast</iconPath>
+    <displayCategory>Construct_Optimizer</displayCategory>
+    <displayOrderInCategory>20</displayOrderInCategory>
+    <biostatCpx>-10</biostatCpx>
+    <biostatMet>-3</biostatMet>
+    <statFactors>
+      <LifespanFactor>0.8</LifespanFactor>
+      <ImmunityGainSpeed>0.85</ImmunityGainSpeed>
+    </statFactors>
+    <customEffectDescriptions>
+      <li>-10 Genetic Complexity (reduces assembler complexity requirements).</li>
+      <li>-3 Metabolic Efficiency penalty.</li>
+      <li>0.8x natural lifespan and 0.85x immunity gain speed.</li>
+    </customEffectDescriptions>
+  </GeneDef>
+
+</Defs>

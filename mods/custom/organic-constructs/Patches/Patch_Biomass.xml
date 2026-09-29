@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Conditionally define GeneticNutrientPaste only if another mod (e.g. Gene Splicer) hasn't already defined it -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="GeneticNutrientPaste"]</xpath>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs</xpath>
+      <value>
+        <ThingDef ParentName="MealBase">
+          <defName>GeneticNutrientPaste</defName>
+          <label>genetic nutrient paste</label>
+          <description>Nutrient-dense biological slurry reclaimed from defective, culled, or botched embryonic material. Highly concentrated fuel formulated specifically for Growth Vats and bioreactors.</description>
+          <graphicData>
+            <texPath>Things/Item/Meal/NutrientPaste</texPath>
+            <graphicClass>Graphic_MealVariants</graphicClass>
+          </graphicData>
+          <statBases>
+            <MarketValue>12</MarketValue>
+            <Nutrition>0.9</Nutrition>
+            <Mass>0.3</Mass>
+          </statBases>
+          <ingestible>
+            <preferability>MealAwful</preferability>
+            <ateEvent>AteNutrientPaste</ateEvent>
+            <foodType>Meal, Processed</foodType>
+          </ingestible>
+          <comps>
+            <li Class="CompProperties_Rottable">
+              <daysToRotStart>14</daysToRotStart>
+              <rotDestroys>true</rotDestroys>
+            </li>
+          </comps>
+        </ThingDef>
+      </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

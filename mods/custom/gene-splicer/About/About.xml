@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Gene Splicer</name>
+  <author>Tyler Kilburn</author>
+  <packageId>tyler.genesplicer</packageId>
+  <supportedVersions>
+    <li>1.5</li>
+  </supportedVersions>
+  <description>Vanilla-adjacent germline genetic engineering for natural human embryos. Load embryos into the Embryo Splicing Bench to refine endogenes using connected Gene Banks and Gene Processors before gestation or pregnancy transfer.</description>
+  <modDependencies>
+    <li>
+      <packageId>Ludeon.RimWorld.Biotech</packageId>
+      <displayName>Biotech</displayName>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+    <li>Ludeon.RimWorld.Biotech</li>
+  </loadAfter>
+</ModMetaData>

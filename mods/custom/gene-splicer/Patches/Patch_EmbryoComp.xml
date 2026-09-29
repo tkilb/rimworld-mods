@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Ensure comps list exists on HumanEmbryo -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="HumanEmbryo"]/comps</xpath>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="HumanEmbryo"]</xpath>
+      <value>
+        <comps />
+      </value>
+    </nomatch>
+  </Operation>
+
+  <!-- Attach CompEmbryoQuality to HumanEmbryo -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="HumanEmbryo"]/comps</xpath>
+    <value>
+      <li Class="GeneSplicer.CompProperties_EmbryoQuality" />
+    </value>
+  </Operation>
+
+</Patch>

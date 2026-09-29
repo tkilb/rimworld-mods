@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Construct Synthesizer Workstation
+       ════════════════════════════════════════════════════════════════════════ -->
+  <ThingDef ParentName="BenchBase">
+    <defName>ConstructSynthesizer</defName>
+    <label>construct synthesizer</label>
+    <description>An industrial biological workstation dedicated to the synthesis, cloning, and batch genome-imprinting of organic constructs (SecUnits / Replicants). Equipped with an integrated genome blueprint disc drive to imprint mass batches of synthetic embryo matrices, and biomass liquefaction tanks for recycling culled biological material.</description>
+    <thingClass>OrganicConstructs.Building_ConstructSynthesizer</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/GeneAssembler/GeneAssembler</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.2, 2.2)</drawSize>
+      <shadowData>
+        <volume>(2.9, 0.75, 1.8)</volume>
+        <offset>(0, 0, 0)</offset>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>4500</WorkToBuild>
+      <Mass>35</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <size>(3, 2)</size>
+    <costList>
+      <Steel>200</Steel>
+      <Plasteel>50</Plasteel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>600</basePowerConsumption>
+        <idlePowerDraw>50</idlePowerDraw>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <recipes>
+      <li>Construct_BatchApplyBlueprint</li>
+      <li>Recipe_SynthesizeBlankEmbryoFresh</li>
+      <li>Recipe_SynthesizeBlankEmbryoRecycled</li>
+      <li>Construct_BatchRecycleEmbryo</li>
+    </recipes>
+    <designationCategory>Biotech</designationCategory>
+    <uiOrder>2600</uiOrder>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0, 0, -1)</interactionCellOffset>
+    <researchPrerequisites>
+      <li>Construct_Foundations</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Neural Scanner Pod
+       ════════════════════════════════════════════════════════════════════════ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>NeuralScanner</defName>
+    <label>neural scanner</label>
+    <description>An enclosed biometric scanning pod engineered to record and digitize human synaptic topologies. Allows veteran colonists to export their combat proficiencies and labor doctrines onto neural imprint discs for growth vat construct programming.</description>
+    <thingClass>OrganicConstructs.Building_NeuralScanner</thingClass>
+    <containedPawnsSelectable>true</containedPawnsSelectable>
+    <graphicData>
+      <texPath>Things/Building/Production/SubcoreSoftscanner</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1.5, 2.5)</drawSize>
+      <shadowData>
+        <volume>(1.3, 0.6, 2.3)</volume>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.5</fillPercent>
+    <pathCost>50</pathCost>
+    <blockWind>true</blockWind>
+    <castEdgeShadows>true</castEdgeShadows>
+    <rotatable>true</rotatable>
+    <size>(1, 2)</size>
+    <uiIconScale>0.56</uiIconScale>
+    <canOverlapZones>false</canOverlapZones>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>3000</WorkToBuild>
+      <Mass>50</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>160</Steel>
+      <Plasteel>40</Plasteel>
+      <ComponentIndustrial>5</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <designationCategory>Biotech</designationCategory>
+    <uiOrder>2500</uiOrder>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0, 0, -1)</interactionCellOffset>
+    <researchPrerequisites>
+      <li>Construct_NeuralImprinting</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="OrganicConstructs.NeuralScannerExtension">
+        <scanTicks>15000</scanTicks>
+        <powerConsumptionScanning>1500</powerConsumptionScanning>
+        <powerConsumptionIdle>200</powerConsumptionIdle>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

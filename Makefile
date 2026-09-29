@@ -35,17 +35,17 @@ update-mods-dry-run: ## Preview 3rd-party mod updates without modifying files
 # Detect if make was invoked with -n / --dry-run
 MAKE_DRY_RUN := $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
 
-link: ## Deploy idempotent symlinks into RimWorld Mods directory
-	+@bash ./scripts/link-mods.sh --link $(MAKE_DRY_RUN)
+link: ## Deploy idempotent symlinks into RimWorld Mods directory (Usage: make link [MOD=<name>])
+	+@bash ./scripts/link-mods.sh --link $(if $(MOD),$(MOD),) $(MAKE_DRY_RUN)
 
-link-dry-run: ## Preview symlink deployment without modifying filesystem
-	@bash ./scripts/link-mods.sh --link --dry-run
+link-dry-run: ## Preview symlink deployment without modifying filesystem (Usage: make link-dry-run [MOD=<name>])
+	@bash ./scripts/link-mods.sh --link $(if $(MOD),$(MOD),) --dry-run
 
-unlink: ## Remove monorepo symlinks from RimWorld Mods directory
-	+@bash ./scripts/link-mods.sh --unlink $(MAKE_DRY_RUN)
+unlink: ## Remove monorepo symlinks from RimWorld Mods directory (Usage: make unlink [MOD=<name>])
+	+@bash ./scripts/link-mods.sh --unlink $(if $(MOD),$(MOD),) $(MAKE_DRY_RUN)
 
-unlink-dry-run: ## Preview removal of monorepo symlinks
-	@bash ./scripts/link-mods.sh --unlink --dry-run
+unlink-dry-run: ## Preview removal of monorepo symlinks (Usage: make unlink-dry-run [MOD=<name>])
+	@bash ./scripts/link-mods.sh --unlink $(if $(MOD),$(MOD),) --dry-run
 
 rollback: ## Rollback a mod to a previous version (Usage: make rollback MOD=<name> VERSION=<ver>)
 	+@bash ./scripts/rollback-mod.sh $(MOD) $(VERSION) $(MAKE_DRY_RUN)

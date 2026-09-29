@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- GeneticNutrientPaste is conditionally injected in Patches/Patch_Biomass.xml to prevent collision with Gene Splicer -->
+</Defs>

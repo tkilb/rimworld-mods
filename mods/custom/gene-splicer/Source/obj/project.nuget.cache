@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "IhXpZt69GZ8=",
+  "success": true,
+  "projectFilePath": "/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/GeneSplicer.csproj",
+  "expectedPackageFiles": [
+    "/home/tylerkilburn/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.3/microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "/home/tylerkilburn/.nuget/packages/microsoft.netframework.referenceassemblies.net472/1.0.3/microsoft.netframework.referenceassemblies.net472.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

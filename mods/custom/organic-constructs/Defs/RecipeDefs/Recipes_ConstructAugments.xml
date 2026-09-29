@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Combat Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Basic Combat -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallBasicCombatPackage</defName>
+    <label>install basic combat augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_BasicCombatPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_BasicCombatPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_BasicCombatPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveBasicCombatPackage</defName>
+    <label>remove basic combat augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_BasicCombatPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Intermediate Combat -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallIntermediateCombatPackage</defName>
+    <label>install intermediate combat augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_IntermediateCombatPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_IntermediateCombatPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_IntermediateCombatPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveIntermediateCombatPackage</defName>
+    <label>remove intermediate combat augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_IntermediateCombatPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Advanced Combat -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallAdvancedCombatPackage</defName>
+    <label>install advanced combat augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_AdvancedCombatPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_AdvancedCombatPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_AdvancedCombatPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveAdvancedCombatPackage</defName>
+    <label>remove advanced combat augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_AdvancedCombatPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Medical Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Basic Medical -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallBasicMedicalPackage</defName>
+    <label>install basic medical augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_BasicMedicalPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_BasicMedicalPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_BasicMedicalPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveBasicMedicalPackage</defName>
+    <label>remove basic medical augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_BasicMedicalPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Intermediate Medical -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallIntermediateMedicalPackage</defName>
+    <label>install intermediate medical augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_IntermediateMedicalPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_IntermediateMedicalPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_IntermediateMedicalPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveIntermediateMedicalPackage</defName>
+    <label>remove intermediate medical augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_IntermediateMedicalPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Advanced Medical -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallAdvancedMedicalPackage</defName>
+    <label>install advanced medical augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_AdvancedMedicalPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_AdvancedMedicalPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_AdvancedMedicalPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveAdvancedMedicalPackage</defName>
+    <label>remove advanced medical augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_AdvancedMedicalPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Industrial Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Basic Industrial -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallBasicIndustrialPackage</defName>
+    <label>install basic industrial augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_BasicIndustrialPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_BasicIndustrialPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_BasicIndustrialPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveBasicIndustrialPackage</defName>
+    <label>remove basic industrial augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_BasicIndustrialPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Intermediate Industrial -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallIntermediateIndustrialPackage</defName>
+    <label>install intermediate industrial augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_IntermediateIndustrialPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_IntermediateIndustrialPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_IntermediateIndustrialPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveIntermediateIndustrialPackage</defName>
+    <label>remove intermediate industrial augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_IntermediateIndustrialPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Advanced Industrial -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallAdvancedIndustrialPackage</defName>
+    <label>install advanced industrial augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_AdvancedIndustrialPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_AdvancedIndustrialPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_AdvancedIndustrialPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveAdvancedIndustrialPackage</defName>
+    <label>remove advanced industrial augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_AdvancedIndustrialPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Laborer Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Basic Laborer -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallBasicLaborerPackage</defName>
+    <label>install basic laborer augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_BasicLaborerPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_BasicLaborerPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_BasicLaborerPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveBasicLaborerPackage</defName>
+    <label>remove basic laborer augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>4</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_BasicLaborerPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Intermediate Laborer -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallIntermediateLaborerPackage</defName>
+    <label>install intermediate laborer augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_IntermediateLaborerPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_IntermediateLaborerPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_IntermediateLaborerPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveIntermediateLaborerPackage</defName>
+    <label>remove intermediate laborer augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>7</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_IntermediateLaborerPackage</removesHediff>
+  </RecipeDef>
+
+  <!-- Advanced Laborer -->
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_InstallAdvancedLaborerPackage</defName>
+    <label>install advanced laborer augment</label>
+    <description>Install a bioware augment.</description>
+    <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+    <jobString>Installing bioware augment.</jobString>
+    <workAmount>3000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Construct_AdvancedLaborerPackageItem</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+      <thingDefs><li>Construct_AdvancedLaborerPackageItem</li></thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+    <addsHediff>Construct_AdvancedLaborerPackage</addsHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>Construct_RemoveAdvancedLaborerPackage</defName>
+    <label>remove advanced laborer augment</label>
+    <description>Remove a bioware augment safely.</description>
+    <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+    <jobString>Removing bioware augment.</jobString>
+    <workAmount>2000</workAmount>
+    <skillRequirements><Medicine>10</Medicine></skillRequirements>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories><li>Medicine</li></categories>
+    </fixedIngredientFilter>
+    <removesHediff>Construct_AdvancedLaborerPackage</removesHediff>
+  </RecipeDef>
+
+</Defs>

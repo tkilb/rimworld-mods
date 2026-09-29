@@ -1,7 +1,0 @@
-/home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/obj/Debug/EugenicsProgram.csproj.AssemblyReference.cache
-/home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/obj/Debug/EugenicsProgram.GeneratedMSBuildEditorConfig.editorconfig
-/home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/obj/Debug/EugenicsProgram.AssemblyInfoInputs.cache
-/home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/obj/Debug/EugenicsProgram.AssemblyInfo.cs
-/home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/obj/Debug/EugenicsProgram.csproj.CoreCompileInputs.cache
-/home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Assemblies/EugenicsProgram.dll
-/home/tylerkilburn/Git/rimworld-mods/mods/custom/eugenics-program/Source/obj/Debug/EugenicsProgram.dll

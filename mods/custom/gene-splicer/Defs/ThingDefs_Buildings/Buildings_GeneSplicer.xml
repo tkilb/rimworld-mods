@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BenchBase">
+    <defName>EmbryoSplicingBench</defName>
+    <label>embryo splicing bench</label>
+    <description>A dedicated advanced genetic engineering workstation designed for precision germline splicing of natural human embryos. An embryo can be loaded directly into the bench to inspect and modify its endogenes using genetic sequences from connected Gene Banks and Gene Processors. High doctor skill and a clean surgical environment are essential to avoid catastrophic cellular collapse.</description>
+    <thingClass>GeneSplicer.Building_EmbryoSplicingBench</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/GeneAssembler/GeneAssembler</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.2, 2.2)</drawSize>
+      <shadowData>
+        <volume>(2.9, 0.75, 1.8)</volume>
+        <offset>(0, 0, 0)</offset>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>4500</WorkToBuild>
+      <Mass>35</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <size>(3, 2)</size>
+    <costList>
+      <Steel>200</Steel>
+      <Plasteel>50</Plasteel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>600</basePowerConsumption>
+        <idlePowerDraw>50</idlePowerDraw>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_AffectedByFacilities">
+        <linkableFacilities>
+          <li>GeneBank</li>
+          <li>GeneProcessor</li>
+          <li MayRequire="Farxmai2.GeneBanksExapnded">GBE_GeneBankLarge</li>
+          <li MayRequire="Farxmai2.GeneBanksExapnded">GBE_GeneBankHuge</li>
+        </linkableFacilities>
+      </li>
+    </comps>
+    <designationCategory>Biotech</designationCategory>
+    <uiOrder>2600</uiOrder>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0, 0, -1)</interactionCellOffset>
+    <researchPrerequisites>
+      <li>Xenogermination</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

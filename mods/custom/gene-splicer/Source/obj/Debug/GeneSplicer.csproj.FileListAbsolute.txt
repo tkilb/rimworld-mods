@@ -1,0 +1,7 @@
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/obj/Debug/GeneSplicer.csproj.AssemblyReference.cache
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/obj/Debug/GeneSplicer.GeneratedMSBuildEditorConfig.editorconfig
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/obj/Debug/GeneSplicer.AssemblyInfoInputs.cache
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/obj/Debug/GeneSplicer.AssemblyInfo.cs
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/obj/Debug/GeneSplicer.csproj.CoreCompileInputs.cache
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Assemblies/GeneSplicer.dll
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/obj/Debug/GeneSplicer.dll

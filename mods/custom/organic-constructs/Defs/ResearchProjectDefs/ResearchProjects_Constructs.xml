@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>Construct_Foundations</defName>
+    <label>construct genetics</label>
+    <description>Study methods of purging emotional volatility and social friction from human germlines, harnessing the resulting metabolic dividend to bio-engineer high-efficiency labor and security castes.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Xenogermination</li>
+    </prerequisites>
+    <researchViewX>14.0</researchViewX>
+    <researchViewY>3.5</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Construct_GeneOptimization</defName>
+    <label>genomic overdrive</label>
+    <description>Develop extreme biological limit-breakers, trading long-term cellular stability and cancer vulnerability for unprecedented metabolic output and compressed genetic complexity.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Construct_Foundations</li>
+    </prerequisites>
+    <researchViewX>15.5</researchViewX>
+    <researchViewY>3.5</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Construct_NeuralImprinting</defName>
+    <label>neural imprinting</label>
+    <description>Construct biometric scanning pods and growth vat neuro-imprinting transceivers to stream combat and technical proficiencies directly into developing construct brains.</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Construct_Foundations</li>
+      <li>GrowthVats</li>
+    </prerequisites>
+    <researchViewX>15.5</researchViewX>
+    <researchViewY>4.5</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

@@ -64,20 +64,47 @@ This outputs a clear matrix displaying:
 
 Monorepo mods (`mods/vendor/` and authoring mods in `mods/custom/`) are deployed into RimWorld's active `Mods` directory via idempotent symlinks.
 
-### Preview Deployment (Dry-Run)
+### Deploying / Linking Mods
+
+#### Link All Mods
 ```bash
-make link-dry-run
+make link-dry-run   # Preview symlink creation
+make link           # Deploy symlinks and sync ModsConfig.xml
 ```
 
-### Deploy Symlinks
+#### Link a Specific Mod
+Deploy or update the symlink for a single mod (matches the manifest identifier or custom mod folder name, e.g. `harmony`, `my-mod`):
 ```bash
-make link
+# Preview linking a specific mod
+make link-dry-run MOD=harmony
+
+# Link a specific mod and synchronize load order
+make link MOD=harmony
+
+# Call script directly (optional --skip-config avoids re-generating ModsConfig.xml)
+bash ./scripts/link-mods.sh --link harmony
+bash ./scripts/link-mods.sh --link harmony --skip-config
 ```
 
-### Remove Monorepo Symlinks
+### Removing / Unlinking Mods
+
+#### Unlink All Mods
 ```bash
 make unlink-dry-run   # Preview links to remove
-make unlink           # Remove symlinks safely
+make unlink           # Remove all monorepo symlinks safely
+```
+
+#### Unlink a Specific Mod
+Remove the symlink for a single mod without affecting other linked mods:
+```bash
+# Preview unlinking a specific mod
+make unlink-dry-run MOD=harmony
+
+# Unlink a specific mod
+make unlink MOD=harmony
+
+# Alternatively, call the script directly
+bash ./scripts/link-mods.sh --unlink harmony
 ```
 
 > **Safety Guarantee:** The linker guards official DLC/core directories (`Core`, `Royalty`, `Ideology`, `Biotech`, `Anomaly`) and will never overwrite pre-existing regular directories in your `Mods` folder.
@@ -227,6 +254,10 @@ make build-mod MOD=my-mod
 Custom mods with a valid `About/About.xml` are automatically recognized by `make link`, `make status`, and `make order-mods`. To activate them in RimWorld:
 
 ```bash
+# Link all mods
 make link
+
+# Or link only this specific custom mod
+make link MOD=my-mod
 ```
 

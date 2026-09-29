@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Organic Constructs</name>
+  <author>Tyler Kilburn</author>
+  <packageId>tyler.organicconstructs</packageId>
+  <supportedVersions>
+    <li>1.5</li>
+  </supportedVersions>
+  <description>Manufacture 100% biological artificial humans (SecUnits / Replicants) from living tissue, blood, synthetic neural wetware, and biological muscle. Features master genome blueprint discs, neural mentor scanning, growth vat neuro-imprinting, and modular bioware augments.</description>
+  <modDependencies>
+    <li>
+      <packageId>Ludeon.RimWorld.Biotech</packageId>
+      <displayName>Biotech</displayName>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+    <li>Ludeon.RimWorld.Biotech</li>
+  </loadAfter>
+</ModMetaData>

@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = GeneSplicer
+build_property.ProjectDir = /home/tylerkilburn/Git/rimworld-mods/mods/custom/gene-splicer/Source/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

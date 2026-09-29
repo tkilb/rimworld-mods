@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Ensure comps list exists on HumanEmbryo -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="HumanEmbryo"]/comps</xpath>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="HumanEmbryo"]</xpath>
+      <value>
+        <comps />
+      </value>
+    </nomatch>
+  </Operation>
+
+  <!-- Attach CompEmbryoQuality to HumanEmbryo for Construct Matrix origin and recycling -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="HumanEmbryo"]/comps/li[@Class="OrganicConstructs.CompProperties_EmbryoQuality"]</xpath>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="HumanEmbryo"]/comps</xpath>
+      <value>
+        <li Class="OrganicConstructs.CompProperties_EmbryoQuality" />
+      </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

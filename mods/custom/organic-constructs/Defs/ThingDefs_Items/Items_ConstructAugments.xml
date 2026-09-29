@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef Name="ConstructAugmentItemBase" ParentName="ResourceBase" Abstract="True">
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Things/Item/Health/HealthItem</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <DeteriorationRate>2.0</DeteriorationRate>
+      <Mass>1.0</Mass>
+    </statBases>
+    <thingCategories>
+      <li>BodyPartsBionic</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- Combat -->
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_BasicCombatPackageItem</defName>
+    <label>basic combat package</label>
+    <description>A basic biological neural bridge tailored for construct combat operations.</description>
+    <statBases>
+      <MarketValue>500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_IntermediateCombatPackageItem</defName>
+    <label>intermediate combat package</label>
+    <description>An intermediate biological neural bridge tailored for construct combat operations.</description>
+    <statBases>
+      <MarketValue>1000</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_AdvancedCombatPackageItem</defName>
+    <label>advanced combat package</label>
+    <description>An advanced biological neural bridge tailored for construct combat operations.</description>
+    <statBases>
+      <MarketValue>1500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <!-- Medical -->
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_BasicMedicalPackageItem</defName>
+    <label>basic medical package</label>
+    <description>A basic neural bridge loaded with construct medical procedures.</description>
+    <statBases>
+      <MarketValue>500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_IntermediateMedicalPackageItem</defName>
+    <label>intermediate medical package</label>
+    <description>An intermediate neural bridge loaded with construct medical procedures.</description>
+    <statBases>
+      <MarketValue>1000</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_AdvancedMedicalPackageItem</defName>
+    <label>advanced medical package</label>
+    <description>An advanced neural bridge loaded with construct medical procedures.</description>
+    <statBases>
+      <MarketValue>1500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <!-- Industrial -->
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_BasicIndustrialPackageItem</defName>
+    <label>basic industrial package</label>
+    <description>A basic neural bridge tailored for construct industrial work.</description>
+    <statBases>
+      <MarketValue>500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_IntermediateIndustrialPackageItem</defName>
+    <label>intermediate industrial package</label>
+    <description>An intermediate neural bridge tailored for construct industrial work.</description>
+    <statBases>
+      <MarketValue>1000</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_AdvancedIndustrialPackageItem</defName>
+    <label>advanced industrial package</label>
+    <description>An advanced neural bridge tailored for construct industrial work.</description>
+    <statBases>
+      <MarketValue>1500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <!-- Laborer -->
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_BasicLaborerPackageItem</defName>
+    <label>basic laborer package</label>
+    <description>A basic neural bridge tailored for construct laborer tasks.</description>
+    <statBases>
+      <MarketValue>500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_IntermediateLaborerPackageItem</defName>
+    <label>intermediate laborer package</label>
+    <description>An intermediate neural bridge tailored for construct laborer tasks.</description>
+    <statBases>
+      <MarketValue>1000</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ConstructAugmentItemBase">
+    <defName>Construct_AdvancedLaborerPackageItem</defName>
+    <label>advanced laborer package</label>
+    <description>An advanced neural bridge tailored for construct laborer tasks.</description>
+    <statBases>
+      <MarketValue>1500</MarketValue>
+    </statBases>
+  </ThingDef>
+
+</Defs>

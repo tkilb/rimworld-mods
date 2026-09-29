@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <GeneCategoryDef>
+    <defName>Construct_GeneCategory</defName>
+    <label>construct genetics</label>
+    <displayPriorityInXenotype>640</displayPriorityInXenotype>
+  </GeneCategoryDef>
+
+  <GeneDef>
+    <defName>Gene_ConstructPsychology</defName>
+    <label>construct psychology</label>
+    <description>Engineered neural architecture that suppresses social recreation, romance, and empathetic drama. The carrier operates with cold, single-minded devotion to their assigned tasks and security protocols.</description>
+    <geneClass>OrganicConstructs.Gene_ConstructPsychology</geneClass>
+    <iconPath>UI/Icons/Genes/Gene_Aggression_HyperAggressive</iconPath>
+    <displayCategory>Construct_GeneCategory</displayCategory>
+    <displayOrderInCategory>10</displayOrderInCategory>
+    <biostatCpx>1</biostatCpx>
+    <biostatMet>2</biostatMet>
+    <customEffectDescriptions>
+      <li>Incapable of romance, marriage proposals, and social chatter.</li>
+      <li>Suppresses social loneliness and recreation decay.</li>
+      <li>Colonists suffer zero mood penalties when this construct dies or is lost.</li>
+    </customEffectDescriptions>
+    <modExtensions>
+      <li Class="OrganicConstructs.GeneExtension_ConstructPsychology">
+        <checkIntervalTicks>250</checkIntervalTicks>
+        <minSocialLevel>0.7</minSocialLevel>
+      </li>
+    </modExtensions>
+  </GeneDef>
+
+  <GeneDef>
+    <defName>Construct_MetabolicallyEfficient</defName>
+    <label>metabolically efficient</label>
+    <description>Converts the intentional excision of empathy, moral hesitation, and inhibition into a massive biological energy dividend (+5 Metabolic Efficiency). Permanently forces the Psychopath and Bloodlust traits.</description>
+    <iconPath>UI/Icons/Genes/Gene_Superfast</iconPath>
+    <displayCategory>Construct_GeneCategory</displayCategory>
+    <displayOrderInCategory>20</displayOrderInCategory>
+    <biostatCpx>1</biostatCpx>
+    <biostatMet>5</biostatMet>
+    <forcedTraits>
+      <li>
+        <def>Psychopath</def>
+      </li>
+      <li>
+        <def>Bloodlust</def>
+      </li>
+    </forcedTraits>
+    <customEffectDescriptions>
+      <li>Grants +5 Metabolic Efficiency surplus.</li>
+      <li>Forces the Psychopath and Bloodlust traits.</li>
+    </customEffectDescriptions>
+  </GeneDef>
+
+  <GeneDef>
+    <defName>Gene_MandatorySterility</defName>
+    <label>mandatory sterility</label>
+    <description>Enforces total biological sterility to prevent unauthorized reproduction, gene drift, and protect proprietary colony genetic investments.</description>
+    <iconPath>UI/Icons/Genes/Gene_Sterile</iconPath>
+    <displayCategory>Construct_GeneCategory</displayCategory>
+    <displayOrderInCategory>30</displayOrderInCategory>
+    <biostatCpx>0</biostatCpx>
+    <biostatMet>1</biostatMet>
+    <sterilize>true</sterilize>
+    <statFactors>
+      <Fertility>0</Fertility>
+    </statFactors>
+    <customEffectDescriptions>
+      <li>Completely sterile. Cannot fertilize or be impregnated.</li>
+      <li>Yields +1 Metabolic Efficiency.</li>
+    </customEffectDescriptions>
+  </GeneDef>
+
+  <GeneDef>
+    <defName>Gene_ConstructHibernation</defName>
+    <label>construct hibernation</label>
+    <description>This construct is capable of entering a long-term stasis cycle to defragment neural pathways and reset metabolic buildup. Requires a 12-hour stasis cycle every 30 days. Neglecting stasis causes emergency comatose shutdown, while interrupted stasis degrades consciousness and motor function.</description>
+    <geneClass>OrganicConstructs.Gene_ConstructHibernation</geneClass>
+    <iconPath>UI/Icons/Genes/Gene_SleepFall_Normal</iconPath>
+    <displayCategory>Construct_GeneCategory</displayCategory>
+    <displayOrderInCategory>40</displayOrderInCategory>
+    <biostatCpx>1</biostatCpx>
+    <biostatMet>0</biostatMet>
+    <customEffectDescriptions>
+      <li>Requires a 12-hour stasis hibernation cycle every 30 days.</li>
+      <li>Clean wake completely restores Rest and resets the 30-day operating limit.</li>
+      <li>Premature interruption inflicts interrupted stasis (neural defragmentation failure).</li>
+    </customEffectDescriptions>
+  </GeneDef>
+
+</Defs>
