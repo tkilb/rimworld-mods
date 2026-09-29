@@ -9,7 +9,15 @@ namespace EugenicsProgram
 
         public EugenicsProgramMod(ModContentPack content) : base(content)
         {
-            var harmony = new Harmony(PackageId);
+        }
+    }
+
+    [StaticConstructorOnStartup]
+    public static class EugenicsProgramModInit
+    {
+        static EugenicsProgramModInit()
+        {
+            var harmony = new Harmony(EugenicsProgramMod.PackageId);
             harmony.PatchAll();
             Log.Message("[Eugenics Program] Mod loaded and Harmony patches initialized.");
         }
