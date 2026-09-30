@@ -17,6 +17,9 @@
     <workSkillLearnFactor>0.15</workSkillLearnFactor>
     <soundWorking>Recipe_Machining</soundWorking>
     <workerClass>OrganicConstructs.Recipe_BatchApplyBlueprint</workerClass>
+    <recipeUsers>
+      <li>ConstructSynthesizer</li>
+    </recipeUsers>
     <ingredients>
       <li>
         <filter>
@@ -35,7 +38,6 @@
     <skillRequirements>
       <Intellectual>6</Intellectual>
     </skillRequirements>
-    <researchPrerequisite>Construct_Foundations</researchPrerequisite>
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
@@ -104,7 +106,6 @@
       <Intellectual>6</Intellectual>
       <Medicine>4</Medicine>
     </skillRequirements>
-    <researchPrerequisite>Construct_Foundations</researchPrerequisite>
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
@@ -182,7 +183,6 @@
       <Intellectual>6</Intellectual>
       <Medicine>4</Medicine>
     </skillRequirements>
-    <researchPrerequisite>Construct_Foundations</researchPrerequisite>
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
@@ -224,7 +224,6 @@
     <skillRequirements>
       <Medicine>4</Medicine>
     </skillRequirements>
-    <researchPrerequisite>Construct_Foundations</researchPrerequisite>
   </RecipeDef>
 
 </Defs>

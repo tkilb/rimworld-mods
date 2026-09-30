@@ -208,7 +208,7 @@ namespace OrganicConstructs
                         foreach (var kvp in bp.skillLevels)
                         {
                             SkillDef skillDef = kvp.Key;
-                            int targetLevel = Mathf.RoundToInt(kvp.Value * 0.5f);
+                            int targetLevel = kvp.Value;
                             SkillRecord record = pawn.skills?.GetSkill(skillDef);
                             if (record != null)
                             {
@@ -222,7 +222,7 @@ namespace OrganicConstructs
                     GameComponent_NeuralImprintTracker.Instance?.RegisterImprint(pawn);
 
                     Messages.Message(
-                        $"Construct {pawn.LabelShortCap} decanted with imprinted neural profile ({bp.doctrineTitle ?? LoadedDisc.Label}): 50% donor skills transferred, passions neutralized.",
+                        $"Construct {pawn.LabelShortCap} decanted with imprinted neural profile ({bp.doctrineTitle ?? LoadedDisc.Label}): skills transferred from disc, passions neutralized.",
                         pawn,
                         MessageTypeDefOf.PositiveEvent);
                 }

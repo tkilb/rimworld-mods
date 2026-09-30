@@ -12,8 +12,8 @@
           <label>genetic nutrient paste</label>
           <description>Nutrient-dense biological slurry reclaimed from defective, culled, or botched embryonic material. Highly concentrated fuel formulated specifically for Growth Vats and bioreactors.</description>
           <graphicData>
-            <texPath>Things/Item/Meal/NutrientPaste</texPath>
-            <graphicClass>Graphic_MealVariants</graphicClass>
+            <texPath>Things/Item/Biomass/GeneticNutrientPaste</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
           </graphicData>
           <statBases>
             <MarketValue>12</MarketValue>

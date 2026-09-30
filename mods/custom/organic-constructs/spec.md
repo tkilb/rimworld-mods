@@ -23,13 +23,14 @@
 ### 1.3 Scanning: `Building_NeuralScanner`
 - Casket-style biometric scanner pod.
 - Scans natural human colonists onto a loaded `NeuralBlueprintDisk`.
+- **Lossy Encoding:** During the scan, skills are encoded at **50% of the donor's level** (rounded up to nearest integer) and **all passions are neutralized to None**, providing transparent WYSIWYG disc stats.
 - **Construct Restriction:** Constructs cannot be scanned (synthetic neural architecture incompatible).
 - Donor experiences temporary `Construct_NeuralFatigue` upon completion.
 
 ### 1.4 Growth Vat Imprinting: `CompGrowthVatImprinter`
 - Attached directly to vanilla `GrowthVat` instances.
 - Holds 1 `NeuralBlueprintDisk`.
-- **Mentored Decanting:** When decanted with an encoded disc, construct receives **50% of the donor's skill levels** and **all passions are forced to None**.
+- **Mentored Decanting:** When decanted with an encoded disc, construct directly inherits the proficiencies encoded on the disc 1:1 with 0 passions.
 - **Blank Decanting:** When decanted without a disc, construct awakens with innate baseline reflexes:
   - Shooting 4, Melee 4, Social 2, Intellectual 2, Artistic 0, all other skills 3. Passions: None.
 

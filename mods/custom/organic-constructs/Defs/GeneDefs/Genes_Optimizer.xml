@@ -11,7 +11,7 @@
     <defName>Gene_MitochondrialOverdrive</defName>
     <label>mitochondrial overdrive</label>
     <description>Overclocks cellular metabolic efficiency to extreme limits (+8 Metabolic Efficiency) by force-multiplying ATP synthesis, but imposes catastrophic cellular instability, halving natural lifespan and multiplying cancer occurrence.</description>
-    <iconPath>UI/Icons/Genes/Gene_TotalHealing</iconPath>
+    <iconPath>UI/Icons/Genes/Gene_MitochondrialOverdrive</iconPath>
     <displayCategory>Construct_Optimizer</displayCategory>
     <displayOrderInCategory>10</displayOrderInCategory>
     <biostatCpx>3</biostatCpx>
@@ -31,7 +31,7 @@
     <defName>Gene_GenomicCompression</defName>
     <label>genomic compression</label>
     <description>Artificially compresses DNA complexity (-10 Complexity) to allow extreme gene stacking, but strains cellular repair mechanisms, reducing natural immunity and general longevity.</description>
-    <iconPath>UI/Icons/Genes/Gene_WoundHealing_Fast</iconPath>
+    <iconPath>UI/Icons/Genes/Gene_GenomicCompression</iconPath>
     <displayCategory>Construct_Optimizer</displayCategory>
     <displayOrderInCategory>20</displayOrderInCategory>
     <biostatCpx>-10</biostatCpx>

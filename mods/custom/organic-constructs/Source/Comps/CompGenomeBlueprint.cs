@@ -180,7 +180,7 @@ namespace OrganicConstructs
                 {
                     defaultLabel = "Record Construct Caste",
                     defaultDesc = "Record the endogenes of an active construct colonist onto this genome blueprint disc.",
-                    icon = ContentFinder<Texture2D>.Get("UI/Commands/Copy", true) ?? parent?.def?.uiIcon,
+                    icon = TexButton.Copy ?? parent?.def?.uiIcon,
                     action = () =>
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();

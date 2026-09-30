@@ -58,7 +58,7 @@ namespace OrganicConstructs
                 {
                     defaultLabel = "Enter Stasis",
                     defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 12 hours for a clean wake.",
-                    icon = ContentFinder<Texture2D>.Get("UI/Designators/Zzz", true),
+                    icon = def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false),
                     action = delegate
                     {
                         Job job = JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("Construct_EnterConstructStasis"), pawn);

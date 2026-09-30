@@ -37,12 +37,9 @@ namespace OrganicConstructs
             {
                 if (skill.Level >= minSkill)
                 {
-                    int encodedLevel = Mathf.Min(skill.Level, cap);
+                    int halvedLevel = Mathf.CeilToInt(skill.Level * 0.5f);
+                    int encodedLevel = Mathf.Min(halvedLevel, cap);
                     skillLevels[skill.def] = encodedLevel;
-                    if (skill.passion != Passion.None)
-                    {
-                        passions[skill.def] = skill.passion;
-                    }
                 }
             }
         }
@@ -133,7 +130,7 @@ namespace OrganicConstructs
                         sb.AppendLine($"Mentor / Source: {donorName}");
                     }
                     sb.AppendLine();
-                    sb.AppendLine("Imprinted Skills & Passions:");
+                    sb.AppendLine("Imprinted Skills (Passions Neutralized):");
                     if (skillLevels == null || skillLevels.Count == 0)
                     {
                         sb.AppendLine("  (No skills recorded)");
@@ -142,13 +139,7 @@ namespace OrganicConstructs
                     {
                         foreach (var kvp in skillLevels)
                         {
-                            string passionStr = "";
-                            if (passions.TryGetValue(kvp.Key, out Passion p))
-                            {
-                                if (p == Passion.Major) passionStr = " (Burning Passion 🔥🔥)";
-                                else if (p == Passion.Minor) passionStr = " (Interested Passion 🔥)";
-                            }
-                            sb.AppendLine($"  • {kvp.Key.label.CapitalizeFirst()}: Level {kvp.Value}{passionStr}");
+                            sb.AppendLine($"  • {kvp.Key.label.CapitalizeFirst()}: Level {kvp.Value}");
                         }
                     }
 

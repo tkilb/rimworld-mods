@@ -43,6 +43,16 @@ namespace OrganicConstructs
                 quality.editCount = 0;
             }
 
+            // Ensure GeneSet is initialized
+            if (embryo.GeneSet == null)
+            {
+                embryo.TryPopulateGenes();
+                if (embryo.GeneSet == null)
+                {
+                    HarmonyLib.AccessTools.Field(typeof(GeneSetHolderBase), "geneSet")?.SetValue(embryo, new GeneSet());
+                }
+            }
+
             // Populate construct baseline endogenes
             if (embryo.GeneSet != null)
             {

@@ -10,7 +10,7 @@
     <description>An industrial biological workstation dedicated to the synthesis, cloning, and batch genome-imprinting of organic constructs (SecUnits / Replicants). Equipped with an integrated genome blueprint disc drive to imprint mass batches of synthetic embryo matrices, and biomass liquefaction tanks for recycling culled biological material.</description>
     <thingClass>OrganicConstructs.Building_ConstructSynthesizer</thingClass>
     <graphicData>
-      <texPath>Things/Building/Misc/GeneAssembler/GeneAssembler</texPath>
+      <texPath>Things/Building/ConstructSynthesizer/ConstructSynthesizer</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(3.2, 2.2)</drawSize>
       <shadowData>
@@ -52,6 +52,13 @@
       <li>Recipe_SynthesizeBlankEmbryoRecycled</li>
       <li>Construct_BatchRecycleEmbryo</li>
     </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <surfaceType>Item</surfaceType>
+    <building>
+      <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
+    </building>
     <designationCategory>Biotech</designationCategory>
     <uiOrder>2600</uiOrder>
     <hasInteractionCell>true</hasInteractionCell>
@@ -71,7 +78,7 @@
     <thingClass>OrganicConstructs.Building_NeuralScanner</thingClass>
     <containedPawnsSelectable>true</containedPawnsSelectable>
     <graphicData>
-      <texPath>Things/Building/Production/SubcoreSoftscanner</texPath>
+      <texPath>Things/Building/NeuralScanner/NeuralScanner</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1.5, 2.5)</drawSize>
       <shadowData>

@@ -4,7 +4,7 @@
   <ThingDef Name="ConstructAugmentItemBase" ParentName="ResourceBase" Abstract="True">
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
-      <texPath>Things/Item/Health/HealthItem</texPath>
+      <texPath>Things/Item/Augments/AugmentPackage_Basic</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>

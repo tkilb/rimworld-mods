@@ -1,6 +1,6 @@
 # Bug: [Short Title]
 
-**Status:** Open
+**Status:** Passed QA
 
 ## Description
 
@@ -117,7 +117,7 @@ Verse.Root:OnGUI ()
 
 ## Dev Notes / Fix (Optional)
 
-- **Cause:**
-- **Fix:**
+- **Cause:** When selecting a blueprint disc, `CompGenomeBlueprint.CompGetGizmosExtra()` attempted to load an icon via `ContentFinder<Texture2D>.Get("UI/Commands/Copy", true)`. In vanilla RimWorld, no texture exists at `"UI/Commands/Copy"`, causing `ContentFinder` to log a red error when `reportFailure` is true. Additionally, `Gene_ConstructHibernation.cs` was attempting to load `"UI/Designators/Zzz"` with `reportFailure: true`, which also does not exist.
+- **Fix:** In `CompGenomeBlueprint.cs`, replaced the missing path with `TexButton.Copy ?? parent?.def?.uiIcon`. In `Gene_ConstructHibernation.cs`, replaced `"UI/Designators/Zzz"` with `def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false)`.
 
 ## Reopen Notes (Optional)

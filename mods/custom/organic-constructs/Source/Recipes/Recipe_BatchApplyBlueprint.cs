@@ -12,18 +12,14 @@ namespace OrganicConstructs
         public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)
         {
             if (!base.AvailableOnNow(thing, part)) return false;
-            if (thing is Building_ConstructSynthesizer bench)
-            {
-                return bench.HasLoadedBlueprint;
-            }
-            return false;
+            return thing is Building_ConstructSynthesizer;
         }
 
         public override AcceptanceReport AvailableReport(Thing thing, BodyPartRecord part = null)
         {
-            if (thing is Building_ConstructSynthesizer bench && !bench.HasLoadedBlueprint)
+            if (thing is Building_ConstructSynthesizer)
             {
-                return new AcceptanceReport("Missing genome blueprint disc in construct synthesizer receptacle.");
+                return AcceptanceReport.WasAccepted;
             }
             return base.AvailableReport(thing, part);
         }
@@ -48,7 +44,15 @@ namespace OrganicConstructs
                 ?? (billDoer?.Map != null ? GenClosest.ClosestThingReachable(billDoer.Position, billDoer.Map, ThingRequest.ForDef(ConstructDefOf.ConstructSynthesizer), PathEndMode.Touch, TraverseParms.For(billDoer)) as Building_ConstructSynthesizer : null);
 
             CompGenomeBlueprint blueprint = bench?.LoadedBlueprintComp;
-            if (blueprint == null || blueprint.genes.NullOrEmpty()) return;
+            if (blueprint == null || blueprint.genes.NullOrEmpty())
+            {
+                Messages.Message(
+                    "Batch splicing aborted: No genome blueprint disc loaded in construct synthesizer.",
+                    bench ?? (Thing)billDoer,
+                    MessageTypeDefOf.RejectInput);
+                DropEmbryo(billDoer, bench, embryo);
+                return;
+            }
 
             CompEmbryoQuality comp = embryo.TryGetComp<CompEmbryoQuality>();
 
@@ -108,6 +112,16 @@ namespace OrganicConstructs
                 return;
             }
 
+            // Ensure GeneSet is initialized
+            if (embryo.GeneSet == null)
+            {
+                embryo.TryPopulateGenes();
+                if (embryo.GeneSet == null)
+                {
+                    HarmonyLib.AccessTools.Field(typeof(GeneSetHolderBase), "geneSet")?.SetValue(embryo, new GeneSet());
+                }
+            }
+
             // Apply all genes from the blueprint to the embryo
             if (embryo.GeneSet != null)
             {
@@ -131,6 +145,7 @@ namespace OrganicConstructs
             {
                 comp.isConstruct = true;
                 comp.editCount++;
+                comp.blueprintLabel = !string.IsNullOrEmpty(blueprint.templateLabel) ? blueprint.templateLabel : "Construct Caste";
 
                 // Ensure core construct genes are present on construct matrices
                 if (embryo.GeneSet != null)
@@ -164,17 +179,26 @@ namespace OrganicConstructs
 
         private static void DropEmbryo(Pawn billDoer, Building_ConstructSynthesizer bench, HumanEmbryo embryo)
         {
+            if (embryo == null) return;
+
             if (billDoer?.carryTracker?.CarriedThing == embryo)
             {
                 billDoer.carryTracker.TryDropCarriedThing(billDoer.Position, ThingPlaceMode.Near, out _);
             }
-            else if (embryo.holdingOwner != null)
+            else if (!embryo.Spawned)
             {
                 IntVec3 dropLoc = bench?.InteractionCell ?? billDoer?.Position ?? IntVec3.Invalid;
                 Map map = bench?.Map ?? billDoer?.Map;
                 if (map != null && dropLoc.IsValid)
                 {
-                    embryo.holdingOwner.TryDrop(embryo, dropLoc, map, ThingPlaceMode.Near, out _);
+                    if (embryo.holdingOwner != null)
+                    {
+                        embryo.holdingOwner.TryDrop(embryo, dropLoc, map, ThingPlaceMode.Near, out _);
+                    }
+                    else
+                    {
+                        GenPlace.TryPlaceThing(embryo, dropLoc, map, ThingPlaceMode.Near);
+                    }
                 }
             }
         }

@@ -5,5 +5,5 @@
   2. Gestate and decant a construct embryo.
   3. Gestate and decant a construct embryo without an imprinter disc.
 - **Expected:**
-  - With mentor disc: Decants with 50% of mentor's skills and all passions forced to None.
+  - With mentor disc: Decants with skills directly matching the encoded disc (50% of mentor's skills rounded up, zero passions).
   - Without disc: Decants with baseline reflexes (Shooting 4, Melee 4, Social 2, Intellectual 2, Artistic 0, Others 3; Passions: None).
