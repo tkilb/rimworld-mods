@@ -72,6 +72,27 @@ namespace OrganicConstructs
                                 Messages.Message($"Volatile genetic stability caused assimilation delay or cellular defect in {newborn.LabelShort}.", newborn, MessageTypeDefOf.NegativeEvent);
                             }
                         }
+
+                        // Seamlessly retain the newborn construct inside the Growth Vat for visual maturation (never drop as baby)
+                        if (newborn.Spawned)
+                        {
+                            newborn.DeSpawn();
+                        }
+                        if (!vat.innerContainer.Contains(newborn))
+                        {
+                            vat.innerContainer.TryAddOrTransfer(newborn, canMergeWithExistingStacks: false);
+                        }
+                        Traverse.Create(vat).Field("selectedPawn").SetValue(newborn);
+                        vat.selectedEmbryo = null;
+                        Traverse.Create(vat).Field("gestationTicks").SetValue(0);
+
+                        Gene_ConstructPsychology.ApplyConstructPhysiology(newborn);
+                        CompGrowthVatImprinter.WipePassions(newborn);
+
+                        Messages.Message(
+                            $"Construct embryonic synthesis complete. Physical form stabilized inside growth vat for maturation.",
+                            vat,
+                            MessageTypeDefOf.PositiveEvent);
                     }
                 }
             }

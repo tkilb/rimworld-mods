@@ -12,9 +12,16 @@ namespace OrganicConstructs
         private static readonly string[] CoreConstructGenes = new string[]
         {
             "Gene_ConstructPsychology",
-            "Construct_MetabolicallyEfficient",
+            "Instability_Major",
             "Gene_MandatorySterility",
-            "Gene_ConstructHibernation"
+            "Gene_ConstructHibernation",
+            "Immunity_SuperStrong",
+            "Pain_Reduced",
+            "Robust",
+            "MeleeDamage_Strong",
+            "MoveSpeed_Quick",
+            "WoundHealing_Fast",
+            "Superclotting"
         };
 
         public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)

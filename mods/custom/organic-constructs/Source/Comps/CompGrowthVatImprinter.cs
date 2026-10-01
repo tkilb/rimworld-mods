@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Text;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Sound;
 
 namespace OrganicConstructs
 {
@@ -441,6 +443,121 @@ namespace OrganicConstructs
                     }
                 };
             }
+
+            // ── Reclaim Biomass Gizmo (Less triggering alternative to abort) ──
+            if (parent is Building_GrowthVat vat)
+            {
+                bool isConstructEmbryo = vat.selectedEmbryo != null && ConstructUtility.IsConstructEmbryo(vat.selectedEmbryo);
+                Pawn occupant = Traverse.Create(vat).Field("selectedPawn").GetValue<Pawn>();
+                bool isConstructOccupant = occupant != null && ConstructUtility.IsConstruct(occupant);
+
+                if (isConstructEmbryo || isConstructOccupant)
+                {
+                    int pasteCount = CalculateReclaimPasteCount(vat);
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "Reclaim Biomass",
+                        defaultDesc = $"Terminate this construct's gestation and dissolve its biological material into Genetic Nutrient Paste. Reclaims approximately 75% of the total nutritional investment (yields {pasteCount}x paste).",
+                        icon = DefDatabase<ThingDef>.GetNamedSilentFail("GeneticNutrientPaste")?.uiIcon ?? ContentFinder<Texture2D>.Get("UI/Designators/Cancel", true) ?? parent.def.uiIcon,
+                        action = () =>
+                        {
+                            Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                                $"Are you sure you want to reclaim this construct's biomass?\n\nThe developing construct will be terminated and dissolved into {pasteCount}x Genetic Nutrient Paste (75% return on invested nutrition).",
+                                () => ReclaimBiomass(vat),
+                                destructive: true
+                            ));
+                        }
+                    };
+                }
+            }
+        }
+
+        public static int CalculateReclaimPasteCount(Building_GrowthVat vat)
+        {
+            float synthesisNutrition = 4.0f; // 40 raw meat + 40 raw plant food from synthesis bill
+            float vatNutrition = 0f;
+
+            if (vat.selectedEmbryo != null)
+            {
+                // Embryo phase: 6 nutrition/day over 4 days = 24 nutrition total
+                int gest = Traverse.Create(vat).Field("gestationTicks").GetValue<int>();
+                float progressFraction = Mathf.Clamp01(gest / 540000f);
+                vatNutrition = progressFraction * 24f;
+            }
+            else
+            {
+                Pawn occupant = Traverse.Create(vat).Field("selectedPawn").GetValue<Pawn>();
+                if (occupant != null)
+                {
+                    // Embryo phase was completed (24 nutrition).
+                    // Maturation phase: 3 nutrition/day over 16 days = 48 nutrition total.
+                    const long Age13Ticks = 13L * 3600000L;
+                    float progressFraction = Mathf.Clamp01((float)occupant.ageTracker.AgeBiologicalTicks / Age13Ticks);
+                    vatNutrition = 24f + (progressFraction * 48f);
+                }
+            }
+
+            float totalNutrition = synthesisNutrition + vatNutrition;
+            float reclaimedNutrition = totalNutrition * 0.75f;
+            // GeneticNutrientPaste provides 0.9 nutrition per unit
+            return Mathf.Max(1, Mathf.RoundToInt(reclaimedNutrition / 0.9f));
+        }
+
+        public static void ReclaimBiomass(Building_GrowthVat vat)
+        {
+            if (vat == null) return;
+            int pasteCount = CalculateReclaimPasteCount(vat);
+
+            if (vat.selectedEmbryo != null)
+            {
+                HumanEmbryo embryo = vat.selectedEmbryo;
+                vat.selectedEmbryo = null;
+                if (vat.innerContainer.Contains(embryo))
+                {
+                    vat.innerContainer.Remove(embryo);
+                }
+                if (!embryo.Destroyed)
+                {
+                    embryo.Destroy();
+                }
+            }
+
+            Pawn occupant = Traverse.Create(vat).Field("selectedPawn").GetValue<Pawn>();
+            if (occupant != null)
+            {
+                Traverse.Create(vat).Field("selectedPawn").SetValue(null);
+                if (vat.innerContainer.Contains(occupant))
+                {
+                    vat.innerContainer.Remove(occupant);
+                }
+                if (!occupant.Destroyed)
+                {
+                    occupant.Destroy();
+                }
+            }
+
+            Traverse.Create(vat).Field("gestationTicks").SetValue(0);
+
+            // Spawn GeneticNutrientPaste stack
+            ThingDef pasteDef = DefDatabase<ThingDef>.GetNamedSilentFail("GeneticNutrientPaste") ?? ThingDefOf.MealNutrientPaste;
+            if (pasteDef != null && vat.Map != null)
+            {
+                Thing paste = ThingMaker.MakeThing(pasteDef);
+                paste.stackCount = pasteCount;
+                IntVec3 spawnLoc = vat.def.hasInteractionCell ? vat.InteractionCell : vat.Position;
+                GenPlace.TryPlaceThing(paste, spawnLoc, vat.Map, ThingPlaceMode.Near);
+            }
+
+            SoundDef sound = SoundDef.Named("Recipe_ButcherCorpseFlesh");
+            if (sound != null && vat.Map != null)
+            {
+                sound.PlayOneShot(new TargetInfo(vat.Position, vat.Map));
+            }
+
+            Messages.Message(
+                $"Construct biomass reclaimed: Gestation terminated and {pasteCount}x Genetic Nutrient Paste recovered (75% nutritional return).",
+                vat,
+                MessageTypeDefOf.NeutralEvent);
         }
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)

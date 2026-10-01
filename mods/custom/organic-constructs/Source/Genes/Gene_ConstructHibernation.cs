@@ -15,7 +15,7 @@ namespace OrganicConstructs
 
         public const int MaxOperatingTicks = 1800000; // 30 days
         public const int WarningTicksRemaining = 75000;
-        public const int MinStasisTicks = 30000; // 12 hours (1 hour = 2500 ticks)
+        public const int MinStasisTicks = 120000; // 48 hours (1 hour = 2500 ticks)
 
         public override void ExposeData()
         {
@@ -57,7 +57,7 @@ namespace OrganicConstructs
                 Command_Action enterStasis = new Command_Action
                 {
                     defaultLabel = "Enter Stasis",
-                    defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 12 hours for a clean wake.",
+                    defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 48 hours for a clean wake.",
                     icon = def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false),
                     action = delegate
                     {

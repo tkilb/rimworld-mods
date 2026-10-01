@@ -6,8 +6,11 @@
   3. Load disc into synthesizer via gizmo or right-click hauling.
   4. Ensure a colonist with Intellectual ≥ 6 and Medicine ≥ 4 is assigned to Doctor or Research work type.
   5. Provide synthesis ingredients on map: 40 MeatRaw, 40 PlantFoodRaw, 10 Neutroamine, 2 Medicine.
+
   6. Bill: Synthesize base construct embryo (fresh organics).
+
   7. Bill: Synthesize complex construct embryo (fresh organics).
+
 - **Expected:**
   - Disc is held in `discContainer` and inspect string shows loaded blueprint info.
   - Base construct embryo is generated with no parents, locked construct baseline endogenes, and `construct embryo` label.

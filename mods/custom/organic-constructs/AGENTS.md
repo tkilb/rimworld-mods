@@ -9,7 +9,7 @@
   - **Colony Property:** Treated as industrial assets; natural colonists suffer 0 mood debuffs when a construct dies or is lost (`Trait_ConstructAsset`).
   - **Suppressed Psychology:** Suppressed romance, marriage, chit-chat, and socialization (`Gene_ConstructPsychology`).
   - **Locked Architecture:** Harmony patch explicitly disables `Recipe_ImplantXenogerm` on constructs.
-  - **Maintenance Stasis:** Requires periodic 12-hour hibernation every 30 days (`Gene_ConstructHibernation`).
+  - **Maintenance Stasis:** Requires periodic 48-hour hibernation every 30 days (`Gene_ConstructHibernation`).
   - **Bioware Augments:** Exclusive biological augment packages (Combat, Medical, Industrial, Laborer) that induce an assimilation coma upon grafting; rejected by natural humans.
 
 ---

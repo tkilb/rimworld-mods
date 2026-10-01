@@ -46,13 +46,6 @@
       </li>
       <li Class="CompProperties_Flickable"/>
     </comps>
-    <recipes>
-      <li>Recipe_SynthesizeBaseEmbryoFresh</li>
-      <li>Recipe_SynthesizeBaseEmbryoRecycled</li>
-      <li>Recipe_SynthesizeComplexEmbryoFresh</li>
-      <li>Recipe_SynthesizeComplexEmbryoRecycled</li>
-      <li>Construct_BatchRecycleEmbryo</li>
-    </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
     </inspectorTabs>

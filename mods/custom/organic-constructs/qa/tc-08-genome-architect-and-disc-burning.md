@@ -8,7 +8,7 @@
   5. Click gizmo `Load Blank Disc` and select a colonist to haul the blank disc.
   6. Once loaded, click gizmo `Configure Genome`.
   7. In the `Dialog_ConfigureConstructGenome` window:
-     - Verify Core Construct Genes (`Gene_ConstructPsychology`, `Construct_MetabolicallyEfficient`, `Gene_MandatorySterility`, `Gene_ConstructHibernation`) are locked in the left panel.
+     - Verify Core Construct Genes (11 locked genes: `Gene_ConstructPsychology`, `Instability_Major`, `Gene_MandatorySterility`, `Gene_ConstructHibernation`, `Immunity_SuperStrong`, `Pain_Reduced`, `Robust`, `MeleeDamage_Strong`, `MoveSpeed_Quick`, `WoundHealing_Fast`, `Superclotting`) are locked in the left panel.
      - Search and select 2-3 adaptation genes from the right panel.
      - Observe live updates to Complexity, Net Metabolism, and Genome Stability readout.
      - Enter a custom template name (e.g., "Assault Specialist").

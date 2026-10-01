@@ -49,11 +49,10 @@ Every construct in the colony is defined by three distinct, layered systems:
 ## 2. Genetics & Biological Traits
 
 | Lore Term | In-Game Def / Class | Function & Meaning |
-| :--- | :--- | :--- |
-| **Construct Psychology** | `Gene_ConstructPsychology` | Engineered neural architecture suppressing romance, marriage, recreation decay, and social chit-chat. |
-| **Construct Hibernation** | `Gene_ConstructHibernation` | Mandatory 12-hour defragmentation stasis cycle required every 30 operating days. |
+| **Construct Psychology** | `Gene_ConstructPsychology` | Engineered neural architecture suppressing romance, marriage, recreation decay, and social chit-chat; forces Psychopath trait. |
+| **Construct Hibernation** | `Gene_ConstructHibernation` | Mandatory 48-hour defragmentation stasis cycle required every 30 operating days; halves biological lifespan (+3 Met). |
 | **Mandatory Sterility** | `Gene_MandatorySterility` | Complete biological sterility (+1 Met) protecting proprietary colony genetic investments. |
-| **Metabolically Efficient** | `Construct_MetabolicallyEfficient` | Converts intentional excision of empathy and moral hesitation into +5 Metabolic Efficiency; forces Psychopath and Bloodlust. |
+| **Major Cell Instability** | `Instability_Major` | Rapid cell degradation (+4 Met, 0.6x lifespan, 5x cancer rate) reflecting the disposable nature of synthetic tissue. |
 | **Mitochondrial Overdrive** | `Gene_MitochondrialOverdrive` | Extreme metabolic overclocking (+8 Met) at the expense of halved lifespan and 5.0x cancer incidence. |
 | **Genomic Compression** | `Gene_GenomicCompression` | Artificially compresses DNA (-10 Complexity) to allow extreme gene stacking, reducing natural immunity and lifespan. |
 
@@ -99,7 +98,7 @@ Every construct in the colony is defined by three distinct, layered systems:
 | :--- | :--- | :--- |
 | **Assimilation Coma** | `Construct_Assimilation` | Severe comatose state induced while synthetic biological packages graft into the neural bus, or upon emergency hibernation failure. |
 | **Neural Fatigue** | `Construct_NeuralFatigue` | Brain drain and disorientation suffered by natural human donors after undergoing a neural scan. |
-| **Interrupted Stasis** | `Construct_InterruptedStasis` | Neurological hangover and motor impairment caused by prematurely interrupting a 12-hour hibernation cycle. |
+| **Interrupted Stasis** | `Construct_InterruptedStasis` | Neurological hangover and motor impairment caused by prematurely interrupting a 48-hour hibernation cycle. |
 
 ---
 

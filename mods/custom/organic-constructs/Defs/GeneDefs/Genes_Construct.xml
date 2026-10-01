@@ -17,8 +17,14 @@
     <displayOrderInCategory>10</displayOrderInCategory>
     <biostatCpx>1</biostatCpx>
     <biostatMet>2</biostatMet>
+    <forcedTraits>
+      <li>
+        <def>Psychopath</def>
+      </li>
+    </forcedTraits>
     <customEffectDescriptions>
       <li>Incapable of romance, marriage proposals, and social chatter.</li>
+      <li>Forces the Psychopath trait (indifferent to death, suffering, and corpses).</li>
       <li>Suppresses social loneliness and recreation decay.</li>
       <li>Colonists suffer zero mood penalties when this construct dies or is lost.</li>
     </customEffectDescriptions>
@@ -28,29 +34,6 @@
         <minSocialLevel>0.7</minSocialLevel>
       </li>
     </modExtensions>
-  </GeneDef>
-
-  <GeneDef>
-    <defName>Construct_MetabolicallyEfficient</defName>
-    <label>metabolically efficient</label>
-    <description>Converts the intentional excision of empathy, moral hesitation, and inhibition into a massive biological energy dividend (+5 Metabolic Efficiency). Permanently forces the Psychopath and Bloodlust traits.</description>
-    <iconPath>UI/Icons/Genes/Construct_MetabolicallyEfficient</iconPath>
-    <displayCategory>Construct_GeneCategory</displayCategory>
-    <displayOrderInCategory>20</displayOrderInCategory>
-    <biostatCpx>1</biostatCpx>
-    <biostatMet>5</biostatMet>
-    <forcedTraits>
-      <li>
-        <def>Psychopath</def>
-      </li>
-      <li>
-        <def>Bloodlust</def>
-      </li>
-    </forcedTraits>
-    <customEffectDescriptions>
-      <li>Grants +5 Metabolic Efficiency surplus.</li>
-      <li>Forces the Psychopath and Bloodlust traits.</li>
-    </customEffectDescriptions>
   </GeneDef>
 
   <GeneDef>
@@ -75,17 +58,22 @@
   <GeneDef>
     <defName>Gene_ConstructHibernation</defName>
     <label>construct hibernation</label>
-    <description>This construct is capable of entering a long-term stasis cycle to defragment neural pathways and reset metabolic buildup. Requires a 12-hour stasis cycle every 30 days. Neglecting stasis causes emergency comatose shutdown, while interrupted stasis degrades consciousness and motor function.</description>
+    <description>This construct is engineered for high-intensity biological throughput: a 'flash in the pan' synthetic organism with rapid cellular senescence. Requires a mandatory 48-hour stasis cycle every 30 days to purge severe metabolic toxicity and defragment neural pathways. Halves natural lifespan.</description>
     <geneClass>OrganicConstructs.Gene_ConstructHibernation</geneClass>
     <iconPath>UI/Icons/Genes/Gene_ConstructHibernation</iconPath>
     <displayCategory>Construct_GeneCategory</displayCategory>
     <displayOrderInCategory>40</displayOrderInCategory>
     <biostatCpx>1</biostatCpx>
-    <biostatMet>0</biostatMet>
+    <biostatMet>3</biostatMet>
+    <statFactors>
+      <LifespanFactor>0.5</LifespanFactor>
+    </statFactors>
     <customEffectDescriptions>
-      <li>Requires a 12-hour stasis hibernation cycle every 30 days.</li>
+      <li>Requires a 48-hour stasis hibernation cycle every 30 days.</li>
       <li>Clean wake completely restores Rest and resets the 30-day operating limit.</li>
       <li>Premature interruption inflicts interrupted stasis (neural defragmentation failure).</li>
+      <li>Halves biological lifespan.</li>
+      <li>Yields +3 Metabolic Efficiency.</li>
     </customEffectDescriptions>
   </GeneDef>
 

@@ -25,7 +25,7 @@ Construct design is governed by three distinct, modular layers:
 - **Role:** High-tech biometric workstation (800 W) for drafting construct genomes and burning master discs.
 - **GeneBank Integration:** Automatically scans connected, powered `GeneBank` facilities within a 16-cell radius to populate available genepacks.
 - **Architect UI (`Dialog_ConfigureConstructGenome`):**
-  - Left panel: Locked Core Construct Genes (`Gene_ConstructPsychology`, `Construct_MetabolicallyEfficient`, `Gene_MandatorySterility`, `Gene_ConstructHibernation`) + selected adaptations.
+  - Left panel: Locked Core Construct Genes (`Gene_ConstructPsychology`, `Instability_Major`, `Gene_MandatorySterility`, `Gene_ConstructHibernation`, `Immunity_SuperStrong`, `Pain_Reduced`, `Robust`, `MeleeDamage_Strong`, `MoveSpeed_Quick`, `WoundHealing_Fast`, `Superclotting`) + selected adaptations.
   - Right panel: Searchable browser of available genepacks.
   - Bottom bar: Live readouts of Complexity, Net Metabolism, and Genome Stability.
 - **ROM Burning:** Once burned, the loaded blank `GenomeBlueprintDisk` is permanently locked (`isBurned = true`) with the chosen template name and gene list.
@@ -64,17 +64,26 @@ Construct design is governed by three distinct, modular layers:
 - **Construct Restriction:** Constructs cannot be scanned (incompatible wetware).
 - Donor suffers temporary `Construct_NeuralFatigue`.
 
-### 2.6 Vat Imprinting: `CompGrowthVatImprinter`
+### 2.6 Vat Incubation & Neural Imprinting: `CompGrowthVatImprinter`
 - Attached to vanilla `GrowthVat` instances via patch. Holds 1 `NeuralBlueprintDisk`.
+- **20-Day Continuous Incubation Pipeline (Embryo ➔ Age 13):**
+  - **Phase 1 (Days 0–4):** Embryonic synthesis takes 4 in-game days.
+  - **Phase 2 (Day 4 Form Emergence):** The construct's physical body emerges directly inside the vat fluid as the occupant (`selectedPawn`). Never dropped to the floor as an infant.
+  - **Phase 3 (Days 4–20 Visual Maturation):** Rapid in-vat maturation ($\sim 49\times$) ages the construct from Age 0 to Age 13. Players visually see the construct grow through its developmental stages behind the glass.
+  - **Mandatory Ejection Lock:** Ejection is strictly disabled prior to Age 13 (*immature neural architecture*).
+  - **Growth Milestone Suppression:** Growth Moments (ages 7, 10, 13) are completely suppressed. Constructs never roll random traits or gain passions.
 - **Mentored Decanting:** Decanted construct inherits proficiencies encoded on the disc 1:1.
 - **Blank Decanting:** Without a disc, construct awakens with baseline reflexes (Shooting 4, Melee 4, Social 2, Intellectual 2, Artistic 0, Others 3; 0 passions).
+- **Optional Adult Aging:** Reaching Age 13 unlocks decanting. Constructs left in the vat can continue maturing to **Age 18** for full adult body size ($1.0$).
 
 ### 2.7 Construct Biology, Traits & Genes
-- **`Gene_ConstructPsychology`:** Suppresses romance, marriage, chit-chat, and loneliness.
+- **Net Zero Foundation (`0 Met`, `11 Cpx`):** Synthetic metabolic surpluses (`Instability_Major` $+4$, `Gene_ConstructHibernation` $+3$, `Gene_ConstructPsychology` $+2$, `Gene_MandatorySterility` $+1$ = $+10\text{ Met}$) precisely balance the enhanced physical chassis ($-10\text{ Met}$), establishing a clean $100\%$ baseline hunger rate.
+- **`Gene_ConstructPsychology`:** Suppresses romance, marriage, chit-chat, and loneliness; permanently forces the `Psychopath` trait (+2 Met).
+- **`Gene_ConstructHibernation`:** "Flash in the pan" biology. Requires a 48-hour stasis cycle every 30 days and halves biological lifespan (`LifespanFactor` 0.5, +3 Met).
+- **`Instability_Major`:** Major cell instability (+4 Met, 0.6x lifespan factor, 5x cancer rate).
+- **`Gene_MandatorySterility`:** Complete sterility (+1 Met).
+- **Physical Chassis Suite:** `Immunity_SuperStrong` (-2 Met), `WoundHealing_Fast` (-2 Met), `Robust` (-2 Met), `Pain_Reduced` (-1 Met), `MeleeDamage_Strong` (-1 Met), `MoveSpeed_Quick` (-1 Met), `Superclotting` (-1 Met).
 - **`Trait_ConstructAsset`:** Colony property. Colonists suffer 0 mood debuffs when a construct dies or is lost.
-- **`Gene_ConstructHibernation`:** Requires a 12-hour stasis cycle every 30 days. Interruption causes `Construct_InterruptedStasis`. Deprivation causes `Construct_Assimilation` coma.
-- **`Gene_MandatorySterility`:** Complete sterility (+1 Metabolic Efficiency).
-- **`Construct_MetabolicallyEfficient`:** +5 Metabolic Efficiency surplus; forces Psychopath and Bloodlust.
 - **Uniform Machine Physiology:** `Gender.None`, "it/its" pronouns, `BodyTypeDefOf.Thin`, completely bald and beardless (`Hair_BaldOnly`, `Beard_NoBeardOnly`).
 - **Locked Architecture:** Harmony patch blocks `Recipe_ImplantXenogerm` on constructs.
 

@@ -77,15 +77,23 @@ This document outlines proposed mechanics, technical architectures, and design d
 ## 4. Genome Architect Terminal (`ConstructGenomeArchitect`) & UI Specification
 
 ### 4.1 Immutable Core Construct Genome
-Every authored genome template strictly includes the **4 Core Construct Genes**, locked permanently into the template:
-1. **`Gene_ConstructPsychology`:** Suppresses romance, marriage, social chit-chat, and loneliness.
-2. **`Construct_MetabolicallyEfficient`:** Excision of empathy provides +5 Metabolic Efficiency surplus; forces Psychopath and Bloodlust.
-3. **`Gene_MandatorySterility`:** Complete sterility to protect proprietary genetic investments (+1 Metabolic Efficiency).
-4. **`Gene_ConstructHibernation`:** 30-day operation cycle requiring a 12-hour stasis hibernation.
+Every authored genome template strictly includes the **11 Core Construct Genes**, locked permanently into the template:
+1. **`Gene_ConstructPsychology`:** Suppresses romance, marriage, social chit-chat, and loneliness; forces `Psychopath` (+2 Met).
+2. **`Instability_Major`:** Major cell instability (+4 Met, 0.6x lifespan factor, 5x cancer rate).
+3. **`Gene_MandatorySterility`:** Complete sterility to protect proprietary genetic investments (+1 Met).
+4. **`Gene_ConstructHibernation`:** 30-day operation cycle requiring 48-hour stasis; halves lifespan (`LifespanFactor` 0.5, +3 Met).
+5. **Physical Chassis Suite ($-10\text{ Met}$ total):**
+   - `Immunity_SuperStrong` (-2 Met, 150% immunity speed)
+   - `WoundHealing_Fast` (-2 Met, 200% healing rate)
+   - `Robust` (-2 Met, 75% damage taken)
+   - `Pain_Reduced` (-1 Met, 50% pain factor)
+   - `MeleeDamage_Strong` (-1 Met, 150% melee damage)
+   - `MoveSpeed_Quick` (-1 Met, +0.40 c/s speed)
+   - `Superclotting` (-1 Met, instant wound clotting)
 
 ### 4.2 Spliced Adaptations from Linked Gene Banks
-* The player builds upon the Core Genome by selecting available genes from nearby linked vanilla `GeneBank` facilities.
-* Metabolic efficiency from the core genes (+6 total net) gives the player an immediate metabolic budget to afford powerful adaptations (e.g., robust, great crafting, quick sleeper, dark vision).
+* The core genes net to exactly **$0\text{ Metabolism}$** ($100\%$ standard human food consumption).
+* The player builds upon this baseline by selecting available genes from nearby linked vanilla `GeneBank` facilities, balancing added adaptations with metabolic stability.
 
 ### 4.3 Aesthetic Defaulting & Cosmetic Overrides
 * Unless the player deliberately selects an aesthetic gene from their gene banks, the template automatically burns:

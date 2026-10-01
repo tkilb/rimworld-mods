@@ -10,7 +10,7 @@
     <soundWorking>Recipe_Machining</soundWorking>
     <workAmount>3000</workAmount>
     <recipeUsers>
-      <li>TableFabrication</li>
+      <li>FabricationBench</li>
     </recipeUsers>
     <ingredients>
       <li>
