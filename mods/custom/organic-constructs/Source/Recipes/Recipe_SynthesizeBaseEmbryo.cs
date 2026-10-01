@@ -6,9 +6,9 @@ using Verse.AI;
 
 namespace OrganicConstructs
 {
-    public class Recipe_SynthesizeBlankEmbryo : RecipeWorker
+    public class Recipe_SynthesizeBaseEmbryo : RecipeWorker
     {
-        private static readonly string[] ConstructBaselineGenes = new string[]
+        private static readonly string[] BaseConstructGenes = new string[]
         {
             "Gene_ConstructPsychology",
             "Construct_MetabolicallyEfficient",
@@ -24,6 +24,12 @@ namespace OrganicConstructs
             "Beard_NoBeardOnly"
         };
 
+        public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)
+        {
+            if (!base.AvailableOnNow(thing, part)) return false;
+            return thing is Building_ConstructSynthesizer;
+        }
+
         public override void Notify_IterationCompleted(Pawn billDoer, List<Thing> ingredients)
         {
             base.Notify_IterationCompleted(billDoer, ingredients);
@@ -37,12 +43,13 @@ namespace OrganicConstructs
                 sources.pawnSources.Clear();
             }
 
-            // Mark as construct matrix on CompEmbryoQuality
+            // Mark as construct on CompEmbryoQuality
             CompEmbryoQuality quality = embryo.TryGetComp<CompEmbryoQuality>();
             if (quality != null)
             {
                 quality.isConstruct = true;
                 quality.editCount = 0;
+                quality.blueprintLabel = "Base Construct";
             }
 
             // Ensure GeneSet is initialized
@@ -64,9 +71,9 @@ namespace OrganicConstructs
                     embryo.GeneSet.Debug_RemoveGene(current[i]);
                 }
 
-                for (int i = 0; i < ConstructBaselineGenes.Length; i++)
+                for (int i = 0; i < BaseConstructGenes.Length; i++)
                 {
-                    GeneDef g = DefDatabase<GeneDef>.GetNamedSilentFail(ConstructBaselineGenes[i]);
+                    GeneDef g = DefDatabase<GeneDef>.GetNamedSilentFail(BaseConstructGenes[i]);
                     if (g != null)
                     {
                         embryo.GeneSet.AddGene(g);
@@ -86,9 +93,14 @@ namespace OrganicConstructs
             }
 
             Messages.Message(
-                "Synthetic construct embryo matrix successfully synthesized with baseline construct genome.",
+                "Successfully synthesized Base Construct embryo with standard baseline genome.",
                 embryo,
                 MessageTypeDefOf.PositiveEvent);
         }
+    }
+
+    // Retained for backward compatibility if referenced by saved data
+    public class Recipe_SynthesizeBlankEmbryo : Recipe_SynthesizeBaseEmbryo
+    {
     }
 }

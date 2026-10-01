@@ -13,6 +13,9 @@ namespace OrganicConstructs
 
         public string templateLabel;
         public List<GeneDef> genes = new List<GeneDef>();
+        public bool isBurned = false;
+
+        public bool IsBlank => !isBurned && (genes == null || genes.Count == 0);
 
         public int ComplexityTotal
         {
@@ -51,7 +54,7 @@ namespace OrganicConstructs
             base.PostPostMake();
             if (genes == null || genes.Count == 0)
             {
-                InitializeDefaultTemplate();
+                // Previously initialized default template here
             }
         }
 
@@ -59,7 +62,7 @@ namespace OrganicConstructs
         {
             if (genes == null) genes = new List<GeneDef>();
             genes.Clear();
-            templateLabel = label ?? Props?.defaultTemplateLabel ?? "SecUnit Baseline Caste";
+            templateLabel = label ?? Props?.defaultTemplateLabel ?? "Base Construct Template";
             string[] defaultGenes = new string[]
             {
                 "Gene_ConstructPsychology",
@@ -78,10 +81,20 @@ namespace OrganicConstructs
                 GeneDef g = DefDatabase<GeneDef>.GetNamedSilentFail(gName);
                 if (g != null) genes.Add(g);
             }
+            isBurned = true;
+        }
+
+        public void BurnGenome(string label, List<GeneDef> newGenes)
+        {
+            if (isBurned) return;
+            templateLabel = label;
+            genes = new List<GeneDef>(newGenes);
+            isBurned = true;
         }
 
         public void RecordFromPawn(Pawn pawn)
         {
+            if (isBurned) return;
             if (pawn?.genes == null) return;
             if (genes == null) genes = new List<GeneDef>();
             genes.Clear();
@@ -93,6 +106,7 @@ namespace OrganicConstructs
                     genes.Add(g.def);
                 }
             }
+            isBurned = true;
             Messages.Message($"Genome Blueprint disc updated with genetic caste template from {pawn.LabelShortCap} ({genes.Count} genes).", parent, MessageTypeDefOf.PositiveEvent);
         }
 
@@ -100,12 +114,18 @@ namespace OrganicConstructs
         {
             base.PostExposeData();
             Scribe_Values.Look(ref templateLabel, "templateLabel", Props?.defaultTemplateLabel ?? "Construct Caste");
+            Scribe_Values.Look(ref isBurned, "isBurned", false);
             Scribe_Collections.Look(ref genes, "genes", LookMode.Def);
             if (genes == null) genes = new List<GeneDef>();
         }
 
         public override string CompInspectStringExtra()
         {
+            if (IsBlank)
+            {
+                return "Blank Genome Disc (Requires burning at Genome Architect)";
+            }
+
             StringBuilder sb = new StringBuilder();
             string label = string.IsNullOrEmpty(templateLabel) ? (Props?.defaultTemplateLabel ?? "Construct Caste") : templateLabel;
             sb.Append("Blueprint: ").Append(label);
@@ -174,7 +194,7 @@ namespace OrganicConstructs
                 }
             };
 
-            if (parent.Spawned && parent.Map != null)
+            if (parent.Spawned && parent.Map != null && !isBurned)
             {
                 yield return new Command_Action
                 {

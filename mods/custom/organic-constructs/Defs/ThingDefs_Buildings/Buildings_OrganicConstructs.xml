@@ -7,7 +7,7 @@
   <ThingDef ParentName="BenchBase">
     <defName>ConstructSynthesizer</defName>
     <label>construct synthesizer</label>
-    <description>An industrial biological workstation dedicated to the synthesis, cloning, and batch genome-imprinting of organic constructs (SecUnits / Replicants). Equipped with an integrated genome blueprint disc drive to imprint mass batches of synthetic embryo matrices, and biomass liquefaction tanks for recycling culled biological material.</description>
+    <description>An industrial biological workstation dedicated to the synthesis, cloning, and batch genome-imprinting of organic constructs (Base and Complex Constructs). Equipped with an integrated genome blueprint disc drive to imprint mass batches of synthetic embryo matrices, and biomass liquefaction tanks for recycling culled biological material.</description>
     <thingClass>OrganicConstructs.Building_ConstructSynthesizer</thingClass>
     <graphicData>
       <texPath>Things/Building/ConstructSynthesizer/ConstructSynthesizer</texPath>
@@ -47,9 +47,10 @@
       <li Class="CompProperties_Flickable"/>
     </comps>
     <recipes>
-      <li>Construct_BatchApplyBlueprint</li>
-      <li>Recipe_SynthesizeBlankEmbryoFresh</li>
-      <li>Recipe_SynthesizeBlankEmbryoRecycled</li>
+      <li>Recipe_SynthesizeBaseEmbryoFresh</li>
+      <li>Recipe_SynthesizeBaseEmbryoRecycled</li>
+      <li>Recipe_SynthesizeComplexEmbryoFresh</li>
+      <li>Recipe_SynthesizeComplexEmbryoRecycled</li>
       <li>Construct_BatchRecycleEmbryo</li>
     </recipes>
     <inspectorTabs>

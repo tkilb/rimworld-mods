@@ -52,6 +52,25 @@ namespace OrganicConstructs
                 {
                     imprinter.OnPawnDecanted(newborn, fromEmbryo: true, embryo: vat.selectedEmbryo);
                 }
+
+                if (vat.selectedEmbryo != null && ConstructUtility.IsConstruct(newborn))
+                {
+                    CompEmbryoQuality quality = vat.selectedEmbryo.TryGetComp<CompEmbryoQuality>();
+                    if (quality != null && quality.isConstruct)
+                    {
+                        float stability = ConstructStabilityUtility.CalculateStability(vat.selectedEmbryo.GeneSet.ComplexityTotal, vat.selectedEmbryo.GeneSet.MetabolismTotal, vat.selectedEmbryo.GeneSet.GenesListForReading);
+                        bool isVolatile = stability < 0.60f || (quality.blueprintLabel != null && quality.blueprintLabel.ToLower().Contains("volatile"));
+                        if (isVolatile && Rand.Chance(0.15f))
+                        {
+                            HediffDef defectDef = DefDatabase<HediffDef>.GetNamedSilentFail("Construct_Assimilation") ?? HediffDefOf.CryptosleepSickness;
+                            if (defectDef != null)
+                            {
+                                newborn.health.AddHediff(defectDef);
+                                Messages.Message($"Volatile genetic stability caused assimilation delay or cellular defect in {newborn.LabelShort}.", newborn, MessageTypeDefOf.NegativeEvent);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

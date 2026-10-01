@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>GenomeBlueprintDisk</defName>
     <label>genome blueprint disc</label>
-    <description>A high-density optical data storage cartridge formatted with complete genomic sequencing data for a human construct caste. Can be loaded into Construct Synthesizers to batch-imprint blank embryo matrices.</description>
+    <description>A high-density optical Genome Blueprint Disc formatted with complete genomic sequencing data for Base & Complex Constructs. Can be loaded into Construct Synthesizers to batch-imprint blank embryo matrices.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Things/Item/Blueprints/GenomeBlueprintDisk</texPath>
@@ -28,7 +28,7 @@
     </tradeTags>
     <comps>
       <li Class="OrganicConstructs.CompProperties_GenomeBlueprint">
-        <defaultTemplateLabel>Construct Caste</defaultTemplateLabel>
+        <defaultTemplateLabel>Base Construct Template</defaultTemplateLabel>
       </li>
       <li Class="CompProperties_Forbiddable" />
     </comps>
@@ -37,7 +37,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>NeuralBlueprintDisk</defName>
     <label>neural imprint disc</label>
-    <description>A cryogenic neural imprint disc containing encoded synaptic pathways, combat reflexes, and skill doctrines extracted from a veteran colonist or master neural template. Used in Growth Vats to impart high-tier proficiencies during construct gestation.</description>
+    <description>A cryogenic neural imprint disc containing encoded synaptic pathways, combat reflexes, and skill doctrines extracted from a veteran colonist or master neural template. Used in Growth Vats to impart high-tier proficiencies during Base & Complex Construct gestation.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Things/Item/Blueprints/NeuralBlueprintDisk</texPath>

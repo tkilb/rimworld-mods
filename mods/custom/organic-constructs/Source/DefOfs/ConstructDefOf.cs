@@ -20,9 +20,9 @@ namespace OrganicConstructs
         // ── Buildings ─────────────────────────────────────────────────────────────
         public static ThingDef NeuralScanner;
         public static ThingDef ConstructSynthesizer;
+        public static ThingDef ConstructGenomeArchitect;
 
         // ── Recipes ───────────────────────────────────────────────────────────────
-        public static RecipeDef Construct_BatchApplyBlueprint;
         public static RecipeDef Construct_BatchRecycleEmbryo;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────

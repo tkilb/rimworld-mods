@@ -121,7 +121,7 @@ namespace OrganicConstructs
             else
             {
                 if (sb.Length > 0) sb.AppendLine();
-                sb.Append("No Genome Blueprint Disc loaded (Required for batch genome imprinting)");
+                sb.Append("No Genome Blueprint Disc loaded (Required for Complex Construct synthesis)");
             }
 
             return sb.ToString().TrimEndNewlines();

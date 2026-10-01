@@ -30,9 +30,9 @@ namespace OrganicConstructs
             {
                 if (!string.IsNullOrEmpty(blueprintLabel))
                 {
-                    return $"{label} (construct: {blueprintLabel})";
+                    return $"construct embryo ({blueprintLabel})";
                 }
-                return $"{label} (construct matrix)";
+                return "construct embryo";
             }
             return base.TransformLabel(label);
         }
@@ -43,16 +43,16 @@ namespace OrganicConstructs
 
             if (isConstruct)
             {
-                sb.AppendLine("Origin: Synthetic Construct Matrix");
+                sb.AppendLine("Origin: Construct Embryo");
                 if (!string.IsNullOrEmpty(blueprintLabel))
                 {
-                    sb.AppendLine($"Blueprint Caste: {blueprintLabel}");
+                    sb.AppendLine($"Blueprint Genome: {blueprintLabel}");
                 }
             }
 
             if (editCount > 0)
             {
-                sb.AppendLine($"Matrix Imprints: {editCount} / 2");
+                sb.AppendLine($"Genome Imprints: {editCount} / 2");
             }
 
             if (designatedForRecycling)
@@ -73,14 +73,14 @@ namespace OrganicConstructs
                 yield return new Command_Action
                 {
                     defaultLabel = "View Genes",
-                    defaultDesc = "View the complete genetic composition of this construct embryo matrix.",
+                    defaultDesc = "View the complete genetic composition of this construct embryo.",
                     icon = GeneSetHolderBase.GeneticInfoTex.Texture ?? parent?.def?.uiIcon,
                     action = () =>
                     {
                         StringBuilder sb = new StringBuilder();
-                        string caste = !string.IsNullOrEmpty(blueprintLabel) ? blueprintLabel : "Construct Matrix";
-                        sb.AppendLine($"--- {caste} ---");
-                        sb.AppendLine($"Origin: Synthetic Construct Matrix");
+                        string genomeName = !string.IsNullOrEmpty(blueprintLabel) ? blueprintLabel : "Construct Embryo";
+                        sb.AppendLine($"--- {genomeName} ---");
+                        sb.AppendLine($"Origin: Construct Embryo");
                         sb.AppendLine($"Genetic Edits: {editCount} / 2");
                         sb.AppendLine($"Total Complexity: {holder.GeneSet.ComplexityTotal}");
                         sb.AppendLine($"Net Metabolism: {(holder.GeneSet.MetabolismTotal >= 0 ? "+" + holder.GeneSet.MetabolismTotal : holder.GeneSet.MetabolismTotal.ToString())}");
