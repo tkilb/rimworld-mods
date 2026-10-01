@@ -19,7 +19,9 @@ namespace OrganicConstructs
             "Beauty_VeryUgly",
             "Gene_ConstructHibernation",
             "LowSleep",
-            "Learning_Slow"
+            "Learning_Slow",
+            "Hair_BaldOnly",
+            "Beard_NoBeardOnly"
         };
 
         public override void Notify_IterationCompleted(Pawn billDoer, List<Thing> ingredients)

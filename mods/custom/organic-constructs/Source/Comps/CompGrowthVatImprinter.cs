@@ -139,14 +139,13 @@ namespace OrganicConstructs
             }
 
             float xp = Props?.xpPerImprintInterval ?? 15f;
-            float skillMult = isConstruct ? 0.5f : 1.0f;
 
             if (blueprint.skillLevels != null)
             {
                 foreach (var kvp in blueprint.skillLevels)
                 {
                     SkillDef skillDef = kvp.Key;
-                    int targetLevel = Mathf.RoundToInt(kvp.Value * skillMult);
+                    int targetLevel = kvp.Value;
                     SkillRecord record = occupant.skills.GetSkill(skillDef);
                     if (record != null && record.Level < targetLevel)
                     {
@@ -184,6 +183,8 @@ namespace OrganicConstructs
                 return;
             }
 
+            Gene_ConstructPsychology.ApplyConstructPhysiology(pawn);
+
             TraitDef traitAsset = NeuralImprintDefOf.Trait_ConstructAsset ?? DefDatabase<TraitDef>.GetNamedSilentFail("Trait_ConstructAsset");
             if (traitAsset != null && pawn.story?.traits != null && !pawn.story.traits.HasTrait(traitAsset))
             {
@@ -212,7 +213,7 @@ namespace OrganicConstructs
                             SkillRecord record = pawn.skills?.GetSkill(skillDef);
                             if (record != null)
                             {
-                                record.Level = Mathf.Max(record.Level, targetLevel);
+                                record.Level = targetLevel;
                                 record.xpSinceLastLevel = 0f;
                             }
                         }
@@ -361,11 +362,11 @@ namespace OrganicConstructs
                             bool isConstruct = IsConstruct(occupant);
                             if (isConstruct)
                             {
-                                sb.AppendLine("Target: Construct (50% Transfer Multiplier, Passions Disabled)");
+                                sb.AppendLine("Target: Construct (1:1 Disc Inheritance, Passions Disabled)");
                             }
                             else
                             {
-                                sb.AppendLine("Target: Standard Pawn (100% Transfer Multiplier)");
+                                sb.AppendLine("Target: Standard Pawn (Vat Learning Imprint)");
                             }
                             sb.AppendLine();
 
@@ -384,9 +385,7 @@ namespace OrganicConstructs
                                         if (p == Passion.Major) passionStr = " (Burning Passion 🔥🔥)";
                                         else if (p == Passion.Minor) passionStr = " (Interested Passion 🔥)";
                                     }
-                                    int effective = isConstruct ? Mathf.RoundToInt(kvp.Value * 0.5f) : kvp.Value;
-                                    string constructNote = isConstruct ? $" [Construct 50%: {effective}]" : "";
-                                    sb.AppendLine($"  • {kvp.Key.label.CapitalizeFirst()}: Scanned Level {kvp.Value}{constructNote}{passionStr}");
+                                    sb.AppendLine($"  • {kvp.Key.label.CapitalizeFirst()}: Scanned Level {kvp.Value}{passionStr}");
                                 }
                             }
 

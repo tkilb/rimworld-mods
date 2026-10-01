@@ -40,6 +40,7 @@
 - **`Gene_ConstructHibernation`:** Requires a 12-hour stasis cycle every 30 days. Interrupted stasis causes `Construct_InterruptedStasis`. Neglecting stasis causes emergency comatose shutdown (`Construct_Assimilation`).
 - **`Gene_MandatorySterility`:** Complete sterility (+1 Metabolic Efficiency).
 - **`Construct_MetabolicallyEfficient`:** +5 Metabolic Efficiency surplus; forces Psychopath and Bloodlust.
+- **Physical Architecture:** Uniform genderless machine physiology (`Gender.None`, "it/its" pronouns, `BodyTypeDefOf.Thin`), completely bald and beardless (`Hair_BaldOnly`, `Beard_NoBeardOnly`).
 - **Locked Genome:** Harmony patch blocks `Recipe_ImplantXenogerm` on constructs.
 
 ### 1.6 Bioware Augments

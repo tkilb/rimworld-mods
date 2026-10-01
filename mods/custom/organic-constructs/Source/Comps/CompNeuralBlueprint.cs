@@ -31,16 +31,12 @@ namespace OrganicConstructs
             passions.Clear();
 
             int cap = Props?.defaultSkillCap ?? 14;
-            int minSkill = Props?.minSkillToEncode ?? 6;
 
             foreach (SkillRecord skill in donor.skills.skills)
             {
-                if (skill.Level >= minSkill)
-                {
-                    int halvedLevel = Mathf.CeilToInt(skill.Level * 0.5f);
-                    int encodedLevel = Mathf.Min(halvedLevel, cap);
-                    skillLevels[skill.def] = encodedLevel;
-                }
+                int halvedLevel = Mathf.CeilToInt(skill.Level * 0.5f);
+                int encodedLevel = Mathf.Min(halvedLevel, cap);
+                skillLevels[skill.def] = encodedLevel;
             }
         }
 
