@@ -8,6 +8,7 @@ namespace OrganicConstructs
     [HarmonyPatch(typeof(WorkGiver_DoBill), "JobOnThing")]
     public static class Patch_WorkGiver_DoBill
     {
+        [HarmonyPostfix]
         public static void Postfix(Pawn pawn, Thing thing, bool forced, ref Job __result)
         {
             if (__result != null && thing is Building_ConstructSynthesizer synth)

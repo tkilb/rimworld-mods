@@ -7,10 +7,14 @@ using Verse.AI;
 
 namespace OrganicConstructs
 {
-    public class Building_ConstructGenomeArchitect : Building_WorkTable, IThingHolder
+    public class Building_ConstructGenomeArchitect : Building, IThingHolder
     {
         public ThingOwner<Thing> discContainer;
         public CompPowerTrader powerComp;
+
+        private List<Building> _cachedGeneBanks;
+        private int _geneBankCacheTick = -999;
+        private const int CacheInterval = 250; // Re-scan every ~4 seconds
 
         public Thing LoadedDisc => discContainer.InnerListForReading.Count > 0 ? discContainer.InnerListForReading[0] : null;
         public CompGenomeBlueprint LoadedBlueprintComp => LoadedDisc?.TryGetComp<CompGenomeBlueprint>();
@@ -20,16 +24,23 @@ namespace OrganicConstructs
         {
             get
             {
-                List<Building> banks = new List<Building>();
-                if (!Spawned) return banks;
-                foreach (Thing t in GenRadial.RadialDistinctThingsAround(Position, Map, 16f, true))
+                if (!Spawned) return new List<Building>();
+                int tick = Find.TickManager.TicksGame;
+                if (_cachedGeneBanks == null || tick - _geneBankCacheTick > CacheInterval)
                 {
-                    if (t is Building bank && bank.def.defName == "GeneBank" && bank.GetComp<CompPowerTrader>() != null && bank.GetComp<CompPowerTrader>().PowerOn)
+                    _cachedGeneBanks = new List<Building>();
+                    foreach (Thing t in GenRadial.RadialDistinctThingsAround(Position, Map, 16f, true))
                     {
-                        banks.Add(bank);
+                        if (t is Building bank && bank.def.defName == "GeneBank")
+                        {
+                            CompPowerTrader pwr = bank.GetComp<CompPowerTrader>();
+                            if (pwr != null && pwr.PowerOn)
+                                _cachedGeneBanks.Add(bank);
+                        }
                     }
+                    _geneBankCacheTick = tick;
                 }
-                return banks;
+                return _cachedGeneBanks;
             }
         }
 
@@ -96,6 +107,7 @@ namespace OrganicConstructs
                 {
                     defaultLabel = "Load Blank Disc",
                     defaultDesc = "Order a colonist to haul a blank Genome Blueprint Disc to this machine.",
+                    icon = ContentFinder<Texture2D>.Get("UI/Commands/LoadTransporter", false) ?? def?.uiIcon,
                     action = () =>
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
@@ -135,6 +147,7 @@ namespace OrganicConstructs
                 {
                     defaultLabel = "Eject Disc",
                     defaultDesc = "Eject the currently loaded genome blueprint disc.",
+                    icon = LoadedDisc.def.uiIcon,
                     action = () =>
                     {
                         if (discContainer.TryDrop(LoadedDisc, Position, Map, ThingPlaceMode.Near, out Thing dropped))
@@ -150,7 +163,8 @@ namespace OrganicConstructs
                 yield return new Command_Action
                 {
                     defaultLabel = "Configure Genome",
-                    defaultDesc = "Open the Genome Architect interface to configure a new construct caste.",
+                    defaultDesc = "Open the Genome Architect interface to configure a new construct genome template.",
+                    icon = GeneSetHolderBase.GeneticInfoTex.Texture ?? def?.uiIcon,
                     action = () =>
                     {
                         Find.WindowStack.Add(new Dialog_ConfigureConstructGenome(this));

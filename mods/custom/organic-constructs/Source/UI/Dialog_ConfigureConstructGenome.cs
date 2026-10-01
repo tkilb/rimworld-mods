@@ -142,23 +142,26 @@ namespace OrganicConstructs
             Widgets.Label(new Rect(0f, listY, viewRect.width, 24f), "Selected Adaptations:");
             listY += 28f;
 
-            foreach (GeneDef def in selectedGenes.Where(g => !CoreGenes.Contains(g.defName)))
+            GeneDef toRemove = null;
+            foreach (GeneDef def in selectedGenes.Where(g => !CoreGenes.Contains(g.defName)).ToList())
             {
                 Rect rowRect = new Rect(0f, listY, viewRect.width, 24f);
                 if (Mouse.IsOver(rowRect)) Widgets.DrawHighlight(rowRect);
-                
+
                 if (Widgets.ButtonImage(new Rect(2f, listY + 2f, 20f, 20f), Widgets.CheckboxOffTex))
                 {
-                    selectedGenes.Remove(def);
-                    break;
+                    toRemove = def;
                 }
-                
+
                 Widgets.Label(new Rect(24f, listY, viewRect.width - 24f, 24f), def.LabelCap);
                 TooltipHandler.TipRegion(rowRect, def.description);
                 listY += 28f;
             }
-            
+
             Widgets.EndScrollView();
+
+            // Apply removal after draw loop to avoid invalidating the enumerator mid-frame
+            if (toRemove != null) selectedGenes.Remove(toRemove);
         }
 
         private void DoRightColumn(Rect rect)

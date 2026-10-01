@@ -98,7 +98,7 @@ namespace OrganicConstructs
             if (pawn?.genes == null) return;
             if (genes == null) genes = new List<GeneDef>();
             genes.Clear();
-            templateLabel = $"{pawn.LabelShortCap} Caste";
+            templateLabel = $"{pawn.LabelShortCap} Genome";
             foreach (Gene g in pawn.genes.Endogenes)
             {
                 if (g?.def != null)
@@ -107,13 +107,13 @@ namespace OrganicConstructs
                 }
             }
             isBurned = true;
-            Messages.Message($"Genome Blueprint disc updated with genetic caste template from {pawn.LabelShortCap} ({genes.Count} genes).", parent, MessageTypeDefOf.PositiveEvent);
+            Messages.Message($"Genome Blueprint disc burned with genetic template from {pawn.LabelShortCap} ({genes.Count} genes).", parent, MessageTypeDefOf.PositiveEvent);
         }
 
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref templateLabel, "templateLabel", Props?.defaultTemplateLabel ?? "Construct Caste");
+            Scribe_Values.Look(ref templateLabel, "templateLabel", Props?.defaultTemplateLabel ?? "Base Construct Template");
             Scribe_Values.Look(ref isBurned, "isBurned", false);
             Scribe_Collections.Look(ref genes, "genes", LookMode.Def);
             if (genes == null) genes = new List<GeneDef>();
@@ -127,7 +127,7 @@ namespace OrganicConstructs
             }
 
             StringBuilder sb = new StringBuilder();
-            string label = string.IsNullOrEmpty(templateLabel) ? (Props?.defaultTemplateLabel ?? "Construct Caste") : templateLabel;
+            string label = string.IsNullOrEmpty(templateLabel) ? (Props?.defaultTemplateLabel ?? "Base Construct Template") : templateLabel;
             sb.Append("Blueprint: ").Append(label);
             sb.Append("\nEncoded Genes: ").Append(genes != null ? genes.Count : 0);
             sb.Append(" (Complexity: ").Append(ComplexityTotal);
@@ -198,7 +198,7 @@ namespace OrganicConstructs
             {
                 yield return new Command_Action
                 {
-                    defaultLabel = "Record Construct Caste",
+                    defaultLabel = "Record Construct Genome",
                     defaultDesc = "Record the endogenes of an active construct colonist onto this genome blueprint disc.",
                     icon = TexButton.Copy ?? parent?.def?.uiIcon,
                     action = () =>

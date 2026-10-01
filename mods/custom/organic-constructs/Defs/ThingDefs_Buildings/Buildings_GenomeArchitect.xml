@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <ThingDef ParentName="BenchBase">
+  <ThingDef ParentName="BuildingBase">
     <defName>ConstructGenomeArchitect</defName>
     <label>genome architect</label>
     <description>A specialized workstation for configuring and burning blank genome blueprint discs. It can connect to nearby Gene Banks to access stored genes for construct templates.</description>
     <thingClass>OrganicConstructs.Building_ConstructGenomeArchitect</thingClass>
     <graphicData>
-      <texPath>Things/Building/Production/GeneAssembler</texPath>
+      <texPath>Things/Building/Misc/GeneAssembler/GeneAssembler</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(3,2)</drawSize>
       <damageData>

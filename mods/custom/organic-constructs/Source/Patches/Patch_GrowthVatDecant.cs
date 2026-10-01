@@ -58,7 +58,10 @@ namespace OrganicConstructs
                     CompEmbryoQuality quality = vat.selectedEmbryo.TryGetComp<CompEmbryoQuality>();
                     if (quality != null && quality.isConstruct)
                     {
-                        float stability = ConstructStabilityUtility.CalculateStability(vat.selectedEmbryo.GeneSet.ComplexityTotal, vat.selectedEmbryo.GeneSet.MetabolismTotal, vat.selectedEmbryo.GeneSet.GenesListForReading);
+                        GeneSet gs = vat.selectedEmbryo.GeneSet;
+                        float stability = gs != null
+                            ? ConstructStabilityUtility.CalculateStability(gs.ComplexityTotal, gs.MetabolismTotal, gs.GenesListForReading)
+                            : 1.0f; // Safe default: treat unknown embryos as stable
                         bool isVolatile = stability < 0.60f || (quality.blueprintLabel != null && quality.blueprintLabel.ToLower().Contains("volatile"));
                         if (isVolatile && Rand.Chance(0.15f))
                         {

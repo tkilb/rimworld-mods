@@ -1,57 +1,91 @@
 # Organic Constructs - Technical Specification
 
 ## Overview
-**Organic Constructs** (`tyler.organicconstructs`) is a Biotech expansion introducing mass-produced, 100% biological artificial humans (SecUnits / Replicants). Constructed exclusively from organic muscle, vat-grown tissue, and synthetic neural wetware, constructs are immune to EMP and solar flares, operate with emotionless efficiency, and are treated by natural colonists as industrial property.
+**Organic Constructs** (`tyler.organicconstructs`) is a Biotech expansion introducing mass-produced, 100% biological artificial humans (Base and Complex Constructs). Constructed exclusively from organic muscle, vat-grown tissue, and synthetic neural wetware, constructs are immune to EMP and solar flares, operate with emotionless efficiency, and are treated by natural colonists as industrial property.
 
 ---
 
-## 1. Core Mechanics
+## 1. Tripartite Architecture
 
-### 1.1 Workstation: `Building_ConstructSynthesizer`
-- **Role:** Industrial synthesis bench for mass embryo creation, batch genome imprinting, and biomass recycling.
-- **Disc Receptacle:** Equipped with a `discContainer` holding exactly 1 `GenomeBlueprintDisk`. The disc acts as a reusable master template for batch printing.
-- **Bills:**
-  - `Synthesize Blank Embryo (Fresh Organics)`: Raw meat, plant food, neutroamine, medicine.
-  - `Synthesize Blank Embryo (Recycled Biomass)`: Genetic nutrient paste + reduced raw organics.
-  - `Batch Imprint Construct Caste`: Imprints the loaded genome blueprint disc onto blank embryos.
-  - `Liquefy Embryo Biomass`: Recycles culled or botched embryos into Genetic Nutrient Paste.
+Construct design is governed by three distinct, modular layers:
+1. **GENOME (Genetics — Synthesizer & Architect):**
+   - **Base Genome:** Standard factory baseline construct template. Unedited, zero-deviation endogenes.
+   - **Complex Genome:** Custom engineered template incorporating external gene adaptations. Requires an encoded/burned master disc.
+2. **NEURAL WIRING (Wetware — Growth Vat):**
+   - **Blank Reflexes:** Innate baseline motor reflexes (Shooting 4, Melee 4, Social 2, Intellectual 2, Artistic 0, Others 3; 0 passions).
+   - **Mentored Imprint:** 1:1 synaptic doctrine streamed from an encoded `NeuralBlueprintDisk` (scanned from a natural colonist).
+3. **BIOWARE (Hardware — Surgery):**
+   - Modular biological augment packages (Combat, Industrial, Laborer, Medical) grafted directly onto the construct's neural bus. Natural humans reject these packages.
 
-### 1.2 Data Storage: Discs
-- **`GenomeBlueprintDisk`:** Stores complete genetic caste templates (`CompGenomeBlueprint`). Reusable in synthesizers.
-- **`NeuralBlueprintDisk`:** Stores scanned synaptic patterns, proficiencies, and combat doctrines (`CompNeuralBlueprint`).
+---
 
-### 1.3 Scanning: `Building_NeuralScanner`
+## 2. Core Mechanics & Subsystems
+
+### 2.1 Genome Architecture: `Building_ConstructGenomeArchitect`
+- **Role:** High-tech biometric workstation (800 W) for drafting construct genomes and burning master discs.
+- **GeneBank Integration:** Automatically scans connected, powered `GeneBank` facilities within a 16-cell radius to populate available genepacks.
+- **Architect UI (`Dialog_ConfigureConstructGenome`):**
+  - Left panel: Locked Core Construct Genes (`Gene_ConstructPsychology`, `Construct_MetabolicallyEfficient`, `Gene_MandatorySterility`, `Gene_ConstructHibernation`) + selected adaptations.
+  - Right panel: Searchable browser of available genepacks.
+  - Bottom bar: Live readouts of Complexity, Net Metabolism, and Genome Stability.
+- **ROM Burning:** Once burned, the loaded blank `GenomeBlueprintDisk` is permanently locked (`isBurned = true`) with the chosen template name and gene list.
+
+### 2.2 Stability & Volatility Engine: `ConstructStabilityUtility`
+- **Formula:** 
+  $$\text{Stability} = \text{Clamp}\Big(1.0 - (\text{Complexity} \times 0.015) + \text{MetabolismBonus} - \text{OptimizerPenalties},\ 0.05,\ 1.0\Big)$$
+  - Positive metabolism adds $+2\%$ per point; negative metabolism subtracts $-4\%$ per point.
+  - Unstable optimizer genes impose direct stability penalties (e.g. `Gene_MitochondrialOverdrive` $-25\%$, `Gene_GenomicCompression` $-20\%$).
+- **Rating Bands:**
+  - $\ge 90\%$: Industrial Grade (Green)
+  - $75\% - 89\%$: Stable (White)
+  - $60\% - 74\%$: Unstable (Orange)
+  - $< 60\%$: Highly Volatile (Red)
+- **Gameplay Consequences:**
+  - **Synthesis Botch Roll:** Volatile genomes dramatically increase synthesis failure chance at the synthesizer:
+    $$\text{BaseCollapse} = (1.0 - \text{Stability}) \times 0.5$$
+    Factored against doctor skill and room cleanliness. On botch, the embryo collapses into 1x `GeneticNutrientPaste`.
+  - **Decant Cellular Defects:** Volatile embryos (< 60% stability) decanting from a Growth Vat carry a $15\%$ risk of developing cellular defects (`Construct_Assimilation` coma or `CryptosleepSickness`).
+
+### 2.3 Embryo Synthesis: `Building_ConstructSynthesizer`
+- **Role:** Heavy biochemical workstation (600 W) for single-step embryo synthesis and biomass recycling.
+- **Direct Synthesis Bills:**
+  - `Synthesize Base Construct Embryo (Fresh Organics / Recycled Biomass)`: Synthesizes a parentless construct embryo carrying the standard baseline construct genome. Requires no disc.
+  - `Synthesize Complex Construct Embryo (Fresh Organics / Recycled Biomass)`: Synthesizes a parentless construct embryo carrying the loaded master blueprint's genes. Requires a burned `GenomeBlueprintDisk`. Blocked at bill dispatch if no disc is present (`Patch_WorkGiver_DoBill`).
+  - `Liquefy Embryo Biomass`: Recycles discarded embryos into `GeneticNutrientPaste`.
+
+### 2.4 Data Storage: Blueprint Discs
+- **`GenomeBlueprintDisk`:** High-capacity optical disc (`CompGenomeBlueprint`). Fabricated blank at `TableFabrication` (`Craft_BlankGenomeDisc`). Burned into a permanent master template at the `ConstructGenomeArchitect`. Reusable during synthesis.
+- **`NeuralBlueprintDisk`:** Synaptic storage medium (`CompNeuralBlueprint`). Scanned from natural colonists at the `NeuralScanner`. Reusable in Growth Vats.
+
+### 2.5 Neural Scanning: `Building_NeuralScanner`
 - Casket-style biometric scanner pod.
 - Scans natural human colonists onto a loaded `NeuralBlueprintDisk`.
-- **Lossy Encoding:** During the scan, skills are encoded at **50% of the donor's level** (rounded up to nearest integer) and **all passions are neutralized to None**, providing transparent WYSIWYG disc stats.
-- **Construct Restriction:** Constructs cannot be scanned (synthetic neural architecture incompatible).
-- Donor experiences temporary `Construct_NeuralFatigue` upon completion.
+- **Lossy Encoding:** Donor skills are encoded at **50% of the donor's level** (rounded up); all passions neutralized to None.
+- **Construct Restriction:** Constructs cannot be scanned (incompatible wetware).
+- Donor suffers temporary `Construct_NeuralFatigue`.
 
-### 1.4 Growth Vat Imprinting: `CompGrowthVatImprinter`
-- Attached directly to vanilla `GrowthVat` instances.
-- Holds 1 `NeuralBlueprintDisk`.
-- **Mentored Decanting:** When decanted with an encoded disc, construct directly inherits the proficiencies encoded on the disc 1:1 with 0 passions.
-- **Blank Decanting:** When decanted without a disc, construct awakens with innate baseline reflexes:
-  - Shooting 4, Melee 4, Social 2, Intellectual 2, Artistic 0, all other skills 3. Passions: None.
+### 2.6 Vat Imprinting: `CompGrowthVatImprinter`
+- Attached to vanilla `GrowthVat` instances via patch. Holds 1 `NeuralBlueprintDisk`.
+- **Mentored Decanting:** Decanted construct inherits proficiencies encoded on the disc 1:1.
+- **Blank Decanting:** Without a disc, construct awakens with baseline reflexes (Shooting 4, Melee 4, Social 2, Intellectual 2, Artistic 0, Others 3; 0 passions).
 
-### 1.5 Construct Biology, Traits & Genes
-- **`Gene_ConstructPsychology`:** Suppresses romance, marriage, social chit-chat, and loneliness.
-- **`Trait_ConstructAsset`:** Designates construct as colony property. Colonists suffer 0 mood debuffs when a construct dies or is lost.
-- **`Gene_ConstructHibernation`:** Requires a 12-hour stasis cycle every 30 days. Interrupted stasis causes `Construct_InterruptedStasis`. Neglecting stasis causes emergency comatose shutdown (`Construct_Assimilation`).
+### 2.7 Construct Biology, Traits & Genes
+- **`Gene_ConstructPsychology`:** Suppresses romance, marriage, chit-chat, and loneliness.
+- **`Trait_ConstructAsset`:** Colony property. Colonists suffer 0 mood debuffs when a construct dies or is lost.
+- **`Gene_ConstructHibernation`:** Requires a 12-hour stasis cycle every 30 days. Interruption causes `Construct_InterruptedStasis`. Deprivation causes `Construct_Assimilation` coma.
 - **`Gene_MandatorySterility`:** Complete sterility (+1 Metabolic Efficiency).
 - **`Construct_MetabolicallyEfficient`:** +5 Metabolic Efficiency surplus; forces Psychopath and Bloodlust.
-- **Physical Architecture:** Uniform genderless machine physiology (`Gender.None`, "it/its" pronouns, `BodyTypeDefOf.Thin`), completely bald and beardless (`Hair_BaldOnly`, `Beard_NoBeardOnly`).
-- **Locked Genome:** Harmony patch blocks `Recipe_ImplantXenogerm` on constructs.
+- **Uniform Machine Physiology:** `Gender.None`, "it/its" pronouns, `BodyTypeDefOf.Thin`, completely bald and beardless (`Hair_BaldOnly`, `Beard_NoBeardOnly`).
+- **Locked Architecture:** Harmony patch blocks `Recipe_ImplantXenogerm` on constructs.
 
-### 1.6 Bioware Augments
-- Modular bioware augments: Combat, Medical, Industrial, Laborer (Basic, Intermediate, Advanced).
-- Surgical installation restricted exclusively to constructs (baseline humans reject the biological bus).
-- Induces `Construct_Assimilation` coma (2 hours on success, 4 hours on failure).
-- Failure salvage chance: $20\% + (\text{Doctor Medicine Skill} \times 5\%)$.
+### 2.8 Bioware Augments
+- Modular packages: Combat, Medical, Industrial, Laborer (Basic, Intermediate, Advanced).
+- Surgical installation restricted exclusively to constructs (natural humans reject the bus).
+- Induces `Construct_Assimilation` coma. Doctor medicine skill determines recovery/salvage chance.
 
 ---
 
-## 2. Technical Architecture & File Map
+## 3. Technical Architecture & File Map
 
 ```
 mods/custom/organic-constructs/
@@ -71,11 +105,13 @@ mods/custom/organic-constructs/
 │   │   └── Jobs_Neural.xml
 │   ├── RecipeDefs/
 │   │   ├── Recipes_ConstructBatch.xml
-│   │   └── Recipes_ConstructAugments.xml
+│   │   ├── Recipes_ConstructAugments.xml
+│   │   └── Recipes_Crafting.xml        # Craft_BlankGenomeDisc
 │   ├── ResearchProjectDefs/
 │   │   └── ResearchProjects_Constructs.xml
 │   ├── ThingDefs_Buildings/
-│   │   └── Buildings_OrganicConstructs.xml # ConstructSynthesizer, NeuralScanner
+│   │   ├── Buildings_OrganicConstructs.xml # ConstructSynthesizer, NeuralScanner
+│   │   └── Buildings_GenomeArchitect.xml   # ConstructGenomeArchitect
 │   ├── ThingDefs_Items/
 │   │   ├── Items_Biomass.xml
 │   │   ├── Items_Blueprints.xml
@@ -92,6 +128,7 @@ mods/custom/organic-constructs/
 ├── Source/
 │   ├── Buildings/
 │   │   ├── Building_ConstructSynthesizer.cs
+│   │   ├── Building_ConstructGenomeArchitect.cs
 │   │   ├── Building_NeuralScanner.cs
 │   │   └── NeuralScannerExtension.cs
 │   ├── Comps/
@@ -119,13 +156,16 @@ mods/custom/organic-constructs/
 │   │   ├── Patch_ColonistDeathThoughts.cs
 │   │   ├── Patch_GrowthVatDecant.cs
 │   │   ├── Patch_RecipeImplantXenogerm.cs
-│   │   └── Patch_SocialAndRomance.cs
+│   │   ├── Patch_SocialAndRomance.cs
+│   │   └── Patch_WorkGiver_DoBill.cs
 │   ├── Recipes/
-│   │   ├── Recipe_BatchApplyBlueprint.cs
+│   │   ├── Recipe_SynthesizeBaseEmbryo.cs
+│   │   ├── Recipe_SynthesizeComplexEmbryo.cs
 │   │   ├── Recipe_BatchRecycleEmbryo.cs
 │   │   ├── Recipe_InstallConstructPackage.cs
-│   │   ├── Recipe_RemoveConstructPackage.cs
-│   │   └── Recipe_SynthesizeBlankEmbryo.cs
+│   │   └── Recipe_RemoveConstructPackage.cs
+│   ├── UI/
+│   │   └── Dialog_ConfigureConstructGenome.cs
 │   ├── Thoughts/
 │   │   └── ThoughtWorker_ConstructProperty.cs
 │   ├── WorkGivers/
@@ -133,8 +173,14 @@ mods/custom/organic-constructs/
 │   │   ├── WorkGiver_HaulToGrowthVatImprinter.cs
 │   │   ├── WorkGiver_HaulToNeuralScanner.cs
 │   │   └── WorkGiver_RecycleEmbryo.cs
+│   ├── ConstructStabilityUtility.cs
+│   ├── ConstructUtility.cs
 │   ├── OrganicConstructs.csproj
 │   └── OrganicConstructsMod.cs
 ├── spec.md
-└── qa.md
+├── GLOSSARY.md
+├── ENHANCEMENTS.md
+└── qa/
+    ├── qa.md
+    └── AGENTS.md
 ```
