@@ -28,6 +28,12 @@ resolve_machine_paths() {
       export DECK_HOST="${DECK_HOST:-steamdeck}"
       export DECK_REMOTE_DIR="${DECK_REMOTE_DIR:-~/.local/share/rimworld-mods}"
       ;;
+    "linux-book")
+      export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
+      export RIMWORLD_CONFIG_DIR="${RIMWORLD_CONFIG_DIR:-$HOME/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config}"
+      export DECK_HOST="${DECK_HOST:-steamdeck}"
+      export DECK_REMOTE_DIR="${DECK_REMOTE_DIR:-~/.local/share/rimworld-mods}"
+      ;;
     "steam-deck")
       export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
       local _proton_cfg="$HOME/.local/share/Steam/steamapps/compatdata/294100/pfx/drive_c/users/steamuser/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Config"
