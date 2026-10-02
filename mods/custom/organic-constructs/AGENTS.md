@@ -6,7 +6,7 @@
 - **Core Concept:** Fully biological vat-grown organisms consisting of synthetic muscle, organs, and wetware.
 - **Key Distinctions:**
   - **Biological Immunity:** Immune to EMPs, solar flares, and mechanoid-specific hacking.
-  - **Colony Property:** Treated as industrial assets; natural colonists suffer 0 mood debuffs when a construct dies or is lost (`Trait_ConstructAsset`).
+  - **Colony Property:** Treated as industrial assets; natural colonists suffer 0 mood debuffs when a construct dies or is lost (`Trait_ConstructAsset`), with an exception for empathetic colonists with the Kind trait or Kind Instinct gene who feel pity (`Construct_KindPity`).
   - **Suppressed Psychology:** Suppressed romance, marriage, chit-chat, and socialization (`Gene_ConstructPsychology`).
   - **Locked Architecture:** Harmony patch explicitly disables `Recipe_ImplantXenogerm` on constructs.
   - **Maintenance Stasis:** Requires periodic 48-hour hibernation every 30 days (`Gene_ConstructHibernation`).
@@ -79,6 +79,7 @@
 | [Items_Biomass.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_Biomass.xml) | `GeneticNutrientPaste` item Def. |
 | [Genes_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/GeneDefs/Genes_Construct.xml) | Core construct genes (`Gene_ConstructPsychology`, `Gene_ConstructHibernation`, etc.). |
 | [Traits_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/TraitDefs/Traits_Construct.xml) | `Trait_ConstructAsset` Def. |
+| [Thoughts_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThoughtDefs/Thoughts_Construct.xml) | `Construct_KindPity` thought for Kind colonist construct mourning. |
 | [Hediffs_ConstructAugments.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/HediffDefs/Hediffs_ConstructAugments.xml) | Augment hediffs and `Construct_Assimilation` coma. |
 | [Hediffs_Neural.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/HediffDefs/Hediffs_Neural.xml) | `Construct_NeuralFatigue` and `Construct_InterruptedStasis` hediffs. |
 | [Recipes_ConstructBatch.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/RecipeDefs/Recipes_ConstructBatch.xml) | Synthesizer bill recipes (Base Fresh/Recycled, Complex Fresh/Recycled, Liquefy). |

@@ -38,6 +38,17 @@ namespace OrganicConstructs
                 int encodedLevel = Mathf.Min(halvedLevel, cap);
                 skillLevels[skill.def] = encodedLevel;
             }
+
+            (parent as Thing_NeuralBlueprintDisk)?.Notify_StateChanged();
+        }
+
+        public void ClearProfile()
+        {
+            donorName = null;
+            doctrineTitle = null;
+            skillLevels?.Clear();
+            passions?.Clear();
+            (parent as Thing_NeuralBlueprintDisk)?.Notify_StateChanged();
         }
 
         private List<SkillDef> skillKeysWorkingList;
@@ -116,7 +127,7 @@ namespace OrganicConstructs
             {
                 defaultLabel = "Inspect Doctrine",
                 defaultDesc = "View the skills, combat doctrines, and passions encoded on this neural imprinting disc.",
-                icon = parent?.def?.uiIcon,
+                icon = parent?.Graphic?.MatSingle?.mainTexture as Texture2D ?? parent?.def?.uiIcon,
                 action = () =>
                 {
                     StringBuilder sb = new StringBuilder();
@@ -142,6 +153,44 @@ namespace OrganicConstructs
                     Find.WindowStack.Add(new Dialog_MessageBox(sb.ToString(), "Close", title: parent?.LabelCap ?? "Neural Blueprint Disc"));
                 }
             };
+
+            if (Prefs.DevMode)
+            {
+                if (!IsEncoded)
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "DEV: Imprint Default Doctrine",
+                        defaultDesc = "Encodes a sample combat doctrine onto this disc for testing.",
+                        action = () =>
+                        {
+                            doctrineTitle = "Veteran Tactical Doctrine";
+                            donorName = "DEV Mentor";
+                            if (skillLevels == null) skillLevels = new Dictionary<SkillDef, int>();
+                            skillLevels.Clear();
+                            foreach (SkillDef s in DefDatabase<SkillDef>.AllDefsListForReading)
+                            {
+                                skillLevels[s] = 10;
+                            }
+                            (parent as Thing_NeuralBlueprintDisk)?.Notify_StateChanged();
+                            Messages.Message("DEV: Imprinted default doctrine.", parent, MessageTypeDefOf.PositiveEvent);
+                        }
+                    };
+                }
+                else
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "DEV: Clear Imprint",
+                        defaultDesc = "Wipes the encoded doctrine and restores this disc to empty state.",
+                        action = () =>
+                        {
+                            ClearProfile();
+                            Messages.Message("DEV: Neural disc wiped to blank state.", parent, MessageTypeDefOf.NeutralEvent);
+                        }
+                    };
+                }
+            }
         }
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)

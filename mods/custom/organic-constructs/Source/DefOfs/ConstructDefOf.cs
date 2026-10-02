@@ -37,6 +37,9 @@ namespace OrganicConstructs
         // ── Traits ────────────────────────────────────────────────────────────────
         public static TraitDef Trait_ConstructAsset;
 
+        // ── Thoughts ──────────────────────────────────────────────────────────────
+        public static ThoughtDef Construct_KindPity;
+
         static ConstructDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(ConstructDefOf));

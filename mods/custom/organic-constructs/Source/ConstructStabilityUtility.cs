@@ -22,21 +22,6 @@ namespace OrganicConstructs
                 stability -= Mathf.Abs(metabolism) * 0.04f;
             }
 
-            if (genes != null)
-            {
-                foreach (GeneDef gene in genes)
-                {
-                    if (gene.defName == "Gene_MitochondrialOverdrive")
-                    {
-                        stability -= 0.25f;
-                    }
-                    else if (gene.defName == "Gene_GenomicCompression")
-                    {
-                        stability -= 0.20f;
-                    }
-                }
-            }
-
             return Mathf.Clamp(stability, 0.05f, 1.0f);
         }
 

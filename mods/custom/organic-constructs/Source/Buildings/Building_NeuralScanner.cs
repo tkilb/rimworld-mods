@@ -41,11 +41,12 @@ namespace OrganicConstructs
         public float HeldPawnDrawPos_Y => DrawPos.y + 0.03658537f;
         public float HeldPawnBodyAngle => Rotation.AsAngle;
         public PawnPosture HeldPawnPosture => PawnPosture.LayingOnGroundFaceUp;
+        public virtual Vector3 PawnDrawOffset => IntVec3.West.RotatedBy(Rotation).ToVector3() * (def.size.x / 4f);
 
         public override void DynamicDrawPhaseAt(DrawPhase phase, Vector3 drawLoc, bool flip = false)
         {
             base.DynamicDrawPhaseAt(phase, drawLoc, flip);
-            Occupant?.Drawer.renderer.DynamicDrawPhaseAt(phase, drawLoc, null, neverAimWeapon: true);
+            Occupant?.Drawer.renderer.DynamicDrawPhaseAt(phase, drawLoc + PawnDrawOffset, null, neverAimWeapon: true);
         }
 
         public Pawn Occupant => innerContainer.Count > 0 ? (innerContainer[0] as Pawn) : null;

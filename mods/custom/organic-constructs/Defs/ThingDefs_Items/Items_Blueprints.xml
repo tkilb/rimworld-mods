@@ -38,7 +38,7 @@
     <defName>NeuralBlueprintDisk</defName>
     <label>neural imprint disc</label>
     <description>A cryogenic neural imprint disc containing encoded synaptic pathways, combat reflexes, and skill doctrines extracted from a veteran colonist or master neural template. Used in Growth Vats to impart high-tier proficiencies during Base &amp; Complex Construct gestation.</description>
-    <thingClass>ThingWithComps</thingClass>
+    <thingClass>OrganicConstructs.Thing_NeuralBlueprintDisk</thingClass>
     <graphicData>
       <texPath>Things/Item/Blueprints/NeuralBlueprintDisk</texPath>
       <graphicClass>Graphic_Single</graphicClass>

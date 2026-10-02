@@ -2,14 +2,16 @@
 <Defs>
 
   <ThoughtDef>
-    <defName>Construct_ColdEfficiency</defName>
-    <workerClass>OrganicConstructs.ThoughtWorker_ConstructProperty</workerClass>
-    <validWhileDespawned>true</validWhileDespawned>
+    <defName>Construct_KindPity</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
     <stages>
       <li>
-        <label>cold efficiency</label>
-        <description>Operating purely according to functional protocols. Internal emotional friction is nonexistent.</description>
-        <baseMoodEffect>4</baseMoodEffect>
+        <label>pity for construct</label>
+        <description>Grown in a vat and engineered to serve without complaint, only to die in the dirt. To live such a hollow life and perish... it just isn't right.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
       </li>
     </stages>
   </ThoughtDef>

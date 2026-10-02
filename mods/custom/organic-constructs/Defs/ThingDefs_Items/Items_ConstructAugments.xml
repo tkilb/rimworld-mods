@@ -23,6 +23,10 @@
     <defName>Construct_BasicCombatPackageItem</defName>
     <label>basic combat package</label>
     <description>A basic biological neural bridge tailored for construct combat operations.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Combat_Basic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>500</MarketValue>
     </statBases>
@@ -32,6 +36,10 @@
     <defName>Construct_IntermediateCombatPackageItem</defName>
     <label>intermediate combat package</label>
     <description>An intermediate biological neural bridge tailored for construct combat operations.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Combat_Intermediate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1000</MarketValue>
     </statBases>
@@ -41,6 +49,10 @@
     <defName>Construct_AdvancedCombatPackageItem</defName>
     <label>advanced combat package</label>
     <description>An advanced biological neural bridge tailored for construct combat operations.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Combat_Advanced</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1500</MarketValue>
     </statBases>
@@ -51,6 +63,10 @@
     <defName>Construct_BasicMedicalPackageItem</defName>
     <label>basic medical package</label>
     <description>A basic neural bridge loaded with construct medical procedures.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Medical_Basic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>500</MarketValue>
     </statBases>
@@ -60,6 +76,10 @@
     <defName>Construct_IntermediateMedicalPackageItem</defName>
     <label>intermediate medical package</label>
     <description>An intermediate neural bridge loaded with construct medical procedures.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Medical_Intermediate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1000</MarketValue>
     </statBases>
@@ -69,6 +89,10 @@
     <defName>Construct_AdvancedMedicalPackageItem</defName>
     <label>advanced medical package</label>
     <description>An advanced neural bridge loaded with construct medical procedures.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Medical_Advanced</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1500</MarketValue>
     </statBases>
@@ -79,6 +103,10 @@
     <defName>Construct_BasicIndustrialPackageItem</defName>
     <label>basic industrial package</label>
     <description>A basic neural bridge tailored for construct industrial work.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Industrial_Basic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>500</MarketValue>
     </statBases>
@@ -88,6 +116,10 @@
     <defName>Construct_IntermediateIndustrialPackageItem</defName>
     <label>intermediate industrial package</label>
     <description>An intermediate neural bridge tailored for construct industrial work.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Industrial_Intermediate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1000</MarketValue>
     </statBases>
@@ -97,6 +129,10 @@
     <defName>Construct_AdvancedIndustrialPackageItem</defName>
     <label>advanced industrial package</label>
     <description>An advanced neural bridge tailored for construct industrial work.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Industrial_Advanced</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1500</MarketValue>
     </statBases>
@@ -107,6 +143,10 @@
     <defName>Construct_BasicLaborerPackageItem</defName>
     <label>basic laborer package</label>
     <description>A basic neural bridge tailored for construct laborer tasks.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Laborer_Basic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>500</MarketValue>
     </statBases>
@@ -116,6 +156,10 @@
     <defName>Construct_IntermediateLaborerPackageItem</defName>
     <label>intermediate laborer package</label>
     <description>An intermediate neural bridge tailored for construct laborer tasks.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Laborer_Intermediate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1000</MarketValue>
     </statBases>
@@ -125,6 +169,10 @@
     <defName>Construct_AdvancedLaborerPackageItem</defName>
     <label>advanced laborer package</label>
     <description>An advanced neural bridge tailored for construct laborer tasks.</description>
+    <graphicData>
+      <texPath>Things/Item/Augments/Augment_Laborer_Advanced</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
     <statBases>
       <MarketValue>1500</MarketValue>
     </statBases>
