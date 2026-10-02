@@ -479,21 +479,21 @@ namespace OrganicConstructs
 
             if (vat.selectedEmbryo != null)
             {
-                // Embryo phase: 6 nutrition/day over 4 days = 24 nutrition total
+                // Embryo phase: 6 nutrition/day over 3 days = 18 nutrition total
                 int gest = Traverse.Create(vat).Field("gestationTicks").GetValue<int>();
                 float progressFraction = Mathf.Clamp01(gest / 540000f);
-                vatNutrition = progressFraction * 24f;
+                vatNutrition = progressFraction * 18f;
             }
             else
             {
                 Pawn occupant = Traverse.Create(vat).Field("selectedPawn").GetValue<Pawn>();
                 if (occupant != null)
                 {
-                    // Embryo phase was completed (24 nutrition).
-                    // Maturation phase: 3 nutrition/day over 16 days = 48 nutrition total.
+                    // Embryo phase was completed (18 nutrition).
+                    // Maturation phase: 3 nutrition/day over 12 days = 36 nutrition total.
                     const long Age13Ticks = 13L * 3600000L;
                     float progressFraction = Mathf.Clamp01((float)occupant.ageTracker.AgeBiologicalTicks / Age13Ticks);
-                    vatNutrition = 24f + (progressFraction * 48f);
+                    vatNutrition = 18f + (progressFraction * 36f);
                 }
             }
 

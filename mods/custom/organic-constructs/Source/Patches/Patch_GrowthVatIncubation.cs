@@ -20,27 +20,26 @@ namespace OrganicConstructs
             CompPowerTrader power = __instance.GetComp<CompPowerTrader>();
             if (power != null && !power.PowerOn) return;
 
-            // ── Phase 1: 4-Day Embryo Gestation ──────────────────────────────
+            // ── Phase 1: 3-Day Embryo Gestation ──────────────────────────────
             // Vanilla takes 9 days (540,000 ticks). 
-            // We want construct embryos to complete in 4 days (240,000 ticks).
-            // That requires 540,000 / 240,000 = 2.25 ticks per tick.
-            // Vanilla adds 1. We add +1 on 3 out of 4 ticks, and +2 on 1 out of 4 ticks (avg +1.25).
+            // We want construct embryos to complete in 3 days (180,000 ticks).
+            // That requires 540,000 / 180,000 = 3 ticks per tick.
+            // Vanilla adds 1. We add +2 on every tick.
             if (__instance.selectedEmbryo != null && ConstructUtility.IsConstructEmbryo(__instance.selectedEmbryo))
             {
                 Traverse trav = Traverse.Create(__instance);
                 int gest = trav.Field("gestationTicks").GetValue<int>();
                 if (gest < 540000)
                 {
-                    int extraGestation = (Find.TickManager.TicksGame % 4 == 0) ? 2 : 1;
-                    trav.Field("gestationTicks").SetValue(gest + extraGestation);
+                    trav.Field("gestationTicks").SetValue(gest + 2);
                 }
             }
 
-            // ── Phase 2: 16-Day In-Vat Maturation (Age 0 -> 13) ───────────────
-            // Target: reach age 13 (46,800,000 biological ticks) in 16 in-game days (960,000 ticks).
-            // Rate needed: 46,800,000 / 960,000 = 48.75 biological ticks per real tick.
+            // ── Phase 2: 12-Day In-Vat Maturation (Age 0 -> 13) ───────────────
+            // Target: reach age 13 (46,800,000 biological ticks) in 12 in-game days (720,000 ticks).
+            // Rate needed: 46,800,000 / 720,000 = 65 biological ticks per real tick.
             // Vanilla adds 20 biological ticks per real tick.
-            // We add an extra 28.75 biological ticks per tick (28 on 1 of 4 ticks, 29 on 3 of 4 ticks).
+            // We add an extra 45 biological ticks per tick (20 + 45 = 65).
             Pawn occupant = Traverse.Create(__instance).Field("selectedPawn").GetValue<Pawn>();
             if (occupant != null && ConstructUtility.IsConstruct(occupant))
             {
@@ -49,8 +48,7 @@ namespace OrganicConstructs
 
                 if (ageBioTicks < Age13Ticks)
                 {
-                    int extraAge = (Find.TickManager.TicksGame % 4 == 0) ? 28 : 29;
-                    occupant.ageTracker.AgeBiologicalTicks += extraAge;
+                    occupant.ageTracker.AgeBiologicalTicks += 45;
 
                     // Keep passions wiped at all times during maturation
                     if (Find.TickManager.TicksGame % 500 == 0)
@@ -144,7 +142,7 @@ namespace OrganicConstructs
             }
             else if (__instance.selectedEmbryo != null && ConstructUtility.IsConstructEmbryo(__instance.selectedEmbryo))
             {
-                __result += "\nConstruct Gestation: Accelerated synthesis (4-day embryonic cycle)";
+                __result += "\nConstruct Gestation: Accelerated synthesis (3-day embryonic cycle)";
             }
             return __result;
         }
