@@ -127,7 +127,7 @@
     </researchPrerequisites>
     <modExtensions>
       <li Class="OrganicConstructs.NeuralScannerExtension">
-        <scanTicks>15000</scanTicks>
+        <scanTicks>30000</scanTicks>
         <powerConsumptionScanning>1500</powerConsumptionScanning>
         <powerConsumptionIdle>200</powerConsumptionIdle>
       </li>

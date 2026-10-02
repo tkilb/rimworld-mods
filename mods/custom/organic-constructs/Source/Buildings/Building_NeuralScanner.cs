@@ -10,7 +10,7 @@ namespace OrganicConstructs
 {
     public class Building_NeuralScanner : Building, IThingHolder, IThingHolderWithDrawnPawn
     {
-        public int scanTicks = 15000;
+        public int scanTicks = 30000;
         public float powerConsumptionScanning = 1500f;
         public float powerConsumptionIdle = 200f;
 
@@ -41,7 +41,7 @@ namespace OrganicConstructs
         public float HeldPawnDrawPos_Y => DrawPos.y + 0.03658537f;
         public float HeldPawnBodyAngle => Rotation.AsAngle;
         public PawnPosture HeldPawnPosture => PawnPosture.LayingOnGroundFaceUp;
-        public virtual Vector3 PawnDrawOffset => IntVec3.West.RotatedBy(Rotation).ToVector3() * (def.size.x / 4f);
+        public virtual Vector3 PawnDrawOffset => IntVec3.East.RotatedBy(Rotation).ToVector3() * (def.size.x / 4f);
 
         public override void DynamicDrawPhaseAt(DrawPhase phase, Vector3 drawLoc, bool flip = false)
         {
@@ -96,6 +96,12 @@ namespace OrganicConstructs
             if (IsConstruct(pawn))
             {
                 Messages.Message("Constructs cannot be scanned: Synthetic neural architecture incompatible with scanner.", pawn, MessageTypeDefOf.RejectInput, false);
+                return false;
+            }
+
+            if (pawn.health?.hediffSet?.HasHediff(ConstructDefOf.Construct_NeuralFatigue) == true)
+            {
+                Messages.Message($"{pawn.LabelShortCap} is still recovering from neural fatigue. Synaptic mapping cannot be performed until neural pathways stabilize.", pawn, MessageTypeDefOf.RejectInput, false);
                 return false;
             }
 
@@ -230,7 +236,7 @@ namespace OrganicConstructs
                 }
 
                 Messages.Message(
-                    $"Neural scan complete: Synaptic profile of {donor.LabelShortCap} successfully encoded to imprint disc.",
+                    $"Neural scan complete: Synaptic profile of {donor.LabelShortCap} successfully encoded onto imprint disc. The subject has emerged with acute neural fatigue and will require 48 hours to stabilize before undergoing another scan.",
                     new LookTargets(this),
                     MessageTypeDefOf.PositiveEvent);
             }
@@ -329,6 +335,14 @@ namespace OrganicConstructs
                                     options.Add(new FloatMenuOption(
                                         $"{p.LabelShortCap} (Cannot scan constructs: Synthetic neural architecture incompatible)",
                                         () => Messages.Message("Constructs cannot be scanned: Synthetic neural architecture incompatible with scanner.", p, MessageTypeDefOf.RejectInput, false)));
+                                    continue;
+                                }
+
+                                if (p.health?.hediffSet?.HasHediff(ConstructDefOf.Construct_NeuralFatigue) == true)
+                                {
+                                    options.Add(new FloatMenuOption(
+                                        $"{p.LabelShortCap} (Recovering from neural fatigue - cooldown active)",
+                                        () => Messages.Message($"{p.LabelShortCap} is still recovering from neural fatigue and cannot undergo another scan yet.", p, MessageTypeDefOf.RejectInput, false)));
                                     continue;
                                 }
 
@@ -450,6 +464,10 @@ namespace OrganicConstructs
                 if (IsConstruct(selPawn))
                 {
                     yield return new FloatMenuOption($"Cannot enter {LabelShort} (Constructs cannot be scanned: Synthetic neural architecture incompatible with scanner)", null);
+                }
+                else if (selPawn.health?.hediffSet?.HasHediff(ConstructDefOf.Construct_NeuralFatigue) == true)
+                {
+                    yield return new FloatMenuOption($"Cannot enter {LabelShort} (Recovering from neural fatigue - cooldown active)", null);
                 }
                 else
                 {

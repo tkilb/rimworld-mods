@@ -16,4 +16,18 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Construct_NeuralFatigueMood</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>Construct_NeuralFatigue</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <stages>
+      <li>
+        <label>synaptic echo</label>
+        <description>My head aches with a hollow, buzzing static. Thoughts feel sluggish and distant, like someone reached into my skull, photocopied my memories, and put them back slightly out of order.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>
