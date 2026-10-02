@@ -21,7 +21,7 @@ This document details all visual assets used by **Organic Constructs** (`tyler.o
 
 | Asset Folder / File | XML Definition | Footprint | Canvas (2x) | Graphic Class | Visual Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `ConstructSynthesizer/ConstructSynthesizer_*.png` | [`ConstructSynthesizer`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Buildings/Buildings_OrganicConstructs.xml#L7-L76) | 3×2 tiles | 384 × 256 px | `Graphic_Multi` (`_north`, `_east`, `_south`, `_west`) | Heavy industrial synthesis vat/bench. Bio-slurry tanks, robotic manipulators, disc drive slot on front console. South face should feature the operator terminal and disc intake tray. |
+| `ConstructSynthesizer/ConstructSynthesizer_*.png` | [`ConstructSynthesizer`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Buildings/Buildings_OrganicConstructs.xml#L7-L76) | 3×1 tiles | 384 × 128 px | `Graphic_Multi` (`_north`, `_east`, `_south`, `_west`) | Heavy industrial synthesis vat/bench. Bio-slurry tanks, robotic manipulators, disc drive slot on front console. South face should feature the operator terminal and disc intake tray. |
 | `NeuralScanner/NeuralScanner_*.png` | [`NeuralScanner`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Buildings/Buildings_OrganicConstructs.xml#L81-L148) | 1×2 tiles | 192 × 320 px | `Graphic_Multi` (`_north`, `_east`, `_south`, `_west`) | Upright biometric scanning sarcophagus/pod with a viewing glass or neural sensor crown. South face shows open/translucent diagnostic glass; north face shows rear heat syncs and power cabling. |
 
 ---
