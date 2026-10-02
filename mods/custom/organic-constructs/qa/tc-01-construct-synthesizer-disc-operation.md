@@ -2,13 +2,11 @@
 
 - **Procedure:**
   1. Build `ConstructSynthesizer` and connect electrical power (600 W).
-  2. Spawn or craft a `GenomeBlueprintDisk` containing genetic data.
-  3. Load disc into synthesizer via gizmo or right-click hauling.
+  2. Spawn or craft a `GenomeBlueprintDisk`. Ensure it is burned with genetic data (either configure via `ConstructGenomeArchitect`, or with Dev Mode active use gizmo `DEV: Burn Default Template`).
+  3. Load disc into synthesizer via gizmo or right-click hauling (or burn while loaded using `DEV: Burn Default Template to Disc`).
   4. Ensure a colonist with Intellectual ≥ 6 and Medicine ≥ 4 is assigned to Doctor or Research work type.
   5. Provide synthesis ingredients on map: 40 MeatRaw, 40 PlantFoodRaw, 10 Neutroamine, 2 Medicine.
-
   6. Bill: Synthesize base construct embryo (fresh organics).
-
   7. Bill: Synthesize complex construct embryo (fresh organics).
 
 - **Expected:**

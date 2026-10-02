@@ -201,6 +201,38 @@ namespace OrganicConstructs
                 }
             };
 
+            if (Prefs.DevMode)
+            {
+                if (!isBurned)
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "DEV: Burn Default Template",
+                        defaultDesc = "Immediately burns the standard Base Construct genetic template onto this disc for testing.",
+                        action = () =>
+                        {
+                            InitializeDefaultTemplate("Standard Construct Template");
+                            Messages.Message("DEV: Disc burned with Standard Construct Template.", parent, MessageTypeDefOf.PositiveEvent);
+                        }
+                    };
+                }
+                else
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "DEV: Clear Disc",
+                        defaultDesc = "Resets this disc back to a blank unburned state.",
+                        action = () =>
+                        {
+                            genes?.Clear();
+                            templateLabel = null;
+                            isBurned = false;
+                            Messages.Message("DEV: Disc reset to blank state.", parent, MessageTypeDefOf.NeutralEvent);
+                        }
+                    };
+                }
+            }
+
             if (parent.Spawned && parent.Map != null && !isBurned)
             {
                 yield return new Command_Action

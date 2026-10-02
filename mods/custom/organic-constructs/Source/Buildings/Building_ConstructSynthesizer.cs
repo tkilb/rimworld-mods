@@ -141,6 +141,38 @@ namespace OrganicConstructs
                     icon = LoadedDisc.def.uiIcon,
                     action = EjectDisc
                 };
+
+                if (Prefs.DevMode && LoadedBlueprintComp != null)
+                {
+                    if (!LoadedBlueprintComp.isBurned)
+                    {
+                        yield return new Command_Action
+                        {
+                            defaultLabel = "DEV: Burn Default Template to Disc",
+                            defaultDesc = "Immediately burns the standard Base Construct genetic template onto the currently loaded disc.",
+                            action = () =>
+                            {
+                                LoadedBlueprintComp.InitializeDefaultTemplate("Standard Construct Template");
+                                Messages.Message("DEV: Loaded disc burned with Standard Construct Template.", this, MessageTypeDefOf.PositiveEvent);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        yield return new Command_Action
+                        {
+                            defaultLabel = "DEV: Clear Loaded Disc",
+                            defaultDesc = "Resets the currently loaded disc back to a blank unburned state.",
+                            action = () =>
+                            {
+                                LoadedBlueprintComp.genes?.Clear();
+                                LoadedBlueprintComp.templateLabel = null;
+                                LoadedBlueprintComp.isBurned = false;
+                                Messages.Message("DEV: Loaded disc reset to blank state.", this, MessageTypeDefOf.NeutralEvent);
+                            }
+                        };
+                    }
+                }
             }
             else if (targetDisc != null)
             {

@@ -101,7 +101,7 @@ namespace OrganicConstructs
         }
     }
 
-    [HarmonyPatch(typeof(LetterStack), "ReceiveLetter", new Type[] { typeof(Letter), typeof(string) })]
+    [HarmonyPatch(typeof(LetterStack), "ReceiveLetter", new Type[] { typeof(Letter), typeof(string), typeof(int), typeof(bool) })]
     public static class Patch_LetterStack_ReceiveLetter
     {
         [HarmonyPrefix]
