@@ -61,7 +61,7 @@
     </tradeTags>
     <comps>
       <li Class="OrganicConstructs.CompProperties_NeuralBlueprint">
-        <defaultDoctrineTitle>Standard Combat Doctrine</defaultDoctrineTitle>
+        <defaultDoctrineTitle>Standard Neural Imprint</defaultDoctrineTitle>
         <defaultSkillCap>14</defaultSkillCap>
       </li>
       <li Class="CompProperties_Forbiddable" />

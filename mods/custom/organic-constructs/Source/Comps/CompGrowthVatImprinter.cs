@@ -347,13 +347,13 @@ namespace OrganicConstructs
                 {
                     yield return new Command_Action
                     {
-                        defaultLabel = "View Imprint Doctrine",
+                        defaultLabel = "View Neural Imprint",
                         defaultDesc = "Inspect the skills and passions encoded in the currently loaded neural blueprint disc.",
                         icon = parent.def.uiIcon,
                         action = () =>
                         {
                             StringBuilder sb = new StringBuilder();
-                            sb.AppendLine($"--- {bp.doctrineTitle ?? "Neural Imprint Doctrine"} ---");
+                            sb.AppendLine($"--- {bp.doctrineTitle ?? "Neural Imprint"} ---");
                             if (!string.IsNullOrEmpty(bp.donorName))
                             {
                                 sb.AppendLine($"Mentor / Source: {bp.donorName}");
@@ -391,7 +391,7 @@ namespace OrganicConstructs
                                 }
                             }
 
-                            Find.WindowStack.Add(new Dialog_MessageBox(sb.ToString(), "Close", title: bp.doctrineTitle ?? "Imprint Doctrine"));
+                            Find.WindowStack.Add(new Dialog_MessageBox(sb.ToString(), "Close", title: bp.doctrineTitle ?? "Neural Imprint"));
                         }
                     };
                 }

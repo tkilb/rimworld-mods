@@ -65,6 +65,8 @@ namespace OrganicConstructs
                 pawn.style.beardDef = BeardDefOf.NoBeard;
             }
 
+            ConstructNameUtility.AssignConstructNameIfNeeded(pawn);
+
             pawn.Drawer?.renderer?.SetAllGraphicsDirty();
         }
 

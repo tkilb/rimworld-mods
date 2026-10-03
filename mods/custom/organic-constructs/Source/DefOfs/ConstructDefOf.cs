@@ -39,6 +39,7 @@ namespace OrganicConstructs
 
         // ── Thoughts ──────────────────────────────────────────────────────────────
         public static ThoughtDef Construct_KindPity;
+        public static ThoughtDef Construct_Expectations;
 
         static ConstructDefOf()
         {

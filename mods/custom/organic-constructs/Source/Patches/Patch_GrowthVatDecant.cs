@@ -42,6 +42,8 @@ namespace OrganicConstructs
     [HarmonyPatch(typeof(PregnancyUtility), nameof(PregnancyUtility.ApplyBirthOutcome))]
     public static class Patch_PregnancyUtility_ApplyBirthOutcome
     {
+        public static readonly Dictionary<Building_GrowthVat, Pawn> pendingConstructMaturation = new Dictionary<Building_GrowthVat, Pawn>();
+
         [HarmonyPostfix]
         public static void Postfix(Thing __result, Thing birtherThing)
         {
@@ -55,6 +57,7 @@ namespace OrganicConstructs
 
                 if (vat.selectedEmbryo != null && ConstructUtility.IsConstruct(newborn))
                 {
+                    ConstructNameUtility.AssignConstructNameIfNeeded(newborn);
                     CompEmbryoQuality quality = vat.selectedEmbryo.TryGetComp<CompEmbryoQuality>();
                     if (quality != null && quality.isConstruct)
                     {
@@ -73,27 +76,70 @@ namespace OrganicConstructs
                             }
                         }
 
-                        // Seamlessly retain the newborn construct inside the Growth Vat for visual maturation (never drop as baby)
+                        // Despawn baby from world so it can transition directly into growth vat maturation
                         if (newborn.Spawned)
                         {
                             newborn.DeSpawn();
                         }
-                        if (!vat.innerContainer.Contains(newborn))
-                        {
-                            vat.innerContainer.TryAddOrTransfer(newborn, canMergeWithExistingStacks: false);
-                        }
-                        Traverse.Create(vat).Field("selectedPawn").SetValue(newborn);
-                        vat.selectedEmbryo = null;
-                        Traverse.Create(vat).Field("gestationTicks").SetValue(0);
 
                         Gene_ConstructPsychology.ApplyConstructPhysiology(newborn);
                         CompGrowthVatImprinter.WipePassions(newborn);
 
-                        Messages.Message(
-                            $"Construct embryonic synthesis complete. Physical form stabilized inside growth vat for maturation.",
-                            vat,
-                            MessageTypeDefOf.PositiveEvent);
+                        // Queue newborn construct for vat insertion after FinishEmbryo() finishes vanilla cleanup
+                        pendingConstructMaturation[vat] = newborn;
                     }
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Building_GrowthVat), "FinishEmbryo")]
+    public static class Patch_Building_GrowthVat_FinishEmbryo
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Building_GrowthVat __instance)
+        {
+            if (Patch_PregnancyUtility_ApplyBirthOutcome.pendingConstructMaturation.TryGetValue(__instance, out Pawn newborn))
+            {
+                Patch_PregnancyUtility_ApplyBirthOutcome.pendingConstructMaturation.Remove(__instance);
+
+                if (newborn != null && !newborn.Destroyed)
+                {
+                    // Defensive cleanup: Ensure no remnant HumanEmbryo items linger in innerContainer
+                    List<Thing> embryosToRemove = null;
+                    foreach (Thing t in __instance.innerContainer)
+                    {
+                        if (t is HumanEmbryo)
+                        {
+                            if (embryosToRemove == null) embryosToRemove = new List<Thing>();
+                            embryosToRemove.Add(t);
+                        }
+                    }
+                    if (embryosToRemove != null)
+                    {
+                        foreach (Thing emb in embryosToRemove)
+                        {
+                            __instance.innerContainer.Remove(emb);
+                            if (!emb.Destroyed) emb.Destroy();
+                        }
+                    }
+
+                    // Seamlessly retain the newborn construct inside the Growth Vat for maturation (never drop as baby)
+                    if (!__instance.innerContainer.Contains(newborn))
+                    {
+                        __instance.innerContainer.TryAddOrTransfer(newborn, canMergeWithExistingStacks: false);
+                    }
+
+                    Traverse trav = Traverse.Create(__instance);
+                    trav.Field("selectedPawn").SetValue(newborn);
+                    trav.Field("startTick").SetValue(Find.TickManager.TicksGame);
+                    trav.Field("gestationTicks").SetValue(0);
+                    __instance.selectedEmbryo = null;
+
+                    Messages.Message(
+                        $"Construct embryonic synthesis complete. Physical form stabilized inside growth vat for maturation.",
+                        __instance,
+                        MessageTypeDefOf.PositiveEvent);
                 }
             }
         }

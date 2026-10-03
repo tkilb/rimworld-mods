@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -101,21 +100,48 @@ namespace OrganicConstructs
         }
     }
 
-    [HarmonyPatch(typeof(LetterStack), "ReceiveLetter", new Type[] { typeof(Letter), typeof(string), typeof(int), typeof(bool) })]
-    public static class Patch_LetterStack_ReceiveLetter
+    // ── Root-level growth moment suppression ────────────────────────────────────
+    // Patch 1: Kill growth moment processing at its source for construct pawns.
+    // TryChildGrowthMoment populates the newPassionOptions / newTraitOptions /
+    // passionGainsCount out-params that BirthdayBiological uses to decide whether
+    // to fire a ChoiceLetter_GrowthMoment.  Returning false (with all outs at 0)
+    // prevents any growth-moment letter from being created at all.
+    [HarmonyPatch(typeof(Pawn_AgeTracker), "TryChildGrowthMoment")]
+    public static class Patch_AgeTracker_TryChildGrowthMoment
     {
         [HarmonyPrefix]
-        public static bool Prefix(Letter let)
+        public static bool Prefix(
+            Pawn_AgeTracker __instance,
+            ref int newPassionOptions,
+            ref int newTraitOptions,
+            ref int passionGainsCount)
         {
-            if (let is ChoiceLetter_GrowthMoment growthLetter)
+            Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
+            if (pawn != null && ConstructUtility.IsConstruct(pawn))
             {
-                Pawn pawn = Traverse.Create(growthLetter).Field("pawn").GetValue<Pawn>();
-                if (pawn != null && ConstructUtility.IsConstruct(pawn))
-                {
-                    // Suppress growth moment letter and ensure passions remain None
-                    CompGrowthVatImprinter.WipePassions(pawn);
-                    return false;
-                }
+                newPassionOptions = 0;
+                newTraitOptions   = 0;
+                passionGainsCount = 0;
+                CompGrowthVatImprinter.WipePassions(pawn);
+                return false; // skip vanilla growth moment machinery entirely
+            }
+            return true;
+        }
+    }
+
+    // Patch 2: Backstop — if any letter somehow reaches the window stack, suppress
+    // the dialog for constructs.
+    [HarmonyPatch(typeof(ChoiceLetter_GrowthMoment), "OpenLetter")]
+    public static class Patch_ChoiceLetter_GrowthMoment_OpenLetter
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(ChoiceLetter_GrowthMoment __instance)
+        {
+            Pawn pawn = __instance.pawn;
+            if (pawn != null && ConstructUtility.IsConstruct(pawn))
+            {
+                // Silently discard — no dialog for constructs.
+                return false;
             }
             return true;
         }

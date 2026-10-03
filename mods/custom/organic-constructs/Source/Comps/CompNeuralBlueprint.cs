@@ -25,7 +25,7 @@ namespace OrganicConstructs
             donorName = donor.LabelShortCap;
             doctrineTitle = !string.IsNullOrEmpty(customTitle)
                 ? customTitle
-                : $"{donor.LabelShortCap}'s Combat Doctrine";
+                : $"{donor.LabelShortCap}'s Neural Imprint";
 
             skillLevels.Clear();
             passions.Clear();
@@ -59,7 +59,7 @@ namespace OrganicConstructs
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref doctrineTitle, "doctrineTitle", Props?.defaultDoctrineTitle ?? "Standard Combat Doctrine");
+            Scribe_Values.Look(ref doctrineTitle, "doctrineTitle", Props?.defaultDoctrineTitle ?? "Standard Neural Imprint");
             Scribe_Values.Look(ref donorName, "donorName");
             Scribe_Collections.Look(ref skillLevels, "skillLevels", LookMode.Def, LookMode.Value, ref skillKeysWorkingList, ref skillValuesWorkingList);
             Scribe_Collections.Look(ref passions, "passions", LookMode.Def, LookMode.Value, ref passionKeysWorkingList, ref passionValuesWorkingList);
@@ -77,8 +77,8 @@ namespace OrganicConstructs
         public override string CompInspectStringExtra()
         {
             StringBuilder sb = new StringBuilder();
-            string title = string.IsNullOrEmpty(doctrineTitle) ? (Props?.defaultDoctrineTitle ?? "Standard Combat Doctrine") : doctrineTitle;
-            sb.Append("Doctrine: ").Append(title);
+            string title = string.IsNullOrEmpty(doctrineTitle) ? (Props?.defaultDoctrineTitle ?? "Standard Neural Imprint") : doctrineTitle;
+            sb.Append("Imprint: ").Append(title);
             if (!string.IsNullOrEmpty(donorName))
             {
                 sb.Append(" (Source: ").Append(donorName).Append(")");
@@ -125,13 +125,13 @@ namespace OrganicConstructs
 
             yield return new Command_Action
             {
-                defaultLabel = "Inspect Doctrine",
-                defaultDesc = "View the skills, combat doctrines, and passions encoded on this neural imprinting disc.",
+                defaultLabel = "Inspect Neural Imprint",
+                defaultDesc = "View the skills, proficiencies, and passions encoded on this neural imprint disc.",
                 icon = parent?.Graphic?.MatSingle?.mainTexture as Texture2D ?? parent?.def?.uiIcon,
                 action = () =>
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine($"--- {doctrineTitle ?? "Neural Imprint Doctrine"} ---");
+                    sb.AppendLine($"--- {doctrineTitle ?? "Neural Imprint"} ---");
                     if (!string.IsNullOrEmpty(donorName))
                     {
                         sb.AppendLine($"Mentor / Source: {donorName}");

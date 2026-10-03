@@ -1,0 +1,23 @@
+using RimWorld;
+using Verse;
+
+namespace OrganicConstructs
+{
+    public class ThoughtWorker_ConstructExpectations : ThoughtWorker
+    {
+        protected override ThoughtState CurrentStateInternal(Pawn p)
+        {
+            if (p == null || !p.RaceProps.Humanlike)
+            {
+                return ThoughtState.Inactive;
+            }
+
+            if (ConstructUtility.IsConstruct(p))
+            {
+                return ThoughtState.ActiveAtStage(0);
+            }
+
+            return ThoughtState.Inactive;
+        }
+    }
+}

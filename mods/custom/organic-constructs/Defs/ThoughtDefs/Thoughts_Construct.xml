@@ -30,4 +30,18 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Construct_Expectations</defName>
+    <workerClass>OrganicConstructs.ThoughtWorker_ConstructExpectations</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>construct expectations</label>
+        <description>I'm a construct. I exist to serve.</description>
+        <baseMoodEffect>28</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>
