@@ -56,8 +56,10 @@ def colorize(text, width, color_code):
 
 for mod_id in all_mod_ids:
     m = manifest_mods[mod_id]
-    enabled = m.get('enabled', True)
     source = m.get('source', 'unknown')
+    if source in ('custom', 'local'):
+        continue
+    enabled = m.get('enabled', True)
     
     # Check downloaded cache
     cached_path = os.path.join(vendor_dir, mod_id)
@@ -104,11 +106,14 @@ if os.path.isdir(custom_dir):
 
 if custom_mods:
     print("\n\033[1mCustom Authoring Mods (mods/custom/):\033[0m")
-    custom_fmt = "{:<20} {:<15} {:<15}"
-    print(custom_fmt.format("MOD ID", "WORKSPACE", "LINK STATUS"))
-    print("-" * 55)
+    custom_fmt = "{:<20} {:<8} {:<15} {:<15}"
+    print(custom_fmt.format("MOD ID", "ENABLED", "WORKSPACE", "LINK STATUS"))
+    print("-" * 65)
     for c_id in custom_mods:
         c_path = os.path.join(custom_dir, c_id)
+        c_meta = manifest_mods.get(c_id, {})
+        enabled = c_meta.get('enabled', True)
+        enabled_colored = colorize("yes" if enabled else "no", 8, "" if enabled else "90")
         link_path = os.path.join(rimworld_mods_dir, c_id)
         if os.path.islink(link_path):
             target = os.path.realpath(link_path)
@@ -121,7 +126,7 @@ if custom_mods:
             l_colored = colorize("Direct Dir", 15, "33")
         else:
             l_colored = colorize("Unlinked", 15, "90")
-        print(f"{c_id:<20} {'local (custom)':<15} {l_colored}")
+        print(f"{c_id:<20} {enabled_colored} {'local (custom)':<15} {l_colored}")
 
 # Check for orphan monorepo links in RimWorld mods directory
 if os.path.isdir(rimworld_mods_dir):

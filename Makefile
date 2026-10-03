@@ -3,6 +3,7 @@ SHELL := /usr/bin/env bash
 
 .PHONY: help check-deps status fetch-mods update-mods update-mods-dry-run \
         link link-dry-run unlink unlink-dry-run rollback rollback-dry-run \
+        tidy tidy-dry-run \
         build-load-order build-order-mods order-mods order-mods-dry-run \
         sync-config sync-config-dry-run \
         sync-deck sync-deck-dry-run sync-deck-check sync-deck-link \
@@ -10,10 +11,8 @@ SHELL := /usr/bin/env bash
         scaffold-mod scaffold-mod-dry-run build-mod build-mod-dry-run
 
 ##@ General
-help: ## Display this help message
-	@echo "RimWorld Monorepo Task Runner"
-	@echo "=============================="
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-22s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+help: ## Display user guide and command reference
+	@bash ./scripts/help.sh
 
 ##@ Verification & Diagnostics
 check-deps: ## Verify system dependencies (steamcmd, jq, yq, rsync, etc.)
@@ -52,6 +51,13 @@ rollback: ## Rollback a mod to a previous version (Usage: make rollback MOD=<nam
 
 rollback-dry-run: ## Preview rollback of a mod (Usage: make rollback-dry-run MOD=<name> VERSION=<ver>)
 	@bash ./scripts/rollback-mod.sh $(MOD) $(VERSION) --dry-run
+
+##@ Repository Maintenance
+tidy: ## Prune unreferenced lock entries, vendor cache, symlinks, and run go mod tidy
+	+@bash ./scripts/tidy.sh $(MAKE_DRY_RUN)
+
+tidy-dry-run: ## Preview cleanup actions without deleting files
+	@bash ./scripts/tidy.sh --dry-run
 
 ##@ Mod Load Order
 build-load-order: ## Compile the Go load order resolver into bin/load-order

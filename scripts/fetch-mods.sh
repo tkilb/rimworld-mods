@@ -230,6 +230,11 @@ EOF
       fi
       ;;
 
+    custom|local)
+      log_info "Skipping local custom mod: $mod_id"
+      continue
+      ;;
+
     *)
       log_warn "Unknown mod source '$mod_source' for $mod_id"
       ;;

@@ -69,6 +69,12 @@ if $CHECK_CONN_ONLY; then
   exit 0
 fi
 
+# Ensure load-order binary is built before syncing (SteamOS doesn't have Go installed)
+if [[ ! -f "$REPO_ROOT/bin/load-order" ]] && command -v go >/dev/null 2>&1; then
+  log_info "Compiling load-order binary before sync..."
+  (cd "$REPO_ROOT/tools/load-order" && go build -o ../../bin/load-order .)
+fi
+
 # Ensure remote base directory exists
 if $DRY_RUN; then
   log_info "[DRY-RUN] Would ensure remote directory: $DECK_REMOTE_DIR"
@@ -105,32 +111,42 @@ fi
 
 "${RSYNC_CMD[@]}" "$REPO_ROOT/" "${DECK_HOST}:${DECK_REMOTE_DIR}/"
 
+# Ensure config/local.env exists on remote Deck
+if ! ssh "$DECK_HOST" "test -f $DECK_REMOTE_DIR/config/local.env" 2>/dev/null; then
+  if $DRY_RUN; then
+    log_info "[DRY-RUN] Would initialize remote config/local.env from config/env.steamdeck.env"
+  else
+    log_info "Initializing remote config/local.env on $DECK_HOST..."
+    ssh "$DECK_HOST" "cp $DECK_REMOTE_DIR/config/env.steamdeck.env $DECK_REMOTE_DIR/config/local.env"
+  fi
+fi
+
 if $DRY_RUN; then
   log_succ "[DRY-RUN] Preview complete. No files were transferred."
 else
   log_succ "Sync complete."
 fi
 
-# Optional: trigger remote link
+# Optional: trigger remote link (use bash directly since SteamOS lacks GNU make by default)
 if $TRIGGER_REMOTE_LINK; then
   if $DRY_RUN; then
-    log_info "[DRY-RUN] Would run 'make link --dry-run' on $DECK_HOST in $DECK_REMOTE_DIR"
-    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && make link --dry-run"
+    log_info "[DRY-RUN] Would run 'link-mods.sh --link --dry-run' on $DECK_HOST in $DECK_REMOTE_DIR"
+    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && bash ./scripts/link-mods.sh --link --dry-run"
   else
-    log_info "Running 'make link' on $DECK_HOST..."
-    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && make link"
+    log_info "Deploying mod symlinks on $DECK_HOST..."
+    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && bash ./scripts/link-mods.sh --link"
     log_succ "Remote link complete."
   fi
 fi
 
-# Optional: trigger remote sync-config
+# Optional: trigger remote sync-config (use bash directly)
 if $TRIGGER_REMOTE_CONFIG; then
   if $DRY_RUN; then
-    log_info "[DRY-RUN] Would run 'make sync-config-dry-run' on $DECK_HOST in $DECK_REMOTE_DIR"
-    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && make sync-config-dry-run"
+    log_info "[DRY-RUN] Would run 'order-mods.sh --write-config --dry-run' on $DECK_HOST in $DECK_REMOTE_DIR"
+    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && bash ./scripts/order-mods.sh --write-config --dry-run"
   else
-    log_info "Running 'make sync-config' on $DECK_HOST..."
-    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && make sync-config"
+    log_info "Generating ModsConfig.xml on $DECK_HOST..."
+    ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && bash ./scripts/order-mods.sh --write-config"
     log_succ "Remote sync-config complete."
   fi
 fi

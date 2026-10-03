@@ -1,5 +1,5 @@
 version: 1
-generated_at: '2026-09-26T22:42:28.898862+00:00'
+generated_at: '2026-10-03T02:20:12.391801+00:00'
 machine: linux-box
 mods:
   harmony:
@@ -26,30 +26,6 @@ mods:
     workshop_time_updated: 1757700442
     workshop_title: Recycle This (Continued)
     download_path: mods/vendor/recyclethis
-  cloning:
-    source: steam_workshop
-    workshop_id: '3348781223'
-    workshop_time_updated: 1787705984
-    workshop_title: Biotech Cloning (Continued)
-    download_path: mods/vendor/cloning
-  enhancedvatlearning:
-    source: steam_workshop
-    workshop_id: '3551263267'
-    workshop_time_updated: 1757220096
-    workshop_title: Enhanced Vat Learning
-    download_path: mods/vendor/enhancedvatlearning
-  injectgene:
-    source: steam_workshop
-    workshop_id: '2918091446'
-    workshop_time_updated: 1752603567
-    workshop_title: Inject Genes
-    download_path: mods/vendor/injectgene
-  hcgenefabrication:
-    source: steam_workshop
-    workshop_id: '3352773112'
-    workshop_time_updated: 1790313328
-    workshop_title: Gene Fabrication
-    download_path: mods/vendor/hcgenefabrication
   generipper:
     source: steam_workshop
     workshop_id: '3524806362'

@@ -165,6 +165,9 @@ for mod_id, mod in manifest_mods.items():
         if 'resolved_commit' in current_lock:
             new_entry['resolved_commit'] = current_lock['resolved_commit']
 
+    elif source in ('custom', 'local'):
+        continue
+
     if dry_run:
         print(f"  [DRY-RUN] Proposed lock entry: {new_entry}")
     else:

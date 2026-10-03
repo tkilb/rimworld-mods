@@ -107,4 +107,5 @@ make sync-deck-link           # Sync and immediately run 'make link' on the Deck
 For detailed step-by-step guides, refer to the documentation in [`docs/`](docs/):
 
 - [**Mod Management Guide**](docs/mod-management.md): In-depth guide for declaring new mods, source schemas (Workshop, GitHub releases, Git), updating lockfiles, rollback mechanics, and troubleshooting.
+- [**Makefile & Task Runner Guide**](docs/makefile-guide.md): Comprehensive guide to commands, arguments, dry-run safety flags, and monorepo lifecycle workflows.
 - [**Steam Deck Setup**](docs/steamdeck-setup.md): Remote synchronization, SSH setup, storage path detection, and running monorepo tools natively on SteamOS.

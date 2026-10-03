@@ -71,11 +71,19 @@ is_protected() {
 
 # Collect candidates to link/unlink: pairs of (mod_id, source_path)
 declare -A CANDIDATE_MODS
+declare -A DISABLED_MODS
 
-# 1. Enabled vendor mods from manifest
+# 1. Mods declared in manifest (vendor and custom)
 if [[ -f "$MANIFEST_FILE" ]]; then
-  while IFS='|' read -r mod_id mod_name enabled; do
-    if [[ "$enabled" == "true" ]]; then
+  while IFS='|' read -r mod_id mod_name enabled source; do
+    if [[ "$enabled" == "false" ]]; then
+      DISABLED_MODS["$mod_id"]=1
+    elif [[ "$source" == "custom" || "$source" == "local" ]]; then
+      candidate_path="$CUSTOM_DIR/$mod_id"
+      if [[ -d "$candidate_path" ]]; then
+        CANDIDATE_MODS["$mod_id"]="$candidate_path"
+      fi
+    else
       candidate_path="$VENDOR_DIR/$mod_id"
       if [[ -d "$candidate_path" ]]; then
         CANDIDATE_MODS["$mod_id"]="$candidate_path"
@@ -92,16 +100,20 @@ mods = data.get('mods', {})
 for mod_id, mod in mods.items():
     enabled = str(mod.get('enabled', True)).lower()
     name = mod.get('name', mod_id)
-    print(f"{mod_id}|{name}|{enabled}")
+    source = mod.get('source', '')
+    print(f"{mod_id}|{name}|{enabled}|{source}")
 EOF
 )
 fi
 
-# 2. Custom authoring mods in mods/custom/ (must contain About/About.xml)
+# 2. Auto-discover custom authoring mods in mods/custom/ (must contain About/About.xml)
 if [[ -d "$CUSTOM_DIR" ]]; then
   for custom_path in "$CUSTOM_DIR"/*; do
     if [[ -d "$custom_path" && -f "$custom_path/About/About.xml" ]]; then
       custom_id="$(basename "$custom_path")"
+      if [[ -n "${DISABLED_MODS[$custom_id]:-}" ]]; then
+        continue
+      fi
       CANDIDATE_MODS["$custom_id"]="$custom_path"
     fi
   done
@@ -165,6 +177,19 @@ if [[ "$ACTION" == "link" ]]; then
       ln -sfn "$source_path" "$dest_path"
       log_succ "Linked: $mod_id ($dest_path -> $source_path)"
       linked_count=$((linked_count + 1))
+    fi
+  done
+
+  # Remove symlinks for disabled mods if present
+  for dis_id in "${!DISABLED_MODS[@]}"; do
+    dis_link="$RIMWORLD_MODS_DIR/$dis_id"
+    if [[ -L "$dis_link" ]]; then
+      if $DRY_RUN; then
+        echo "  [DRY-RUN] Would remove symlink for disabled mod: $dis_link"
+      else
+        rm "$dis_link"
+        log_info "Removed symlink for disabled mod: $dis_id"
+      fi
     fi
   done
 

@@ -46,6 +46,9 @@ func main() {
 		if !entry.IsEnabled() {
 			continue
 		}
+		if entry.Source == "custom" || entry.Source == "local" {
+			continue
+		}
 
 		modDirPath := filepath.Join(*vendorDir, modID)
 		var meta *ModMetaData
@@ -72,6 +75,12 @@ func main() {
 				continue
 			}
 			customModID := e.Name()
+
+			// Check if custom mod is declared in manifest and disabled
+			if entry, ok := mf.Mods[customModID]; ok && !entry.IsEnabled() {
+				continue
+			}
+
 			customModDir := filepath.Join(*customDir, customModID)
 
 			var meta *ModMetaData
@@ -97,11 +106,23 @@ func main() {
 				continue
 			}
 
-			dummyEntry := ModEntry{
-				Name:      customName,
-				PackageID: customPkgID,
+			var entry ModEntry
+			if mEntry, ok := mf.Mods[customModID]; ok {
+				entry = mEntry
+				if entry.Name == "" {
+					entry.Name = customName
+				}
+				if entry.PackageID == "" {
+					entry.PackageID = customPkgID
+				}
+			} else {
+				entry = ModEntry{
+					Name:      customName,
+					PackageID: customPkgID,
+				}
 			}
-			node := BuildModNode(customModID, dummyEntry, meta, customModDir, true)
+
+			node := BuildModNode(customModID, entry, meta, customModDir, true)
 			s.AddNode(node)
 			addedPackageIDs[node.NormalizedPackageID()] = true
 		}

@@ -35,7 +35,15 @@ resolve_machine_paths() {
       export DECK_REMOTE_DIR="${DECK_REMOTE_DIR:-~/.local/share/rimworld-mods}"
       ;;
     "steam-deck")
-      export RIMWORLD_MODS_DIR="${RIMWORLD_MODS_DIR:-$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods}"
+      if [[ -z "${RIMWORLD_MODS_DIR:-}" ]]; then
+        local _sd_candidate
+        _sd_candidate="$(find /run/media -maxdepth 4 -type d -path '*/steamapps/common/RimWorld/Mods' 2>/dev/null | head -n 1 || true)"
+        if [[ -n "$_sd_candidate" && -d "$_sd_candidate" ]]; then
+          export RIMWORLD_MODS_DIR="$_sd_candidate"
+        else
+          export RIMWORLD_MODS_DIR="$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods"
+        fi
+      fi
       local _proton_cfg="$HOME/.local/share/Steam/steamapps/compatdata/294100/pfx/drive_c/users/steamuser/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Config"
       local _native_cfg="$HOME/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config"
       if [[ -d "$_proton_cfg" ]]; then

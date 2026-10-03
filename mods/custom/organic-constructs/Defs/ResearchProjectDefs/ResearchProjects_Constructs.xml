@@ -28,4 +28,49 @@
     <researchViewY>4.5</researchViewY>
   </ResearchProjectDef>
 
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Bioware Research Progression
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <ResearchProjectDef>
+    <defName>Construct_BiowareBasic</defName>
+    <label>basic bioware</label>
+    <description>Synthesize entry-tier biological neural packages and reflexes to interface with construct biological buses, boosting physical and cognitive functions.</description>
+    <baseCost>1000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Construct_Foundations</li>
+    </prerequisites>
+    <researchViewX>15.5</researchViewX>
+    <researchViewY>2.5</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Construct_BiowareIntermediate</defName>
+    <label>intermediate bioware</label>
+    <description>Engineer advanced neuromuscular reflex conduits and specialized biological bridges for mid-tier construct augmentations.</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Construct_BiowareBasic</li>
+      <li>Bionics</li>
+    </prerequisites>
+    <researchViewX>17.0</researchViewX>
+    <researchViewY>2.5</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Construct_BiowareAdvanced</defName>
+    <label>advanced bioware</label>
+    <description>Develop apex synthetic wetware using advanced components and high-purity biological substrates for maximum construct capability.</description>
+    <baseCost>2400</baseCost>
+    <techLevel>Ultra</techLevel>
+    <prerequisites>
+      <li>Construct_BiowareIntermediate</li>
+      <li>Fabrication</li>
+    </prerequisites>
+    <researchViewX>18.5</researchViewX>
+    <researchViewY>2.5</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

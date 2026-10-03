@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Abstract Bases for Bioware Augment Fabrication at Construct Synthesizer
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef Name="CraftConstructAugmentBase" Abstract="True">
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>ConstructSynthesizer</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <!-- Low Tier (Basic) Base -->
+  <RecipeDef Name="CraftConstructAugmentBase_Low" ParentName="CraftConstructAugmentBase" Abstract="True">
+    <workAmount>3000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.15</workSkillLearnFactor>
+    <skillRequirements>
+      <Crafting>6</Crafting>
+      <Intellectual>4</Intellectual>
+    </skillRequirements>
+    <researchPrerequisite>Construct_BiowareBasic</researchPrerequisite>
+    <ingredients>
+      <li>
+        <filter><categories><li>MeatRaw</li></categories></filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter><categories><li>PlantFoodRaw</li></categories></filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Plasteel</li></thingDefs></filter>
+        <count>15</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Neutroamine</li></thingDefs></filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>MedicineIndustrial</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <thingDefs>
+        <li>Plasteel</li>
+        <li>Neutroamine</li>
+        <li>ComponentIndustrial</li>
+        <li>MedicineIndustrial</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Meat_Human</li>
+        <li>Meat_Megaspider</li>
+      </disallowedThingDefs>
+    </defaultIngredientFilter>
+  </RecipeDef>
+
+  <!-- Mid Tier (Intermediate) Base -->
+  <RecipeDef Name="CraftConstructAugmentBase_Mid" ParentName="CraftConstructAugmentBase" Abstract="True">
+    <workAmount>5000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.15</workSkillLearnFactor>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+      <Medicine>6</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>Construct_BiowareIntermediate</researchPrerequisite>
+    <ingredients>
+      <li>
+        <filter><categories><li>MeatRaw</li></categories></filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter><categories><li>PlantFoodRaw</li></categories></filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Plasteel</li></thingDefs></filter>
+        <count>30</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Neutroamine</li></thingDefs></filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>MedicineIndustrial</li></thingDefs></filter>
+        <count>4</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <thingDefs>
+        <li>Plasteel</li>
+        <li>Neutroamine</li>
+        <li>ComponentSpacer</li>
+        <li>MedicineIndustrial</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Meat_Human</li>
+        <li>Meat_Megaspider</li>
+      </disallowedThingDefs>
+    </defaultIngredientFilter>
+  </RecipeDef>
+
+  <!-- Advanced Tier Base -->
+  <RecipeDef Name="CraftConstructAugmentBase_Advanced" ParentName="CraftConstructAugmentBase" Abstract="True">
+    <workAmount>8000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.15</workSkillLearnFactor>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+      <Medicine>8</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>Construct_BiowareAdvanced</researchPrerequisite>
+    <ingredients>
+      <li>
+        <filter><categories><li>MeatRaw</li></categories></filter>
+        <count>60</count>
+      </li>
+      <li>
+        <filter><categories><li>PlantFoodRaw</li></categories></filter>
+        <count>60</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Plasteel</li></thingDefs></filter>
+        <count>50</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Neutroamine</li></thingDefs></filter>
+        <count>16</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>MedicineIndustrial</li></thingDefs></filter>
+        <count>8</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <thingDefs>
+        <li>Plasteel</li>
+        <li>Neutroamine</li>
+        <li>ComponentSpacer</li>
+        <li>MedicineIndustrial</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Meat_Human</li>
+        <li>Meat_Megaspider</li>
+      </disallowedThingDefs>
+    </defaultIngredientFilter>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Combat Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Low">
+    <defName>Craft_Construct_BasicCombatPackage</defName>
+    <label>fabricate basic combat augment</label>
+    <description>Synthesize a basic combat bioware augment package using organic substrate and neural reflex bridges.</description>
+    <jobString>Fabricating basic combat augment.</jobString>
+    <products>
+      <Construct_BasicCombatPackageItem>1</Construct_BasicCombatPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
+    <defName>Craft_Construct_IntermediateCombatPackage</defName>
+    <label>fabricate intermediate combat augment</label>
+    <description>Synthesize an intermediate combat bioware augment package with advanced targeting computation and reflex conduits.</description>
+    <jobString>Fabricating intermediate combat augment.</jobString>
+    <products>
+      <Construct_IntermediateCombatPackageItem>1</Construct_IntermediateCombatPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
+    <defName>Craft_Construct_AdvancedCombatPackage</defName>
+    <label>fabricate advanced combat augment</label>
+    <description>Synthesize an advanced combat bioware augment package with high-frequency synaptic bridges and locomotive acceleration networks.</description>
+    <jobString>Fabricating advanced combat augment.</jobString>
+    <products>
+      <Construct_AdvancedCombatPackageItem>1</Construct_AdvancedCombatPackageItem>
+    </products>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Medical Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Low">
+    <defName>Craft_Construct_BasicMedicalPackage</defName>
+    <label>fabricate basic medical augment</label>
+    <description>Synthesize a basic medical bioware augment package loaded with diagnostic and triage routines.</description>
+    <jobString>Fabricating basic medical augment.</jobString>
+    <products>
+      <Construct_BasicMedicalPackageItem>1</Construct_BasicMedicalPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
+    <defName>Craft_Construct_IntermediateMedicalPackage</defName>
+    <label>fabricate intermediate medical augment</label>
+    <description>Synthesize an intermediate medical bioware augment package with enhanced anatomical comprehension and surgical precision nodes.</description>
+    <jobString>Fabricating intermediate medical augment.</jobString>
+    <products>
+      <Construct_IntermediateMedicalPackageItem>1</Construct_IntermediateMedicalPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
+    <defName>Craft_Construct_AdvancedMedicalPackage</defName>
+    <label>fabricate advanced medical augment</label>
+    <description>Synthesize an advanced medical bioware augment package providing rapid trauma response calculations and high-dexterity surgical control.</description>
+    <jobString>Fabricating advanced medical augment.</jobString>
+    <products>
+      <Construct_AdvancedMedicalPackageItem>1</Construct_AdvancedMedicalPackageItem>
+    </products>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Industrial Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Low">
+    <defName>Craft_Construct_BasicIndustrialPackage</defName>
+    <label>fabricate basic industrial augment</label>
+    <description>Synthesize a basic industrial bioware augment package configured for heavy mining, excavation, and structural construction.</description>
+    <jobString>Fabricating basic industrial augment.</jobString>
+    <products>
+      <Construct_BasicIndustrialPackageItem>1</Construct_BasicIndustrialPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
+    <defName>Craft_Construct_IntermediateIndustrialPackage</defName>
+    <label>fabricate intermediate industrial augment</label>
+    <description>Synthesize an intermediate industrial bioware augment package with reinforced musculoskeletal linkages and construction optimization relays.</description>
+    <jobString>Fabricating intermediate industrial augment.</jobString>
+    <products>
+      <Construct_IntermediateIndustrialPackageItem>1</Construct_IntermediateIndustrialPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
+    <defName>Craft_Construct_AdvancedIndustrialPackage</defName>
+    <label>fabricate advanced industrial augment</label>
+    <description>Synthesize an advanced industrial bioware augment package maximizing kinetic output, excavation speed, and assembly velocity.</description>
+    <jobString>Fabricating advanced industrial augment.</jobString>
+    <products>
+      <Construct_AdvancedIndustrialPackageItem>1</Construct_AdvancedIndustrialPackageItem>
+    </products>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Laborer Packages
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Low">
+    <defName>Craft_Construct_BasicLaborerPackage</defName>
+    <label>fabricate basic laborer augment</label>
+    <description>Synthesize a basic laborer bioware augment package tailored for agricultural cultivation and domestic maintenance.</description>
+    <jobString>Fabricating basic laborer augment.</jobString>
+    <products>
+      <Construct_BasicLaborerPackageItem>1</Construct_BasicLaborerPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
+    <defName>Craft_Construct_IntermediateLaborerPackage</defName>
+    <label>fabricate intermediate laborer augment</label>
+    <description>Synthesize an intermediate laborer bioware augment package with refined motor control for botanic harvesting, food preparation, and general labor.</description>
+    <jobString>Fabricating intermediate laborer augment.</jobString>
+    <products>
+      <Construct_IntermediateLaborerPackageItem>1</Construct_IntermediateLaborerPackageItem>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
+    <defName>Craft_Construct_AdvancedLaborerPackage</defName>
+    <label>fabricate advanced laborer augment</label>
+    <description>Synthesize an advanced laborer bioware augment package with master-tier dexterity nodes for rapid harvest, culinary execution, and delicate crafting.</description>
+    <jobString>Fabricating advanced laborer augment.</jobString>
+    <products>
+      <Construct_AdvancedLaborerPackageItem>1</Construct_AdvancedLaborerPackageItem>
+    </products>
+  </RecipeDef>
+
+</Defs>

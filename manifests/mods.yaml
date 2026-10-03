@@ -59,3 +59,19 @@ mods:
     package_id: "erdelf.MinifyEverything"
     enabled: true
     description: "Allows minifying and reinstalling nearly all buildings and furniture."
+
+  # Custom Authoring Mods
+  gene-splicer:
+    name: "Gene Splicer"
+    source: custom
+    package_id: "tyler.genesplicer"
+    enabled: false
+    description: "Vanilla-adjacent germline genetic engineering for natural human embryos."
+
+  organic-constructs:
+    name: "Organic Constructs"
+    source: custom
+    package_id: "tyler.organicconstructs"
+    enabled: true
+    description: "Manufacture 100% biological artificial humans from living tissue."
+

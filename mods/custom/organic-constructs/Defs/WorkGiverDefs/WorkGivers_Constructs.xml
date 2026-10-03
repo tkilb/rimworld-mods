@@ -59,6 +59,26 @@
   </WorkGiverDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
+       WorkGiver: Do Bills at Construct Synthesizer (Crafting)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <WorkGiverDef>
+    <defName>DoBillsConstructSynthesizerCrafting</defName>
+    <label>craft at construct synthesizer</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Crafting</workType>
+    <priorityInType>45</priorityInType>
+    <fixedBillGiverDefs>
+      <li>ConstructSynthesizer</li>
+    </fixedBillGiverDefs>
+    <verb>synthesize</verb>
+    <gerund>synthesizing at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
        WorkGivers: Haul Blueprint Discs to Construct Facilities (Hauling)
        ════════════════════════════════════════════════════════════════════════ -->
   <WorkGiverDef>
