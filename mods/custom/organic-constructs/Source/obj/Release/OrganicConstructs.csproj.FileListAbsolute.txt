@@ -1,0 +1,7 @@
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Assemblies/OrganicConstructs.dll
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/obj/Release/OrganicConstructs.csproj.AssemblyReference.cache
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/obj/Release/OrganicConstructs.GeneratedMSBuildEditorConfig.editorconfig
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/obj/Release/OrganicConstructs.AssemblyInfoInputs.cache
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/obj/Release/OrganicConstructs.AssemblyInfo.cs
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/obj/Release/OrganicConstructs.csproj.CoreCompileInputs.cache
+/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/obj/Release/OrganicConstructs.dll

@@ -8,3 +8,4 @@
   - Xenogerm surgery is disabled ("Cannot implant xenogerm: Synthetic construct genetic architecture is permanently locked").
   - Romance attempts have 0 selection weight.
   - Colonists suffer no "Colonist died" or "Colonist lost" thoughts.
+  - Apparel/armor worn by constructs does not become tainted (WornByCorpse) upon death.

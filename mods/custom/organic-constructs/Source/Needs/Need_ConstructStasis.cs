@@ -34,6 +34,7 @@ namespace OrganicConstructs
             var gene = HibernationGene;
             if (gene != null)
             {
+                gene.UpdateStasisTicks();
                 if (gene.inStasis)
                 {
                     CurLevel = Mathf.Clamp01((float)gene.stasisTicks / Gene_ConstructHibernation.MinStasisTicks);
@@ -54,6 +55,7 @@ namespace OrganicConstructs
             var gene = HibernationGene;
             if (gene == null) return;
 
+            gene.UpdateStasisTicks();
             if (gene.inStasis)
             {
                 CurLevel = Mathf.Clamp01((float)gene.stasisTicks / Gene_ConstructHibernation.MinStasisTicks);
@@ -71,7 +73,7 @@ namespace OrganicConstructs
                 var gene = HibernationGene;
                 if (gene != null && gene.inStasis)
                 {
-                    return 1; // Rising arrow during stasis recharging
+                    return gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks ? 0 : 1;
                 }
                 return -1; // Falling arrow during active operation
             }
@@ -90,21 +92,29 @@ namespace OrganicConstructs
                 {
                     float hoursPassed = (float)gene.stasisTicks / 2500f;
                     float totalHours = (float)Gene_ConstructHibernation.MinStasisTicks / 2500f;
-                    sb.AppendLine($"Currently in hibernation stasis: {hoursPassed:F1} / {totalHours:F0} hours ({CurLevelPercentage:P0}).");
-                    sb.AppendLine("Purging metabolic toxicity and defragmenting neural pathways.");
+                    if (gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks)
+                    {
+                        sb.AppendLine($"Hibernation stasis complete: {hoursPassed:F1} hours elapsed.");
+                        sb.AppendLine("Safe to wake at any time. Construct will remain in stasis until woken.");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"Currently in hibernation stasis: {hoursPassed:F1} / {totalHours:F0} hours.");
+                        sb.AppendLine("Purging metabolic toxicity and defragmenting neural pathways.");
+                    }
                 }
                 else
                 {
                     int remainingTicks = Mathf.Max(0, Gene_ConstructHibernation.MaxOperatingTicks - gene.operatingTicks);
                     float daysRemaining = (float)remainingTicks / 60000f;
-                    sb.AppendLine($"Operating margin: {daysRemaining:F1} / 30.0 days remaining ({CurLevelPercentage:P0}).");
+                    sb.AppendLine($"Operating margin: {daysRemaining:F1} / 30.0 days remaining.");
                     if (daysRemaining <= 2.0f)
                     {
                         sb.AppendLine("CRITICAL: Stasis required immediately to prevent emergency shutdown.");
                     }
                     else
                     {
-                        sb.AppendLine("Must hibernate for 48 hours before reaching 0% to prevent emergency shutdown.");
+                        sb.AppendLine("Must hibernate for 48 hours before reaching 0 to prevent emergency shutdown.");
                     }
                 }
             }

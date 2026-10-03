@@ -6,6 +6,28 @@ namespace OrganicConstructs
 {
     public static class BiowareSkillUtility
     {
+        public static readonly HashSet<string> AllBiowareHediffNames = new HashSet<string>
+        {
+            "Construct_BasicCombatPackage",
+            "Construct_IntermediateCombatPackage",
+            "Construct_AdvancedCombatPackage",
+            "Construct_BasicMedicalPackage",
+            "Construct_IntermediateMedicalPackage",
+            "Construct_AdvancedMedicalPackage",
+            "Construct_BasicIndustrialPackage",
+            "Construct_IntermediateIndustrialPackage",
+            "Construct_AdvancedIndustrialPackage",
+            "Construct_BasicLaborerPackage",
+            "Construct_IntermediateLaborerPackage",
+            "Construct_AdvancedLaborerPackage"
+        };
+
+        public static bool IsBiowareAugment(HediffDef def)
+        {
+            if (def == null) return false;
+            return AllBiowareHediffNames.Contains(def.defName);
+        }
+
         public static int GetSkillBonus(Pawn pawn, SkillDef skill)
         {
             if (pawn?.health?.hediffSet == null || skill == null)
@@ -34,12 +56,12 @@ namespace OrganicConstructs
                 if (defName == "Construct_BasicCombatPackage") return 4;
             }
 
-            // Medical: Medicine (+2 / +4 / +6)
-            if (skill == SkillDefOf.Medicine)
+            // Biomedical: Medicine, Crafting (+3 / +5 / +7)
+            if (skill == SkillDefOf.Medicine || skill == SkillDefOf.Crafting)
             {
-                if (defName == "Construct_AdvancedMedicalPackage") return 6;
-                if (defName == "Construct_IntermediateMedicalPackage") return 4;
-                if (defName == "Construct_BasicMedicalPackage") return 2;
+                if (defName == "Construct_AdvancedMedicalPackage") return 7;
+                if (defName == "Construct_IntermediateMedicalPackage") return 5;
+                if (defName == "Construct_BasicMedicalPackage") return 3;
             }
 
             // Industrial: Construction, Mining, Crafting (+2 / +4 / +6)

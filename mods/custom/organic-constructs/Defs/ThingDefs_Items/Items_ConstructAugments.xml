@@ -58,11 +58,11 @@
     </statBases>
   </ThingDef>
 
-  <!-- Medical -->
+  <!-- Biomedical -->
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_BasicMedicalPackageItem</defName>
-    <label>basic medical package</label>
-    <description>A basic neural bridge loaded with construct medical procedures.</description>
+    <label>basic biomedical package</label>
+    <description>A basic biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and micro-crafting calibrations.</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Medical_Basic</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -74,8 +74,8 @@
 
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_IntermediateMedicalPackageItem</defName>
-    <label>intermediate medical package</label>
-    <description>An intermediate neural bridge loaded with construct medical procedures.</description>
+    <label>intermediate biomedical package</label>
+    <description>An intermediate biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and micro-crafting calibrations.</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Medical_Intermediate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -87,8 +87,8 @@
 
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_AdvancedMedicalPackageItem</defName>
-    <label>advanced medical package</label>
-    <description>An advanced neural bridge loaded with construct medical procedures.</description>
+    <label>advanced biomedical package</label>
+    <description>An advanced biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and micro-crafting calibrations.</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Medical_Advanced</texPath>
       <graphicClass>Graphic_Single</graphicClass>

@@ -126,16 +126,16 @@
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
-       Medical Packages
+       Biomedical Packages
        ════════════════════════════════════════════════════════════════════════ -->
 
-  <!-- Basic Medical -->
+  <!-- Basic Biomedical -->
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicMedicalPackage</defName>
-    <label>install basic medical augment</label>
-    <description>Install a bioware augment.</description>
+    <label>install basic biomedical augment</label>
+    <description>Install a biomedical augment.</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
-    <jobString>Installing bioware augment.</jobString>
+    <jobString>Installing biomedical augment.</jobString>
     <workAmount>3000</workAmount>
     <skillRequirements><Medicine>4</Medicine></skillRequirements>
     <ingredients>
@@ -152,10 +152,10 @@
 
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveBasicMedicalPackage</defName>
-    <label>remove basic medical augment</label>
-    <description>Remove a bioware augment safely.</description>
+    <label>remove basic biomedical augment</label>
+    <description>Remove a biomedical augment safely.</description>
     <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
-    <jobString>Removing bioware augment.</jobString>
+    <jobString>Removing biomedical augment.</jobString>
     <workAmount>2000</workAmount>
     <skillRequirements><Medicine>4</Medicine></skillRequirements>
     <ingredients>
@@ -167,13 +167,13 @@
     <removesHediff>Construct_BasicMedicalPackage</removesHediff>
   </RecipeDef>
 
-  <!-- Intermediate Medical -->
+  <!-- Intermediate Biomedical -->
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateMedicalPackage</defName>
-    <label>install intermediate medical augment</label>
-    <description>Install a bioware augment.</description>
+    <label>install intermediate biomedical augment</label>
+    <description>Install a biomedical augment.</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
-    <jobString>Installing bioware augment.</jobString>
+    <jobString>Installing biomedical augment.</jobString>
     <workAmount>3000</workAmount>
     <skillRequirements><Medicine>7</Medicine></skillRequirements>
     <ingredients>
@@ -190,10 +190,10 @@
 
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveIntermediateMedicalPackage</defName>
-    <label>remove intermediate medical augment</label>
-    <description>Remove a bioware augment safely.</description>
+    <label>remove intermediate biomedical augment</label>
+    <description>Remove a biomedical augment safely.</description>
     <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
-    <jobString>Removing bioware augment.</jobString>
+    <jobString>Removing biomedical augment.</jobString>
     <workAmount>2000</workAmount>
     <skillRequirements><Medicine>7</Medicine></skillRequirements>
     <ingredients>
@@ -205,13 +205,13 @@
     <removesHediff>Construct_IntermediateMedicalPackage</removesHediff>
   </RecipeDef>
 
-  <!-- Advanced Medical -->
+  <!-- Advanced Biomedical -->
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedMedicalPackage</defName>
-    <label>install advanced medical augment</label>
-    <description>Install a bioware augment.</description>
+    <label>install advanced biomedical augment</label>
+    <description>Install a biomedical augment.</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
-    <jobString>Installing bioware augment.</jobString>
+    <jobString>Installing biomedical augment.</jobString>
     <workAmount>3000</workAmount>
     <skillRequirements><Medicine>10</Medicine></skillRequirements>
     <ingredients>
@@ -228,10 +228,10 @@
 
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveAdvancedMedicalPackage</defName>
-    <label>remove advanced medical augment</label>
-    <description>Remove a bioware augment safely.</description>
+    <label>remove advanced biomedical augment</label>
+    <description>Remove a biomedical augment safely.</description>
     <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
-    <jobString>Removing bioware augment.</jobString>
+    <jobString>Removing biomedical augment.</jobString>
     <workAmount>2000</workAmount>
     <skillRequirements><Medicine>10</Medicine></skillRequirements>
     <ingredients>

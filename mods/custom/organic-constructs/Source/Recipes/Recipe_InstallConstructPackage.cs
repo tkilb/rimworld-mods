@@ -14,9 +14,16 @@ namespace OrganicConstructs
 
         public override AcceptanceReport AvailableReport(Thing thing, BodyPartRecord part = null)
         {
-            if (thing is Pawn pawn && !ConstructUtility.IsConstruct(pawn))
+            if (thing is Pawn pawn)
             {
-                return new AcceptanceReport("Cannot graft: Incompatible biological neural bus (Requires Construct).");
+                if (!ConstructUtility.IsConstruct(pawn))
+                {
+                    return new AcceptanceReport("Cannot graft: Incompatible biological neural bus (Requires Construct).");
+                }
+                if (recipe.addsHediff != null && pawn.health.hediffSet.HasHediff(recipe.addsHediff, part))
+                {
+                    return new AcceptanceReport("Already has this bioware package installed.");
+                }
             }
 
             return base.AvailableReport(thing, part);
@@ -43,7 +50,30 @@ namespace OrganicConstructs
                 TaleRecorder.RecordTale(TaleDefOf.DidSurgery, billDoer, pawn);
             }
 
-            // Success
+            // Extract and eject any existing bioware augment(s) to maintain single-package neural bus limit
+            List<Hediff> existingBiowares = pawn.health.hediffSet.hediffs
+                .Where(h => h.def != null && BiowareSkillUtility.IsBiowareAugment(h.def))
+                .ToList();
+
+            foreach (Hediff existing in existingBiowares)
+            {
+                ThingDef itemDef = existing.def.spawnThingOnRemoved;
+                if (itemDef != null)
+                {
+                    Map map = pawn.Map ?? billDoer?.Map;
+                    IntVec3 pos = pawn.PositionHeld;
+                    if (map != null && pos.IsValid)
+                    {
+                        Thing ejected = ThingMaker.MakeThing(itemDef);
+                        GenPlace.TryPlaceThing(ejected, pos, map, ThingPlaceMode.Near);
+                    }
+                }
+
+                pawn.health.RemoveHediff(existing);
+                Messages.Message($"Extracted previous bioware package ({existing.Label}) from {pawn.NameShortColored} to accommodate new package.", pawn, MessageTypeDefOf.NeutralEvent, false);
+            }
+
+            // Success - graft new bioware
             pawn.health.AddHediff(recipe.addsHediff, part, null, null);
 
             // Add Neural Assimilation (Success - 5000 ticks)

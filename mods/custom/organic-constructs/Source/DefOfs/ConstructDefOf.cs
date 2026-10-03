@@ -29,6 +29,7 @@ namespace OrganicConstructs
         public static HediffDef Construct_NeuralFatigue;
         public static HediffDef Construct_Assimilation;
         public static HediffDef Construct_InterruptedStasis;
+        public static HediffDef Construct_InStasis;
 
         // ── Backstories ───────────────────────────────────────────────────────────
         public static BackstoryDef Construct_Childhood;

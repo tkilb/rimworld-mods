@@ -61,18 +61,20 @@
     </stages>
   </HediffDef>
 
-  <!-- Medical -->
+  <!-- Biomedical -->
   <HediffDef ParentName="ConstructAugmentBase">
     <defName>Construct_BasicMedicalPackage</defName>
     <spawnThingOnRemoved>Construct_BasicMedicalPackageItem</spawnThingOnRemoved>
-    <label>basic medical package</label>
-    <description>A basic neural bridge loaded with medical procedures. Boosts Medicine skill by +2 alongside tend quality and tend speed.</description>
+    <label>basic biomedical package</label>
+    <description>A basic biological neural bridge loaded with bio-synthesis routines and medical protocols. Boosts Medicine and Crafting skills by +3 alongside tend quality, surgery success, synthesis speeds, and general labor.</description>
     <stages>
       <li>
         <statOffsets>
           <MedicalTendQuality>0.05</MedicalTendQuality>
           <MedicalSurgerySuccessChance>0.03</MedicalSurgerySuccessChance>
           <MedicalTendSpeed>0.10</MedicalTendSpeed>
+          <GeneralLaborSpeed>0.05</GeneralLaborSpeed>
+          <DrugSynthesisSpeed>0.10</DrugSynthesisSpeed>
         </statOffsets>
       </li>
     </stages>
@@ -81,8 +83,8 @@
   <HediffDef ParentName="ConstructAugmentBase">
     <defName>Construct_IntermediateMedicalPackage</defName>
     <spawnThingOnRemoved>Construct_IntermediateMedicalPackageItem</spawnThingOnRemoved>
-    <label>intermediate medical package</label>
-    <description>An intermediate neural bridge loaded with medical procedures. Boosts Medicine skill by +4 alongside tend quality, surgery success, tend speed, and operation speed.</description>
+    <label>intermediate biomedical package</label>
+    <description>An intermediate biological neural bridge loaded with bio-synthesis routines and medical protocols. Boosts Medicine and Crafting skills by +5 alongside tend quality, surgery success, operation speed, and synthesis speeds.</description>
     <stages>
       <li>
         <statOffsets>
@@ -90,6 +92,8 @@
           <MedicalSurgerySuccessChance>0.05</MedicalSurgerySuccessChance>
           <MedicalTendSpeed>0.20</MedicalTendSpeed>
           <MedicalOperationSpeed>0.10</MedicalOperationSpeed>
+          <GeneralLaborSpeed>0.10</GeneralLaborSpeed>
+          <DrugSynthesisSpeed>0.20</DrugSynthesisSpeed>
         </statOffsets>
       </li>
     </stages>
@@ -98,8 +102,8 @@
   <HediffDef ParentName="ConstructAugmentBase">
     <defName>Construct_AdvancedMedicalPackage</defName>
     <spawnThingOnRemoved>Construct_AdvancedMedicalPackageItem</spawnThingOnRemoved>
-    <label>advanced medical package</label>
-    <description>An advanced neural bridge loaded with medical procedures. Boosts Medicine skill by +6 alongside elite tend quality, surgery success, rapid tending, and swift operation speed.</description>
+    <label>advanced biomedical package</label>
+    <description>An advanced biological neural bridge loaded with bio-synthesis routines and medical protocols. Boosts Medicine and Crafting skills by +7 alongside elite tend quality, surgery success, rapid operations, and swift synthesis speeds.</description>
     <stages>
       <li>
         <statOffsets>
@@ -107,6 +111,8 @@
           <MedicalSurgerySuccessChance>0.07</MedicalSurgerySuccessChance>
           <MedicalTendSpeed>0.30</MedicalTendSpeed>
           <MedicalOperationSpeed>0.20</MedicalOperationSpeed>
+          <GeneralLaborSpeed>0.15</GeneralLaborSpeed>
+          <DrugSynthesisSpeed>0.30</DrugSynthesisSpeed>
         </statOffsets>
       </li>
     </stages>

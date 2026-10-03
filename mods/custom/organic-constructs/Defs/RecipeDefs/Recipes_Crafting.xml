@@ -53,4 +53,59 @@
     </skillRequirements>
     <researchPrerequisite>Construct_Foundations</researchPrerequisite>
   </RecipeDef>
+
+  <RecipeDef>
+    <defName>Craft_BlankNeuralDisc</defName>
+    <label>craft blank neural imprint disc</label>
+    <description>Fabricate a blank cryogenic neural imprint disc capable of encoding synaptic pathways and combat doctrines from veteran colonists.</description>
+    <jobString>Crafting neural imprint disc.</jobString>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>2500</workAmount>
+    <recipeUsers>
+      <li>TableMachining</li>
+      <li>FabricationBench</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Steel</li>
+        <li>Plasteel</li>
+        <li>ComponentIndustrial</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <NeuralBlueprintDisk>1</NeuralBlueprintDisk>
+    </products>
+    <skillRequirements>
+      <Crafting>6</Crafting>
+    </skillRequirements>
+    <researchPrerequisite>Construct_NeuralImprinting</researchPrerequisite>
+  </RecipeDef>
 </Defs>

@@ -129,8 +129,8 @@ namespace OrganicConstructs
         }
     }
 
-    // Patch 2: Backstop — if any letter somehow reaches the window stack, suppress
-    // the dialog for constructs.
+    // Patch 2: Backstop & dismissal — ensure growth moment letters for constructs are
+    // suppressed from the stack, auto-cleaned up if present, and cleanly dismissible.
     [HarmonyPatch(typeof(ChoiceLetter_GrowthMoment), "OpenLetter")]
     public static class Patch_ChoiceLetter_GrowthMoment_OpenLetter
     {
@@ -140,8 +140,61 @@ namespace OrganicConstructs
             Pawn pawn = __instance.pawn;
             if (pawn != null && ConstructUtility.IsConstruct(pawn))
             {
-                // Silently discard — no dialog for constructs.
+                __instance.choiceMade = true;
+                Find.LetterStack.RemoveLetter(__instance);
                 return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(ChoiceLetter_GrowthMoment), "CanDismissWithRightClick", MethodType.Getter)]
+    public static class Patch_ChoiceLetter_GrowthMoment_CanDismissWithRightClick
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(ChoiceLetter_GrowthMoment __instance, ref bool __result)
+        {
+            if (__instance.pawn != null && ConstructUtility.IsConstruct(__instance.pawn))
+            {
+                __result = true;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(ChoiceLetter_GrowthMoment), "CanShowInLetterStack", MethodType.Getter)]
+    public static class Patch_ChoiceLetter_GrowthMoment_CanShowInLetterStack
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(ChoiceLetter_GrowthMoment __instance, ref bool __result)
+        {
+            if (__instance.pawn != null && ConstructUtility.IsConstruct(__instance.pawn))
+            {
+                __result = false;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(LetterStack), "ReceiveLetter", new[] { typeof(Letter), typeof(string), typeof(int), typeof(bool) })]
+    public static class Patch_LetterStack_ReceiveLetter
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(Letter let)
+        {
+            if (let is ChoiceLetter_GrowthMoment gm && gm.pawn != null && ConstructUtility.IsConstruct(gm.pawn))
+            {
+                return false;
+            }
+            if (let is ChoiceLetter_BabyToChild btc)
+            {
+                Pawn p = btc.lookTargets?.TryGetPrimaryTarget().Thing as Pawn;
+                if (p != null && ConstructUtility.IsConstruct(p))
+                {
+                    return false;
+                }
             }
             return true;
         }

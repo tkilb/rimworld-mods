@@ -19,8 +19,8 @@
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.15</workSkillLearnFactor>
     <skillRequirements>
-      <Crafting>6</Crafting>
-      <Intellectual>4</Intellectual>
+      <Crafting>5</Crafting>
+      <Medicine>4</Medicine>
     </skillRequirements>
     <researchPrerequisite>Construct_BiowareBasic</researchPrerequisite>
     <ingredients>
@@ -79,8 +79,8 @@
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.15</workSkillLearnFactor>
     <skillRequirements>
-      <Crafting>8</Crafting>
-      <Medicine>6</Medicine>
+      <Crafting>7</Crafting>
+      <Medicine>5</Medicine>
     </skillRequirements>
     <researchPrerequisite>Construct_BiowareIntermediate</researchPrerequisite>
     <ingredients>
@@ -139,8 +139,8 @@
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.15</workSkillLearnFactor>
     <skillRequirements>
-      <Crafting>10</Crafting>
-      <Medicine>8</Medicine>
+      <Crafting>9</Crafting>
+      <Medicine>7</Medicine>
     </skillRequirements>
     <researchPrerequisite>Construct_BiowareAdvanced</researchPrerequisite>
     <ingredients>
@@ -228,14 +228,14 @@
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
-       Medical Packages
+       Biomedical Packages
        ════════════════════════════════════════════════════════════════════════ -->
 
   <RecipeDef ParentName="CraftConstructAugmentBase_Low">
     <defName>Craft_Construct_BasicMedicalPackage</defName>
-    <label>fabricate basic medical augment</label>
-    <description>Synthesize a basic medical bioware augment package loaded with diagnostic and triage routines.</description>
-    <jobString>Fabricating basic medical augment.</jobString>
+    <label>fabricate basic biomedical augment</label>
+    <description>Synthesize a basic biomedical augment package loaded with diagnostic, surgical, and bio-synthesis routines.</description>
+    <jobString>Fabricating basic biomedical augment.</jobString>
     <products>
       <Construct_BasicMedicalPackageItem>1</Construct_BasicMedicalPackageItem>
     </products>
@@ -243,9 +243,9 @@
 
   <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
     <defName>Craft_Construct_IntermediateMedicalPackage</defName>
-    <label>fabricate intermediate medical augment</label>
-    <description>Synthesize an intermediate medical bioware augment package with enhanced anatomical comprehension and surgical precision nodes.</description>
-    <jobString>Fabricating intermediate medical augment.</jobString>
+    <label>fabricate intermediate biomedical augment</label>
+    <description>Synthesize an intermediate biomedical augment package with enhanced anatomical comprehension, bio-crafting dexterity, and surgical precision nodes.</description>
+    <jobString>Fabricating intermediate biomedical augment.</jobString>
     <products>
       <Construct_IntermediateMedicalPackageItem>1</Construct_IntermediateMedicalPackageItem>
     </products>
@@ -253,9 +253,9 @@
 
   <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
     <defName>Craft_Construct_AdvancedMedicalPackage</defName>
-    <label>fabricate advanced medical augment</label>
-    <description>Synthesize an advanced medical bioware augment package providing rapid trauma response calculations and high-dexterity surgical control.</description>
-    <jobString>Fabricating advanced medical augment.</jobString>
+    <label>fabricate advanced biomedical augment</label>
+    <description>Synthesize an advanced biomedical augment package providing rapid trauma response calculations, high-dexterity surgical control, and master bio-synthesis protocols.</description>
+    <jobString>Fabricating advanced biomedical augment.</jobString>
     <products>
       <Construct_AdvancedMedicalPackageItem>1</Construct_AdvancedMedicalPackageItem>
     </products>

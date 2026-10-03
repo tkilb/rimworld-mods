@@ -26,50 +26,58 @@ namespace OrganicConstructs
         {
             Rect overRect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), 75f);
             Widgets.DrawWindowBackground(overRect);
-            Rect rect = overRect.ContractedBy(6f);
+            Rect inRect = overRect.ContractedBy(6f);
 
-            Text.Font = GameFont.Tiny;
-            if (gene.inStasis)
+            TextAnchor prevAnchor = Text.Anchor;
+            GameFont prevFont = Text.Font;
+            bool prevWrap = Text.WordWrap;
+
+            try
             {
-                float hours = (float)gene.stasisTicks / 2500f;
-                float totalHours = (float)Gene_ConstructHibernation.MinStasisTicks / 2500f;
-                float pct = Mathf.Clamp01((float)gene.stasisTicks / Gene_ConstructHibernation.MinStasisTicks);
+                Text.Font = GameFont.Tiny;
+                Text.WordWrap = false;
 
-                Rect labelRect = new Rect(rect.x, rect.y, rect.width, 18f);
-                Widgets.Label(labelRect, "Stasis Cycle");
+                Rect titleRect = new Rect(inRect.x, inRect.y, inRect.width, 20f);
+                Rect barRect = new Rect(inRect.x, inRect.y + 24f, inRect.width, 32f);
 
-                Rect barRect = new Rect(rect.x, rect.y + 20f, rect.width, 22f);
-                Widgets.FillableBar(barRect, pct, StasisBarTex, EmptyBarTex, true);
+                if (gene.inStasis)
+                {
+                    gene.UpdateStasisTicks();
+                    float hours = (float)gene.stasisTicks / 2500f;
+                    float totalHours = (float)Gene_ConstructHibernation.MinStasisTicks / 2500f;
+                    float pct = Mathf.Clamp01((float)gene.stasisTicks / Gene_ConstructHibernation.MinStasisTicks);
 
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(barRect, $"{hours:F1} / {totalHours:F0}h ({pct:P0})");
-                Text.Anchor = TextAnchor.UpperLeft;
+                    Text.Anchor = TextAnchor.UpperLeft;
+                    Widgets.Label(titleRect, gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks ? "Stasis Complete" : "Stasis Hibernation");
 
-                Rect descRect = new Rect(rect.x, rect.y + 44f, rect.width, 18f);
-                Widgets.Label(descRect, "Defragmenting...");
+                    Widgets.FillableBar(barRect, pct, StasisBarTex, EmptyBarTex, doBorder: false);
+
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Widgets.Label(barRect, gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks ? $"Ready ({hours:F1}h)" : $"{hours:F1} / {totalHours:F0}h");
+                }
+                else
+                {
+                    int remainingTicks = Mathf.Max(0, Gene_ConstructHibernation.MaxOperatingTicks - gene.operatingTicks);
+                    float days = (float)remainingTicks / 60000f;
+                    float pct = Mathf.Clamp01(1f - ((float)gene.operatingTicks / Gene_ConstructHibernation.MaxOperatingTicks));
+
+                    Texture2D barTex = (days <= 2.0f) ? CriticalBarTex : FullBarTex;
+
+                    Text.Anchor = TextAnchor.UpperLeft;
+                    Widgets.Label(titleRect, days <= 2.0f ? "STASIS CRITICAL" : "Operating Margin");
+
+                    Widgets.FillableBar(barRect, pct, barTex, EmptyBarTex, doBorder: false);
+
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Widgets.Label(barRect, $"{days:F1} / 30.0d");
+                }
             }
-            else
+            finally
             {
-                int remainingTicks = Mathf.Max(0, Gene_ConstructHibernation.MaxOperatingTicks - gene.operatingTicks);
-                float days = (float)remainingTicks / 60000f;
-                float pct = Mathf.Clamp01(1f - ((float)gene.operatingTicks / Gene_ConstructHibernation.MaxOperatingTicks));
-
-                Texture2D barTex = (days <= 2.0f) ? CriticalBarTex : FullBarTex;
-
-                Rect labelRect = new Rect(rect.x, rect.y, rect.width, 18f);
-                Widgets.Label(labelRect, days <= 2.0f ? "STASIS CRITICAL" : "Operating Margin");
-
-                Rect barRect = new Rect(rect.x, rect.y + 20f, rect.width, 22f);
-                Widgets.FillableBar(barRect, pct, barTex, EmptyBarTex, true);
-
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(barRect, $"{days:F1} / 30.0d");
-                Text.Anchor = TextAnchor.UpperLeft;
-
-                Rect descRect = new Rect(rect.x, rect.y + 44f, rect.width, 18f);
-                Widgets.Label(descRect, $"{pct:P0} capacity");
+                Text.Anchor = prevAnchor;
+                Text.Font = prevFont;
+                Text.WordWrap = prevWrap;
             }
-            Text.Font = GameFont.Small;
 
             TooltipHandler.TipRegion(overRect, gene.GetStasisTooltip());
 
