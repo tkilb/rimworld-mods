@@ -24,7 +24,6 @@ namespace OrganicConstructs
 
         private static readonly string[] CoreGenes = new string[]
         {
-            "Gene_ConstructPsychology",
             "Instability_Major",
             "Gene_MandatorySterility",
             "Gene_ConstructHibernation",

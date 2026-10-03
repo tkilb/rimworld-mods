@@ -30,8 +30,11 @@ namespace OrganicConstructs
         public static HediffDef Construct_Assimilation;
         public static HediffDef Construct_InterruptedStasis;
 
+        // ── Backstories ───────────────────────────────────────────────────────────
+        public static BackstoryDef Construct_Childhood;
+        public static BackstoryDef Construct_Adulthood;
+
         // ── Genes ─────────────────────────────────────────────────────────────────
-        public static GeneDef Gene_ConstructPsychology;
         public static GeneDef Gene_ConstructHibernation;
 
         // ── Traits ────────────────────────────────────────────────────────────────

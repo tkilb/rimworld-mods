@@ -82,7 +82,7 @@ namespace OrganicConstructs
                             newborn.DeSpawn();
                         }
 
-                        Gene_ConstructPsychology.ApplyConstructPhysiology(newborn);
+                        ConstructUtility.ApplyConstructPhysiology(newborn);
                         CompGrowthVatImprinter.WipePassions(newborn);
 
                         // Queue newborn construct for vat insertion after FinishEmbryo() finishes vanilla cleanup

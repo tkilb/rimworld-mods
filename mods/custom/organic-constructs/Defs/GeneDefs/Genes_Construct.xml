@@ -8,35 +8,6 @@
   </GeneCategoryDef>
 
   <GeneDef>
-    <defName>Gene_ConstructPsychology</defName>
-    <label>construct psychology</label>
-    <description>Engineered neural architecture that suppresses social recreation, romance, and empathetic drama. The carrier operates with cold, single-minded devotion to their assigned tasks and security protocols.</description>
-    <geneClass>OrganicConstructs.Gene_ConstructPsychology</geneClass>
-    <iconPath>UI/Icons/Genes/Gene_ConstructPsychology</iconPath>
-    <displayCategory>Construct_GeneCategory</displayCategory>
-    <displayOrderInCategory>10</displayOrderInCategory>
-    <biostatCpx>1</biostatCpx>
-    <biostatMet>2</biostatMet>
-    <forcedTraits>
-      <li>
-        <def>Psychopath</def>
-      </li>
-    </forcedTraits>
-    <customEffectDescriptions>
-      <li>Incapable of romance, marriage proposals, and social chatter.</li>
-      <li>Forces the Psychopath trait (indifferent to death, suffering, and corpses).</li>
-      <li>Suppresses social loneliness and recreation decay.</li>
-      <li>Colonists suffer zero mood penalties when this construct dies or is lost.</li>
-    </customEffectDescriptions>
-    <modExtensions>
-      <li Class="OrganicConstructs.GeneExtension_ConstructPsychology">
-        <checkIntervalTicks>250</checkIntervalTicks>
-        <minSocialLevel>0.7</minSocialLevel>
-      </li>
-    </modExtensions>
-  </GeneDef>
-
-  <GeneDef>
     <defName>Gene_MandatorySterility</defName>
     <label>mandatory sterility</label>
     <description>Enforces total biological sterility to prevent unauthorized reproduction, gene drift, and protect proprietary colony genetic investments.</description>
@@ -64,7 +35,7 @@
     <displayCategory>Construct_GeneCategory</displayCategory>
     <displayOrderInCategory>40</displayOrderInCategory>
     <biostatCpx>1</biostatCpx>
-    <biostatMet>3</biostatMet>
+    <biostatMet>5</biostatMet>
     <statFactors>
       <LifespanFactor>0.5</LifespanFactor>
     </statFactors>
@@ -73,7 +44,7 @@
       <li>Clean wake completely restores Rest and resets the 30-day operating limit.</li>
       <li>Premature interruption inflicts interrupted stasis (neural defragmentation failure).</li>
       <li>Halves biological lifespan.</li>
-      <li>Yields +3 Metabolic Efficiency.</li>
+      <li>Yields +5 Metabolic Efficiency.</li>
     </customEffectDescriptions>
   </GeneDef>
 

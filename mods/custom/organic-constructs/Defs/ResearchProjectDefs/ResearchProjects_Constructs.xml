@@ -4,26 +4,13 @@
   <ResearchProjectDef>
     <defName>Construct_Foundations</defName>
     <label>construct genetics</label>
-    <description>Study methods of purging emotional volatility and social friction from human germlines, harnessing the resulting metabolic dividend to bio-engineer high-efficiency labor and security castes.</description>
+    <description>Study methods of purging emotional volatility and social friction from human germlines, harnessing the resulting metabolic dividend to bio-engineer high-efficiency labor and security constructs.</description>
     <baseCost>1200</baseCost>
     <techLevel>Ultra</techLevel>
     <prerequisites>
       <li>Xenogermination</li>
     </prerequisites>
     <researchViewX>14.0</researchViewX>
-    <researchViewY>3.5</researchViewY>
-  </ResearchProjectDef>
-
-  <ResearchProjectDef>
-    <defName>Construct_GeneOptimization</defName>
-    <label>genomic overdrive</label>
-    <description>Develop extreme biological limit-breakers, trading long-term cellular stability and cancer vulnerability for unprecedented metabolic output and compressed genetic complexity.</description>
-    <baseCost>2000</baseCost>
-    <techLevel>Ultra</techLevel>
-    <prerequisites>
-      <li>Construct_Foundations</li>
-    </prerequisites>
-    <researchViewX>15.5</researchViewX>
     <researchViewY>3.5</researchViewY>
   </ResearchProjectDef>
 

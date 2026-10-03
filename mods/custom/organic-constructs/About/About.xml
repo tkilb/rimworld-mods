@@ -5,6 +5,7 @@
   <packageId>tyler.organicconstructs</packageId>
   <supportedVersions>
     <li>1.5</li>
+    <li>1.6</li>
   </supportedVersions>
   <description>Manufacture 100% biological artificial humans (Base and Complex Constructs) from living tissue, blood, synthetic neural wetware, and biological muscle. Features master genome blueprint discs, neural mentor scanning, growth vat neuro-imprinting, and modular bioware augments.</description>
   <modDependencies>

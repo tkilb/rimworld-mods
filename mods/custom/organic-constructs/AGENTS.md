@@ -6,10 +6,10 @@
 - **Core Concept:** Fully biological vat-grown organisms consisting of synthetic muscle, organs, and wetware.
 - **Key Distinctions:**
   - **Biological Immunity:** Immune to EMPs, solar flares, and mechanoid-specific hacking.
-  - **Colony Property:** Treated as industrial assets; natural colonists suffer 0 mood debuffs when a construct dies or is lost (`Trait_ConstructAsset`), with an exception for empathetic colonists with the Kind trait or Kind Instinct gene who feel pity (`Construct_KindPity`).
-  - **Suppressed Psychology:** Suppressed romance, marriage, chit-chat, and socialization (`Gene_ConstructPsychology`).
+  - **Colony Property & Identity:** Treated as industrial assets; natural colonists suffer 0 mood debuffs when a construct dies or is lost (`Trait_ConstructAsset`), with an exception for empathetic colonists with the Kind trait or Kind Instinct gene who feel pity (`Construct_KindPity`). Enforced via custom Construct childhood and adulthood backstories (`Construct_Childhood` / `Construct_Adulthood`).
+  - **Suppressed Psychology:** Incapable of romance, marriage, chit-chat, and social drama; forces `Psychopath`.
   - **Locked Architecture:** Harmony patch explicitly disables `Recipe_ImplantXenogerm` on constructs.
-  - **Maintenance Stasis:** Requires periodic 48-hour hibernation every 30 days (`Gene_ConstructHibernation`).
+  - **Maintenance Stasis:** Requires periodic 48-hour hibernation every 30 days (`Gene_ConstructHibernation`, +5 Met).
   - **Bioware Augments:** Exclusive biological augment packages (Combat, Medical, Industrial, Laborer) that induce an assimilation coma upon grafting; rejected by natural humans.
 
 ---
@@ -32,7 +32,7 @@
 3. **Neural Scanning & Vat Imprinting:**
    - [Building_NeuralScanner.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Buildings/Building_NeuralScanner.cs): Casket scanning natural humans onto a [NeuralBlueprintDisk](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_Blueprints.xml) (50% skills, 0 passions, lossy). Constructs cannot enter. Donor suffers `Construct_NeuralFatigue`.
    - [CompGrowthVatImprinter.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Comps/CompGrowthVatImprinter.cs): Injected into vanilla `GrowthVat` to hold a mentor disc.
-   - [Patch_GrowthVatDecant.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_GrowthVatDecant.cs): Decanting applies disc skills 1:1, or baseline reflexes (3-4 skills) if blank. Rolls 15% defect chance on volatile templates (<60% stability).
+   - [Patch_GrowthVatDecant.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_GrowthVatDecant.cs): Decanting applies disc skills 1:1, or baseline reflexes (Shooting/Melee 6, other skills 2-3) if blank. Rolls 15% defect chance on volatile templates (<60% stability).
 
 4. **Bioware Augments:**
    - [Recipe_InstallConstructPackage.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Recipes/Recipe_InstallConstructPackage.cs): Surgical recipes restricted to constructs; causes `Construct_Assimilation` coma. Rejects natural humans.
@@ -66,18 +66,19 @@
 | [Patches/Patch_RecipeImplantXenogerm.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_RecipeImplantXenogerm.cs) | Harmony postfix blocking xenogerm surgery on constructs. |
 | [Patches/Patch_SocialAndRomance.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_SocialAndRomance.cs) | Harmony patches eliminating construct romance and interaction weights. |
 | [Patches/Patch_ColonistDeathThoughts.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_ColonistDeathThoughts.cs) | Suppresses colonist grief memories when a construct dies. |
-| [Genes/Gene_ConstructHibernation.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Genes/Gene_ConstructHibernation.cs) | Ticking gene tracking 30-day operation cycles and stasis jobs. |
-| [Genes/Gene_ConstructPsychology.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Genes/Gene_ConstructPsychology.cs) | Suppressed socialization and uniform construct physiology. |
+| [Genes/Gene_ConstructHibernation.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Genes/Gene_ConstructHibernation.cs) | Ticking gene tracking 30-day operation cycles, stasis jobs, and social need suppression. |
+| [Patches/Patch_ConstructBackstories.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_ConstructBackstories.cs) | Harmony patch overriding vanilla colony child and colonist with construct backstories. |
 
 ### XML Definitions (`Defs/` & `Patches/`)
 | Path | Purpose |
 | :--- | :--- |
+| [Backstories_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/BackstoryDefs/Backstories_Construct.xml) | Construct childhood and adulthood backstory Defs (`Construct_Childhood`, `Construct_Adulthood`). |
 | [Buildings_OrganicConstructs.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Buildings/Buildings_OrganicConstructs.xml) | `ConstructSynthesizer` and `NeuralScanner` building Defs. |
 | [Buildings_GenomeArchitect.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Buildings/Buildings_GenomeArchitect.xml) | `ConstructGenomeArchitect` building Def. |
 | [Items_Blueprints.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_Blueprints.xml) | `GenomeBlueprintDisk` and `NeuralBlueprintDisk` item Defs. |
 | [Items_ConstructAugments.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_ConstructAugments.xml) | Bioware augment item Defs. |
 | [Items_Biomass.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_Biomass.xml) | `GeneticNutrientPaste` item Def. |
-| [Genes_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/GeneDefs/Genes_Construct.xml) | Core construct genes (`Gene_ConstructPsychology`, `Gene_ConstructHibernation`, etc.). |
+| [Genes_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/GeneDefs/Genes_Construct.xml) | Core construct genes (`Gene_ConstructHibernation`, `Gene_MandatorySterility`). |
 | [Traits_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/TraitDefs/Traits_Construct.xml) | `Trait_ConstructAsset` Def. |
 | [Thoughts_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThoughtDefs/Thoughts_Construct.xml) | `Construct_KindPity` thought for Kind colonist construct mourning. |
 | [Hediffs_ConstructAugments.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/HediffDefs/Hediffs_ConstructAugments.xml) | Augment hediffs and `Construct_Assimilation` coma. |

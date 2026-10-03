@@ -12,7 +12,7 @@ namespace OrganicConstructs
                 return ThoughtState.Inactive;
             }
 
-            if (Gene_ConstructPsychology.IsConstruct(p))
+            if (ConstructUtility.IsConstruct(p))
             {
                 return ThoughtState.ActiveAtStage(0);
             }

@@ -32,6 +32,15 @@ namespace OrganicConstructs
 
             if (!inStasis)
             {
+                if (pawn.IsHashIntervalTick(250))
+                {
+                    Need socialNeed = pawn.needs?.TryGetNeed(DefDatabase<NeedDef>.GetNamedSilentFail("Social"));
+                    if (socialNeed != null && socialNeed.CurLevelPercentage < 0.7f)
+                    {
+                        socialNeed.CurLevelPercentage = 0.7f;
+                    }
+                }
+
                 operatingTicks++;
                 if (operatingTicks >= MaxOperatingTicks - WarningTicksRemaining && !maintenanceWarningFired)
                 {

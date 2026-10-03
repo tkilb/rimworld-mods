@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ======================================================================= -->
+  <!-- Legacy Compatibility Defs                                               -->
+  <!-- Preserved strictly for save-game compatibility with ongoing colonies.   -->
+  <!-- ======================================================================= -->
+
+  <ResearchProjectDef>
+    <defName>Construct_GeneOptimization</defName>
+    <label>construct gene optimization (legacy)</label>
+    <description>Deprecated research project preserved for save-game compatibility.</description>
+    <baseCost>1</baseCost>
+    <techLevel>Ultra</techLevel>
+    <researchViewX>99</researchViewX>
+    <researchViewY>99</researchViewY>
+  </ResearchProjectDef>
+
+  <GeneDef>
+    <defName>Gene_ConstructPsychology</defName>
+    <label>construct psychology (legacy)</label>
+    <description>Deprecated gene preserved for save-game compatibility. Replaced by the Construct backstory.</description>
+    <iconPath>UI/Icons/Genes/Gene_ConstructPsychology</iconPath>
+    <biostatCpx>0</biostatCpx>
+    <biostatMet>0</biostatMet>
+    <canGenerateInGeneSet>false</canGenerateInGeneSet>
+    <selectionWeight>0</selectionWeight>
+    <displayCategory>Construct_GeneCategory</displayCategory>
+    <displayOrderInCategory>999</displayOrderInCategory>
+  </GeneDef>
+
+</Defs>

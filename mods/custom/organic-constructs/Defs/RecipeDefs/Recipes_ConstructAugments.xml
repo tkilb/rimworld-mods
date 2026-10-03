@@ -5,8 +5,14 @@
        Combat Packages
        ════════════════════════════════════════════════════════════════════════ -->
 
+  <RecipeDef Name="Construct_SurgeryPackageBase" ParentName="SurgeryFlesh" Abstract="True">
+    <recipeUsers>
+      <li>Human</li>
+    </recipeUsers>
+  </RecipeDef>
+
   <!-- Basic Combat -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicCombatPackage</defName>
     <label>install basic combat augment</label>
     <description>Install a bioware augment.</description>
@@ -26,7 +32,7 @@
     <addsHediff>Construct_BasicCombatPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveBasicCombatPackage</defName>
     <label>remove basic combat augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -44,7 +50,7 @@
   </RecipeDef>
 
   <!-- Intermediate Combat -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateCombatPackage</defName>
     <label>install intermediate combat augment</label>
     <description>Install a bioware augment.</description>
@@ -64,7 +70,7 @@
     <addsHediff>Construct_IntermediateCombatPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveIntermediateCombatPackage</defName>
     <label>remove intermediate combat augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -82,7 +88,7 @@
   </RecipeDef>
 
   <!-- Advanced Combat -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedCombatPackage</defName>
     <label>install advanced combat augment</label>
     <description>Install a bioware augment.</description>
@@ -102,7 +108,7 @@
     <addsHediff>Construct_AdvancedCombatPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveAdvancedCombatPackage</defName>
     <label>remove advanced combat augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -124,7 +130,7 @@
        ════════════════════════════════════════════════════════════════════════ -->
 
   <!-- Basic Medical -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicMedicalPackage</defName>
     <label>install basic medical augment</label>
     <description>Install a bioware augment.</description>
@@ -144,7 +150,7 @@
     <addsHediff>Construct_BasicMedicalPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveBasicMedicalPackage</defName>
     <label>remove basic medical augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -162,7 +168,7 @@
   </RecipeDef>
 
   <!-- Intermediate Medical -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateMedicalPackage</defName>
     <label>install intermediate medical augment</label>
     <description>Install a bioware augment.</description>
@@ -182,7 +188,7 @@
     <addsHediff>Construct_IntermediateMedicalPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveIntermediateMedicalPackage</defName>
     <label>remove intermediate medical augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -200,7 +206,7 @@
   </RecipeDef>
 
   <!-- Advanced Medical -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedMedicalPackage</defName>
     <label>install advanced medical augment</label>
     <description>Install a bioware augment.</description>
@@ -220,7 +226,7 @@
     <addsHediff>Construct_AdvancedMedicalPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveAdvancedMedicalPackage</defName>
     <label>remove advanced medical augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -242,7 +248,7 @@
        ════════════════════════════════════════════════════════════════════════ -->
 
   <!-- Basic Industrial -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicIndustrialPackage</defName>
     <label>install basic industrial augment</label>
     <description>Install a bioware augment.</description>
@@ -262,7 +268,7 @@
     <addsHediff>Construct_BasicIndustrialPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveBasicIndustrialPackage</defName>
     <label>remove basic industrial augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -280,7 +286,7 @@
   </RecipeDef>
 
   <!-- Intermediate Industrial -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateIndustrialPackage</defName>
     <label>install intermediate industrial augment</label>
     <description>Install a bioware augment.</description>
@@ -300,7 +306,7 @@
     <addsHediff>Construct_IntermediateIndustrialPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveIntermediateIndustrialPackage</defName>
     <label>remove intermediate industrial augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -318,7 +324,7 @@
   </RecipeDef>
 
   <!-- Advanced Industrial -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedIndustrialPackage</defName>
     <label>install advanced industrial augment</label>
     <description>Install a bioware augment.</description>
@@ -338,7 +344,7 @@
     <addsHediff>Construct_AdvancedIndustrialPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveAdvancedIndustrialPackage</defName>
     <label>remove advanced industrial augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -360,7 +366,7 @@
        ════════════════════════════════════════════════════════════════════════ -->
 
   <!-- Basic Laborer -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicLaborerPackage</defName>
     <label>install basic laborer augment</label>
     <description>Install a bioware augment.</description>
@@ -380,7 +386,7 @@
     <addsHediff>Construct_BasicLaborerPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveBasicLaborerPackage</defName>
     <label>remove basic laborer augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -398,7 +404,7 @@
   </RecipeDef>
 
   <!-- Intermediate Laborer -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateLaborerPackage</defName>
     <label>install intermediate laborer augment</label>
     <description>Install a bioware augment.</description>
@@ -418,7 +424,7 @@
     <addsHediff>Construct_IntermediateLaborerPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveIntermediateLaborerPackage</defName>
     <label>remove intermediate laborer augment</label>
     <description>Remove a bioware augment safely.</description>
@@ -436,7 +442,7 @@
   </RecipeDef>
 
   <!-- Advanced Laborer -->
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedLaborerPackage</defName>
     <label>install advanced laborer augment</label>
     <description>Install a bioware augment.</description>
@@ -456,7 +462,7 @@
     <addsHediff>Construct_AdvancedLaborerPackage</addsHediff>
   </RecipeDef>
 
-  <RecipeDef ParentName="SurgeryFlesh">
+  <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveAdvancedLaborerPackage</defName>
     <label>remove advanced laborer augment</label>
     <description>Remove a bioware augment safely.</description>

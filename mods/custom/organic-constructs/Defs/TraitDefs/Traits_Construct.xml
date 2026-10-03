@@ -7,7 +7,7 @@
     <degreeDatas>
       <li>
         <label>construct asset</label>
-        <description>{PAWN_nameDef} is a genetically engineered construct caste asset. Free from social sentimentality and emotional frailty, {PAWN_pronoun} is viewed by natural colonists as colony property rather than an equal peer.</description>
+        <description>{PAWN_nameDef} is a genetically engineered construct. Free from social sentimentality and emotional frailty, {PAWN_pronoun} is viewed by natural colonists as colony property rather than an equal peer.</description>
       </li>
     </degreeDatas>
   </TraitDef>

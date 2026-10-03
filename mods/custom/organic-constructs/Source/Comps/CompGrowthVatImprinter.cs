@@ -185,7 +185,7 @@ namespace OrganicConstructs
                 return;
             }
 
-            Gene_ConstructPsychology.ApplyConstructPhysiology(pawn);
+            ConstructUtility.ApplyConstructPhysiology(pawn);
 
             TraitDef traitAsset = NeuralImprintDefOf.Trait_ConstructAsset ?? DefDatabase<TraitDef>.GetNamedSilentFail("Trait_ConstructAsset");
             if (traitAsset != null && pawn.story?.traits != null && !pawn.story.traits.HasTrait(traitAsset))
@@ -263,8 +263,8 @@ namespace OrganicConstructs
                 if (record == null) continue;
 
                 int level;
-                if (skill == SkillDefOf.Shooting) level = 4;
-                else if (skill == SkillDefOf.Melee) level = 4;
+                if (skill == SkillDefOf.Shooting) level = 6;
+                else if (skill == SkillDefOf.Melee) level = 6;
                 else if (skill == SkillDefOf.Social) level = 2;
                 else if (skill == SkillDefOf.Intellectual) level = 2;
                 else if (skill == SkillDefOf.Artistic) level = 0;

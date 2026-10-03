@@ -62,7 +62,7 @@ namespace OrganicConstructs
                         CompGrowthVatImprinter.WipePassions(occupant);
 
                         // Ensure construct physiology is locked
-                        Gene_ConstructPsychology.ApplyConstructPhysiology(occupant);
+                        ConstructUtility.ApplyConstructPhysiology(occupant);
 
                         Messages.Message(
                             $"Construct {occupant.LabelShortCap} has reached neural maturity (Age 13) inside the growth vat and is ready to be decanted.",

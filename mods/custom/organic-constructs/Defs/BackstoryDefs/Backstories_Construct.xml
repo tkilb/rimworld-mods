@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <BackstoryDef>
+    <defName>Construct_Childhood</defName>
+    <title>construct</title>
+    <titleShort>construct</titleShort>
+    <description>[PAWN_nameDef] was bio-engineered in an embryo synthesis bench and gestated within an industrial growth vat. [PAWN_pronoun] has known only sterile acceleration pods, biometric calibration, and neural programming.</description>
+    <slot>Childhood</slot>
+    <spawnCategories>
+      <li>Construct</li>
+    </spawnCategories>
+    <requiresSpawnCategory>true</requiresSpawnCategory>
+    <shuffleable>false</shuffleable>
+    <forcedTraits>
+      <Psychopath>0</Psychopath>
+      <Trait_ConstructAsset>0</Trait_ConstructAsset>
+    </forcedTraits>
+  </BackstoryDef>
+
+  <BackstoryDef>
+    <defName>Construct_Adulthood</defName>
+    <title>construct</title>
+    <titleShort>construct</titleShort>
+    <description>[PAWN_nameDef] functions as a mass-produced biological construct. Free from emotional sentimentality, social friction, and personal ambition, [PAWN_pronoun] exists solely to execute assigned directives as colony property.</description>
+    <slot>Adulthood</slot>
+    <spawnCategories>
+      <li>Construct</li>
+    </spawnCategories>
+    <requiresSpawnCategory>true</requiresSpawnCategory>
+    <shuffleable>false</shuffleable>
+    <bodyTypeGlobal>Thin</bodyTypeGlobal>
+    <forcedTraits>
+      <Psychopath>0</Psychopath>
+      <Trait_ConstructAsset>0</Trait_ConstructAsset>
+    </forcedTraits>
+  </BackstoryDef>
+
+</Defs>

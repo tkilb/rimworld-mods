@@ -5,19 +5,11 @@ using Verse;
 
 namespace OrganicConstructs
 {
-    public class Recipe_InstallConstructPackage : Recipe_Surgery
+    public class Recipe_InstallConstructPackage : Recipe_InstallImplant
     {
         public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)
         {
-            if (!base.AvailableOnNow(thing, part))
-                return false;
-
-            if (thing is Pawn pawn && !ConstructUtility.IsConstruct(pawn))
-            {
-                return false;
-            }
-
-            return true;
+            return base.AvailableOnNow(thing, part);
         }
 
         public override AcceptanceReport AvailableReport(Thing thing, BodyPartRecord part = null)

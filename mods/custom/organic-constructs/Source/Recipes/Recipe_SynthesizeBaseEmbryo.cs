@@ -10,7 +10,6 @@ namespace OrganicConstructs
     {
         private static readonly string[] BaseConstructGenes = new string[]
         {
-            "Gene_ConstructPsychology",
             "Instability_Major",
             "Gene_MandatorySterility",
             "Gene_ConstructHibernation",

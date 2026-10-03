@@ -36,38 +36,6 @@ mods:
     enabled: true
     description: "Recycle or destroy unwanted weapons and apparel directly via order commands."
 
-  cloning:
-    name: "Biotech Cloning (Continued)"
-    source: steam_workshop
-    workshop_id: "3348781223"
-    package_id: "zal.cloning"
-    enabled: true
-    description: "Clone pawns and manage artificial human gestation in growth vats."
-
-  enhancedvatlearning:
-    name: "Enhanced Vat Learning"
-    source: steam_workshop
-    workshop_id: "3551263267"
-    package_id: "ninagoblin.enhancedvatlearning"
-    enabled: true
-    description: "Adds learning machines to boost skill acquisition for vat-grown children."
-
-  injectgene:
-    name: "Inject Genes"
-    source: steam_workshop
-    workshop_id: "2918091446"
-    package_id: "Zaf.InjectGene"
-    enabled: true
-    description: "Allows injecting individual genes without requiring xenotype creation."
-
-  hcgenefabrication:
-    name: "Gene Fabrication"
-    source: steam_workshop
-    workshop_id: "3352773112"
-    package_id: "AmCh.Eragon.HCGeneFabrication"
-    enabled: true
-    description: "Craft and synthesize custom genepacks using specialized gene fabrication benches."
-
   generipper:
     name: "Gene Ripper"
     source: steam_workshop

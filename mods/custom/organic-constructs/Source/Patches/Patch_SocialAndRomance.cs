@@ -1,6 +1,7 @@
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace OrganicConstructs
 {
@@ -9,7 +10,7 @@ namespace OrganicConstructs
     {
         public static bool Prefix(Pawn initiator, Pawn recipient, ref float __result)
         {
-            if (Gene_ConstructPsychology.IsConstruct(initiator) || Gene_ConstructPsychology.IsConstruct(recipient))
+            if (ConstructUtility.IsConstruct(initiator) || ConstructUtility.IsConstruct(recipient))
             {
                 __result = 0f;
                 return false;
@@ -23,7 +24,7 @@ namespace OrganicConstructs
     {
         public static bool Prefix(Pawn initiator, Pawn recipient, ref float __result)
         {
-            if (Gene_ConstructPsychology.IsConstruct(initiator) || Gene_ConstructPsychology.IsConstruct(recipient))
+            if (ConstructUtility.IsConstruct(initiator) || ConstructUtility.IsConstruct(recipient))
             {
                 __result = 0f;
                 return false;
@@ -37,7 +38,7 @@ namespace OrganicConstructs
     {
         public static bool Prefix(Pawn initiator, Pawn recipient, ref float __result)
         {
-            if (Gene_ConstructPsychology.IsConstruct(initiator) || Gene_ConstructPsychology.IsConstruct(recipient))
+            if (ConstructUtility.IsConstruct(initiator) || ConstructUtility.IsConstruct(recipient))
             {
                 __result = 0f;
                 return false;
@@ -51,9 +52,79 @@ namespace OrganicConstructs
     {
         public static bool Prefix(Pawn initiator, Pawn recipient, ref float __result)
         {
-            if (Gene_ConstructPsychology.IsConstruct(initiator) || Gene_ConstructPsychology.IsConstruct(recipient))
+            if (ConstructUtility.IsConstruct(initiator) || ConstructUtility.IsConstruct(recipient))
             {
                 __result = 0f;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(InteractionWorker_Insult), nameof(InteractionWorker_Insult.RandomSelectionWeight))]
+    public static class Patch_Insult
+    {
+        public static bool Prefix(Pawn initiator, Pawn recipient, ref float __result)
+        {
+            if (ConstructUtility.IsConstruct(initiator))
+            {
+                __result = 0f;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(InteractionWorker_Slight), nameof(InteractionWorker_Slight.RandomSelectionWeight))]
+    public static class Patch_Slight
+    {
+        public static bool Prefix(Pawn initiator, Pawn recipient, ref float __result)
+        {
+            if (ConstructUtility.IsConstruct(initiator))
+            {
+                __result = 0f;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.SocialFightPossible))]
+    public static class Patch_SocialFightPossible
+    {
+        public static bool Prefix(Pawn otherPawn, Pawn ___pawn, ref bool __result)
+        {
+            if (ConstructUtility.IsConstruct(___pawn) || ConstructUtility.IsConstruct(otherPawn))
+            {
+                __result = false;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(MentalStateWorker_InsultingSpreeAll), nameof(MentalStateWorker_InsultingSpreeAll.StateCanOccur))]
+    public static class Patch_InsultingSpreeAll
+    {
+        public static bool Prefix(Pawn pawn, ref bool __result)
+        {
+            if (ConstructUtility.IsConstruct(pawn))
+            {
+                __result = false;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(MentalStateWorker_TargetedInsultingSpree), nameof(MentalStateWorker_TargetedInsultingSpree.StateCanOccur))]
+    public static class Patch_TargetedInsultingSpree
+    {
+        public static bool Prefix(Pawn pawn, ref bool __result)
+        {
+            if (ConstructUtility.IsConstruct(pawn))
+            {
+                __result = false;
                 return false;
             }
             return true;

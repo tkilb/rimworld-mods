@@ -12,7 +12,6 @@ namespace OrganicConstructs
 
         // Genes
         public static GeneDef Gene_ConstructHibernation;
-        public static GeneDef Gene_ConstructPsychology;
 
         // Traits
         public static TraitDef Trait_ConstructAsset;
