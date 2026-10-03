@@ -34,8 +34,11 @@
     <iconPath>UI/Icons/Genes/Gene_ConstructHibernation</iconPath>
     <displayCategory>Construct_GeneCategory</displayCategory>
     <displayOrderInCategory>40</displayOrderInCategory>
+    <enablesNeeds>
+      <li>Construct_Stasis</li>
+    </enablesNeeds>
     <biostatCpx>1</biostatCpx>
-    <biostatMet>5</biostatMet>
+    <biostatMet>9</biostatMet>
     <statFactors>
       <LifespanFactor>0.5</LifespanFactor>
     </statFactors>
@@ -44,7 +47,7 @@
       <li>Clean wake completely restores Rest and resets the 30-day operating limit.</li>
       <li>Premature interruption inflicts interrupted stasis (neural defragmentation failure).</li>
       <li>Halves biological lifespan.</li>
-      <li>Yields +5 Metabolic Efficiency.</li>
+      <li>Yields +9 Metabolic Efficiency.</li>
     </customEffectDescriptions>
   </GeneDef>
 

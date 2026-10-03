@@ -9,7 +9,7 @@
   - **Colony Property & Identity:** Treated as industrial assets; natural colonists suffer 0 mood debuffs when a construct dies or is lost (`Trait_ConstructAsset`), with an exception for empathetic colonists with the Kind trait or Kind Instinct gene who feel pity (`Construct_KindPity`). Enforced via custom Construct childhood and adulthood backstories (`Construct_Childhood` / `Construct_Adulthood`).
   - **Suppressed Psychology:** Incapable of romance, marriage, chit-chat, and social drama; forces `Psychopath`.
   - **Locked Architecture:** Harmony patch explicitly disables `Recipe_ImplantXenogerm` on constructs.
-  - **Maintenance Stasis:** Requires periodic 48-hour hibernation every 30 days (`Gene_ConstructHibernation`, +5 Met).
+  - **Maintenance Stasis:** Requires periodic 48-hour hibernation every 30 days (`Gene_ConstructHibernation`, +9 Met) tracked via native stasis meter and selection gizmo.
   - **Bioware Augments:** Exclusive biological augment packages (Combat, Medical, Industrial, Laborer) that induce an assimilation coma upon grafting; rejected by natural humans.
 
 ---

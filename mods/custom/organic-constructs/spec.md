@@ -77,9 +77,8 @@ Construct design is governed by three distinct, modular layers:
 - **Optional Adult Aging:** Reaching Age 13 unlocks decanting. Constructs left in the vat can continue maturing to **Age 18** for full adult body size ($1.0$).
 
 ### 2.7 Construct Biology, Traits & Genes
-- **Net Zero Foundation (`0 Met`, `11 Cpx`):** Synthetic metabolic surpluses (`Instability_Major` $+4$, `Gene_ConstructHibernation` $+3$, `Gene_ConstructPsychology` $+2$, `Gene_MandatorySterility` $+1$ = $+10\text{ Met}$) precisely balance the enhanced physical chassis ($-10\text{ Met}$), establishing a clean $100\%$ baseline hunger rate.
-- **`Gene_ConstructPsychology`:** Suppresses romance, marriage, chit-chat, and loneliness; permanently forces the `Psychopath` trait (+2 Met).
-- **`Gene_ConstructHibernation`:** "Flash in the pan" biology. Requires a 48-hour stasis cycle every 30 days and halves biological lifespan (`LifespanFactor` 0.5, +3 Met).
+- **Net Zero Foundation (`0 Met`):** Synthetic metabolic surpluses (`Instability_Major` $+4$, `Gene_ConstructHibernation` $+9$, `Gene_MandatorySterility` $+1$, plus behavioral/utility modifiers $+6$ = $+20\text{ Met}$) precisely balance the enhanced physical chassis ($-20\text{ Met}$), establishing a clean $100\%$ baseline hunger rate.
+- **`Gene_ConstructHibernation`:** "Flash in the pan" biology. Requires a 48-hour stasis cycle every 30 days and halves biological lifespan (`LifespanFactor` 0.5, +9 Met). Tracked via native `Need_ConstructStasis` meter and selection gizmo.
 - **`Instability_Major`:** Major cell instability (+4 Met, 0.6x lifespan factor, 5x cancer rate).
 - **`Gene_MandatorySterility`:** Complete sterility (+1 Met).
 - **Physical Chassis Suite:** `Immunity_SuperStrong` (-2 Met), `WoundHealing_Fast` (-2 Met), `Robust` (-2 Met), `Pain_Reduced` (-1 Met), `MeleeDamage_Strong` (-1 Met), `MoveSpeed_Quick` (-1 Met), `Superclotting` (-1 Met).

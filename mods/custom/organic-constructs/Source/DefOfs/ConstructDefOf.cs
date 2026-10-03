@@ -40,6 +40,9 @@ namespace OrganicConstructs
         // ── Traits ────────────────────────────────────────────────────────────────
         public static TraitDef Trait_ConstructAsset;
 
+        // ── Needs ─────────────────────────────────────────────────────────────────
+        public static NeedDef Construct_Stasis;
+
         // ── Thoughts ──────────────────────────────────────────────────────────────
         public static ThoughtDef Construct_KindPity;
         public static ThoughtDef Construct_Expectations;

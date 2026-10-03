@@ -59,22 +59,48 @@ namespace OrganicConstructs
             }
         }
 
+        public string GetStasisTooltip()
+        {
+            if (inStasis)
+            {
+                float hours = (float)stasisTicks / 2500f;
+                float totalHours = (float)MinStasisTicks / 2500f;
+                return $"Construct Hibernation Stasis\nProgress: {hours:F1} / {totalHours:F0} hours ({(stasisTicks / (float)MinStasisTicks):P0})\nPurging synthetic cellular toxicity and defragmenting neural pathways.";
+            }
+            else
+            {
+                int remainingTicks = Mathf.Max(0, MaxOperatingTicks - operatingTicks);
+                float days = (float)remainingTicks / 60000f;
+                string tip = $"Construct Operating Margin\nRemaining: {days:F1} / 30.0 days\nMust enter stasis for 48 hours before reaching 0 to avoid emergency shutdown.";
+                if (days <= 2.0f)
+                {
+                    tip += "\n\nCRITICAL: Emergency shutdown imminent!";
+                }
+                return tip;
+            }
+        }
+
         public override IEnumerable<Gizmo> GetGizmos()
         {
             if (pawn.Faction == Faction.OfPlayer)
             {
-                Command_Action enterStasis = new Command_Action
+                yield return new Gizmo_ConstructStasisStatus(this);
+
+                if (!inStasis)
                 {
-                    defaultLabel = "Enter Stasis",
-                    defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 48 hours for a clean wake.",
-                    icon = def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false),
-                    action = delegate
+                    Command_Action enterStasis = new Command_Action
                     {
-                        Job job = JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("Construct_EnterConstructStasis"), pawn);
-                        pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                    }
-                };
-                yield return enterStasis;
+                        defaultLabel = "Enter Stasis",
+                        defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 48 hours for a clean wake.",
+                        icon = def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false),
+                        action = delegate
+                        {
+                            Job job = JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("Construct_EnterConstructStasis"), pawn);
+                            pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                        }
+                    };
+                    yield return enterStasis;
+                }
             }
         }
     }

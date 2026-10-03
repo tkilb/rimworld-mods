@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <NeedDef>
+    <defName>Construct_Stasis</defName>
+    <needClass>OrganicConstructs.Need_ConstructStasis</needClass>
+    <label>stasis</label>
+    <description>Constructs are engineered with high-intensity synthetic biology requiring periodic hibernation stasis every 30 operating days to defragment neural pathways and purge metabolic toxicity. Running out of stasis margin causes emergency shutdown.</description>
+    <baseLevel>1.0</baseLevel>
+    <listPriority>650</listPriority>
+    <major>true</major>
+    <minIntelligence>ToolUser</minIntelligence>
+    <colonistsOnly>false</colonistsOnly>
+    <onlyIfCausedByGene>true</onlyIfCausedByGene>
+  </NeedDef>
+
+</Defs>
