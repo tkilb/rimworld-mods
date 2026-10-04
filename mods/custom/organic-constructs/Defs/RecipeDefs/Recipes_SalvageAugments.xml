@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Abstract Base for Bioware Augment Salvage
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef Name="SalvageConstructAugmentBase" Abstract="True">
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smelt</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.15</workSkillLearnFactor>
+    <recipeUsers>
+      <li>ConstructSynthesizer</li>
+      <li>FabricationBench</li>
+      <li>TableMachining</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Basic Augment Salvage
+       Recovers: 1x ComponentIndustrial (100%), 7x Plasteel (50%)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef ParentName="SalvageConstructAugmentBase">
+    <defName>Salvage_ConstructAugment_Basic</defName>
+    <label>salvage basic bioware augment</label>
+    <description>Dismantle an unused basic bioware augment package to reclaim its intact micro-circuitry and reinforced plasteel casing. Recovers 1 industrial component and 7 plasteel. Biological tissue and chemical stabilizers are consumed in the process.</description>
+    <jobString>Salvaging basic bioware augment.</jobString>
+    <workAmount>1200</workAmount>
+    <researchPrerequisite>Construct_BiowareBasic</researchPrerequisite>
+    <skillRequirements>
+      <Crafting>4</Crafting>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Construct_BasicCombatPackageItem</li>
+            <li>Construct_BasicMedicalPackageItem</li>
+            <li>Construct_BasicIndustrialPackageItem</li>
+            <li>Construct_BasicLaborerPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Construct_BasicCombatPackageItem</li>
+        <li>Construct_BasicMedicalPackageItem</li>
+        <li>Construct_BasicIndustrialPackageItem</li>
+        <li>Construct_BasicLaborerPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <ComponentIndustrial>1</ComponentIndustrial>
+      <Plasteel>7</Plasteel>
+    </products>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Intermediate Augment Salvage
+       Recovers: 1x ComponentSpacer (100%), 15x Plasteel (50%)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef ParentName="SalvageConstructAugmentBase">
+    <defName>Salvage_ConstructAugment_Intermediate</defName>
+    <label>salvage intermediate bioware augment</label>
+    <description>Dismantle an unused intermediate bioware augment package to reclaim its intact advanced component and reinforced plasteel casing. Recovers 1 advanced component and 15 plasteel. Biological tissue and chemical stabilizers are consumed in the process.</description>
+    <jobString>Salvaging intermediate bioware augment.</jobString>
+    <workAmount>1800</workAmount>
+    <researchPrerequisite>Construct_BiowareIntermediate</researchPrerequisite>
+    <skillRequirements>
+      <Crafting>6</Crafting>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Construct_IntermediateCombatPackageItem</li>
+            <li>Construct_IntermediateMedicalPackageItem</li>
+            <li>Construct_IntermediateIndustrialPackageItem</li>
+            <li>Construct_IntermediateLaborerPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Construct_IntermediateCombatPackageItem</li>
+        <li>Construct_IntermediateMedicalPackageItem</li>
+        <li>Construct_IntermediateIndustrialPackageItem</li>
+        <li>Construct_IntermediateLaborerPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <ComponentSpacer>1</ComponentSpacer>
+      <Plasteel>15</Plasteel>
+    </products>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Advanced Augment Salvage
+       Recovers: 2x ComponentSpacer (100%), 25x Plasteel (50%)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef ParentName="SalvageConstructAugmentBase">
+    <defName>Salvage_ConstructAugment_Advanced</defName>
+    <label>salvage advanced bioware augment</label>
+    <description>Dismantle an unused advanced bioware augment package to reclaim its intact advanced components and reinforced plasteel casing. Recovers 2 advanced components and 25 plasteel. Biological tissue and chemical stabilizers are consumed in the process.</description>
+    <jobString>Salvaging advanced bioware augment.</jobString>
+    <workAmount>2400</workAmount>
+    <researchPrerequisite>Construct_BiowareAdvanced</researchPrerequisite>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Construct_AdvancedCombatPackageItem</li>
+            <li>Construct_AdvancedMedicalPackageItem</li>
+            <li>Construct_AdvancedIndustrialPackageItem</li>
+            <li>Construct_AdvancedLaborerPackageItem</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Construct_AdvancedCombatPackageItem</li>
+        <li>Construct_AdvancedMedicalPackageItem</li>
+        <li>Construct_AdvancedIndustrialPackageItem</li>
+        <li>Construct_AdvancedLaborerPackageItem</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Plasteel>25</Plasteel>
+    </products>
+  </RecipeDef>
+
+</Defs>

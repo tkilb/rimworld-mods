@@ -14,7 +14,7 @@
       <Mass>1.0</Mass>
     </statBases>
     <thingCategories>
-      <li>BodyPartsBionic</li>
+      <li>Construct_Augments</li>
     </thingCategories>
   </ThingDef>
 

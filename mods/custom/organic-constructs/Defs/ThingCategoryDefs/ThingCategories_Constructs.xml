@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingCategoryDef>
+    <defName>Construct_Augments</defName>
+    <label>bioware augments</label>
+    <parent>Manufactured</parent>
+    <iconPath>Things/Item/Augments/AugmentPackage_Basic</iconPath>
+  </ThingCategoryDef>
+
+</Defs>
