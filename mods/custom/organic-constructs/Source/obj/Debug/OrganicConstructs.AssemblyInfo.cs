@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OrganicConstructs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0d777a6c5575d3c1f68e4b49108c60064d8379e5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b86588212f86c2b413d567e6c5f0662d40d749e")]
 [assembly: System.Reflection.AssemblyProductAttribute("OrganicConstructs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OrganicConstructs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

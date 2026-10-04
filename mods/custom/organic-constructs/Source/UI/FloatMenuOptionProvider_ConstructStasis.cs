@@ -92,24 +92,32 @@ namespace OrganicConstructs
                 var field = typeof(FloatMenuMakerMap).GetField("providers", BindingFlags.NonPublic | BindingFlags.Static);
                 if (field?.GetValue(null) is IList list)
                 {
-                    bool exists = false;
+                    bool existsStasis = false;
+                    bool existsCarry = false;
                     foreach (var item in list)
                     {
                         if (item is FloatMenuOptionProvider_ConstructStasis)
                         {
-                            exists = true;
-                            break;
+                            existsStasis = true;
+                        }
+                        else if (item is FloatMenuOptionProvider_CarryConstructToBed)
+                        {
+                            existsCarry = true;
                         }
                     }
-                    if (!exists)
+                    if (!existsStasis)
                     {
                         list.Add(new FloatMenuOptionProvider_ConstructStasis());
+                    }
+                    if (!existsCarry)
+                    {
+                        list.Add(new FloatMenuOptionProvider_CarryConstructToBed());
                     }
                 }
             }
             catch (Exception ex)
             {
-                Log.Warning($"[OrganicConstructs] Failed to ensure FloatMenuOptionProvider_ConstructStasis registration: {ex.Message}");
+                Log.Warning($"[OrganicConstructs] Failed to ensure FloatMenuOptionProvider registration: {ex.Message}");
             }
         }
     }

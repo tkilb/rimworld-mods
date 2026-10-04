@@ -131,7 +131,7 @@ namespace OrganicConstructs
     }
 
     /// <summary>
-    /// When carried or rescued to a bed while in stasis, assign Construct_EnterConstructStasis
+    /// When carried or rescued to a bed while in stasis or emergency shutdown, assign Construct_EnterConstructStasis
     /// rather than vanilla LayDown (matching Deathrest parity).
     /// </summary>
     [HarmonyPatch(typeof(Pawn_JobTracker), nameof(Pawn_JobTracker.Notify_TuckedIntoBed))]
@@ -141,11 +141,18 @@ namespace OrganicConstructs
         public static bool Prefix(Pawn_JobTracker __instance, Pawn ___pawn, Building_Bed bed)
         {
             var gene = ___pawn?.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
-            if (gene != null && gene.inStasis)
+            if (gene != null && (gene.inStasis || ___pawn.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis) || gene.operatingTicks >= Gene_ConstructHibernation.MaxOperatingTicks))
             {
                 ___pawn.Position = RestUtility.GetBedSleepingSlotPosFor(___pawn, bed);
                 ___pawn.Notify_Teleported(endCurrentJob: false);
                 ___pawn.stances.CancelBusyStanceHard();
+                gene.inStasis = true;
+                if (gene.stasisStartTick < 0)
+                {
+                    gene.stasisStartTick = Find.TickManager.TicksGame;
+                    gene.stasisTicks = 0;
+                    gene.notifiedWakeOK = false;
+                }
                 Job job = JobMaker.MakeJob(ConstructDefOf.Construct_EnterConstructStasis, bed);
                 job.forceSleep = true;
                 __instance.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: false, cancelBusyStances: true, null, JobTag.TuckedIntoBed, fromQueue: false, canReturnCurJobToPool: false, null, continueSleeping: true);
@@ -258,6 +265,128 @@ namespace OrganicConstructs
             if (gene != null && gene.inStasis && pawn.GetPosture().Laying())
             {
                 __result = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Prevents constructs in stasis who are already in bed from wanting to be rescued.
+    /// </summary>
+    [HarmonyPatch(typeof(HealthAIUtility), nameof(HealthAIUtility.WantsToBeRescued))]
+    public static class Patch_HealthAIUtility_WantsToBeRescued
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(Pawn pawn, ref bool __result)
+        {
+            if (pawn != null)
+            {
+                var gene = pawn.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
+                if (gene != null && (gene.inStasis || pawn.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis)))
+                {
+                    if (pawn.InBed())
+                    {
+                        __result = false;
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Prevents autonomous doctor AI from rescuing constructs who are already resting in a bed.
+    /// </summary>
+    [HarmonyPatch(typeof(HealthAIUtility), nameof(HealthAIUtility.CanRescueNow))]
+    public static class Patch_HealthAIUtility_CanRescueNow
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(Pawn rescuer, Pawn patient, bool forced, ref bool __result)
+        {
+            if (!forced && patient != null)
+            {
+                var gene = patient.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
+                if (gene != null && (gene.inStasis || patient.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis)))
+                {
+                    if (patient.InBed())
+                    {
+                        __result = false;
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Prevents WorkGiver_RescueDowned from grabbing constructs out of their beds and delivering them to medical beds.
+    /// </summary>
+    [HarmonyPatch(typeof(WorkGiver_RescueDowned), nameof(WorkGiver_RescueDowned.HasJobOnThing))]
+    public static class Patch_WorkGiver_RescueDowned_HasJobOnThing
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn pawn, Thing t, bool forced, ref bool __result)
+        {
+            if (__result && t is Pawn patient)
+            {
+                var gene = patient.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
+                if (gene != null && (gene.inStasis || patient.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis)))
+                {
+                    if (patient.InBed())
+                    {
+                        __result = false;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Suppresses the "Colonist needs rescue" alert banner when the construct is safely in bed.
+    /// Keeps the alert active if the construct collapsed on the floor/outdoors.
+    /// </summary>
+    [HarmonyPatch(typeof(Alert_ColonistNeedsRescuing), "NeedsRescue")]
+    public static class Patch_Alert_ColonistNeedsRescuing_NeedsRescue
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn p, ref bool __result)
+        {
+            if (__result && p != null)
+            {
+                var gene = p.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
+                if (gene != null && (gene.inStasis || p.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis)))
+                {
+                    if (p.InBed())
+                    {
+                        __result = false;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// When taking/rescuing a construct in stasis or emergency shutdown to bed, route them to their
+    /// assigned personal bed rather than an unrelated hospital or medical bed.
+    /// </summary>
+    [HarmonyPatch(typeof(WorkGiver_TakeToBed), "FindBed")]
+    public static class Patch_WorkGiver_TakeToBed_FindBed
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn pawn, Pawn patient, ref Building_Bed __result)
+        {
+            if (patient != null)
+            {
+                var gene = patient.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
+                if (gene != null && (gene.inStasis || patient.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis) || gene.operatingTicks >= Gene_ConstructHibernation.MaxOperatingTicks))
+                {
+                    Building_Bed ownedBed = patient.ownership?.OwnedBed;
+                    if (ownedBed != null && !ownedBed.Medical && RestUtility.IsValidBedFor(ownedBed, patient, pawn, checkSocialProperness: false))
+                    {
+                        __result = ownedBed;
+                    }
+                }
             }
         }
     }
