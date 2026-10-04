@@ -200,7 +200,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Low">
     <defName>Craft_Construct_BasicCombatPackage</defName>
     <label>fabricate basic combat augment</label>
-    <description>Synthesize a basic combat bioware augment package using organic substrate and neural reflex bridges.</description>
+    <description>Synthesize a basic combat bioware augment package using organic substrate and neural reflex bridges.\n\nStat Modifiers:\n• Shooting Accuracy: +4.0\n• Melee Hit Chance: +4.0\n• Melee Dodge Chance: +4.0\n\nSkill Aptitudes:\n• Shooting: +4\n• Melee: +4</description>
     <jobString>Fabricating basic combat augment.</jobString>
     <products>
       <Construct_BasicCombatPackageItem>1</Construct_BasicCombatPackageItem>
@@ -210,7 +210,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
     <defName>Craft_Construct_IntermediateCombatPackage</defName>
     <label>fabricate intermediate combat augment</label>
-    <description>Synthesize an intermediate combat bioware augment package with advanced targeting computation and reflex conduits.</description>
+    <description>Synthesize an intermediate combat bioware augment package with advanced targeting computation and reflex conduits.\n\nStat Modifiers:\n• Shooting Accuracy: +6.0\n• Melee Hit Chance: +6.0\n• Melee Dodge Chance: +6.0\n• Aiming Time: -5%\n\nSkill Aptitudes:\n• Shooting: +6\n• Melee: +6</description>
     <jobString>Fabricating intermediate combat augment.</jobString>
     <products>
       <Construct_IntermediateCombatPackageItem>1</Construct_IntermediateCombatPackageItem>
@@ -220,7 +220,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
     <defName>Craft_Construct_AdvancedCombatPackage</defName>
     <label>fabricate advanced combat augment</label>
-    <description>Synthesize an advanced combat bioware augment package with high-frequency synaptic bridges and locomotive acceleration networks.</description>
+    <description>Synthesize an advanced combat bioware augment package with high-frequency synaptic bridges and locomotive acceleration networks.\n\nStat Modifiers:\n• Shooting Accuracy: +8.0\n• Melee Hit Chance: +8.0\n• Melee Dodge Chance: +8.0\n• Aiming Time: -10%\n• Move Speed: +0.20 c/s\n\nSkill Aptitudes:\n• Shooting: +8\n• Melee: +8</description>
     <jobString>Fabricating advanced combat augment.</jobString>
     <products>
       <Construct_AdvancedCombatPackageItem>1</Construct_AdvancedCombatPackageItem>
@@ -228,14 +228,14 @@
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
-       Biomedical Packages
+       Biotech Packages
        ════════════════════════════════════════════════════════════════════════ -->
 
   <RecipeDef ParentName="CraftConstructAugmentBase_Low">
     <defName>Craft_Construct_BasicMedicalPackage</defName>
-    <label>fabricate basic biomedical augment</label>
-    <description>Synthesize a basic biomedical augment package loaded with diagnostic, surgical, and bio-synthesis routines.</description>
-    <jobString>Fabricating basic biomedical augment.</jobString>
+    <label>fabricate basic biotech augment</label>
+    <description>Synthesize a basic biotech augment package loaded with diagnostic, surgical, bio-synthesis, and research routines.\n\nStat Modifiers:\n• Medical Tend Quality: +5%\n• Medical Surgery Success Chance: +3%\n• Medical Tend Speed: +10%\n• General Labor Speed: +5%\n• Drug Synthesis Speed: +10%\n• Research Speed: +10%\n\nSkill Aptitudes:\n• Medicine: +3\n• Crafting: +3\n• Intellectual: +3</description>
+    <jobString>Fabricating basic biotech augment.</jobString>
     <products>
       <Construct_BasicMedicalPackageItem>1</Construct_BasicMedicalPackageItem>
     </products>
@@ -243,9 +243,9 @@
 
   <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
     <defName>Craft_Construct_IntermediateMedicalPackage</defName>
-    <label>fabricate intermediate biomedical augment</label>
-    <description>Synthesize an intermediate biomedical augment package with enhanced anatomical comprehension, bio-crafting dexterity, and surgical precision nodes.</description>
-    <jobString>Fabricating intermediate biomedical augment.</jobString>
+    <label>fabricate intermediate biotech augment</label>
+    <description>Synthesize an intermediate biotech augment package with enhanced anatomical comprehension, bio-crafting dexterity, surgical precision, and advanced research nodes.\n\nStat Modifiers:\n• Medical Tend Quality: +10%\n• Medical Surgery Success Chance: +5%\n• Medical Tend Speed: +20%\n• Medical Operation Speed: +10%\n• General Labor Speed: +10%\n• Drug Synthesis Speed: +20%\n• Research Speed: +20%\n\nSkill Aptitudes:\n• Medicine: +5\n• Crafting: +5\n• Intellectual: +5</description>
+    <jobString>Fabricating intermediate biotech augment.</jobString>
     <products>
       <Construct_IntermediateMedicalPackageItem>1</Construct_IntermediateMedicalPackageItem>
     </products>
@@ -253,9 +253,9 @@
 
   <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
     <defName>Craft_Construct_AdvancedMedicalPackage</defName>
-    <label>fabricate advanced biomedical augment</label>
-    <description>Synthesize an advanced biomedical augment package providing rapid trauma response calculations, high-dexterity surgical control, and master bio-synthesis protocols.</description>
-    <jobString>Fabricating advanced biomedical augment.</jobString>
+    <label>fabricate advanced biotech augment</label>
+    <description>Synthesize an advanced biotech augment package providing rapid trauma response calculations, high-dexterity surgical control, master bio-synthesis protocols, and high-throughput research computation.\n\nStat Modifiers:\n• Medical Tend Quality: +15%\n• Medical Surgery Success Chance: +7%\n• Medical Tend Speed: +30%\n• Medical Operation Speed: +20%\n• General Labor Speed: +15%\n• Drug Synthesis Speed: +30%\n• Research Speed: +30%\n\nSkill Aptitudes:\n• Medicine: +7\n• Crafting: +7\n• Intellectual: +7</description>
+    <jobString>Fabricating advanced biotech augment.</jobString>
     <products>
       <Construct_AdvancedMedicalPackageItem>1</Construct_AdvancedMedicalPackageItem>
     </products>
@@ -268,7 +268,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Low">
     <defName>Craft_Construct_BasicIndustrialPackage</defName>
     <label>fabricate basic industrial augment</label>
-    <description>Synthesize a basic industrial bioware augment package configured for heavy mining, excavation, and structural construction.</description>
+    <description>Synthesize a basic industrial bioware augment package configured for heavy mining, excavation, and structural construction.\n\nStat Modifiers:\n• Construction Speed: +15%\n• Construct Success Chance: +3%\n• Mining Speed: +15%\n• Mining Yield: +3%\n• General Labor Speed: +10%\n\nSkill Aptitudes:\n• Construction: +2\n• Mining: +2\n• Crafting: +2</description>
     <jobString>Fabricating basic industrial augment.</jobString>
     <products>
       <Construct_BasicIndustrialPackageItem>1</Construct_BasicIndustrialPackageItem>
@@ -278,7 +278,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
     <defName>Craft_Construct_IntermediateIndustrialPackage</defName>
     <label>fabricate intermediate industrial augment</label>
-    <description>Synthesize an intermediate industrial bioware augment package with reinforced musculoskeletal linkages and construction optimization relays.</description>
+    <description>Synthesize an intermediate industrial bioware augment package with reinforced musculoskeletal linkages and construction optimization relays.\n\nStat Modifiers:\n• Construction Speed: +25%\n• Construct Success Chance: +5%\n• Mining Speed: +25%\n• Mining Yield: +5%\n• General Labor Speed: +15%\n\nSkill Aptitudes:\n• Construction: +4\n• Mining: +4\n• Crafting: +4</description>
     <jobString>Fabricating intermediate industrial augment.</jobString>
     <products>
       <Construct_IntermediateIndustrialPackageItem>1</Construct_IntermediateIndustrialPackageItem>
@@ -288,7 +288,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
     <defName>Craft_Construct_AdvancedIndustrialPackage</defName>
     <label>fabricate advanced industrial augment</label>
-    <description>Synthesize an advanced industrial bioware augment package maximizing kinetic output, excavation speed, and assembly velocity.</description>
+    <description>Synthesize an advanced industrial bioware augment package maximizing kinetic output, excavation speed, and assembly velocity.\n\nStat Modifiers:\n• Construction Speed: +35%\n• Construct Success Chance: +7%\n• Mining Speed: +35%\n• Mining Yield: +7%\n• General Labor Speed: +25%\n• Deep Drilling Speed: +20%\n\nSkill Aptitudes:\n• Construction: +6\n• Mining: +6\n• Crafting: +6</description>
     <jobString>Fabricating advanced industrial augment.</jobString>
     <products>
       <Construct_AdvancedIndustrialPackageItem>1</Construct_AdvancedIndustrialPackageItem>
@@ -302,7 +302,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Low">
     <defName>Craft_Construct_BasicLaborerPackage</defName>
     <label>fabricate basic laborer augment</label>
-    <description>Synthesize a basic laborer bioware augment package tailored for agricultural cultivation and domestic maintenance.</description>
+    <description>Synthesize a basic laborer bioware augment package tailored for agricultural cultivation and domestic maintenance.\n\nStat Modifiers:\n• Cooking Speed: +10%\n• Plant Work Speed: +10%\n• Plant Harvest Yield: +2%\n• Tame Animal Chance: +2%\n• Train Animal Chance: +2%\n• Butchery Flesh Speed: +15%\n\nSkill Aptitudes:\n• Cooking: +2\n• Plants: +2\n• Animals: +2</description>
     <jobString>Fabricating basic laborer augment.</jobString>
     <products>
       <Construct_BasicLaborerPackageItem>1</Construct_BasicLaborerPackageItem>
@@ -312,7 +312,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Mid">
     <defName>Craft_Construct_IntermediateLaborerPackage</defName>
     <label>fabricate intermediate laborer augment</label>
-    <description>Synthesize an intermediate laborer bioware augment package with refined motor control for botanic harvesting, food preparation, and general labor.</description>
+    <description>Synthesize an intermediate laborer bioware augment package with refined motor control for botanic harvesting, food preparation, and general labor.\n\nStat Modifiers:\n• Cooking Speed: +20%\n• Plant Work Speed: +20%\n• Plant Harvest Yield: +4%\n• Tame Animal Chance: +4%\n• Train Animal Chance: +4%\n• Butchery Flesh Speed: +25%\n• Hunting Stealth: +10%\n\nSkill Aptitudes:\n• Cooking: +4\n• Plants: +4\n• Animals: +4</description>
     <jobString>Fabricating intermediate laborer augment.</jobString>
     <products>
       <Construct_IntermediateLaborerPackageItem>1</Construct_IntermediateLaborerPackageItem>
@@ -322,7 +322,7 @@
   <RecipeDef ParentName="CraftConstructAugmentBase_Advanced">
     <defName>Craft_Construct_AdvancedLaborerPackage</defName>
     <label>fabricate advanced laborer augment</label>
-    <description>Synthesize an advanced laborer bioware augment package with master-tier dexterity nodes for rapid harvest, culinary execution, and delicate crafting.</description>
+    <description>Synthesize an advanced laborer bioware augment package with master-tier dexterity nodes for rapid harvest, culinary execution, and delicate crafting.\n\nStat Modifiers:\n• Cooking Speed: +30%\n• Plant Work Speed: +30%\n• Plant Harvest Yield: +6%\n• Tame Animal Chance: +6%\n• Train Animal Chance: +6%\n• Butchery Flesh Speed: +35%\n• Animal Gather Yield: +10%\n\nSkill Aptitudes:\n• Cooking: +6\n• Plants: +6\n• Animals: +6</description>
     <jobString>Fabricating advanced laborer augment.</jobString>
     <products>
       <Construct_AdvancedLaborerPackageItem>1</Construct_AdvancedLaborerPackageItem>

@@ -15,7 +15,7 @@ Construct design is governed by three distinct, modular layers:
    - **Blank Reflexes:** Innate baseline motor reflexes (Shooting 4, Melee 4, Social 2, Intellectual 2, Artistic 0, Others 3; 0 passions).
    - **Mentored Imprint:** 1:1 synaptic doctrine streamed from an encoded `NeuralBlueprintDisk` (scanned from a natural colonist).
 3. **BIOWARE (Hardware — Surgery):**
-   - Modular biological augment packages (Combat, Industrial, Laborer, Medical) grafted directly onto the construct's neural bus. Natural humans reject these packages.
+   - Modular biological augment packages (Combat, Industrial, Laborer, Biotech) grafted directly onto the construct's neural bus. Natural humans reject these packages.
 
 ---
 
@@ -87,7 +87,7 @@ Construct design is governed by three distinct, modular layers:
 - **Locked Architecture:** Harmony patch blocks `Recipe_ImplantXenogerm` on constructs.
 
 ### 2.8 Bioware Augments
-- Modular packages: Combat, Medical, Industrial, Laborer (Basic, Intermediate, Advanced).
+- Modular packages: Combat, Biotech, Industrial, Laborer (Basic, Intermediate, Advanced).
 - Surgical installation restricted exclusively to constructs (natural humans reject the bus).
 - Induces `Construct_Assimilation` coma. Doctor medicine skill determines recovery/salvage chance.
 

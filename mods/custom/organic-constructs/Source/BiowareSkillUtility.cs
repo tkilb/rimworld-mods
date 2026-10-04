@@ -56,8 +56,8 @@ namespace OrganicConstructs
                 if (defName == "Construct_BasicCombatPackage") return 4;
             }
 
-            // Biomedical: Medicine, Crafting (+3 / +5 / +7)
-            if (skill == SkillDefOf.Medicine || skill == SkillDefOf.Crafting)
+            // Biotech: Medicine, Crafting, Intellectual (+3 / +5 / +7)
+            if (skill == SkillDefOf.Medicine || skill == SkillDefOf.Crafting || skill == SkillDefOf.Intellectual)
             {
                 if (defName == "Construct_AdvancedMedicalPackage") return 7;
                 if (defName == "Construct_IntermediateMedicalPackage") return 5;

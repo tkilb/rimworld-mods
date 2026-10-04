@@ -15,7 +15,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicCombatPackage</defName>
     <label>install basic combat augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft a basic combat bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Shooting Accuracy: +4.0\n• Melee Hit Chance: +4.0\n• Melee Dodge Chance: +4.0\n\nSkill Aptitudes:\n• Shooting: +4\n• Melee: +4</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -53,7 +53,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateCombatPackage</defName>
     <label>install intermediate combat augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft an intermediate combat bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Shooting Accuracy: +6.0\n• Melee Hit Chance: +6.0\n• Melee Dodge Chance: +6.0\n• Aiming Time: -5%\n\nSkill Aptitudes:\n• Shooting: +6\n• Melee: +6</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -91,7 +91,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedCombatPackage</defName>
     <label>install advanced combat augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft an advanced combat bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Shooting Accuracy: +8.0\n• Melee Hit Chance: +8.0\n• Melee Dodge Chance: +8.0\n• Aiming Time: -10%\n• Move Speed: +0.20 c/s\n\nSkill Aptitudes:\n• Shooting: +8\n• Melee: +8</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -126,16 +126,16 @@
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
-       Biomedical Packages
+       Biotech Packages
        ════════════════════════════════════════════════════════════════════════ -->
 
-  <!-- Basic Biomedical -->
+  <!-- Basic Biotech -->
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicMedicalPackage</defName>
-    <label>install basic biomedical augment</label>
-    <description>Install a biomedical augment.</description>
+    <label>install basic biotech augment</label>
+    <description>Surgically graft a basic biotech augment into a construct's neural bus.\n\nStat Modifiers:\n• Medical Tend Quality: +5%\n• Medical Surgery Success Chance: +3%\n• Medical Tend Speed: +10%\n• General Labor Speed: +5%\n• Drug Synthesis Speed: +10%\n• Research Speed: +10%\n\nSkill Aptitudes:\n• Medicine: +3\n• Crafting: +3\n• Intellectual: +3</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
-    <jobString>Installing biomedical augment.</jobString>
+    <jobString>Installing biotech augment.</jobString>
     <workAmount>3000</workAmount>
     <skillRequirements><Medicine>4</Medicine></skillRequirements>
     <ingredients>
@@ -152,10 +152,10 @@
 
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveBasicMedicalPackage</defName>
-    <label>remove basic biomedical augment</label>
-    <description>Remove a biomedical augment safely.</description>
+    <label>remove basic biotech augment</label>
+    <description>Remove a biotech augment safely.</description>
     <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
-    <jobString>Removing biomedical augment.</jobString>
+    <jobString>Removing biotech augment.</jobString>
     <workAmount>2000</workAmount>
     <skillRequirements><Medicine>4</Medicine></skillRequirements>
     <ingredients>
@@ -167,13 +167,13 @@
     <removesHediff>Construct_BasicMedicalPackage</removesHediff>
   </RecipeDef>
 
-  <!-- Intermediate Biomedical -->
+  <!-- Intermediate Biotech -->
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateMedicalPackage</defName>
-    <label>install intermediate biomedical augment</label>
-    <description>Install a biomedical augment.</description>
+    <label>install intermediate biotech augment</label>
+    <description>Surgically graft an intermediate biotech augment into a construct's neural bus.\n\nStat Modifiers:\n• Medical Tend Quality: +10%\n• Medical Surgery Success Chance: +5%\n• Medical Tend Speed: +20%\n• Medical Operation Speed: +10%\n• General Labor Speed: +10%\n• Drug Synthesis Speed: +20%\n• Research Speed: +20%\n\nSkill Aptitudes:\n• Medicine: +5\n• Crafting: +5\n• Intellectual: +5</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
-    <jobString>Installing biomedical augment.</jobString>
+    <jobString>Installing biotech augment.</jobString>
     <workAmount>3000</workAmount>
     <skillRequirements><Medicine>7</Medicine></skillRequirements>
     <ingredients>
@@ -190,10 +190,10 @@
 
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveIntermediateMedicalPackage</defName>
-    <label>remove intermediate biomedical augment</label>
-    <description>Remove a biomedical augment safely.</description>
+    <label>remove intermediate biotech augment</label>
+    <description>Remove a biotech augment safely.</description>
     <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
-    <jobString>Removing biomedical augment.</jobString>
+    <jobString>Removing biotech augment.</jobString>
     <workAmount>2000</workAmount>
     <skillRequirements><Medicine>7</Medicine></skillRequirements>
     <ingredients>
@@ -205,13 +205,13 @@
     <removesHediff>Construct_IntermediateMedicalPackage</removesHediff>
   </RecipeDef>
 
-  <!-- Advanced Biomedical -->
+  <!-- Advanced Biotech -->
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedMedicalPackage</defName>
-    <label>install advanced biomedical augment</label>
-    <description>Install a biomedical augment.</description>
+    <label>install advanced biotech augment</label>
+    <description>Surgically graft an advanced biotech augment into a construct's neural bus.\n\nStat Modifiers:\n• Medical Tend Quality: +15%\n• Medical Surgery Success Chance: +7%\n• Medical Tend Speed: +30%\n• Medical Operation Speed: +20%\n• General Labor Speed: +15%\n• Drug Synthesis Speed: +30%\n• Research Speed: +30%\n\nSkill Aptitudes:\n• Medicine: +7\n• Crafting: +7\n• Intellectual: +7</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
-    <jobString>Installing biomedical augment.</jobString>
+    <jobString>Installing biotech augment.</jobString>
     <workAmount>3000</workAmount>
     <skillRequirements><Medicine>10</Medicine></skillRequirements>
     <ingredients>
@@ -228,10 +228,10 @@
 
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_RemoveAdvancedMedicalPackage</defName>
-    <label>remove advanced biomedical augment</label>
-    <description>Remove a biomedical augment safely.</description>
+    <label>remove advanced biotech augment</label>
+    <description>Remove a biotech augment safely.</description>
     <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
-    <jobString>Removing biomedical augment.</jobString>
+    <jobString>Removing biotech augment.</jobString>
     <workAmount>2000</workAmount>
     <skillRequirements><Medicine>10</Medicine></skillRequirements>
     <ingredients>
@@ -251,7 +251,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicIndustrialPackage</defName>
     <label>install basic industrial augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft a basic industrial bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Construction Speed: +15%\n• Construct Success Chance: +3%\n• Mining Speed: +15%\n• Mining Yield: +3%\n• General Labor Speed: +10%\n\nSkill Aptitudes:\n• Construction: +2\n• Mining: +2\n• Crafting: +2</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -289,7 +289,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateIndustrialPackage</defName>
     <label>install intermediate industrial augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft an intermediate industrial bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Construction Speed: +25%\n• Construct Success Chance: +5%\n• Mining Speed: +25%\n• Mining Yield: +5%\n• General Labor Speed: +15%\n\nSkill Aptitudes:\n• Construction: +4\n• Mining: +4\n• Crafting: +4</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -327,7 +327,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedIndustrialPackage</defName>
     <label>install advanced industrial augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft an advanced industrial bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Construction Speed: +35%\n• Construct Success Chance: +7%\n• Mining Speed: +35%\n• Mining Yield: +7%\n• General Labor Speed: +25%\n• Deep Drilling Speed: +20%\n\nSkill Aptitudes:\n• Construction: +6\n• Mining: +6\n• Crafting: +6</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -369,7 +369,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallBasicLaborerPackage</defName>
     <label>install basic laborer augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft a basic laborer bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Cooking Speed: +10%\n• Plant Work Speed: +10%\n• Plant Harvest Yield: +2%\n• Tame Animal Chance: +2%\n• Train Animal Chance: +2%\n• Butchery Flesh Speed: +15%\n\nSkill Aptitudes:\n• Cooking: +2\n• Plants: +2\n• Animals: +2</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -407,7 +407,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallIntermediateLaborerPackage</defName>
     <label>install intermediate laborer augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft an intermediate laborer bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Cooking Speed: +20%\n• Plant Work Speed: +20%\n• Plant Harvest Yield: +4%\n• Tame Animal Chance: +4%\n• Train Animal Chance: +4%\n• Butchery Flesh Speed: +25%\n• Hunting Stealth: +10%\n\nSkill Aptitudes:\n• Cooking: +4\n• Plants: +4\n• Animals: +4</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>
@@ -445,7 +445,7 @@
   <RecipeDef ParentName="Construct_SurgeryPackageBase">
     <defName>Construct_InstallAdvancedLaborerPackage</defName>
     <label>install advanced laborer augment</label>
-    <description>Install a bioware augment.</description>
+    <description>Surgically graft an advanced laborer bioware augment into a construct's neural bus.\n\nStat Modifiers:\n• Cooking Speed: +30%\n• Plant Work Speed: +30%\n• Plant Harvest Yield: +6%\n• Tame Animal Chance: +6%\n• Train Animal Chance: +6%\n• Butchery Flesh Speed: +35%\n• Animal Gather Yield: +10%\n\nSkill Aptitudes:\n• Cooking: +6\n• Plants: +6\n• Animals: +6</description>
     <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
     <jobString>Installing bioware augment.</jobString>
     <workAmount>3000</workAmount>

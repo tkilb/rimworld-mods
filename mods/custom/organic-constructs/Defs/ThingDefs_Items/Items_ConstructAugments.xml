@@ -22,7 +22,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_BasicCombatPackageItem</defName>
     <label>basic combat package</label>
-    <description>A basic biological neural bridge tailored for construct combat operations.</description>
+    <description>A basic biological neural bridge tailored for construct combat operations.\n\nStat Modifiers:\n• Shooting Accuracy: +4.0\n• Melee Hit Chance: +4.0\n• Melee Dodge Chance: +4.0\n\nSkill Aptitudes:\n• Shooting: +4\n• Melee: +4</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Combat_Basic</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -35,7 +35,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_IntermediateCombatPackageItem</defName>
     <label>intermediate combat package</label>
-    <description>An intermediate biological neural bridge tailored for construct combat operations.</description>
+    <description>An intermediate biological neural bridge tailored for construct combat operations.\n\nStat Modifiers:\n• Shooting Accuracy: +6.0\n• Melee Hit Chance: +6.0\n• Melee Dodge Chance: +6.0\n• Aiming Time: -5%\n\nSkill Aptitudes:\n• Shooting: +6\n• Melee: +6</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Combat_Intermediate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -48,7 +48,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_AdvancedCombatPackageItem</defName>
     <label>advanced combat package</label>
-    <description>An advanced biological neural bridge tailored for construct combat operations.</description>
+    <description>An advanced biological neural bridge tailored for construct combat operations.\n\nStat Modifiers:\n• Shooting Accuracy: +8.0\n• Melee Hit Chance: +8.0\n• Melee Dodge Chance: +8.0\n• Aiming Time: -10%\n• Move Speed: +0.20 c/s\n\nSkill Aptitudes:\n• Shooting: +8\n• Melee: +8</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Combat_Advanced</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -58,11 +58,11 @@
     </statBases>
   </ThingDef>
 
-  <!-- Biomedical -->
+  <!-- Biotech -->
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_BasicMedicalPackageItem</defName>
-    <label>basic biomedical package</label>
-    <description>A basic biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and micro-crafting calibrations.</description>
+    <label>basic biotech package</label>
+    <description>A basic biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and scientific research calibrations.\n\nStat Modifiers:\n• Medical Tend Quality: +5%\n• Medical Surgery Success Chance: +3%\n• Medical Tend Speed: +10%\n• General Labor Speed: +5%\n• Drug Synthesis Speed: +10%\n• Research Speed: +10%\n\nSkill Aptitudes:\n• Medicine: +3\n• Crafting: +3\n• Intellectual: +3</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Medical_Basic</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -74,8 +74,8 @@
 
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_IntermediateMedicalPackageItem</defName>
-    <label>intermediate biomedical package</label>
-    <description>An intermediate biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and micro-crafting calibrations.</description>
+    <label>intermediate biotech package</label>
+    <description>An intermediate biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and scientific research calibrations.\n\nStat Modifiers:\n• Medical Tend Quality: +10%\n• Medical Surgery Success Chance: +5%\n• Medical Tend Speed: +20%\n• Medical Operation Speed: +10%\n• General Labor Speed: +10%\n• Drug Synthesis Speed: +20%\n• Research Speed: +20%\n\nSkill Aptitudes:\n• Medicine: +5\n• Crafting: +5\n• Intellectual: +5</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Medical_Intermediate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -87,8 +87,8 @@
 
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_AdvancedMedicalPackageItem</defName>
-    <label>advanced biomedical package</label>
-    <description>An advanced biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and micro-crafting calibrations.</description>
+    <label>advanced biotech package</label>
+    <description>An advanced biological neural bridge loaded with construct medical procedures, bio-synthesis techniques, and scientific research calibrations.\n\nStat Modifiers:\n• Medical Tend Quality: +15%\n• Medical Surgery Success Chance: +7%\n• Medical Tend Speed: +30%\n• Medical Operation Speed: +20%\n• General Labor Speed: +15%\n• Drug Synthesis Speed: +30%\n• Research Speed: +30%\n\nSkill Aptitudes:\n• Medicine: +7\n• Crafting: +7\n• Intellectual: +7</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Medical_Advanced</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -102,7 +102,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_BasicIndustrialPackageItem</defName>
     <label>basic industrial package</label>
-    <description>A basic neural bridge tailored for construct industrial work.</description>
+    <description>A basic neural bridge tailored for construct industrial work.\n\nStat Modifiers:\n• Construction Speed: +15%\n• Construct Success Chance: +3%\n• Mining Speed: +15%\n• Mining Yield: +3%\n• General Labor Speed: +10%\n\nSkill Aptitudes:\n• Construction: +2\n• Mining: +2\n• Crafting: +2</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Industrial_Basic</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -115,7 +115,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_IntermediateIndustrialPackageItem</defName>
     <label>intermediate industrial package</label>
-    <description>An intermediate neural bridge tailored for construct industrial work.</description>
+    <description>An intermediate neural bridge tailored for construct industrial work.\n\nStat Modifiers:\n• Construction Speed: +25%\n• Construct Success Chance: +5%\n• Mining Speed: +25%\n• Mining Yield: +5%\n• General Labor Speed: +15%\n\nSkill Aptitudes:\n• Construction: +4\n• Mining: +4\n• Crafting: +4</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Industrial_Intermediate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -128,7 +128,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_AdvancedIndustrialPackageItem</defName>
     <label>advanced industrial package</label>
-    <description>An advanced neural bridge tailored for construct industrial work.</description>
+    <description>An advanced neural bridge tailored for construct industrial work.\n\nStat Modifiers:\n• Construction Speed: +35%\n• Construct Success Chance: +7%\n• Mining Speed: +35%\n• Mining Yield: +7%\n• General Labor Speed: +25%\n• Deep Drilling Speed: +20%\n\nSkill Aptitudes:\n• Construction: +6\n• Mining: +6\n• Crafting: +6</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Industrial_Advanced</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -142,7 +142,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_BasicLaborerPackageItem</defName>
     <label>basic laborer package</label>
-    <description>A basic neural bridge tailored for construct laborer tasks.</description>
+    <description>A basic neural bridge tailored for construct laborer tasks.\n\nStat Modifiers:\n• Cooking Speed: +10%\n• Plant Work Speed: +10%\n• Plant Harvest Yield: +2%\n• Tame Animal Chance: +2%\n• Train Animal Chance: +2%\n• Butchery Flesh Speed: +15%\n\nSkill Aptitudes:\n• Cooking: +2\n• Plants: +2\n• Animals: +2</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Laborer_Basic</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -155,7 +155,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_IntermediateLaborerPackageItem</defName>
     <label>intermediate laborer package</label>
-    <description>An intermediate neural bridge tailored for construct laborer tasks.</description>
+    <description>An intermediate neural bridge tailored for construct laborer tasks.\n\nStat Modifiers:\n• Cooking Speed: +20%\n• Plant Work Speed: +20%\n• Plant Harvest Yield: +4%\n• Tame Animal Chance: +4%\n• Train Animal Chance: +4%\n• Butchery Flesh Speed: +25%\n• Hunting Stealth: +10%\n\nSkill Aptitudes:\n• Cooking: +4\n• Plants: +4\n• Animals: +4</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Laborer_Intermediate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -168,7 +168,7 @@
   <ThingDef ParentName="ConstructAugmentItemBase">
     <defName>Construct_AdvancedLaborerPackageItem</defName>
     <label>advanced laborer package</label>
-    <description>An advanced neural bridge tailored for construct laborer tasks.</description>
+    <description>An advanced neural bridge tailored for construct laborer tasks.\n\nStat Modifiers:\n• Cooking Speed: +30%\n• Plant Work Speed: +30%\n• Plant Harvest Yield: +6%\n• Tame Animal Chance: +6%\n• Train Animal Chance: +6%\n• Butchery Flesh Speed: +35%\n• Animal Gather Yield: +10%\n\nSkill Aptitudes:\n• Cooking: +6\n• Plants: +6\n• Animals: +6</description>
     <graphicData>
       <texPath>Things/Item/Augments/Augment_Laborer_Advanced</texPath>
       <graphicClass>Graphic_Single</graphicClass>

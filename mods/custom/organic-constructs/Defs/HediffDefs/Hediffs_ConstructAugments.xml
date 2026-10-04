@@ -14,7 +14,7 @@
     <defName>Construct_BasicCombatPackage</defName>
     <spawnThingOnRemoved>Construct_BasicCombatPackageItem</spawnThingOnRemoved>
     <label>basic combat package</label>
-    <description>A basic biological neural bridge tailored for combat. Enhances targeting calculations, reflex routines, and boosts Shooting and Melee skills by +4.</description>
+    <description>A basic biological neural bridge tailored for combat.\n\nStat Modifiers:\n• Shooting Accuracy: +4.0\n• Melee Hit Chance: +4.0\n• Melee Dodge Chance: +4.0\n\nSkill Aptitudes:\n• Shooting: +4\n• Melee: +4</description>
     <stages>
       <li>
         <statOffsets>
@@ -30,7 +30,7 @@
     <defName>Construct_IntermediateCombatPackage</defName>
     <spawnThingOnRemoved>Construct_IntermediateCombatPackageItem</spawnThingOnRemoved>
     <label>intermediate combat package</label>
-    <description>An intermediate biological neural bridge tailored for combat. Enhances targeting calculations, reflex routines, quickens aiming, and boosts Shooting and Melee skills by +6.</description>
+    <description>An intermediate biological neural bridge tailored for combat.\n\nStat Modifiers:\n• Shooting Accuracy: +6.0\n• Melee Hit Chance: +6.0\n• Melee Dodge Chance: +6.0\n• Aiming Time: -5%\n\nSkill Aptitudes:\n• Shooting: +6\n• Melee: +6</description>
     <stages>
       <li>
         <statOffsets>
@@ -47,7 +47,7 @@
     <defName>Construct_AdvancedCombatPackage</defName>
     <spawnThingOnRemoved>Construct_AdvancedCombatPackageItem</spawnThingOnRemoved>
     <label>advanced combat package</label>
-    <description>An advanced biological neural bridge tailored for combat. Enhances targeting calculations, reflex routines, quickens aiming, increases move speed, and boosts Shooting and Melee skills by +8.</description>
+    <description>An advanced biological neural bridge tailored for combat.\n\nStat Modifiers:\n• Shooting Accuracy: +8.0\n• Melee Hit Chance: +8.0\n• Melee Dodge Chance: +8.0\n• Aiming Time: -10%\n• Move Speed: +0.20 c/s\n\nSkill Aptitudes:\n• Shooting: +8\n• Melee: +8</description>
     <stages>
       <li>
         <statOffsets>
@@ -61,12 +61,12 @@
     </stages>
   </HediffDef>
 
-  <!-- Biomedical -->
+  <!-- Biotech -->
   <HediffDef ParentName="ConstructAugmentBase">
     <defName>Construct_BasicMedicalPackage</defName>
     <spawnThingOnRemoved>Construct_BasicMedicalPackageItem</spawnThingOnRemoved>
-    <label>basic biomedical package</label>
-    <description>A basic biological neural bridge loaded with bio-synthesis routines and medical protocols. Boosts Medicine and Crafting skills by +3 alongside tend quality, surgery success, synthesis speeds, and general labor.</description>
+    <label>basic biotech package</label>
+    <description>A basic biological neural bridge loaded with bio-synthesis routines, medical protocols, and scientific research algorithms.\n\nStat Modifiers:\n• Medical Tend Quality: +5%\n• Medical Surgery Success Chance: +3%\n• Medical Tend Speed: +10%\n• General Labor Speed: +5%\n• Drug Synthesis Speed: +10%\n• Research Speed: +10%\n\nSkill Aptitudes:\n• Medicine: +3\n• Crafting: +3\n• Intellectual: +3</description>
     <stages>
       <li>
         <statOffsets>
@@ -75,6 +75,7 @@
           <MedicalTendSpeed>0.10</MedicalTendSpeed>
           <GeneralLaborSpeed>0.05</GeneralLaborSpeed>
           <DrugSynthesisSpeed>0.10</DrugSynthesisSpeed>
+          <ResearchSpeed>0.10</ResearchSpeed>
         </statOffsets>
       </li>
     </stages>
@@ -83,8 +84,8 @@
   <HediffDef ParentName="ConstructAugmentBase">
     <defName>Construct_IntermediateMedicalPackage</defName>
     <spawnThingOnRemoved>Construct_IntermediateMedicalPackageItem</spawnThingOnRemoved>
-    <label>intermediate biomedical package</label>
-    <description>An intermediate biological neural bridge loaded with bio-synthesis routines and medical protocols. Boosts Medicine and Crafting skills by +5 alongside tend quality, surgery success, operation speed, and synthesis speeds.</description>
+    <label>intermediate biotech package</label>
+    <description>An intermediate biological neural bridge loaded with bio-synthesis routines, medical protocols, and scientific research algorithms.\n\nStat Modifiers:\n• Medical Tend Quality: +10%\n• Medical Surgery Success Chance: +5%\n• Medical Tend Speed: +20%\n• Medical Operation Speed: +10%\n• General Labor Speed: +10%\n• Drug Synthesis Speed: +20%\n• Research Speed: +20%\n\nSkill Aptitudes:\n• Medicine: +5\n• Crafting: +5\n• Intellectual: +5</description>
     <stages>
       <li>
         <statOffsets>
@@ -94,6 +95,7 @@
           <MedicalOperationSpeed>0.10</MedicalOperationSpeed>
           <GeneralLaborSpeed>0.10</GeneralLaborSpeed>
           <DrugSynthesisSpeed>0.20</DrugSynthesisSpeed>
+          <ResearchSpeed>0.20</ResearchSpeed>
         </statOffsets>
       </li>
     </stages>
@@ -102,8 +104,8 @@
   <HediffDef ParentName="ConstructAugmentBase">
     <defName>Construct_AdvancedMedicalPackage</defName>
     <spawnThingOnRemoved>Construct_AdvancedMedicalPackageItem</spawnThingOnRemoved>
-    <label>advanced biomedical package</label>
-    <description>An advanced biological neural bridge loaded with bio-synthesis routines and medical protocols. Boosts Medicine and Crafting skills by +7 alongside elite tend quality, surgery success, rapid operations, and swift synthesis speeds.</description>
+    <label>advanced biotech package</label>
+    <description>An advanced biological neural bridge loaded with bio-synthesis routines, medical protocols, and scientific research algorithms.\n\nStat Modifiers:\n• Medical Tend Quality: +15%\n• Medical Surgery Success Chance: +7%\n• Medical Tend Speed: +30%\n• Medical Operation Speed: +20%\n• General Labor Speed: +15%\n• Drug Synthesis Speed: +30%\n• Research Speed: +30%\n\nSkill Aptitudes:\n• Medicine: +7\n• Crafting: +7\n• Intellectual: +7</description>
     <stages>
       <li>
         <statOffsets>
@@ -113,6 +115,7 @@
           <MedicalOperationSpeed>0.20</MedicalOperationSpeed>
           <GeneralLaborSpeed>0.15</GeneralLaborSpeed>
           <DrugSynthesisSpeed>0.30</DrugSynthesisSpeed>
+          <ResearchSpeed>0.30</ResearchSpeed>
         </statOffsets>
       </li>
     </stages>
@@ -123,7 +126,7 @@
     <defName>Construct_BasicIndustrialPackage</defName>
     <spawnThingOnRemoved>Construct_BasicIndustrialPackageItem</spawnThingOnRemoved>
     <label>basic industrial package</label>
-    <description>A basic neural bridge tailored for industrial work. Boosts Construction, Mining, and Crafting skills by +2 alongside construction, mining, and general labor speeds.</description>
+    <description>A basic neural bridge tailored for industrial work.\n\nStat Modifiers:\n• Construction Speed: +15%\n• Construct Success Chance: +3%\n• Mining Speed: +15%\n• Mining Yield: +3%\n• General Labor Speed: +10%\n\nSkill Aptitudes:\n• Construction: +2\n• Mining: +2\n• Crafting: +2</description>
     <stages>
       <li>
         <statOffsets>
@@ -141,7 +144,7 @@
     <defName>Construct_IntermediateIndustrialPackage</defName>
     <spawnThingOnRemoved>Construct_IntermediateIndustrialPackageItem</spawnThingOnRemoved>
     <label>intermediate industrial package</label>
-    <description>An intermediate neural bridge tailored for industrial work. Boosts Construction, Mining, and Crafting skills by +4 alongside construction, mining, and general labor speeds.</description>
+    <description>An intermediate neural bridge tailored for industrial work.\n\nStat Modifiers:\n• Construction Speed: +25%\n• Construct Success Chance: +5%\n• Mining Speed: +25%\n• Mining Yield: +5%\n• General Labor Speed: +15%\n\nSkill Aptitudes:\n• Construction: +4\n• Mining: +4\n• Crafting: +4</description>
     <stages>
       <li>
         <statOffsets>
@@ -159,7 +162,7 @@
     <defName>Construct_AdvancedIndustrialPackage</defName>
     <spawnThingOnRemoved>Construct_AdvancedIndustrialPackageItem</spawnThingOnRemoved>
     <label>advanced industrial package</label>
-    <description>An advanced neural bridge tailored for industrial work. Boosts Construction, Mining, and Crafting skills by +6 alongside construction, mining, deep drilling, and general labor speeds.</description>
+    <description>An advanced neural bridge tailored for industrial work.\n\nStat Modifiers:\n• Construction Speed: +35%\n• Construct Success Chance: +7%\n• Mining Speed: +35%\n• Mining Yield: +7%\n• General Labor Speed: +25%\n• Deep Drilling Speed: +20%\n\nSkill Aptitudes:\n• Construction: +6\n• Mining: +6\n• Crafting: +6</description>
     <stages>
       <li>
         <statOffsets>
@@ -179,7 +182,7 @@
     <defName>Construct_BasicLaborerPackage</defName>
     <spawnThingOnRemoved>Construct_BasicLaborerPackageItem</spawnThingOnRemoved>
     <label>basic laborer package</label>
-    <description>A basic neural bridge tailored for cooking, plants, and animals. Boosts Cooking, Plants, and Animals skills by +2 alongside work speeds and butchery.</description>
+    <description>A basic neural bridge tailored for cooking, plants, and animals.\n\nStat Modifiers:\n• Cooking Speed: +10%\n• Plant Work Speed: +10%\n• Plant Harvest Yield: +2%\n• Tame Animal Chance: +2%\n• Train Animal Chance: +2%\n• Butchery Flesh Speed: +15%\n\nSkill Aptitudes:\n• Cooking: +2\n• Plants: +2\n• Animals: +2</description>
     <stages>
       <li>
         <statOffsets>
@@ -198,7 +201,7 @@
     <defName>Construct_IntermediateLaborerPackage</defName>
     <spawnThingOnRemoved>Construct_IntermediateLaborerPackageItem</spawnThingOnRemoved>
     <label>intermediate laborer package</label>
-    <description>An intermediate neural bridge tailored for cooking, plants, and animals. Boosts Cooking, Plants, and Animals skills by +4 alongside work speeds, butchery, and hunting stealth.</description>
+    <description>An intermediate neural bridge tailored for cooking, plants, and animals.\n\nStat Modifiers:\n• Cooking Speed: +20%\n• Plant Work Speed: +20%\n• Plant Harvest Yield: +4%\n• Tame Animal Chance: +4%\n• Train Animal Chance: +4%\n• Butchery Flesh Speed: +25%\n• Hunting Stealth: +10%\n\nSkill Aptitudes:\n• Cooking: +4\n• Plants: +4\n• Animals: +4</description>
     <stages>
       <li>
         <statOffsets>
@@ -218,7 +221,7 @@
     <defName>Construct_AdvancedLaborerPackage</defName>
     <spawnThingOnRemoved>Construct_AdvancedLaborerPackageItem</spawnThingOnRemoved>
     <label>advanced laborer package</label>
-    <description>An advanced neural bridge tailored for cooking, plants, and animals. Boosts Cooking, Plants, and Animals skills by +6 alongside work speeds, butchery, and animal gathering yields.</description>
+    <description>An advanced neural bridge tailored for cooking, plants, and animals.\n\nStat Modifiers:\n• Cooking Speed: +30%\n• Plant Work Speed: +30%\n• Plant Harvest Yield: +6%\n• Tame Animal Chance: +6%\n• Train Animal Chance: +6%\n• Butchery Flesh Speed: +35%\n• Animal Gather Yield: +10%\n\nSkill Aptitudes:\n• Cooking: +6\n• Plants: +6\n• Animals: +6</description>
     <stages>
       <li>
         <statOffsets>
