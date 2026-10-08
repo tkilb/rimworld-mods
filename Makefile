@@ -6,8 +6,7 @@ SHELL := /usr/bin/env bash
         tidy tidy-dry-run \
         build-load-order build-order-mods order-mods order-mods-dry-run \
         sync-config sync-config-dry-run \
-        sync-deck sync-deck-dry-run sync-deck-check sync-deck-link \
-        sync-deck-config sync-deck-config-dry-run \
+        sync-deck sync-deck-dry-run sync-deck-check \
         scaffold-mod scaffold-mod-dry-run build-mod build-mod-dry-run
 
 ##@ General
@@ -79,23 +78,14 @@ sync-config-dry-run: ## Preview ModsConfig.xml generation without modifying file
 	@bash ./scripts/order-mods.sh --write-config --dry-run
 
 ##@ Remote Synchronization
-sync-deck: ## Sync mods and lockfile to Steam Deck via SSH/rsync
+sync-deck: ## Sync mods, deploy symlinks, and update ModsConfig.xml on Steam Deck
 	+@bash ./scripts/sync-deck.sh $(MAKE_DRY_RUN)
 
-sync-deck-dry-run: ## Preview rsync transfer to Steam Deck
+sync-deck-dry-run: ## Preview sync, symlink, and ModsConfig.xml deployment on Steam Deck
 	@bash ./scripts/sync-deck.sh --dry-run
 
 sync-deck-check: ## Test SSH connectivity to Steam Deck
 	@bash ./scripts/sync-deck.sh --check
-
-sync-deck-link: ## Sync to Steam Deck and deploy symlinks remotely
-	+@bash ./scripts/sync-deck.sh --link $(MAKE_DRY_RUN)
-
-sync-deck-config: ## Sync to Steam Deck and deploy ModsConfig.xml remotely
-	+@bash ./scripts/sync-deck.sh --config $(MAKE_DRY_RUN)
-
-sync-deck-config-dry-run: ## Preview remote ModsConfig.xml deployment on Steam Deck
-	@bash ./scripts/sync-deck.sh --config --dry-run
 
 ##@ Private Mod Development
 scaffold-mod: ## Scaffold a private mod (Usage: make scaffold-mod MOD=<name> [TYPE=xml|csharp])

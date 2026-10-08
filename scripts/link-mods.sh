@@ -11,7 +11,7 @@ SKIP_CONFIG=false
 TARGET_MOD=""
 
 # Official Core / DLC directory names that must NEVER be overwritten or unlinked
-PROTECTED_DIRS=("Core" "Royalty" "Ideology" "Biotech" "Anomaly")
+PROTECTED_DIRS=("Core" "Royalty" "Ideology" "Biotech" "Anomaly" "Odyssey")
 
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do

@@ -32,6 +32,23 @@ func TestTopologicalSorter(t *testing.T) {
 			wantErr: false,
 		},
 		{
+			name: "All canonical DLCs including Odyssey sorted correctly",
+			nodes: []*ModNode{
+				BuildModNode("cloning", ModEntry{PackageID: "zal.cloning", Name: "Cloning"}, nil, "", false),
+			},
+			availableDLCs: []string{"ludeon.rimworld.odyssey", "ludeon.rimworld.biotech", "ludeon.rimworld.royalty", "ludeon.rimworld.anomaly", "ludeon.rimworld.ideology"},
+			wantOrder: []string{
+				"ludeon.rimworld",
+				"ludeon.rimworld.royalty",
+				"ludeon.rimworld.ideology",
+				"ludeon.rimworld.biotech",
+				"ludeon.rimworld.anomaly",
+				"ludeon.rimworld.odyssey",
+				"zal.cloning",
+			},
+			wantErr: false,
+		},
+		{
 			name: "Standard dependencies with LoadAfter and LoadBefore",
 			nodes: []*ModNode{
 				BuildModNode("modA", ModEntry{PackageID: "author.modA", Name: "Mod A"}, &ModMetaData{

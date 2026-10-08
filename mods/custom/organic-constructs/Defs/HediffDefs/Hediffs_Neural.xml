@@ -30,7 +30,7 @@
   <HediffDef>
     <defName>Construct_InStasis</defName>
     <label>hibernation stasis</label>
-    <description>This construct is in deep metabolic hibernation, purging synthetic cellular toxicity and defragmenting neural pathways. Physical and conscious functions are suspended in a coma-like sleep.</description>
+    <description>This construct is in deep metabolic hibernation, purging synthetic cellular toxicity and defragmenting neural pathways. Physical and conscious functions are suspended in a deep restorative sleep.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <defaultLabelColor>(0.6, 0.35, 0.85)</defaultLabelColor>
     <isBad>false</isBad>

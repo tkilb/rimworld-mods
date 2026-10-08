@@ -107,7 +107,7 @@ make unlink MOD=harmony
 bash ./scripts/link-mods.sh --unlink harmony
 ```
 
-> **Safety Guarantee:** The linker guards official DLC/core directories (`Core`, `Royalty`, `Ideology`, `Biotech`, `Anomaly`) and will never overwrite pre-existing regular directories in your `Mods` folder.
+> **Safety Guarantee:** The linker guards official DLC/core directories (`Core`, `Royalty`, `Ideology`, `Biotech`, `Anomaly`, `Odyssey`) and will never overwrite pre-existing regular directories in your `Mods` folder.
 
 ---
 
@@ -155,7 +155,7 @@ make rollback MOD=hugslib VERSION=v11.0.0
 The monorepo includes an automated topological load order resolver and `ModsConfig.xml` generator inspired by RimSort and RimPy. It resolves dependencies and ordering constraints from mod `About.xml` metadata, manifest priority/after/before rules, and strict canonical tiers:
 1. **Harmony** (`brrainz.harmony`)
 2. **Core** (`ludeon.rimworld`)
-3. **Official DLCs** (`royalty`, `ideology`, `biotech`, `anomaly`)
+3. **Official DLCs** (`royalty`, `ideology`, `biotech`, `anomaly`, `odyssey`)
 4. **Standard Mods** (topologically sorted via Kahn's DAG algorithm)
 5. **Trailing Mods** (e.g. `RocketMan`)
 

@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 DRY_RUN=false
-TRIGGER_REMOTE_LINK=false
+TRIGGER_REMOTE_LINK=true
 TRIGGER_REMOTE_CONFIG=false
 CHECK_CONN_ONLY=false
 
@@ -20,8 +20,13 @@ while [[ $# -gt 0 ]]; do
       TRIGGER_REMOTE_LINK=true
       shift
       ;;
+    --no-link|--skip-link|--files-only)
+      TRIGGER_REMOTE_LINK=false
+      shift
+      ;;
     --config|--remote-config)
       TRIGGER_REMOTE_CONFIG=true
+      TRIGGER_REMOTE_LINK=false
       shift
       ;;
     --check)
@@ -29,12 +34,12 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --help|-h)
-      echo "Usage: $0 [--dry-run] [--link] [--config] [--check]"
+      echo "Usage: $0 [--dry-run] [--no-link] [--config] [--check]"
       echo ""
       echo "Options:"
-      echo "  --dry-run    Preview rsync operations without transferring files"
-      echo "  --link       Run 'make link' on Steam Deck via SSH after sync"
-      echo "  --config     Run 'make sync-config' on Steam Deck via SSH after sync"
+      echo "  --dry-run    Preview rsync and remote link operations without transferring files"
+      echo "  --no-link    Sync files only without updating remote symlinks or ModsConfig.xml"
+      echo "  --config     Run 'order-mods.sh --write-config' only on Steam Deck without re-linking"
       echo "  --check      Test SSH connection to Steam Deck and exit"
       echo "  --help, -h   Show this help message"
       echo ""
@@ -127,15 +132,15 @@ else
   log_succ "Sync complete."
 fi
 
-# Optional: trigger remote link (use bash directly since SteamOS lacks GNU make by default)
+# Trigger remote link and config generation (unless --no-link was passed)
 if $TRIGGER_REMOTE_LINK; then
   if $DRY_RUN; then
-    log_info "[DRY-RUN] Would run 'link-mods.sh --link --dry-run' on $DECK_HOST in $DECK_REMOTE_DIR"
+    log_info "[DRY-RUN] Would deploy mod symlinks and update ModsConfig.xml on $DECK_HOST"
     ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && bash ./scripts/link-mods.sh --link --dry-run"
   else
-    log_info "Deploying mod symlinks on $DECK_HOST..."
+    log_info "Deploying mod symlinks and updating ModsConfig.xml on $DECK_HOST..."
     ssh "$DECK_HOST" "cd $DECK_REMOTE_DIR && bash ./scripts/link-mods.sh --link"
-    log_succ "Remote link complete."
+    log_succ "Remote link and ModsConfig.xml update complete."
   fi
 fi
 

@@ -130,7 +130,7 @@ EOF
 fi
 
 # 3. Prune broken or orphaned symlinks in RimWorld Mods directory
-PROTECTED_DIRS=("Core" "Royalty" "Ideology" "Biotech" "Anomaly")
+PROTECTED_DIRS=("Core" "Royalty" "Ideology" "Biotech" "Anomaly" "Odyssey")
 is_protected() {
   local target_name="$1"
   for prot in "${PROTECTED_DIRS[@]}"; do

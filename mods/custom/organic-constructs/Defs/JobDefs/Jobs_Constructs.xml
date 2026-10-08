@@ -18,7 +18,7 @@
     <driverClass>OrganicConstructs.JobDriver_ConstructStasis</driverClass>
     <reportString>entering stasis.</reportString>
     <casualInterruptible>false</casualInterruptible>
-    <playerInterruptible>false</playerInterruptible>
+    <playerInterruptible>true</playerInterruptible>
     <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
   </JobDef>
 

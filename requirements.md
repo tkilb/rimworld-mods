@@ -171,7 +171,7 @@ To maintain high quality and reliability across Linux environments:
     - `scripts/order-mods.sh` implementing:
       - Extraction of `<packageId>`, `<loadAfter>`, `<loadBefore>`, `<forceLoadAfter>`, `<forceLoadBefore>`, and `<modDependencies>` from `About/About.xml` across all active mods (`mods/vendor` and `mods/custom`).
       - Support for user-defined ordering overrides and priority pinning in `manifests/mods.yaml` (e.g. `order_after: [...]`, `order_before: [...]`, or priority weights).
-      - Strict anchor tier enforcement: Harmony (`brrainz.harmony`) -> Core (`ludeon.rimworld`) -> Official DLCs (`royalty`, `ideology`, `biotech`, `anomaly`) -> standard mods (topologically sorted via Kahn's / Tarjan's DAG algorithm with cycle detection) -> late/trailing mods.
+      - Strict anchor tier enforcement: Harmony (`brrainz.harmony`) -> Core (`ludeon.rimworld`) -> Official DLCs (`royalty`, `ideology`, `biotech`, `anomaly`, `odyssey`) -> standard mods (topologically sorted via Kahn's / Tarjan's DAG algorithm with cycle detection) -> late/trailing mods.
       - CLI flags supporting `--dry-run` to preview the computed load order and report any circular dependencies or missing requirements.
       - Makefile integration: `order-mods` and companion `order-mods-dry-run`.
   - **QA Step:** Run `make order-mods-dry-run` and verify that calculated order respects Harmony first, Core, DLCs, and all `About.xml` constraints without graph cycles.

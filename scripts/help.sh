@@ -68,11 +68,8 @@ TARGET REFERENCE
 
 [ Remote Synchronization (Steam Deck) ]
   make sync-deck-check         Test SSH connectivity to Steam Deck.
-  make sync-deck               Sync repository mods and lockfile to Steam Deck.
-  make sync-deck-dry-run       Preview rsync file transfer to Steam Deck.
-  make sync-deck-link          Sync to Deck and deploy symlinks on remote machine.
-  make sync-deck-config        Sync to Deck and deploy ModsConfig.xml on remote.
-  make sync-deck-config-dry-run Preview remote ModsConfig.xml generation.
+  make sync-deck               Sync mods, deploy symlinks, and update ModsConfig.xml on Deck.
+  make sync-deck-dry-run       Preview sync and deployment actions on Steam Deck.
 
 [ Private Mod Development ]
   make scaffold-mod MOD=<name> [TYPE=xml|csharp]
@@ -98,7 +95,7 @@ COMMON WORKFLOWS
 3. Syncing to Steam Deck:
    - Check connection: `make sync-deck-check`
    - Dry run preview: `make sync-deck-dry-run`
-   - Deploy: `make sync-deck-link` and `make sync-deck-config`
+   - Deploy: `make sync-deck`
 
 ================================================================================
 EOF

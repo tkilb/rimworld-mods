@@ -2,14 +2,67 @@ package main
 
 import (
 	"os"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
 
 // Manifest represents the structure of manifests/mods.yaml.
 type Manifest struct {
-	Version int                 `yaml:"version"`
-	Mods    map[string]ModEntry `yaml:"mods"`
+	Version int                   `yaml:"version"`
+	DLCs    map[string]DLCSetting `yaml:"dlcs"`
+	Mods    map[string]ModEntry   `yaml:"mods"`
+}
+
+// DLCSetting represents configuration for an official expansion.
+type DLCSetting struct {
+	Enabled bool
+}
+
+// UnmarshalYAML supports both scalar booleans (e.g. `ideology: false`)
+// and mapping objects (e.g. `ideology: { enabled: false }`).
+func (d *DLCSetting) UnmarshalYAML(value *yaml.Node) error {
+	if value.Kind == yaml.ScalarNode {
+		var b bool
+		if err := value.Decode(&b); err != nil {
+			return err
+		}
+		d.Enabled = b
+		return nil
+	}
+	if value.Kind == yaml.MappingNode {
+		var m struct {
+			Enabled *bool `yaml:"enabled"`
+		}
+		if err := value.Decode(&m); err != nil {
+			return err
+		}
+		if m.Enabled != nil {
+			d.Enabled = *m.Enabled
+		} else {
+			d.Enabled = true
+		}
+		return nil
+	}
+	return nil
+}
+
+// IsDLCEnabled checks if a DLC (by package ID or short name) is enabled in the manifest.
+// If the DLC is not specified in the manifest, it defaults to true.
+func (m *Manifest) IsDLCEnabled(dlc string) bool {
+	if m.DLCs == nil {
+		return true
+	}
+	norm := strings.ToLower(dlc)
+	short := strings.TrimPrefix(norm, "ludeon.rimworld.")
+
+	if setting, ok := m.DLCs[short]; ok {
+		return setting.Enabled
+	}
+	if setting, ok := m.DLCs[norm]; ok {
+		return setting.Enabled
+	}
+	return true
 }
 
 // ModEntry represents an individual mod declared in mods.yaml.

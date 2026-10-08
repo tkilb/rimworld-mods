@@ -23,6 +23,7 @@ const (
 	PkgIdeology = "ludeon.rimworld.ideology"
 	PkgBiotech  = "ludeon.rimworld.biotech"
 	PkgAnomaly  = "ludeon.rimworld.anomaly"
+	PkgOdyssey  = "ludeon.rimworld.odyssey"
 )
 
 // Canonical DLC ordering.
@@ -31,6 +32,7 @@ var CanonicalDLCs = []string{
 	PkgIdeology,
 	PkgBiotech,
 	PkgAnomaly,
+	PkgOdyssey,
 }
 
 // Well-known late/trailing mods.
@@ -116,7 +118,7 @@ func BuildModNode(id string, entry ModEntry, meta *ModMetaData, dir string, isCu
 		node.Tier = TierHarmony
 	case PkgCore:
 		node.Tier = TierCore
-	case PkgRoyalty, PkgIdeology, PkgBiotech, PkgAnomaly:
+	case PkgRoyalty, PkgIdeology, PkgBiotech, PkgAnomaly, PkgOdyssey:
 		node.Tier = TierDLC
 	default:
 		if node.Trailing || KnownTrailingMods[normPkg] {

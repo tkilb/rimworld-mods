@@ -93,28 +93,18 @@ All sync commands run from your **desktop**.
 make sync-deck-check
 ```
 
-### Preview File Transfer (Dry-Run)
+### Preview Sync (Dry-Run)
 ```bash
 make sync-deck-dry-run
 ```
 
-### Sync Repository to Steam Deck
-Transfers `manifests/`, `mods/vendor/`, `mods/custom/`, `scripts/`, `Makefile`, and docs. Excludes `config/local.env`, `.git/`, and temp files.
+### Sync & Deploy to Steam Deck
+Transfers all mods, manifests, and scripts via `rsync`, automatically creates/updates symlinks in RimWorld's `Mods/` directory, and resolves/writes `ModsConfig.xml` on the Steam Deck in one command:
 ```bash
 make sync-deck
 ```
 
-### Sync + Automatically Deploy Symlinks & Load Order
-Sync files, then run `make link` (which automatically updates symlinks and generates `ModsConfig.xml`) on the Deck in one step:
-```bash
-make sync-deck-link
-```
-
-### Sync + Deploy `ModsConfig.xml` Only
-Sync files and regenerate the remote `ModsConfig.xml` without re-linking mods:
-```bash
-make sync-deck-config
-```
+> **Note:** If you ever want to transfer files without touching symlinks or config on the Deck, run `bash ./scripts/sync-deck.sh --no-link`.
 
 ---
 

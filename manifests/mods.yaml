@@ -3,6 +3,15 @@
 # Synchronized to reflect active mods from Steam Deck (ModsConfig-on-deck.xml).
 version: 1
 
+# Official Expansion (DLC) Toggles
+# Set to false to omit from ModsConfig.xml and disable in RimWorld.
+dlcs:
+  royalty: false
+  ideology: false
+  biotech: true
+  anomaly: false
+  odyssey: false
+
 mods:
   harmony:
     name: "Harmony"

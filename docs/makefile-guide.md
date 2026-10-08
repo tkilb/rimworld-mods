@@ -59,7 +59,7 @@ bash ./scripts/help.sh -h
 ### Symlink Deployment & Game Configuration
 - `make link [MOD=<name>]`: Creates idempotent symlinks in RimWorld's `Mods/` directory pointing to `mods/vendor/<name>` and `mods/custom/<name>`. Also regenerates `ModsConfig.xml`.
 - `make link-dry-run`: Previews symlink operations.
-- `make unlink [MOD=<name>]`: Safely removes symlinks targeting monorepo mods from RimWorld's `Mods/` directory without touching official core directories (`Core`, `Royalty`, `Ideology`, `Biotech`, `Anomaly`).
+- `make unlink [MOD=<name>]`: Safely removes symlinks targeting monorepo mods from RimWorld's `Mods/` directory without touching official core directories (`Core`, `Royalty`, `Ideology`, `Biotech`, `Anomaly`, `Odyssey`).
 - `make unlink-dry-run`: Previews symlink removals.
 - `make rollback MOD=<name> VERSION=<ver>`: Reverts a mod to an earlier cached or pinned version.
 - `make rollback-dry-run MOD=<name> VERSION=<ver>`: Previews rollback changes.

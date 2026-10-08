@@ -74,12 +74,11 @@ make rollback MOD=hugslib VERSION=v11.0.0
 ```
 
 ### 7. Sync to Steam Deck
-Transfer mods and lockfile to your Steam Deck and optionally deploy symlinks remotely:
+Transfer mods, deploy symlinks, and update `ModsConfig.xml` on your Steam Deck in one command:
 ```bash
 make sync-deck-check          # Test SSH connectivity
-make sync-deck-dry-run        # Preview rsync transfer
-make sync-deck                # Sync files to Deck
-make sync-deck-link           # Sync and immediately run 'make link' on the Deck
+make sync-deck-dry-run        # Preview sync, symlink, and config actions
+make sync-deck                # Sync files and deploy to Steam Deck
 ```
 
 ---

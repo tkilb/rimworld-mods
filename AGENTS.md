@@ -70,7 +70,7 @@ As defined in [`GEMINI.md`](file:///home/tylerkilburn/Git/rimworld-mods/GEMINI.m
 ### Operations Requiring Confirmation or User Hands-Off
 - **Never Commit Code:** Do not run `git commit` or suggest committing automatically; the user manages git commits manually.
 - **No Remote Network Mutations:** Do not run mutating remote operations (e.g., `git push`, external cloud API state mutations) without explicit user authorization.
-- **Steam Deck Sync Confirmation:** Modifying files on the remote Steam Deck (`make sync-deck`, `make sync-deck-link`, `make sync-deck-config`) mutates remote target state. Run dry-runs (`make sync-deck-dry-run`, `make sync-deck-config-dry-run`) first or confirm before running mutating syncs.
+- **Steam Deck Sync Confirmation:** Modifying files on the remote Steam Deck (`make sync-deck`) mutates remote target state. Run dry-runs (`make sync-deck-dry-run`) first or confirm before running mutating syncs.
 
 ---
 

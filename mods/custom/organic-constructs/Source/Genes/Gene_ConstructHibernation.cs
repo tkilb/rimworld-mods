@@ -318,21 +318,41 @@ namespace OrganicConstructs
                 }
                 else
                 {
-                    Command_Action enterStasis = new Command_Action
+                    if (pawn.CurJobDef == ConstructDefOf.Construct_EnterConstructStasis)
                     {
-                        defaultLabel = "Enter Stasis",
-                        defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 48 hours for a clean wake.",
-                        icon = def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false),
-                        action = delegate
+                        Command_Action cancelStasis = new Command_Action
                         {
-                            Building_Bed bed = RestUtility.FindBedFor(pawn);
-                            Job job = bed != null
-                                ? JobMaker.MakeJob(ConstructDefOf.Construct_EnterConstructStasis, bed)
-                                : JobMaker.MakeJob(ConstructDefOf.Construct_EnterConstructStasis, pawn.Position);
-                            pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                        }
-                    };
-                    yield return enterStasis;
+                            defaultLabel = "Cancel Stasis",
+                            defaultDesc = "Cancel heading to stasis and resume normal activities.",
+                            icon = ContentFinder<Texture2D>.Get("UI/Designators/Cancel", true),
+                            action = delegate
+                            {
+                                if (pawn.CurJobDef == ConstructDefOf.Construct_EnterConstructStasis && !inStasis)
+                                {
+                                    pawn.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
+                                }
+                            }
+                        };
+                        yield return cancelStasis;
+                    }
+                    else
+                    {
+                        Command_Action enterStasis = new Command_Action
+                        {
+                            defaultLabel = "Enter Stasis",
+                            defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 48 hours for a clean wake.",
+                            icon = def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false),
+                            action = delegate
+                            {
+                                Building_Bed bed = RestUtility.FindBedFor(pawn);
+                                Job job = bed != null
+                                    ? JobMaker.MakeJob(ConstructDefOf.Construct_EnterConstructStasis, bed)
+                                    : JobMaker.MakeJob(ConstructDefOf.Construct_EnterConstructStasis, pawn.Position);
+                                pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                            }
+                        };
+                        yield return enterStasis;
+                    }
                 }
             }
         }
@@ -385,7 +405,7 @@ namespace OrganicConstructs
                 yield return Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.OnCell);
             }
 
-            Toil layDown = Toils_LayDown.LayDown(TargetIndex.A, Bed != null, lookForOtherJobs: false, canSleep: true, gainRestAndHealth: true, PawnPosture.LayingOnGroundNormal, deathrest: true);
+            Toil layDown = Toils_LayDown.LayDown(TargetIndex.A, Bed != null, lookForOtherJobs: false, canSleep: true, gainRestAndHealth: true, PawnPosture.LayingOnGroundFaceUp, deathrest: true);
             layDown.AddPreInitAction(delegate
             {
                 job.forceSleep = true;
@@ -402,9 +422,6 @@ namespace OrganicConstructs
                     }
                 }
             });
-            // Must run after the base LayDown init (which sets the laying posture). The hediff caps
-            // consciousness, downing the pawn; Pawn_JobTracker.StopAll(ifLayingKeepLaying) would
-            // otherwise end this job because the pawn is not yet laying.
             layDown.initAction = (System.Action)System.Delegate.Combine(layDown.initAction, (System.Action)delegate
             {
                 if (pawn.Drafted)
@@ -415,6 +432,8 @@ namespace OrganicConstructs
                 {
                     pawn.health.AddHediff(ConstructDefOf.Construct_InStasis);
                 }
+                PortraitsCache.SetDirty(pawn);
+                GlobalTextureAtlasManager.TryMarkPawnFrameSetDirty(pawn);
             });
             layDown.AddPreTickAction(delegate
             {

@@ -128,7 +128,7 @@ func main() {
 		}
 	}
 
-	var availableDLCs []string
+	var candidateDLCs []string
 	resolvedRimWorldDir := *rimworldDir
 
 	if resolvedRimWorldDir == "" {
@@ -145,17 +145,55 @@ func main() {
 				dlcSubdir = strings.ToUpper(dlcSubdir[:1]) + dlcSubdir[1:]
 				dlcPath := filepath.Join(dataDir, dlcSubdir)
 				if fi, err := os.Stat(dlcPath); err == nil && fi.IsDir() {
-					availableDLCs = append(availableDLCs, dlcPkg)
+					candidateDLCs = append(candidateDLCs, dlcPkg)
 				}
 			}
 		}
 	}
 
-	if len(availableDLCs) == 0 {
-		availableDLCs = append(availableDLCs, CanonicalDLCs...)
+	if len(candidateDLCs) == 0 {
+		candidateDLCs = append(candidateDLCs, CanonicalDLCs...)
 	}
 
-	result, err := s.Sort(availableDLCs)
+	var activeDLCs []string
+	for _, dlcPkg := range candidateDLCs {
+		if mf.IsDLCEnabled(dlcPkg) {
+			activeDLCs = append(activeDLCs, dlcPkg)
+		}
+	}
+
+	// Also check any extra DLCs explicitly enabled in manifest (e.g. future or custom expansions)
+	for dlcName, setting := range mf.DLCs {
+		if !setting.Enabled {
+			continue
+		}
+		dlcPkg := strings.ToLower(dlcName)
+		if !strings.HasPrefix(dlcPkg, "ludeon.rimworld.") {
+			dlcPkg = "ludeon.rimworld." + dlcPkg
+		}
+		alreadyActive := false
+		for _, existing := range activeDLCs {
+			if strings.EqualFold(existing, dlcPkg) {
+				alreadyActive = true
+				break
+			}
+		}
+		if !alreadyActive {
+			activeDLCs = append(activeDLCs, dlcPkg)
+		}
+		alreadyCandidate := false
+		for _, existing := range candidateDLCs {
+			if strings.EqualFold(existing, dlcPkg) {
+				alreadyCandidate = true
+				break
+			}
+		}
+		if !alreadyCandidate {
+			candidateDLCs = append(candidateDLCs, dlcPkg)
+		}
+	}
+
+	result, err := s.Sort(activeDLCs)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s[ERROR]%s %v\n", colorRed, colorReset, err)
 		os.Exit(1)
@@ -232,7 +270,7 @@ func main() {
 		}
 
 		var knownExpansions []string
-		for _, dlc := range availableDLCs {
+		for _, dlc := range candidateDLCs {
 			knownExpansions = append(knownExpansions, strings.ToLower(dlc))
 		}
 

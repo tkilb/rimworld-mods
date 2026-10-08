@@ -96,6 +96,31 @@ for mod_id in all_mod_ids:
     enabled_colored = colorize("yes" if enabled else "no", 8, "" if enabled else "90")
     print(f"{mod_id:<20} {enabled_colored} {source:<15} {dl_colored} {version_info:<15} {link_colored}")
 
+# Official DLCs section
+manifest_dlcs = manifest_data.get('dlcs', {})
+canonical_dlcs = ["royalty", "ideology", "biotech", "anomaly", "odyssey"]
+all_dlc_keys = list(canonical_dlcs)
+for d in manifest_dlcs.keys():
+    clean_d = d.lower().replace("ludeon.rimworld.", "")
+    if clean_d not in all_dlc_keys:
+        all_dlc_keys.append(clean_d)
+
+print("\n\033[1mOfficial Expansions (DLCs):\033[0m")
+dlc_fmt = "{:<20} {:<8} {:<30}"
+print(dlc_fmt.format("EXPANSION", "ENABLED", "PACKAGE ID"))
+print("-" * 62)
+for d in all_dlc_keys:
+    val = manifest_dlcs.get(d, manifest_dlcs.get(f"ludeon.rimworld.{d}", True))
+    if isinstance(val, dict):
+        enabled = val.get('enabled', True)
+    elif isinstance(val, bool):
+        enabled = val
+    else:
+        enabled = True
+    enabled_colored = colorize("yes" if enabled else "no", 8, "32" if enabled else "90")
+    pkg_id = f"ludeon.rimworld.{d}"
+    print(f"{d.capitalize():<20} {enabled_colored} {pkg_id:<30}")
+
 # Custom mods authoring section
 custom_mods = []
 if os.path.isdir(custom_dir):
