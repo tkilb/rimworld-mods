@@ -241,15 +241,15 @@ namespace OrganicConstructs
                 float totalHours = (float)MinStasisTicks / 2500f;
                 if (stasisTicks >= MinStasisTicks)
                 {
-                    return $"Construct Hibernation Stasis\nStatus: Complete ({hours:F1}h elapsed)\nReady to wake safely. Stasis will continue until woken.";
+                    return $"Construct hibernation stasis\nStatus: Complete ({hours:F1}h elapsed)\nReady to wake safely. Stasis will continue until woken.";
                 }
-                return $"Construct Hibernation Stasis\nProgress: {hours:F1} / {totalHours:F0} hours\nPurging synthetic cellular toxicity and defragmenting neural pathways.";
+                return $"Construct hibernation stasis\nProgress: {hours:F1} / {totalHours:F0} hours\nPurging synthetic cellular toxicity and defragmenting neural pathways.";
             }
             else
             {
                 int remainingTicks = Mathf.Max(0, MaxOperatingTicks - operatingTicks);
                 float days = (float)remainingTicks / 60000f;
-                string tip = $"Construct Operating Margin\nRemaining: {days:F1} / 30.0 days\nMust enter stasis for 48 hours before reaching 0 to avoid emergency shutdown.";
+                string tip = $"Construct operating margin\nRemaining: {days:F1} / 30.0 days\nMust enter stasis for 48 hours before reaching 0 to avoid emergency shutdown.";
                 if (days <= 2.0f)
                 {
                     tip += "\n\nCRITICAL: Emergency shutdown imminent!";
@@ -262,7 +262,10 @@ namespace OrganicConstructs
         {
             if (pawn.Faction == Faction.OfPlayer)
             {
-                yield return new Gizmo_ConstructStasisStatus(this);
+                if (Find.Selector != null && Find.Selector.SelectedPawns.Count == 1)
+                {
+                    yield return new Gizmo_ConstructStasisStatus(this);
+                }
 
                 if (inStasis)
                 {
@@ -322,7 +325,7 @@ namespace OrganicConstructs
                     {
                         Command_Action cancelStasis = new Command_Action
                         {
-                            defaultLabel = "Cancel Stasis",
+                            defaultLabel = "Cancel stasis",
                             defaultDesc = "Cancel heading to stasis and resume normal activities.",
                             icon = ContentFinder<Texture2D>.Get("UI/Designators/Cancel", true),
                             action = delegate
@@ -334,24 +337,6 @@ namespace OrganicConstructs
                             }
                         };
                         yield return cancelStasis;
-                    }
-                    else
-                    {
-                        Command_Action enterStasis = new Command_Action
-                        {
-                            defaultLabel = "Enter Stasis",
-                            defaultDesc = "Direct this construct to enter hibernation stasis (requires a bed or ground). Must remain in stasis for at least 48 hours for a clean wake.",
-                            icon = def?.Icon ?? ContentFinder<Texture2D>.Get("UI/Icons/ColonistBar/Sleeping", false),
-                            action = delegate
-                            {
-                                Building_Bed bed = RestUtility.FindBedFor(pawn);
-                                Job job = bed != null
-                                    ? JobMaker.MakeJob(ConstructDefOf.Construct_EnterConstructStasis, bed)
-                                    : JobMaker.MakeJob(ConstructDefOf.Construct_EnterConstructStasis, pawn.Position);
-                                pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                            }
-                        };
-                        yield return enterStasis;
                     }
                 }
             }

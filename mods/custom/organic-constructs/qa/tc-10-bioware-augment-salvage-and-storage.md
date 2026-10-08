@@ -2,8 +2,8 @@
 
 - **Procedure:**
   1. Inspect storage settings on standard shelves and stockpiles:
-     - Verify `bioware augments` (`Construct_Augments`) appears directly under `Manufactured`.
-     - Confirm that bioware augment packages (Combat, Biotech, Industrial, Laborer) can be stored on shelves enabled for Manufactured items.
+     - Verify `organic constructs` (`Construct_Augments`) appears directly under `Manufactured`.
+     - Confirm that bioware augment packages and blueprint discs can be stored on shelves enabled for Manufactured items.
   2. Spawn or craft 1x Basic Bioware Augment (e.g. Basic Biotech Package).
   3. At a Construct Synthesizer, Fabrication Bench, or Machining Table, queue `salvage basic bioware augment`.
      - Assign a crafter to complete the bill.

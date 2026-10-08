@@ -48,7 +48,7 @@ namespace OrganicConstructs
                     float pct = Mathf.Clamp01((float)gene.stasisTicks / Gene_ConstructHibernation.MinStasisTicks);
 
                     Text.Anchor = TextAnchor.UpperLeft;
-                    Widgets.Label(titleRect, gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks ? "Stasis Complete" : "Stasis Hibernation");
+                    Widgets.Label(titleRect, gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks ? "Stasis complete" : "Stasis hibernation");
 
                     Widgets.FillableBar(barRect, pct, StasisBarTex, EmptyBarTex, doBorder: false);
 
@@ -64,7 +64,7 @@ namespace OrganicConstructs
                     Texture2D barTex = (days <= 2.0f) ? CriticalBarTex : FullBarTex;
 
                     Text.Anchor = TextAnchor.UpperLeft;
-                    Widgets.Label(titleRect, days <= 2.0f ? "STASIS CRITICAL" : "Operating Margin");
+                    Widgets.Label(titleRect, days <= 2.0f ? "Stasis critical" : "Operating margin");
 
                     Widgets.FillableBar(barRect, pct, barTex, EmptyBarTex, doBorder: false);
 

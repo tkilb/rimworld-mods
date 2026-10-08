@@ -125,7 +125,7 @@ namespace OrganicConstructs
 
             yield return new Command_Action
             {
-                defaultLabel = "Inspect Neural Imprint",
+                defaultLabel = "Inspect neural imprint",
                 defaultDesc = "View the skills, proficiencies, and passions encoded on this neural imprint disc.",
                 icon = parent?.Graphic?.MatSingle?.mainTexture as Texture2D ?? parent?.def?.uiIcon,
                 action = () =>
@@ -160,7 +160,7 @@ namespace OrganicConstructs
                 {
                     yield return new Command_Action
                     {
-                        defaultLabel = "DEV: Imprint Default Doctrine",
+                        defaultLabel = "DEV: Imprint default doctrine",
                         defaultDesc = "Encodes a sample combat doctrine onto this disc for testing.",
                         action = () =>
                         {
@@ -181,7 +181,7 @@ namespace OrganicConstructs
                 {
                     yield return new Command_Action
                     {
-                        defaultLabel = "DEV: Clear Imprint",
+                        defaultLabel = "DEV: Clear imprint",
                         defaultDesc = "Wipes the encoded doctrine and restores this disc to empty state.",
                         action = () =>
                         {

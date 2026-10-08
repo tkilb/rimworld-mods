@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       1. Reformat / Wipe Neural Imprint Disc to Blank State
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef>
+    <defName>Wipe_NeuralImprintDisc</defName>
+    <label>wipe neural imprint disc</label>
+    <description>Wipe an encoded neural imprint disc back to blank standby state so it can be reused to scan a new colonist's profile.</description>
+    <jobString>Wiping neural imprint disc.</jobString>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>400</workAmount>
+    <recipeUsers>
+      <li>TableMachining</li>
+      <li>FabricationBench</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>NeuralBlueprintDisk</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>NeuralBlueprintDisk</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <NeuralBlueprintDisk>1</NeuralBlueprintDisk>
+    </products>
+    <skillRequirements>
+      <Crafting>4</Crafting>
+    </skillRequirements>
+    <researchPrerequisite>Construct_NeuralImprinting</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       2. Smelt / Recycle Blueprint Discs for Materials
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef>
+    <defName>Smelt_ConstructBlueprintDisc</defName>
+    <label>smelt blueprint disc</label>
+    <description>Break down unwanted construct blueprint or neural imprint discs to recover valuable plasteel and steel.</description>
+    <jobString>Smelting blueprint disc.</jobString>
+    <workSpeedStat>SmeltingSpeed</workSpeedStat>
+    <effectWorking>Smelt</effectWorking>
+    <soundWorking>Recipe_Smelt</soundWorking>
+    <workAmount>600</workAmount>
+    <recipeUsers>
+      <li>TableMachining</li>
+      <li>ElectricSmelter</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>NeuralBlueprintDisk</li>
+            <li>GenomeBlueprintDisk</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>NeuralBlueprintDisk</li>
+        <li>GenomeBlueprintDisk</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Steel>15</Steel>
+      <Plasteel>5</Plasteel>
+    </products>
+    <researchPrerequisite>Construct_Foundations</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       3. Cremate / Incinerate Unwanted Blueprint Discs (Zero Products)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <RecipeDef>
+    <defName>Destroy_ConstructBlueprintDisc</defName>
+    <label>destroy blueprint disc</label>
+    <description>Incinerate or completely destroy unwanted construct blueprint or neural imprint discs.</description>
+    <jobString>Destroying blueprint disc.</jobString>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <requiredGiverWorkType>Hauling</requiredGiverWorkType>
+    <effectWorking>Cremate</effectWorking>
+    <soundWorking>Recipe_Cremate</soundWorking>
+    <workAmount>100</workAmount>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricCrematorium</li>
+      <li>ElectricSmelter</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>NeuralBlueprintDisk</li>
+            <li>GenomeBlueprintDisk</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>NeuralBlueprintDisk</li>
+        <li>GenomeBlueprintDisk</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+  </RecipeDef>
+
+</Defs>
