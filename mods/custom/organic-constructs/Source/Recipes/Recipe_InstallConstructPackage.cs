@@ -9,6 +9,10 @@ namespace OrganicConstructs
     {
         public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)
         {
+            if (thing is Pawn pawn && !ConstructUtility.IsConstruct(pawn))
+            {
+                return false;
+            }
             return base.AvailableOnNow(thing, part);
         }
 

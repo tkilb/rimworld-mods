@@ -3,6 +3,7 @@
 
   <ThingDef Name="ConstructAugmentItemBase" ParentName="ResourceBase" Abstract="True">
     <thingClass>ThingWithComps</thingClass>
+    <isTechHediff>true</isTechHediff>
     <graphicData>
       <texPath>Things/Item/Augments/AugmentPackage_Basic</texPath>
       <graphicClass>Graphic_Single</graphicClass>
