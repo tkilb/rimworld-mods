@@ -6,6 +6,7 @@ SHELL := /usr/bin/env bash
         tidy tidy-dry-run \
         build-load-order build-order-mods order-mods order-mods-dry-run \
         sync-config sync-config-dry-run \
+        import-deck import-deck-dry-run import-deck-mods import-deck-mods-dry-run \
         sync-deck sync-deck-dry-run sync-deck-check \
         scaffold-mod scaffold-mod-dry-run build-mod build-mod-dry-run
 
@@ -29,6 +30,7 @@ update-mods: ## Update 3rd-party mods and synchronize lockfile
 
 update-mods-dry-run: ## Preview 3rd-party mod updates without modifying files
 	@bash ./scripts/update-mods.sh --dry-run
+
 
 # Detect if make was invoked with -n / --dry-run
 MAKE_DRY_RUN := $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
@@ -78,6 +80,15 @@ sync-config-dry-run: ## Preview ModsConfig.xml generation without modifying file
 	@bash ./scripts/order-mods.sh --write-config --dry-run
 
 ##@ Remote Synchronization
+import-deck: ## Interactive TUI to cherry-pick Steam Workshop mods from Steam Deck
+	@bash ./scripts/import-deck.sh $(MAKE_DRY_RUN) $(if $(COPY),--copy-files,)
+
+import-deck-dry-run: ## Preview cherry-picking Steam Workshop mods without writing to mods.yaml
+	@bash ./scripts/import-deck.sh --dry-run
+
+import-deck-mods: import-deck ## Alias for import-deck
+import-deck-mods-dry-run: import-deck-dry-run ## Alias for import-deck-dry-run
+
 sync-deck: ## Sync mods, deploy symlinks, and update ModsConfig.xml on Steam Deck
 	+@bash ./scripts/sync-deck.sh $(MAKE_DRY_RUN)
 

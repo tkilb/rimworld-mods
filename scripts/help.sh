@@ -67,6 +67,8 @@ TARGET REFERENCE
   make tidy-dry-run            Preview what tidy would prune without deleting anything.
 
 [ Remote Synchronization (Steam Deck) ]
+  make import-deck             Cherry-pick Steam Workshop mods from Steam Deck via TUI.
+  make import-deck-dry-run     Preview cherry-picked mods without modifying mods.yaml.
   make sync-deck-check         Test SSH connectivity to Steam Deck.
   make sync-deck               Sync mods, deploy symlinks, and update ModsConfig.xml on Deck.
   make sync-deck-dry-run       Preview sync and deployment actions on Steam Deck.

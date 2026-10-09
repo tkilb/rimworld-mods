@@ -13,6 +13,53 @@ dlcs:
   odyssey: false
 
 mods:
+  vanillabionicsexpansion:
+    name: "[FSF] Vanilla Bionics Expansion"
+    source: steam_workshop
+    workshop_id: "1419675146"
+    package_id: "FrozenSnowFox.VanillaBionicsExpansion"
+    enabled: true
+    description: "Fills out the vanilla bionics to include numerous omitted body parts"
+
+  vanillavehiclesexpanded:
+    name: "Vanilla Vehicles Expanded"
+    source: steam_workshop
+    workshop_id: "3014906877"
+    package_id: "OskarPotocki.VanillaVehiclesExpanded"
+    enabled: true
+    description: "Vanilla Vehicles Expanded is a long awaited mod utilising Smash Phil’s Vehicles framework. The main purpose of the mod is to add realistic and engaging mechanics surrounding vehicles of all kinds into the game. Not just the cars, but boats and airplanes too, this mod comes packed full of content and"
+
+  simplesidearms:
+    name: "Simple sidearms"
+    source: steam_workshop
+    workshop_id: "927155256"
+    package_id: "PeteTimesSix.SimpleSidearms"
+    enabled: true
+    description: "With the invention of pockets comes the idea of bringing EVEN MORE WEAPONS. Because your snipers are getting really tired of getting shanked.  See forum thread for details. https://ludeon.com/forums/index.php?topic=32497.0"
+
+  dubspaintshop:
+    name: "Dub's Paint Shop"
+    source: steam_workshop
+    workshop_id: "1579516669"
+    package_id: "Dubwise.DubsPaintShop"
+    enabled: true
+    description: "Adds painting tools to change the colour of stuffed or colourable buildings, apparel, and terrain\n\nMultiplayer Ready"
+
+  vehicleframework:
+    name: "Vehicle Framework"
+    source: steam_workshop
+    workshop_id: "3014915404"
+    package_id: "SmashPhil.VehicleFramework"
+    enabled: true
+    description: "Framework which allows the creation of vehicles in RimWorld."
+
+  vanillafactionsexpandedcore:
+    name: "Vanilla Expanded Framework"
+    source: steam_workshop
+    workshop_id: "2023507013"
+    package_id: "OskarPotocki.VanillaFactionsExpanded.Core"
+    enabled: true
+    description: "Vanilla Expanded Framework incorporates a multitude of functionalities for different mods in order for us to boost performance by not duplicating code across several mods. Examples of shared functionality include custom base generation code with an amazing building export tool, customisable sieges, "
   harmony:
     name: "Harmony"
     source: steam_workshop
