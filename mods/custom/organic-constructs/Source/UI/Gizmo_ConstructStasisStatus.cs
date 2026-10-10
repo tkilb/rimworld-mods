@@ -43,17 +43,32 @@ namespace OrganicConstructs
                 if (gene.inStasis)
                 {
                     gene.UpdateStasisTicks();
+                    int targetTicks = gene.GetTargetStasisTicks();
                     float hours = (float)gene.stasisTicks / 2500f;
-                    float totalHours = (float)Gene_ConstructHibernation.MinStasisTicks / 2500f;
-                    float pct = Mathf.Clamp01((float)gene.stasisTicks / Gene_ConstructHibernation.MinStasisTicks);
+                    float totalHours = (float)targetTicks / 2500f;
+                    float pct = Mathf.Clamp01((float)gene.stasisTicks / targetTicks);
 
                     Text.Anchor = TextAnchor.UpperLeft;
-                    Widgets.Label(titleRect, gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks ? "Stasis complete" : "Stasis hibernation");
+                    string title;
+                    if (gene.stasisTicks >= targetTicks)
+                    {
+                        title = "Stasis complete";
+                    }
+                    else if (gene.stasisTicks < Gene_ConstructHibernation.MinLockoutTicks)
+                    {
+                        float lockHours = (float)(Gene_ConstructHibernation.MinLockoutTicks - gene.stasisTicks) / 2500f;
+                        title = $"Locked ({lockHours:F1}h)";
+                    }
+                    else
+                    {
+                        title = gene.IsInPoweredStasisPod() ? "Pod stasis" : "Bed stasis";
+                    }
+                    Widgets.Label(titleRect, title);
 
                     Widgets.FillableBar(barRect, pct, StasisBarTex, EmptyBarTex, doBorder: false);
 
                     Text.Anchor = TextAnchor.MiddleCenter;
-                    Widgets.Label(barRect, gene.stasisTicks >= Gene_ConstructHibernation.MinStasisTicks ? $"Ready ({hours:F1}h)" : $"{hours:F1} / {totalHours:F0}h");
+                    Widgets.Label(barRect, gene.stasisTicks >= targetTicks ? $"Ready ({hours:F1}h)" : $"{hours:F1} / {totalHours:F0}h");
                 }
                 else
                 {

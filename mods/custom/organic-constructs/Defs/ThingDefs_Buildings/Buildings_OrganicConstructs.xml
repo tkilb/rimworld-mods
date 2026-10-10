@@ -63,6 +63,63 @@
   </ThingDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
+       Construct Stasis Pod (1x1 Vertical Hibernation Alcove)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <ThingDef ParentName="BedBase">
+    <defName>ConstructStasisPod</defName>
+    <label>construct stasis pod</label>
+    <description>A compact 1x1 vertical hibernation alcove designed exclusively for biological constructs. When supplied with 150 W of power, cryo-neuro flushes defragment construct synaptic pathways at an accelerated rate, completing a full stasis cycle in 36 hours (down from 48 hours in a basic bed). In addition, its internal shock-dampening buffer mitigates the cognitive trauma of premature awakening.</description>
+    <thingClass>OrganicConstructs.Building_ConstructStasisPod</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/GrowthVat/GrowthVat</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.2, 1.2)</drawSize>
+      <shadowData>
+        <volume>(0.8, 0.4, 0.8)</volume>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Mass>20</Mass>
+      <Flammability>0.3</Flammability>
+      <BedRestEffectiveness>1.0</BedRestEffectiveness>
+      <Comfort>0.75</Comfort>
+      <ImmunityGainSpeedFactor>1.1</ImmunityGainSpeedFactor>
+    </statBases>
+    <size>(1, 1)</size>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <building>
+      <bed_showSleeperBody>false</bed_showSleeperBody>
+      <bed_healPerDay>4</bed_healPerDay>
+      <bed_defaultMedical>false</bed_defaultMedical>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <designationCategory>Biotech</designationCategory>
+    <uiOrder>2605</uiOrder>
+    <hasInteractionCell>false</hasInteractionCell>
+    <researchPrerequisites>
+      <li>Construct_FieldBioproduction</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
        Neural Scanner Pod
        ════════════════════════════════════════════════════════════════════════ -->
   <ThingDef ParentName="BuildingBase">

@@ -77,4 +77,49 @@ namespace OrganicConstructs
             return false;
         }
     }
+
+    /// <summary>
+    /// Constructs are 100% synthetic biological humans devoid of sentimentality and social disgust.
+    /// Suppresses all cannibalism, human meat consumption, and humanlike butchering mood debuffs.
+    /// </summary>
+    [HarmonyPatch(typeof(MemoryThoughtHandler), nameof(MemoryThoughtHandler.TryGainMemory), new[] { typeof(Thought_Memory), typeof(Pawn) })]
+    public static class Patch_MemoryThoughtHandler_ConstructCannibalism
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(MemoryThoughtHandler __instance, Thought_Memory newThought)
+        {
+            if (__instance?.pawn != null && newThought?.def != null)
+            {
+                if (ConstructUtility.IsConstruct(__instance.pawn))
+                {
+                    string defName = newThought.def.defName;
+                    if (defName == "AteHumanlikeMeatDirect" ||
+                        defName == "AteHumanlikeMeatAsIngredient" ||
+                        defName == "AteRawHumanlikeMeat" ||
+                        defName == "ButcheredHumanlikeCorpse" ||
+                        defName == "KnowButcheredHumanlikeCorpse")
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Suppresses situational human leather clothing sadness for constructs.
+    /// </summary>
+    [HarmonyPatch(typeof(ThoughtWorker_Precept_HumanLeatherApparel), "CurrentStateInternal")]
+    public static class Patch_ThoughtWorker_HumanLeatherApparel
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn p, ref ThoughtState __result)
+        {
+            if (__result.Active && ConstructUtility.IsConstruct(p))
+            {
+                __result = ThoughtState.Inactive;
+            }
+        }
+    }
 }

@@ -27,8 +27,13 @@ namespace OrganicConstructs
 
             if (pawn.genes != null)
             {
-                GeneDef hiberGene = ConstructDefOf.Gene_ConstructHibernation
-                    ?? ConstructAugmentDefOf.Gene_ConstructHibernation
+                if (pawn.genes.Xenotype?.defName == "Construct_Base")
+                {
+                    return true;
+                }
+
+                GeneDef hiberGene = ConstructDefOf.Gene_ConstructHibernation 
+                    ?? ConstructAugmentDefOf.Gene_ConstructHibernation 
                     ?? DefDatabase<GeneDef>.GetNamedSilentFail("Gene_ConstructHibernation");
                 if (hiberGene != null && pawn.genes.HasActiveGene(hiberGene)) return true;
 
@@ -148,6 +153,15 @@ namespace OrganicConstructs
 
             ConstructNameUtility.AssignConstructNameIfNeeded(pawn);
             AssignConstructBackstories(pawn);
+
+            if (pawn.genes != null)
+            {
+                XenotypeDef constructXenotype = DefDatabase<XenotypeDef>.GetNamedSilentFail("Construct_Base");
+                if (constructXenotype != null && (pawn.genes.Xenotype == null || pawn.genes.Xenotype == XenotypeDefOf.Baseliner))
+                {
+                    pawn.genes.SetXenotypeDirect(constructXenotype);
+                }
+            }
 
             pawn.Drawer?.renderer?.SetAllGraphicsDirty();
         }

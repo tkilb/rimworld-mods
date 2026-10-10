@@ -514,4 +514,23 @@ namespace OrganicConstructs
             }
         }
     }
+
+    /// <summary>
+    /// Restricts Building_ConstructStasisPod to constructs only. Natural humans cannot claim or use them.
+    /// </summary>
+    [HarmonyPatch(typeof(RestUtility), nameof(RestUtility.CanUseBedEver))]
+    public static class Patch_RestUtility_CanUseBedEver
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn p, ThingDef bedDef, ref bool __result)
+        {
+            if (__result && bedDef?.defName == "ConstructStasisPod")
+            {
+                if (!ConstructUtility.IsConstruct(p))
+                {
+                    __result = false;
+                }
+            }
+        }
+    }
 }

@@ -265,13 +265,13 @@
     </stages>
   </HediffDef>
 
-  <!-- Interrupted Stasis -->
+  <!-- Interrupted Stasis (Standard Bed: -20% Penalty) -->
   <HediffDef>
     <defName>Construct_InterruptedStasis</defName>
     <label>interrupted stasis</label>
-    <description>This construct was forcibly awakened from a hibernation cycle before neural and metabolic defragmentation was complete.</description>
+    <description>This construct was forcibly awakened from a hibernation cycle before neural and metabolic defragmentation was complete. The unit experiences severe cognitive lag and sluggish motor responses (-20%).</description>
     <hediffClass>HediffWithComps</hediffClass>
-    <defaultLabelColor>(0.9, 0.2, 0.2)</defaultLabelColor>
+    <defaultLabelColor>(0.9, 0.4, 0.4)</defaultLabelColor>
     <initialSeverity>1.0</initialSeverity>
     <isBad>true</isBad>
     <comps>
@@ -289,6 +289,44 @@
           </li>
           <li>
             <capacity>Moving</capacity>
+            <offset>-0.20</offset>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.20</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <GeneralLaborSpeed>-0.20</GeneralLaborSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- Minor Interrupted Stasis (Buffered by Stasis Pod: -10% Penalty) -->
+  <HediffDef>
+    <defName>Construct_MinorInterruptedStasis</defName>
+    <label>buffered stasis interruption</label>
+    <description>This construct was awakened early from a specialized stasis pod. The pod's dampening buffer mitigated the shock of interruption to a moderate cognitive deficit (-10%).</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.9, 0.6, 0.4)</defaultLabelColor>
+    <initialSeverity>1.0</initialSeverity>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>60000~60000</disappearsAfterTicks> <!-- 1 day -->
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.10</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
             <offset>-0.10</offset>
           </li>
           <li>
@@ -296,7 +334,9 @@
             <offset>-0.10</offset>
           </li>
         </capMods>
-        <vomitMtbDays>1</vomitMtbDays>
+        <statOffsets>
+          <GeneralLaborSpeed>-0.10</GeneralLaborSpeed>
+        </statOffsets>
       </li>
     </stages>
   </HediffDef>

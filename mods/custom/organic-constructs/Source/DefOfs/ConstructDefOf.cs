@@ -21,6 +21,7 @@ namespace OrganicConstructs
         public static ThingDef NeuralScanner;
         public static ThingDef ConstructSynthesizer;
         public static ThingDef ConstructGenomeArchitect;
+        public static ThingDef ConstructStasisPod;
 
         // ── Recipes ───────────────────────────────────────────────────────────────
         public static RecipeDef Construct_BatchRecycleEmbryo;
@@ -29,6 +30,7 @@ namespace OrganicConstructs
         public static HediffDef Construct_NeuralFatigue;
         public static HediffDef Construct_Assimilation;
         public static HediffDef Construct_InterruptedStasis;
+        public static HediffDef Construct_MinorInterruptedStasis;
         public static HediffDef Construct_InStasis;
 
         // ── Backstories ───────────────────────────────────────────────────────────

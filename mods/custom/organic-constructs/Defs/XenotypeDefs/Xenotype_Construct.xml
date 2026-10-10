@@ -3,7 +3,7 @@
 
   <XenotypeDef>
     <defName>Construct_Base</defName>
-    <label>base construct</label>
+    <label>construct</label>
     <description>A mass-produced biological construct engineered from human genetic stock. Devoid of personal ambition, romance, and emotional volatility, constructs operate as resilient biological labor and defense units with mandatory sterility and rapid cellular senescence.</description>
     <descriptionShort>Mass-produced artificial biological humans engineered for resilient industrial labor. Sterile, immune to disease, and devoid of emotional friction, but require periodic stasis hibernation cycles and age rapidly.</descriptionShort>
     <iconPath>UI/Icons/Genes/Gene_ConstructPsychology</iconPath>

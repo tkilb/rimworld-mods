@@ -24,7 +24,27 @@ namespace OrganicConstructs
         public const int MaxOperatingTicks = 1800000; // 30 days
         public const int WarningTicksRemaining = 75000; // 1.25 days
         public const int AutoStasisTicksRemaining = 10000; // 4 hours before shutdown (1 hour = 2500 ticks)
-        public const int MinStasisTicks = 120000; // 48 hours (1 hour = 2500 ticks)
+        public const int MinStasisTicks = 120000; // 48 hours in standard bed
+        public const int PodMinStasisTicks = 90000; // 36 hours in powered stasis pod
+        public const int MinLockoutTicks = 15000; // 6 hours mandatory minimum commitment (1h = 2500 ticks)
+
+        /// <summary>Checks if the construct is resting in a powered Building_ConstructStasisPod.</summary>
+        public bool IsInPoweredStasisPod()
+        {
+            if (pawn == null) return false;
+            Building_Bed bed = pawn.CurrentBed();
+            if (bed is Building_ConstructStasisPod pod)
+            {
+                return pod.IsPowered;
+            }
+            return false;
+        }
+
+        /// <summary>Returns the required stasis duration in ticks for the current resting spot.</summary>
+        public int GetTargetStasisTicks()
+        {
+            return IsInPoweredStasisPod() ? PodMinStasisTicks : MinStasisTicks;
+        }
 
         public override void ExposeData()
         {
@@ -52,7 +72,7 @@ namespace OrganicConstructs
             }
         }
 
-        /// <summary>Recomputes elapsed stasis ticks from the game clock.</summary>
+        /// <summary>Recomputes elapsed stasis ticks from the game clock and pod rate.</summary>
         public void UpdateStasisTicks()
         {
             if (!inStasis)
@@ -66,6 +86,8 @@ namespace OrganicConstructs
                 // Fallback: anchor start tick to current game tick
                 stasisStartTick = Find.TickManager.TicksGame - stasisTicks;
             }
+            // If in a powered pod, ticks progress at 1.333x speed (48h/36h) so 36 real hours yields 48h equivalent
+            // Alternatively, stasisTicks tracks direct progress towards GetTargetStasisTicks().
             stasisTicks = Mathf.Max(0, Find.TickManager.TicksGame - stasisStartTick);
         }
 
@@ -76,7 +98,8 @@ namespace OrganicConstructs
             if (inStasis)
             {
                 UpdateStasisTicks();
-                if (stasisTicks >= MinStasisTicks)
+                int targetTicks = GetTargetStasisTicks();
+                if (stasisTicks >= targetTicks)
                 {
                     if (autoWake)
                     {
@@ -163,7 +186,9 @@ namespace OrganicConstructs
         {
             if (!inStasis) return;
             UpdateStasisTicks();
-            bool cleanWake = (stasisTicks >= MinStasisTicks);
+            int targetTicks = GetTargetStasisTicks();
+            bool cleanWake = (stasisTicks >= targetTicks);
+            bool inPod = IsInPoweredStasisPod();
 
             inStasis = false;
             stasisStartTick = -1;
@@ -179,9 +204,28 @@ namespace OrganicConstructs
 
             if (!cleanWake)
             {
-                // Interrupted Stasis
-                pawn.health.AddHediff(ConstructDefOf.Construct_InterruptedStasis);
-                Messages.Message($"{pawn.NameShortColored} was interrupted from stasis early and suffers from neural defragmentation failure.", pawn, MessageTypeDefOf.NegativeEvent);
+                // Interrupted Stasis: pod applies buffered minor version, standard bed applies full version
+                HediffDef interruptHediff = inPod ? ConstructDefOf.Construct_MinorInterruptedStasis : ConstructDefOf.Construct_InterruptedStasis;
+                if (interruptHediff != null)
+                {
+                    pawn.health.AddHediff(interruptHediff);
+                }
+
+                // Incentive mechanic: Early wake only grants at most 50% operating margin (15 days)
+                // If the construct had less than 15 days margin remaining, refund up to half margin (900,000 ticks).
+                // If they already had more than 15 days margin, preserve their existing operatingTicks.
+                int halfOperatingTicks = MaxOperatingTicks / 2;
+                if (operatingTicks > halfOperatingTicks)
+                {
+                    operatingTicks = halfOperatingTicks;
+                }
+                maintenanceWarningFired = false;
+                autoStasisNotificationFired = false;
+
+                string penaltyText = inPod
+                    ? $"{pawn.NameShortColored} was awakened from stasis pod early: buffered -10% cognition and operating margin capped at 15 days. Return to stasis for a full refresh."
+                    : $"{pawn.NameShortColored} was awakened from stasis early: severe -20% cognition and operating margin capped at 15 days. Return to stasis for a full refresh.";
+                Messages.Message(penaltyText, pawn, MessageTypeDefOf.NegativeEvent);
             }
             else
             {
@@ -190,11 +234,16 @@ namespace OrganicConstructs
                 maintenanceWarningFired = false;
                 autoStasisNotificationFired = false;
 
-                // Clear interrupted debuff if it lingered from a prior interruption
+                // Clear interrupted debuffs if lingering from prior interruptions
                 Hediff interruptedHediff = pawn.health.hediffSet.GetFirstHediffOfDef(ConstructDefOf.Construct_InterruptedStasis);
                 if (interruptedHediff != null)
                 {
                     pawn.health.RemoveHediff(interruptedHediff);
+                }
+                Hediff minorInterrupted = pawn.health.hediffSet.GetFirstHediffOfDef(ConstructDefOf.Construct_MinorInterruptedStasis);
+                if (minorInterrupted != null)
+                {
+                    pawn.health.RemoveHediff(minorInterrupted);
                 }
 
                 if (pawn.needs != null)
@@ -238,18 +287,26 @@ namespace OrganicConstructs
             if (inStasis)
             {
                 float hours = (float)stasisTicks / 2500f;
-                float totalHours = (float)MinStasisTicks / 2500f;
-                if (stasisTicks >= MinStasisTicks)
+                int targetTicks = GetTargetStasisTicks();
+                float totalHours = (float)targetTicks / 2500f;
+                string locationStr = IsInPoweredStasisPod() ? "Stasis Pod (Accelerated 36h cycle)" : "Standard Bed (48h cycle)";
+
+                if (stasisTicks >= targetTicks)
                 {
-                    return $"Construct hibernation stasis\nStatus: Complete ({hours:F1}h elapsed)\nReady to wake safely. Stasis will continue until woken.";
+                    return $"Construct hibernation stasis ({locationStr})\nStatus: Complete ({hours:F1}h elapsed)\nReady to wake safely. Stasis will continue until woken.";
                 }
-                return $"Construct hibernation stasis\nProgress: {hours:F1} / {totalHours:F0} hours\nPurging synthetic cellular toxicity and defragmenting neural pathways.";
+                if (stasisTicks < MinLockoutTicks)
+                {
+                    float lockHours = (float)(MinLockoutTicks - stasisTicks) / 2500f;
+                    return $"Construct hibernation stasis ({locationStr})\nProgress: {hours:F1} / {totalHours:F0} hours\n[LOCKED] Initial cryo-neural synchronization in progress. Minimum commitment: {lockHours:F1}h remaining before early wake is permitted.";
+                }
+                return $"Construct hibernation stasis ({locationStr})\nProgress: {hours:F1} / {totalHours:F0} hours\nPurging synthetic cellular toxicity and defragmenting neural pathways.";
             }
             else
             {
                 int remainingTicks = Mathf.Max(0, MaxOperatingTicks - operatingTicks);
                 float days = (float)remainingTicks / 60000f;
-                string tip = $"Construct operating margin\nRemaining: {days:F1} / 30.0 days\nMust enter stasis for 48 hours before reaching 0 to avoid emergency shutdown.";
+                string tip = $"Construct operating margin\nRemaining: {days:F1} / 30.0 days\nMust enter stasis (36h in pod, 48h in bed) before reaching 0 to avoid emergency shutdown.";
                 if (days <= 2.0f)
                 {
                     tip += "\n\nCRITICAL: Emergency shutdown imminent!";
@@ -276,12 +333,25 @@ namespace OrganicConstructs
                         icon = WakeCommandTex.Texture,
                         action = delegate
                         {
-                            if (stasisTicks < MinStasisTicks)
+                            int targetTicks = GetTargetStasisTicks();
+                            if (stasisTicks < MinLockoutTicks)
                             {
-                                int remaining = MinStasisTicks - stasisTicks;
+                                float lockHours = (float)(MinLockoutTicks - stasisTicks) / 2500f;
+                                Messages.Message($"Cannot wake {pawn.NameShortColored}: initial stasis synchronization requires a minimum 6-hour commitment ({lockHours:F1}h remaining).", pawn, MessageTypeDefOf.RejectInput);
+                                return;
+                            }
+
+                            if (stasisTicks < targetTicks)
+                            {
+                                int remaining = targetTicks - stasisTicks;
                                 float remHours = remaining / 2500f;
+                                bool inPod = IsInPoweredStasisPod();
+                                string penaltyDesc = inPod
+                                    ? "buffered early wake (1-day -10% cognitive deficit, operating margin capped at 15 days)"
+                                    : "neural defragmentation failure (3-day -20% cognitive lag, operating margin capped at 15 days)";
+
                                 Dialog_MessageBox window = Dialog_MessageBox.CreateConfirmation(
-                                    $"Warning: {pawn.NameShortColored} has not completed the required stasis duration ({remHours:F1} hours remaining). Waking them early will cause neural defragmentation failure and severe disorientation.\n\nWake them anyway?",
+                                    $"Warning: {pawn.NameShortColored} has not completed the required stasis duration ({remHours:F1} hours remaining). Waking them early will cause {penaltyDesc}.\n\nWake them anyway?",
                                     delegate
                                     {
                                         Wake();
@@ -296,6 +366,13 @@ namespace OrganicConstructs
                             }
                         }
                     };
+
+                    if (stasisTicks < MinLockoutTicks)
+                    {
+                        float lockHours = (float)(MinLockoutTicks - stasisTicks) / 2500f;
+                        wakeAction.Disable($"Cryo-synchronization lockout in progress ({lockHours:F1}h remaining).");
+                    }
+
                     yield return wakeAction;
 
                     Command_Toggle autoWakeToggle = new Command_Toggle
@@ -310,7 +387,7 @@ namespace OrganicConstructs
                             if (autoWake && inStasis)
                             {
                                 UpdateStasisTicks();
-                                if (stasisTicks >= MinStasisTicks)
+                                if (stasisTicks >= GetTargetStasisTicks())
                                 {
                                     Wake();
                                 }
