@@ -6,11 +6,11 @@ version: 1
 # Official Expansion (DLC) Toggles
 # Set to false to omit from ModsConfig.xml and disable in RimWorld.
 dlcs:
-  royalty: false
-  ideology: false
+  royalty: true
+  ideology: true
   biotech: true
   anomaly: false
-  odyssey: false
+  odyssey: true
 
 mods:
   vanillabionicsexpansion:

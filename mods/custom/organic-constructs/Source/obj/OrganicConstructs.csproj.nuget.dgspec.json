@@ -10,11 +10,11 @@
         "projectUniqueName": "/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/OrganicConstructs.csproj",
         "projectName": "OrganicConstructs",
         "projectPath": "/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/OrganicConstructs.csproj",
-        "packagesPath": "/home/tylerkilburn/.nuget/packages/",
+        "packagesPath": "/home/tylerkilburn/.cache/nuget",
         "outputPath": "/home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/tylerkilburn/.nuget/NuGet/NuGet.Config"
+          "/home/tylerkilburn/.local/share/dotnet/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net472"

@@ -1,112 +1,109 @@
 SHELL := /usr/bin/env bash
 .DEFAULT_GOAL := help
 
-.PHONY: help check-deps status fetch-mods update-mods update-mods-dry-run \
-        link link-dry-run unlink unlink-dry-run rollback rollback-dry-run \
-        tidy tidy-dry-run \
-        build-load-order build-order-mods order-mods order-mods-dry-run \
-        sync-config sync-config-dry-run \
-        import-deck import-deck-dry-run import-deck-mods import-deck-mods-dry-run \
-        sync-deck sync-deck-dry-run sync-deck-check \
-        scaffold-mod scaffold-mod-dry-run build-mod build-mod-dry-run
+BINDIR ?= $(HOME)/bin
+INSTALL_BIN := $(BINDIR)/rimmod
+BIN := ./bin/rimmod
 
-##@ General
-help: ## Display user guide and command reference
-	@bash ./scripts/help.sh
+.PHONY: help build test status apply apply-dry-run update update-dry-run \
+        tidy tidy-dry-run order deck-push deck-push-dry-run deck-check \
+        deck-pull deck-pull-dry-run dev dev-dry-run \
+        install install-dry-run uninstall uninstall-dry-run \
+        sync-deck sync-deck-dry-run sync-deck-check import-deck import-deck-dry-run \
+        build-load-order build-mod
 
-##@ Verification & Diagnostics
-check-deps: ## Verify system dependencies (steamcmd, jq, yq, rsync, etc.)
-	@bash ./scripts/check-deps.sh
-
-status: ## Inspect active mod versions, downloaded cache, and symlinks
-	@bash ./scripts/status.sh
-
-##@ Mod Management
-fetch-mods: ## Download/fetch declared mods from Steam Workshop and Git
-	@bash ./scripts/fetch-mods.sh
-
-update-mods: ## Update 3rd-party mods and synchronize lockfile
-	@bash ./scripts/update-mods.sh
-
-update-mods-dry-run: ## Preview 3rd-party mod updates without modifying files
-	@bash ./scripts/update-mods.sh --dry-run
-
-
-# Detect if make was invoked with -n / --dry-run
-MAKE_DRY_RUN := $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
-
-link: ## Deploy idempotent symlinks into RimWorld Mods directory (Usage: make link [MOD=<name>])
-	+@bash ./scripts/link-mods.sh --link $(if $(MOD),$(MOD),) $(MAKE_DRY_RUN)
-
-link-dry-run: ## Preview symlink deployment without modifying filesystem (Usage: make link-dry-run [MOD=<name>])
-	@bash ./scripts/link-mods.sh --link $(if $(MOD),$(MOD),) --dry-run
-
-unlink: ## Remove monorepo symlinks from RimWorld Mods directory (Usage: make unlink [MOD=<name>])
-	+@bash ./scripts/link-mods.sh --unlink $(if $(MOD),$(MOD),) $(MAKE_DRY_RUN)
-
-unlink-dry-run: ## Preview removal of monorepo symlinks (Usage: make unlink-dry-run [MOD=<name>])
-	@bash ./scripts/link-mods.sh --unlink $(if $(MOD),$(MOD),) --dry-run
-
-rollback: ## Rollback a mod to a previous version (Usage: make rollback MOD=<name> VERSION=<ver>)
-	+@bash ./scripts/rollback-mod.sh $(MOD) $(VERSION) $(MAKE_DRY_RUN)
-
-rollback-dry-run: ## Preview rollback of a mod (Usage: make rollback-dry-run MOD=<name> VERSION=<ver>)
-	@bash ./scripts/rollback-mod.sh $(MOD) $(VERSION) --dry-run
-
-##@ Repository Maintenance
-tidy: ## Prune unreferenced lock entries, vendor cache, symlinks, and run go mod tidy
-	+@bash ./scripts/tidy.sh $(MAKE_DRY_RUN)
-
-tidy-dry-run: ## Preview cleanup actions without deleting files
-	@bash ./scripts/tidy.sh --dry-run
-
-##@ Mod Load Order
-build-load-order: ## Compile the Go load order resolver into bin/load-order
+##@ Build & Test
+build: ## Compile the unified Go CLI (bin/rimmod)
 	@mkdir -p bin
-	@go -C tools/load-order build -o ../../bin/load-order .
+	@go build -o $(BIN) ./cmd/rimmod
 
-build-order-mods: build-load-order ## Alias for build-load-order
+test: ## Run the Go test suite
+	@go test ./...
 
-order-mods: ## Resolve and sort active mods into valid load order
-	+@bash ./scripts/order-mods.sh $(MAKE_DRY_RUN)
+$(BIN):
+	@$(MAKE) build
 
-order-mods-dry-run: ## Preview computed mod load order without modifying files
-	@bash ./scripts/order-mods.sh --dry-run
+##@ Installation
+install: $(BIN) ## Install rimmod CLI to $(BINDIR)/rimmod (default: ~/bin/rimmod)
+ifeq ($(findstring n,$(firstword -$(MAKEFLAGS))),n)
+	@echo "  [DRY-RUN] Would install $(abspath $(BIN)) -> $(INSTALL_BIN)"
+else
+	@mkdir -p $(BINDIR)
+	@ln -sf $(abspath $(BIN)) $(INSTALL_BIN)
+	@echo "Installed $(INSTALL_BIN) -> $(abspath $(BIN))"
+endif
 
-sync-config: ## Generate and deploy ModsConfig.xml to RimWorld config directory
-	+@bash ./scripts/order-mods.sh --write-config $(MAKE_DRY_RUN)
+install-dry-run: ## Preview installing rimmod CLI
+	@echo "  [DRY-RUN] Would install $(abspath $(BIN)) -> $(INSTALL_BIN)"
 
-sync-config-dry-run: ## Preview ModsConfig.xml generation without modifying filesystem
-	@bash ./scripts/order-mods.sh --write-config --dry-run
+uninstall: ## Remove installed rimmod CLI from $(BINDIR)/rimmod
+ifeq ($(findstring n,$(firstword -$(MAKEFLAGS))),n)
+	@echo "  [DRY-RUN] Would remove $(INSTALL_BIN)"
+else
+	@rm -f $(INSTALL_BIN)
+	@echo "Removed $(INSTALL_BIN)"
+endif
 
-##@ Remote Synchronization
-import-deck: ## Interactive TUI to cherry-pick Steam Workshop mods from Steam Deck
-	@bash ./scripts/import-deck.sh $(MAKE_DRY_RUN) $(if $(COPY),--copy-files,)
+uninstall-dry-run: ## Preview removing installed rimmod CLI
+	@echo "  [DRY-RUN] Would remove $(INSTALL_BIN)"
 
-import-deck-dry-run: ## Preview cherry-picking Steam Workshop mods without writing to mods.yaml
-	@bash ./scripts/import-deck.sh --dry-run
+##@ Core Workflows
+apply: $(BIN) ## Reconcile local game (fetch missing, link, sort, write config)
+	@$(BIN) apply $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
 
-import-deck-mods: import-deck ## Alias for import-deck
-import-deck-mods-dry-run: import-deck-dry-run ## Alias for import-deck-dry-run
+apply-dry-run: $(BIN) ## Preview local reconciliation without modifying filesystem
+	@$(BIN) apply --dry-run
 
-sync-deck: ## Sync mods, deploy symlinks, and update ModsConfig.xml on Steam Deck
-	+@bash ./scripts/sync-deck.sh $(MAKE_DRY_RUN)
+update: $(BIN) ## Check upstream mod updates, refresh lockfile, and re-apply
+	@$(BIN) update $(if $(MOD),--mod $(MOD),) $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
 
-sync-deck-dry-run: ## Preview sync, symlink, and ModsConfig.xml deployment on Steam Deck
-	@bash ./scripts/sync-deck.sh --dry-run
+update-dry-run: $(BIN) ## Preview upstream mod updates
+	@$(BIN) update $(if $(MOD),--mod $(MOD),) --dry-run
 
-sync-deck-check: ## Test SSH connectivity to Steam Deck
-	@bash ./scripts/sync-deck.sh --check
+tidy: $(BIN) ## Prune unreferenced lock entries, vendor cache, and dead symlinks
+	@$(BIN) tidy $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
+
+tidy-dry-run: $(BIN) ## Preview tidy cleanup without deleting files
+	@$(BIN) tidy --dry-run
+
+##@ Steam Deck Sync
+deck-push: $(BIN) ## Rsync manifests/mods to Steam Deck and apply remotely
+	@$(BIN) deck push $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
+
+deck-push-dry-run: $(BIN) ## Preview sync to Steam Deck
+	@$(BIN) deck push --dry-run
+
+deck-check: $(BIN) ## Test SSH connectivity to Steam Deck
+	@$(BIN) deck push --check
+
+deck-pull: $(BIN) ## Interactive TUI to import Workshop subscriptions from Steam Deck
+	@$(BIN) deck pull $(if $(COPY),--copy,) $(if $(ALL),--all,) $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
+
+deck-pull-dry-run: $(BIN) ## Preview importing mods from Steam Deck
+	@$(BIN) deck pull --dry-run
 
 ##@ Private Mod Development
-scaffold-mod: ## Scaffold a private mod (Usage: make scaffold-mod MOD=<name> [TYPE=xml|csharp])
-	+@bash ./scripts/scaffold-mod.sh $(if $(MOD),--name $(MOD),) $(if $(TYPE),--type $(TYPE),) $(MAKE_DRY_RUN)
+dev: $(BIN) ## Compile custom mod and auto-apply (Usage: make dev MOD=<name>)
+	@$(BIN) dev build $(if $(MOD),$(MOD),organic-constructs) $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
 
-scaffold-mod-dry-run: ## Preview scaffolding a private mod (Usage: make scaffold-mod-dry-run MOD=<name> [TYPE=xml|csharp])
-	@bash ./scripts/scaffold-mod.sh $(if $(MOD),--name $(MOD),) $(if $(TYPE),--type $(TYPE),) --dry-run
+dev-dry-run: $(BIN) ## Preview compiling custom mod
+	@$(BIN) dev build $(if $(MOD),$(MOD),organic-constructs) --dry-run
 
-build-mod: ## Compile C# assemblies for a custom mod (Usage: make build-mod MOD=<name>)
-	+@bash ./scripts/build-mod.sh $(if $(MOD),--mod $(MOD),) $(MAKE_DRY_RUN)
+##@ Diagnostics & Inspection
+order: $(BIN) ## Inspect computed topological mod load order
+	@$(BIN) order
 
-build-mod-dry-run: ## Preview compiling C# assemblies (Usage: make build-mod-dry-run MOD=<name>)
-	@bash ./scripts/build-mod.sh $(if $(MOD),--mod $(MOD),) --dry-run
+status: $(BIN) ## Inspect monorepo health, active symlinks, and Deck status
+	@$(BIN) status
+
+help: $(BIN) ## Display rimmod CLI help and reference
+	@$(BIN) help
+
+##@ Compatibility Aliases
+sync-deck: deck-push
+sync-deck-dry-run: deck-push-dry-run
+sync-deck-check: deck-check
+import-deck: deck-pull
+import-deck-dry-run: deck-pull-dry-run
+build-load-order: build
+build-mod: dev

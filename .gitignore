@@ -9,6 +9,7 @@ mods/vendor/*
 !mods/vendor/.gitkeep
 .cache/
 tmp/
+bin/
 
 # OS / Editor artifacts
 .DS_Store

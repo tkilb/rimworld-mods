@@ -1,46 +1,82 @@
 version: 1
-generated_at: '2026-10-03T02:20:12.391801+00:00'
+generated_at: "2026-10-10T21:01:54Z"
 machine: linux-box
 mods:
-  harmony:
-    source: steam_workshop
-    workshop_id: '2009463077'
-    workshop_time_updated: 1756914561
-    workshop_title: Harmony
-    download_path: mods/vendor/harmony
-  laboratory:
-    source: steam_workshop
-    workshop_id: '3296362231'
-    workshop_time_updated: 1789312967
-    workshop_title: ilyvion's Laboratory
-    download_path: mods/vendor/laboratory
-  colonymanagerredux:
-    source: steam_workshop
-    workshop_id: '3310027356'
-    workshop_time_updated: 1789881525
-    workshop_title: Colony Manager Redux
-    download_path: mods/vendor/colonymanagerredux
-  recyclethis:
-    source: steam_workshop
-    workshop_id: '3253550009'
-    workshop_time_updated: 1757700442
-    workshop_title: Recycle This (Continued)
-    download_path: mods/vendor/recyclethis
-  generipper:
-    source: steam_workshop
-    workshop_id: '3524806362'
-    workshop_time_updated: 1755011920
-    workshop_title: Gene Ripper
-    download_path: mods/vendor/generipper
-  genebankplus:
-    source: steam_workshop
-    workshop_id: '2889919154'
-    workshop_time_updated: 1753223386
-    workshop_title: Gene Bank Plus
-    download_path: mods/vendor/genebankplus
-  minifyeverything:
-    source: steam_workshop
-    workshop_id: '872762753'
-    workshop_time_updated: 1755347385
-    workshop_title: MinifyEverything
-    download_path: mods/vendor/minifyeverything
+    colonymanagerredux:
+        source: steam_workshop
+        workshop_id: "3310027356"
+        workshop_time_updated: 1789881525
+        workshop_title: Colony Manager Redux
+        download_path: mods/vendor/colonymanagerredux
+    dubspaintshop:
+        source: steam_workshop
+        workshop_id: "1579516669"
+        workshop_time_updated: 1790096443
+        workshop_title: Dub's Paint Shop
+        download_path: mods/vendor/dubspaintshop
+    genebankplus:
+        source: steam_workshop
+        workshop_id: "2889919154"
+        workshop_time_updated: 1753223386
+        workshop_title: Gene Bank Plus
+        download_path: mods/vendor/genebankplus
+    generipper:
+        source: steam_workshop
+        workshop_id: "3524806362"
+        workshop_time_updated: 1755011920
+        workshop_title: Gene Ripper
+        download_path: mods/vendor/generipper
+    harmony:
+        source: steam_workshop
+        workshop_id: "2009463077"
+        workshop_time_updated: 1756914561
+        workshop_title: Harmony
+        download_path: mods/vendor/harmony
+    laboratory:
+        source: steam_workshop
+        workshop_id: "3296362231"
+        workshop_time_updated: 1789312967
+        workshop_title: ilyvion's Laboratory
+        download_path: mods/vendor/laboratory
+    minifyeverything:
+        source: steam_workshop
+        workshop_id: "872762753"
+        workshop_time_updated: 1755347385
+        workshop_title: MinifyEverything
+        download_path: mods/vendor/minifyeverything
+    recyclethis:
+        source: steam_workshop
+        workshop_id: "3253550009"
+        workshop_time_updated: 1757700442
+        workshop_title: Recycle This (Continued)
+        download_path: mods/vendor/recyclethis
+    simplesidearms:
+        source: steam_workshop
+        workshop_id: "927155256"
+        workshop_time_updated: 1755068836
+        workshop_title: Simple sidearms
+        download_path: mods/vendor/simplesidearms
+    vanillabionicsexpansion:
+        source: steam_workshop
+        workshop_id: "1419675146"
+        workshop_time_updated: 1783227122
+        workshop_title: '[FSF] Vanilla Bionics Expansion'
+        download_path: mods/vendor/vanillabionicsexpansion
+    vanillafactionsexpandedcore:
+        source: steam_workshop
+        workshop_id: "2023507013"
+        workshop_time_updated: 1791216658
+        workshop_title: Vanilla Expanded Framework
+        download_path: mods/vendor/vanillafactionsexpandedcore
+    vanillavehiclesexpanded:
+        source: steam_workshop
+        workshop_id: "3014906877"
+        workshop_time_updated: 1774351676
+        workshop_title: Vanilla Vehicles Expanded
+        download_path: mods/vendor/vanillavehiclesexpanded
+    vehicleframework:
+        source: steam_workshop
+        workshop_id: "3014915404"
+        workshop_time_updated: 1761014012
+        workshop_title: Vehicle Framework
+        download_path: mods/vendor/vehicleframework
