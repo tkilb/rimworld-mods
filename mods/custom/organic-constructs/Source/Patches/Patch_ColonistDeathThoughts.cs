@@ -110,7 +110,20 @@ namespace OrganicConstructs
     /// <summary>
     /// Suppresses situational human leather clothing sadness for constructs.
     /// </summary>
-    [HarmonyPatch(typeof(ThoughtWorker_Precept_HumanLeatherApparel), "CurrentStateInternal")]
+    [HarmonyPatch(typeof(ThoughtWorker_Precept_HumanLeatherApparel), "ShouldHaveThought")]
+    public static class Patch_ThoughtWorker_Precept_HumanLeatherApparel
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn p, ref ThoughtState __result)
+        {
+            if (__result.Active && ConstructUtility.IsConstruct(p))
+            {
+                __result = ThoughtState.Inactive;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(ThoughtWorker_HumanLeatherApparel), "CurrentStateInternal")]
     public static class Patch_ThoughtWorker_HumanLeatherApparel
     {
         [HarmonyPostfix]

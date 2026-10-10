@@ -25,6 +25,7 @@
     <HarmonyDllPath Condition="Exists('$(HarmonyWorkshopBase)/Current/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/Current/Assemblies/0Harmony.dll</HarmonyDllPath>
     <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(HarmonyWorkshopBase)/1.5/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/1.5/Assemblies/0Harmony.dll</HarmonyDllPath>
     <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(HarmonyWorkshopBase)/1.4/Assemblies/0Harmony.dll')">$(HarmonyWorkshopBase)/1.4/Assemblies/0Harmony.dll</HarmonyDllPath>
+    <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(MSBuildProjectDirectory)/../../../vendor/harmony/Current/Assemblies/0Harmony.dll')">$(MSBuildProjectDirectory)/../../../vendor/harmony/Current/Assemblies/0Harmony.dll</HarmonyDllPath>
     <HarmonyDllPath Condition="'$(HarmonyDllPath)' == '' And Exists('$(RimWorldManagedDir)/0Harmony.dll')">$(RimWorldManagedDir)/0Harmony.dll</HarmonyDllPath>
   </PropertyGroup>
 
