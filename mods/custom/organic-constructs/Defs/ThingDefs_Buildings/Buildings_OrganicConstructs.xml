@@ -58,7 +58,7 @@
     <hasInteractionCell>true</hasInteractionCell>
     <interactionCellOffset>(0, 0, -1)</interactionCellOffset>
     <researchPrerequisites>
-      <li>Construct_Foundations</li>
+      <li>Construct_FieldBioproduction</li>
     </researchPrerequisites>
   </ThingDef>
 

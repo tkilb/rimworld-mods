@@ -119,3 +119,6 @@ dotnet build Source/OrganicConstructs.csproj
 2. **Tunable Numbers:** Expose gameplay balance numbers in XML via `CompProperties` or `DefModExtension`; avoid hardcoding game values in C#.
 3. **Scoped Tools:** Prefer `replace_file_content` and `write_to_file` over shell commands for inspecting and editing code.
 4. **Git Hygiene:** Never run `git commit` or suggest committing changes; commits are handled manually by the user.
+5. **Mod Dependencies (Biotech vs Odyssey):**
+   - **Biotech (`Ludeon.RimWorld.Biotech`):** Hard dependency. Declared in `<modDependencies>` in [About.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/About/About.xml).
+   - **Odyssey (`Ludeon.RimWorld.Odyssey`):** Strict **optional/soft dependency**. Listed only in `<loadAfter>`. All Odyssey/gravship-specific XML (buildings, scenarios, bioware patches) must be conditionally loaded via `<Operation Class="PatchOperationFindMod">` matching `Ludeon.RimWorld.Odyssey`. Any Odyssey-specific C# routines must be guarded behind `ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")` so the base mod loads cleanly without Odyssey installed.

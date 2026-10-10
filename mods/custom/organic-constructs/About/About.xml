@@ -17,5 +17,6 @@
   <loadAfter>
     <li>Ludeon.RimWorld</li>
     <li>Ludeon.RimWorld.Biotech</li>
+    <li>Ludeon.RimWorld.Odyssey</li>
   </loadAfter>
 </ModMetaData>

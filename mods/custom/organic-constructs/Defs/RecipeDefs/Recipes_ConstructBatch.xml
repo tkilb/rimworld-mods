@@ -213,6 +213,7 @@
       <Intellectual>6</Intellectual>
       <Medicine>4</Medicine>
     </skillRequirements>
+    <researchPrerequisite>Construct_Foundations</researchPrerequisite>
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
@@ -291,6 +292,7 @@
       <Intellectual>6</Intellectual>
       <Medicine>4</Medicine>
     </skillRequirements>
+    <researchPrerequisite>Construct_Foundations</researchPrerequisite>
   </RecipeDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
