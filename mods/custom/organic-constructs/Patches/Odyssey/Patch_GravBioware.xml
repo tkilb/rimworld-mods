@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Odyssey Gravship Bioware: GravOps & Salvage Augment Packages
+       Conditionally loaded only when Ludeon.RimWorld.Odyssey is active.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Ludeon.RimWorld.Odyssey</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+
+        <!-- ──────────────────────────────────────────────────────────────────
+             1. HediffDefs
+             ────────────────────────────────────────────────────────────────── -->
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs</xpath>
+          <value>
+            <!-- Gravship Flight & Operations Package -->
+            <HediffDef ParentName="ConstructAugmentBase">
+              <defName>Construct_GravOpsPackage</defName>
+              <spawnThingOnRemoved>Construct_GravOpsPackageItem</spawnThingOnRemoved>
+              <label>grav-ops bioware package</label>
+              <description>A specialized biological neural package engineered for Odyssey gravship crews. Accelerates shipboard damage control, navigation calculations, and high-G flight resilience while dampening nutritional burn during aerial maneuvers.\n\nStat Modifiers:\n• Construction Speed: +30%\n• Repair Rate / Fix Broken Down: +30%\n• General Labor Speed: +20%\n• Move Speed: +0.30 c/s\n• Hunger Rate Factor: 85%\n\nSkill Aptitudes:\n• Construction: +6\n• Intellectual: +4</description>
+              <stages>
+                <li>
+                  <statOffsets>
+                    <ConstructionSpeed>0.30</ConstructionSpeed>
+                    <FixBrokenDownBuildingInstallChance>0.30</FixBrokenDownBuildingInstallChance>
+                    <GeneralLaborSpeed>0.20</GeneralLaborSpeed>
+                    <MoveSpeed>0.30</MoveSpeed>
+                  </statOffsets>
+                  <statFactors>
+                    <HungerRateFactor>0.85</HungerRateFactor>
+                  </statFactors>
+                </li>
+              </stages>
+            </HediffDef>
+
+            <!-- Deep-Field EVA & Salvage Package -->
+            <HediffDef ParentName="ConstructAugmentBase">
+              <defName>Construct_SalvagePackage</defName>
+              <spawnThingOnRemoved>Construct_SalvagePackageItem</spawnThingOnRemoved>
+              <label>salvage bioware package</label>
+              <description>A heavy-duty biological muscle and dermal weave augment engineered for asteroid mining and high-hazard ground salvage sorties. Dramatically increases drilling and excavation output while adding dense subdermal ballistic shielding.\n\nStat Modifiers:\n• Mining Speed: +40%\n• Deep Drilling Speed: +50%\n• Armor - Sharp: +20%\n• Armor - Blunt: +15%\n• Carrying Capacity: +25\n\nSkill Aptitudes:\n• Mining: +6\n• Construction: +4</description>
+              <stages>
+                <li>
+                  <statOffsets>
+                    <MiningSpeed>0.40</MiningSpeed>
+                    <DeepDrillingSpeed>0.50</DeepDrillingSpeed>
+                    <ArmorRating_Sharp>0.20</ArmorRating_Sharp>
+                    <ArmorRating_Blunt>0.15</ArmorRating_Blunt>
+                    <CarryingCapacity>25</CarryingCapacity>
+                  </statOffsets>
+                </li>
+              </stages>
+            </HediffDef>
+          </value>
+        </li>
+
+        <!-- ──────────────────────────────────────────────────────────────────
+             2. Item ThingDefs
+             ────────────────────────────────────────────────────────────────── -->
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs</xpath>
+          <value>
+            <!-- GravOps Item -->
+            <ThingDef ParentName="ConstructAugmentItemBase">
+              <defName>Construct_GravOpsPackageItem</defName>
+              <label>grav-ops package</label>
+              <description>A specialized biological neural package engineered for Odyssey gravship crews. Accelerates vessel damage control, flight maneuver calculations, and emergency hull maintenance.\n\nStat Modifiers:\n• Construction Speed: +30%\n• Fix Broken Down Chance: +30%\n• General Labor Speed: +20%\n• Move Speed: +0.30 c/s\n• Hunger Rate: 85%\n\nSkill Aptitudes:\n• Construction: +6\n• Intellectual: +4</description>
+              <graphicData>
+                <texPath>Things/Item/Augments/Augment_Industrial_Intermediate</texPath>
+                <graphicClass>Graphic_Single</graphicClass>
+              </graphicData>
+              <statBases>
+                <MarketValue>1100</MarketValue>
+              </statBases>
+            </ThingDef>
+
+            <!-- Salvage Item -->
+            <ThingDef ParentName="ConstructAugmentItemBase">
+              <defName>Construct_SalvagePackageItem</defName>
+              <label>salvage package</label>
+              <description>A heavy-duty biological muscle and dermal weave augment engineered for hazardous asteroid mining and expeditionary salvage sorties.\n\nStat Modifiers:\n• Mining Speed: +40%\n• Deep Drilling Speed: +50%\n• Armor - Sharp: +20%\n• Armor - Blunt: +15%\n• Carrying Capacity: +25\n\nSkill Aptitudes:\n• Mining: +6\n• Construction: +4</description>
+              <graphicData>
+                <texPath>Things/Item/Augments/Augment_Industrial_Advanced</texPath>
+                <graphicClass>Graphic_Single</graphicClass>
+              </graphicData>
+              <statBases>
+                <MarketValue>1200</MarketValue>
+              </statBases>
+            </ThingDef>
+          </value>
+        </li>
+
+        <!-- ──────────────────────────────────────────────────────────────────
+             3. Crafting RecipeDefs (Synthesizer Bench)
+             ────────────────────────────────────────────────────────────────── -->
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs</xpath>
+          <value>
+            <!-- Craft GravOps -->
+            <RecipeDef ParentName="CraftConstructAugmentBase_Intermediate">
+              <defName>Craft_Construct_GravOpsPackage</defName>
+              <label>synthesize grav-ops package</label>
+              <description>Synthesize a grav-ops bioware package designed for gravship maintenance and operations.</description>
+              <jobString>Synthesizing grav-ops package.</jobString>
+              <products>
+                <Construct_GravOpsPackageItem>1</Construct_GravOpsPackageItem>
+              </products>
+            </RecipeDef>
+
+            <!-- Craft Salvage -->
+            <RecipeDef ParentName="CraftConstructAugmentBase_Intermediate">
+              <defName>Craft_Construct_SalvagePackage</defName>
+              <label>synthesize salvage package</label>
+              <description>Synthesize a salvage bioware package tailored for heavy excavation and orbital debris breaching.</description>
+              <jobString>Synthesizing salvage package.</jobString>
+              <products>
+                <Construct_SalvagePackageItem>1</Construct_SalvagePackageItem>
+              </products>
+            </RecipeDef>
+          </value>
+        </li>
+
+        <!-- ──────────────────────────────────────────────────────────────────
+             4. Surgical Install & Remove Recipes
+             ────────────────────────────────────────────────────────────────── -->
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs</xpath>
+          <value>
+            <!-- Install GravOps -->
+            <RecipeDef ParentName="Construct_SurgeryPackageBase">
+              <defName>Construct_InstallGravOpsPackage</defName>
+              <label>install grav-ops augment</label>
+              <description>Surgically graft a grav-ops bioware augment into a construct's neural bus.</description>
+              <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+              <jobString>Installing grav-ops bioware augment.</jobString>
+              <workAmount>3000</workAmount>
+              <skillRequirements><Medicine>6</Medicine></skillRequirements>
+              <ingredients>
+                <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+                <li><filter><thingDefs><li>Construct_GravOpsPackageItem</li></thingDefs></filter><count>1</count></li>
+              </ingredients>
+              <fixedIngredientFilter>
+                <categories><li>Medicine</li></categories>
+                <thingDefs><li>Construct_GravOpsPackageItem</li></thingDefs>
+              </fixedIngredientFilter>
+              <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+              <addsHediff>Construct_GravOpsPackage</addsHediff>
+            </RecipeDef>
+
+            <!-- Remove GravOps -->
+            <RecipeDef ParentName="Construct_SurgeryPackageBase">
+              <defName>Construct_RemoveGravOpsPackage</defName>
+              <label>remove grav-ops augment</label>
+              <description>Remove a grav-ops bioware augment safely.</description>
+              <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+              <jobString>Removing grav-ops augment.</jobString>
+              <workAmount>2000</workAmount>
+              <skillRequirements><Medicine>5</Medicine></skillRequirements>
+              <ingredients>
+                <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+              </ingredients>
+              <fixedIngredientFilter>
+                <categories><li>Medicine</li></categories>
+              </fixedIngredientFilter>
+              <removesHediff>Construct_GravOpsPackage</removesHediff>
+            </RecipeDef>
+
+            <!-- Install Salvage -->
+            <RecipeDef ParentName="Construct_SurgeryPackageBase">
+              <defName>Construct_InstallSalvagePackage</defName>
+              <label>install salvage augment</label>
+              <description>Surgically graft a salvage bioware augment into a construct's neural bus and skeletal frame.</description>
+              <workerClass>OrganicConstructs.Recipe_InstallConstructPackage</workerClass>
+              <jobString>Installing salvage bioware augment.</jobString>
+              <workAmount>3000</workAmount>
+              <skillRequirements><Medicine>6</Medicine></skillRequirements>
+              <ingredients>
+                <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+                <li><filter><thingDefs><li>Construct_SalvagePackageItem</li></thingDefs></filter><count>1</count></li>
+              </ingredients>
+              <fixedIngredientFilter>
+                <categories><li>Medicine</li></categories>
+                <thingDefs><li>Construct_SalvagePackageItem</li></thingDefs>
+              </fixedIngredientFilter>
+              <appliedOnFixedBodyParts><li>Brain</li></appliedOnFixedBodyParts>
+              <addsHediff>Construct_SalvagePackage</addsHediff>
+            </RecipeDef>
+
+            <!-- Remove Salvage -->
+            <RecipeDef ParentName="Construct_SurgeryPackageBase">
+              <defName>Construct_RemoveSalvagePackage</defName>
+              <label>remove salvage augment</label>
+              <description>Remove a salvage bioware augment safely.</description>
+              <workerClass>OrganicConstructs.Recipe_RemoveConstructPackage</workerClass>
+              <jobString>Removing salvage augment.</jobString>
+              <workAmount>2000</workAmount>
+              <skillRequirements><Medicine>5</Medicine></skillRequirements>
+              <ingredients>
+                <li><filter><categories><li>Medicine</li></categories></filter><count>1</count></li>
+              </ingredients>
+              <fixedIngredientFilter>
+                <categories><li>Medicine</li></categories>
+              </fixedIngredientFilter>
+              <removesHediff>Construct_SalvagePackage</removesHediff>
+            </RecipeDef>
+          </value>
+        </li>
+
+        <!-- ──────────────────────────────────────────────────────────────────
+             5. Augment Salvage / Recycle Recipes
+             ────────────────────────────────────────────────────────────────── -->
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/RecipeDef[defName="Salvage_ConstructAugment_Intermediate"]/ingredients/li/filter/thingDefs</xpath>
+          <value>
+            <li>Construct_GravOpsPackageItem</li>
+            <li>Construct_SalvagePackageItem</li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/RecipeDef[defName="Salvage_ConstructAugment_Intermediate"]/fixedIngredientFilter/thingDefs</xpath>
+          <value>
+            <li>Construct_GravOpsPackageItem</li>
+            <li>Construct_SalvagePackageItem</li>
+          </value>
+        </li>
+
+        <!-- ──────────────────────────────────────────────────────────────────
+             6. Link Bioware Crafting to ShipConstructSynthesizer
+             ────────────────────────────────────────────────────────────────── -->
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/RecipeDef[defName="Craft_Construct_GravOpsPackage" or defName="Craft_Construct_SalvagePackage"]/recipeUsers</xpath>
+          <value>
+            <li>ShipConstructSynthesizer</li>
+          </value>
+        </li>
+
+      </operations>
+    </match>
+  </Operation>
+
+</Patch>

@@ -43,7 +43,8 @@ namespace OrganicConstructs
             base.Notify_IterationCompleted(billDoer, ingredients);
 
             Building_ConstructSynthesizer bench = billDoer?.CurJob?.targetA.Thing as Building_ConstructSynthesizer
-                ?? (billDoer?.Map != null ? GenClosest.ClosestThingReachable(billDoer.Position, billDoer.Map, ThingRequest.ForDef(ConstructDefOf.ConstructSynthesizer), PathEndMode.Touch, TraverseParms.For(billDoer)) as Building_ConstructSynthesizer : null);
+                ?? (billDoer?.Map != null ? (GenClosest.ClosestThingReachable(billDoer.Position, billDoer.Map, ThingRequest.ForDef(ConstructDefOf.ConstructSynthesizer), PathEndMode.Touch, TraverseParms.For(billDoer)) as Building_ConstructSynthesizer
+                    ?? (DefDatabase<ThingDef>.GetNamedSilentFail("ShipConstructSynthesizer") != null ? GenClosest.ClosestThingReachable(billDoer.Position, billDoer.Map, ThingRequest.ForDef(DefDatabase<ThingDef>.GetNamedSilentFail("ShipConstructSynthesizer")), PathEndMode.Touch, TraverseParms.For(billDoer)) as Building_ConstructSynthesizer : null)) : null);
 
             CompGenomeBlueprint blueprint = bench?.LoadedBlueprintComp;
             if (blueprint == null || blueprint.genes.NullOrEmpty())
