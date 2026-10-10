@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ScenarioDef ParentName="ScenarioBase">
+    <defName>GravshipVanguard</defName>
+    <label>The Gravship Vanguard</label>
+    <description>A corporate exploration charter dispatched to the Rimworld to claim mineral stakes with a gravship prototype. The ship survived a catastrophic descent, leaving a single biological officer and two synthetic labor units with limited stores to restore flight capability.\n\nNote: Constructs age rapidly and require periodic stasis hibernation, but eliminate social disputes and do not trigger colonist grief when lost.</description>
+    <scenario>
+      <summary>One natural human supervisor and two base constructs with limited stores after a catastrophic gravship descent.</summary>
+      <parts>
+
+        <!-- Game start dialog -->
+        <li Class="ScenPart_GameStartDialog">
+          <def>GameStartDialog</def>
+          <text>Your corporate exploration expedition ended in disaster when atmospheric turbulence sheared your prototype vessel during entry. The ship crashed on this desolate world, its systems crippled.\n\nOnly you—the biological supervisor—and two synthetic base constructs survived the impact. With limited supplies and rapid cellular decay ticking down on your synthetic crew, you must establish an industrial bio-synthesis loop, secure power, and rebuild your operation.</text>
+          <closeSound>GameStartSting</closeSound>
+        </li>
+
+        <!-- Config pages: 1 Human Supervisor + 2 Base Constructs -->
+        <li Class="ScenPart_ConfigPage_ConfigureStartingPawns_Xenotypes">
+          <def>ConfigurePawnsXenotypes</def>
+          <pawnChoiceCount>8</pawnChoiceCount>
+          <customSummary>Start with 1 natural human supervisor and 2 base constructs.</customSummary>
+          <overrideKinds>
+            <li>
+              <xenotype>Construct_Base</xenotype>
+              <pawnKind>Construct_Colonist</pawnKind>
+            </li>
+          </overrideKinds>
+          <xenotypeCounts>
+            <li>
+              <xenotype>Baseliner</xenotype>
+              <count>1</count>
+              <description>biological supervisor</description>
+              <requiredAtStart>true</requiredAtStart>
+            </li>
+            <li>
+              <xenotype>Construct_Base</xenotype>
+              <count>2</count>
+              <description>synthetic labor units (Base Constructs)</description>
+              <requiredAtStart>true</requiredAtStart>
+            </li>
+          </xenotypeCounts>
+        </li>
+
+        <!-- Player starting stuff spawn method -->
+        <li Class="ScenPart_PlayerPawnsArriveMethod">
+          <def>PlayerPawnsArriveMethod</def>
+          <visible>false</visible>
+          <method>DropPods</method>
+        </li>
+
+        <!-- Starting Research: Tier 1 Field Bioproduction -->
+        <li Class="ScenPart_StartingResearch">
+          <def>StartingResearch</def>
+          <project>Construct_FieldBioproduction</project>
+        </li>
+
+        <!-- Starting Hardware & Deployable Components -->
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Steel</thingDef>
+          <count>450</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Plasteel</thingDef>
+          <count>80</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>ComponentIndustrial</thingDef>
+          <count>24</count>
+        </li>
+
+        <!-- Starting Consumables & Biological Reagents -->
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MedicineHerbal</thingDef>
+          <count>30</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Neutroamine</thingDef>
+          <count>15</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Chemfuel</thingDef>
+          <count>300</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MealSurvivalPack</thingDef>
+          <count>40</count>
+        </li>
+
+        <!-- Pre-burned Blank Neural Disc -->
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>NeuralBlueprintDisk</thingDef>
+          <count>1</count>
+        </li>
+
+        <!-- Starter Survival Equipment & Weapons -->
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Gun_Autopistol</thingDef>
+          <count>1</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MeleeWeapon_Knife</thingDef>
+          <stuff>Steel</stuff>
+          <count>2</count>
+        </li>
+
+        <!-- Scatter Ship Debris Near Start -->
+        <li Class="ScenPart_ScatterThingsNearPlayerStart">
+          <def>ScatterThingsNearPlayerStart</def>
+          <thingDef>Steel</thingDef>
+          <count>200</count>
+        </li>
+        <li Class="ScenPart_ScatterThingsNearPlayerStart">
+          <def>ScatterThingsNearPlayerStart</def>
+          <thingDef>ComponentIndustrial</thingDef>
+          <count>6</count>
+        </li>
+
+      </parts>
+    </scenario>
+  </ScenarioDef>
+
+</Defs>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="BasePlayerPawnKind">
+    <defName>Construct_Colonist</defName>
+    <label>construct</label>
+    <defaultFactionDef>PlayerColony</defaultFactionDef>
+    <xenotypeSet>
+      <xenotypeChances>
+        <Construct_Base>999</Construct_Base>
+      </xenotypeChances>
+    </xenotypeSet>
+    <useFactionXenotypes>false</useFactionXenotypes>
+    <chemicalAddictionChance>0</chemicalAddictionChance>
+    <apparelTags>
+      <li>IndustrialBasic</li>
+    </apparelTags>
+    <apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+    <apparelMoney>200~400</apparelMoney>
+    <backstoryCryptosleepCommonality>0</backstoryCryptosleepCommonality>
+    <backstoryFilters>
+      <li>
+        <categories>
+          <li>Construct</li>
+        </categories>
+      </li>
+    </backstoryFilters>
+    <initialResistanceRange>0~0</initialResistanceRange>
+    <initialWillRange>0~0</initialWillRange>
+    <forcedTraits>
+      <Psychopath>0</Psychopath>
+      <Trait_ConstructAsset>0</Trait_ConstructAsset>
+    </forcedTraits>
+  </PawnKindDef>
+
+</Defs>

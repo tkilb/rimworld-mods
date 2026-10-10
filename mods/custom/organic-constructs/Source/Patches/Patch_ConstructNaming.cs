@@ -13,7 +13,12 @@ namespace OrganicConstructs
         {
             if (__result != null && ConstructUtility.IsConstruct(__result))
             {
-                ConstructNameUtility.AssignConstructNameIfNeeded(__result);
+                ConstructUtility.ApplyConstructPhysiology(__result);
+                if (__result.Faction == Faction.OfPlayer || __result.kindDef?.defName == "Construct_Colonist")
+                {
+                    CompGrowthVatImprinter.ApplyBaselineSkills(__result);
+                    CompGrowthVatImprinter.WipePassions(__result);
+                }
             }
         }
     }

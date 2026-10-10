@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <XenotypeDef>
+    <defName>Construct_Base</defName>
+    <label>base construct</label>
+    <description>A mass-produced biological construct engineered from human genetic stock. Devoid of personal ambition, romance, and emotional volatility, constructs operate as resilient biological labor and defense units with mandatory sterility and rapid cellular senescence.</description>
+    <descriptionShort>Mass-produced artificial biological humans engineered for resilient industrial labor. Sterile, immune to disease, and devoid of emotional friction, but require periodic stasis hibernation cycles and age rapidly.</descriptionShort>
+    <iconPath>UI/Icons/Genes/Gene_ConstructPsychology</iconPath>
+    <inheritable>false</inheritable>
+    <displayPriority>600</displayPriority>
+    <factionlessGenerationWeight>0</factionlessGenerationWeight>
+    <genes>
+      <li>Instability_Major</li>
+      <li>Gene_MandatorySterility</li>
+      <li>Gene_ConstructHibernation</li>
+      <li>Immunity_SuperStrong</li>
+      <li>Pain_Reduced</li>
+      <li>Robust</li>
+      <li>MeleeDamage_Strong</li>
+      <li>MoveSpeed_Quick</li>
+      <li>WoundHealing_Fast</li>
+      <li>Superclotting</li>
+      <li>RobustDigestion</li>
+      <li>StrongStomach</li>
+      <li>PsychicAbility_Deaf</li>
+      <li>Beauty_VeryUgly</li>
+      <li>LowSleep</li>
+      <li>Learning_Slow</li>
+      <li>Hair_BaldOnly</li>
+      <li>Beard_NoBeardOnly</li>
+    </genes>
+  </XenotypeDef>
+
+</Defs>
