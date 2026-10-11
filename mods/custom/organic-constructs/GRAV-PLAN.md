@@ -129,28 +129,29 @@ Because constructs age ~3.3x faster than natural humans due to [`Instability_Maj
 
 ### Narrative Hook
 
-_A corporate exploration charter dispatched to the Rimworld to claim mineral stakes with a gravship prototype. The ship survived a catastrophic descent, leaving a single biological officer and two synthetic labor units with limited stores to restore flight capability._
+_Your gravship prototype sits docked at the orbital relay. As your crew begins salvaging operations, you trigger a mechanoid war beacon. A distant mechhive is hunting you now, and they will eventually find you wherever you go. With two biological officers and two synthetic labor units, you must flee the relay, establish surface operations, and keep your construct workforce alive._
 
 ### Scenario Roster
 
-- **1 Natural Human Officer (The Supervisor):**
-  - Normal human with full emotions, romance, traits, and passions.
+- **2 Natural Human Officers (Command & Oversight):**
+  - Normal humans with full emotions, romance, traits, and passions.
   - Capable of intellectual work, social diplomacy, and leadership.
 - **2 Base Constructs (`C-01` and `C-02`):**
-  - Age: Biological age 13 (freshly decanted, maximizing working years before rapid cell decay sets in).
+  - Freshly decanted synthetic units.
   - Baseline Blank Reflexes (Skill 3–4 across the board, 0 passions).
   - Trait: [`Trait_ConstructAsset`](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/spec.md#L85) (0 colonist grief upon loss).
 
-### Starting Equipment & Infrastructure
+### Starting Setup & Infrastructure
 
-- **Pre-Researched Tech:** Tier 1 _Field Bioproduction_ unlocked.
-- **Shipboard Hardware:**
-  - 1x Crashed/Damaged Gravship Hull (Grav Engine intact).
-  - 1x Damaged/Salvaged Auxiliary Synthesizer (or parts to deploy one).
-  - 1x Growth Cradle with built-in Imprinter.
-- **Starting Consumables:**
-  - 30x Herbal Medicine, 15x Neutroamine (starter biological reagents).
-  - 300x Chemfuel, 40x Packaged Survival Meals.
+- **Vessel & Location:**
+  - Docked at the Orbital Relay with an intact Gravship (`ScenPart_PlayerPawnsArriveMethod: Gravship`).
+  - Active Mechanoid Pursuit (`ScenPart_PursuingMechanoids`) and disabled signal beacon quest.
+- **Pre-Researched Tech:** `BasicGravtech`, `BiofuelRefining`, and Tier 1 `Construct_FieldBioproduction`.
+- **Starting Consumables & Supplies:**
+  - 150x Chemfuel, 250x Wood, 60x Survival Meals, 30x Industrial Meds, 20x Herbal Meds.
+  - 15x Neutroamine, 1x `NeuralBlueprintDisk`.
+  - Autopistol, Machine Pistol, Steel Breach Axe, Steel Knife.
+  - Scattered Gravlite panels, steel, and silver at the relay.
 
 ---
 

@@ -4,23 +4,40 @@
   <ScenarioDef ParentName="ScenarioBase">
     <defName>GravshipVanguard</defName>
     <label>The Gravship Vanguard</label>
-    <description>A corporate exploration charter dispatched to the Rimworld to claim mineral stakes with a gravship prototype. The ship survived a catastrophic descent, leaving a single biological officer and two synthetic labor units with limited stores to restore flight capability.\n\nNote: Constructs age rapidly and require periodic stasis hibernation, but eliminate social disputes and do not trigger colonist grief when lost.</description>
+    <description>Your gravship prototype sits docked at the orbital relay. As your crew begins salvaging operations, you trigger a mechanoid war beacon. A distant mechhive is hunting you now, and they will eventually find you wherever you go. With two biological officers and two synthetic labor units, you must flee the relay, establish surface operations, and keep your construct workforce alive.\n\nNote: Constructs age rapidly and require periodic stasis hibernation, but eliminate social disputes and do not trigger colonist grief when lost.</description>
     <scenario>
-      <summary>One natural human supervisor and two base constructs with limited stores after a catastrophic gravship descent.</summary>
-      <parts>
+      <summary>Two natural human officers and two base constructs hunted across the Rimworld by a mechanoid hive.</summary>
+      <playerFaction>
+        <factionDef>GravshipCrew</factionDef>
+      </playerFaction>
+      <parts Inherit="False">
+
+        <!-- Orbit Layer & Connections -->
+        <li Class="ScenPart_PlanetLayer">
+          <def>PlanetLayerFixed</def>
+          <tag>Orbit</tag>
+          <layer>Orbit</layer>
+          <settingsDef>Orbit</settingsDef>
+          <hide>true</hide>
+          <connections>
+            <Surface>
+              <zoomMode>ZoomIn</zoomMode>
+            </Surface>
+          </connections>
+        </li>
 
         <!-- Game start dialog -->
         <li Class="ScenPart_GameStartDialog">
           <def>GameStartDialog</def>
-          <text>Your corporate exploration expedition ended in disaster when atmospheric turbulence sheared your prototype vessel during entry. The ship crashed on this desolate world, its systems crippled.\n\nOnly you—the biological supervisor—and two synthetic base constructs survived the impact. With limited supplies and rapid cellular decay ticking down on your synthetic crew, you must establish an industrial bio-synthesis loop, secure power, and rebuild your operation.</text>
+          <text>You screwed up, and now the mechhive wants you dead. Its terrifying murder machines will arrive soon. Gather the valuable gravlite panels, then use your gravship to flee to a safe location on the planet below.\n\nTo launch the gravship, select the pilot console, then select the launch command.\n\nOn the world map, select 'view planet' to choose a landing spot on the planet.\n\nFrom now on, wherever you go, the mechanoids will eventually find you. With rapid cellular decay ticking down on your synthetic crew, you must maintain your vessel, secure an industrial bio-synthesis loop, and prepare to defeat the mechhive.</text>
           <closeSound>GameStartSting</closeSound>
         </li>
 
-        <!-- Config pages: 1 Human Supervisor + 2 Base Constructs -->
+        <!-- Config pages: 2 Human Officers + 2 Base Constructs -->
         <li Class="ScenPart_ConfigPage_ConfigureStartingPawns_Xenotypes">
           <def>ConfigurePawnsXenotypes</def>
           <pawnChoiceCount>8</pawnChoiceCount>
-          <customSummary>Start with 1 natural human supervisor and 2 base constructs.</customSummary>
+          <customSummary>Start with 2 natural human officers and 2 base constructs.</customSummary>
           <overrideKinds>
             <li>
               <xenotype>Construct_Base</xenotype>
@@ -30,8 +47,8 @@
           <xenotypeCounts>
             <li>
               <xenotype>Baseliner</xenotype>
-              <count>1</count>
-              <description>biological supervisor</description>
+              <count>2</count>
+              <description>biological officers</description>
               <requiredAtStart>true</requiredAtStart>
             </li>
             <li>
@@ -43,42 +60,81 @@
           </xenotypeCounts>
         </li>
 
-        <!-- Player starting stuff spawn method -->
-        <li Class="ScenPart_PlayerPawnsArriveMethod">
-          <def>PlayerPawnsArriveMethod</def>
-          <visible>false</visible>
-          <method>DropPods</method>
+        <!-- Forced Map: Orbital Relay -->
+        <li Class="ScenPart_ForcedMap">
+          <def>ForcedMap</def>
+          <mapGenerator>OrbitalRelay</mapGenerator>
+          <layerDef>Orbit</layerDef>
         </li>
 
-        <!-- Starting Research: Tier 1 Field Bioproduction -->
+        <!-- Player starting pawns arrive in Gravship -->
+        <li Class="ScenPart_PlayerPawnsArriveMethod">
+          <def>PlayerPawnsArriveMethod</def>
+          <method>Gravship</method>
+        </li>
+
+        <!-- Mechanoid Pursuit Mechanics -->
+        <li Class="ScenPart_PursuingMechanoids">
+          <def>PursuingMechanoids</def>
+        </li>
+
+        <li Class="ScenPart_DisableQuest">
+          <def>DisableQuest</def>
+          <questDef>MechanoidSignal</questDef>
+        </li>
+
+        <!-- Starting Research: Gravtech, Biofuel Refining, and Field Bioproduction -->
+        <li Class="ScenPart_StartingResearch">
+          <def>StartingResearch</def>
+          <project>BasicGravtech</project>
+        </li>
+        <li Class="ScenPart_StartingResearch">
+          <def>StartingResearch</def>
+          <project>BiofuelRefining</project>
+        </li>
         <li Class="ScenPart_StartingResearch">
           <def>StartingResearch</def>
           <project>Construct_FieldBioproduction</project>
         </li>
 
-        <!-- Starting Hardware & Deployable Components -->
+        <!-- Starting Fuel, Wood, and Supplies -->
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>Steel</thingDef>
-          <count>450</count>
+          <thingDef>Chemfuel</thingDef>
+          <count>150</count>
         </li>
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>Plasteel</thingDef>
-          <count>80</count>
+          <thingDef>WoodLog</thingDef>
+          <count>250</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MealSurvivalPack</thingDef>
+          <count>60</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MedicineIndustrial</thingDef>
+          <count>30</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MedicineHerbal</thingDef>
+          <count>20</count>
         </li>
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>ComponentIndustrial</thingDef>
-          <count>24</count>
+          <count>35</count>
         </li>
-
-        <!-- Starting Consumables & Biological Reagents -->
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>MedicineHerbal</thingDef>
-          <count>30</count>
+          <thingDef>Steel</thingDef>
+          <count>350</count>
         </li>
+
+        <!-- Biological Reagents & Blueprint -->
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>Neutroamine</thingDef>
@@ -86,45 +142,48 @@
         </li>
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>Chemfuel</thingDef>
-          <count>300</count>
-        </li>
-        <li Class="ScenPart_StartingThing_Defined">
-          <def>StartingThing_Defined</def>
-          <thingDef>MealSurvivalPack</thingDef>
-          <count>40</count>
-        </li>
-
-        <!-- Pre-burned Blank Neural Disc -->
-        <li Class="ScenPart_StartingThing_Defined">
-          <def>StartingThing_Defined</def>
           <thingDef>NeuralBlueprintDisk</thingDef>
           <count>1</count>
         </li>
 
-        <!-- Starter Survival Equipment & Weapons -->
+        <!-- Starter Weapons & Equipment -->
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>Gun_Autopistol</thingDef>
-          <count>1</count>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Gun_MachinePistol</thingDef>
+        </li>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MeleeWeapon_BreachAxe</thingDef>
+          <stuff>Steel</stuff>
         </li>
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>MeleeWeapon_Knife</thingDef>
           <stuff>Steel</stuff>
-          <count>2</count>
         </li>
 
-        <!-- Scatter Ship Debris Near Start -->
-        <li Class="ScenPart_ScatterThingsNearPlayerStart">
+        <!-- Scatter Salvage & Panels Near Player Start on Orbital Relay -->
+        <li Class="ScenPart_ScatterThingsAnywhere">
+          <def>ScatterThingsNearPlayerStart</def>
+          <thingDef>Silver</thingDef>
+          <count>300</count>
+          <allowRoofed>false</allowRoofed>
+        </li>
+        <li Class="ScenPart_ScatterThingsAnywhere">
           <def>ScatterThingsNearPlayerStart</def>
           <thingDef>Steel</thingDef>
-          <count>200</count>
+          <count>500</count>
+          <allowRoofed>false</allowRoofed>
         </li>
-        <li Class="ScenPart_ScatterThingsNearPlayerStart">
+        <li Class="ScenPart_ScatterThingsAnywhere">
           <def>ScatterThingsNearPlayerStart</def>
-          <thingDef>ComponentIndustrial</thingDef>
-          <count>6</count>
+          <thingDef>GravlitePanel</thingDef>
+          <count>400</count>
+          <allowRoofed>false</allowRoofed>
         </li>
 
       </parts>
