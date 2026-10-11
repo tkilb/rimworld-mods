@@ -88,19 +88,26 @@ func LoadEnvironment(repoRoot string) (*Environment, error) {
 	localEnvPath := filepath.Join(repoRoot, "config", "local.env")
 	readSimpleEnvFile(localEnvPath, envVars)
 
+	home, _ := os.UserHomeDir()
+
 	// Helper to resolve with priority: process environment > local.env > fallback
 	getVal := func(key, fallback string) string {
-		if val := os.Getenv(key); val != "" {
-			return val
+		val := fallback
+		if v, ok := envVars[key]; ok && v != "" {
+			val = v
 		}
-		if val, ok := envVars[key]; ok && val != "" {
-			return val
+		if v := os.Getenv(key); v != "" {
+			val = v
 		}
-		return fallback
+		// Expand environment variables and tilde
+		val = os.ExpandEnv(val)
+		if home != "" && (val == "~" || strings.HasPrefix(val, "~/")) {
+			val = filepath.Join(home, strings.TrimPrefix(val, "~/"))
+		}
+		return val
 	}
 
 	machine := getVal("MACHINE", "unknown")
-	home, _ := os.UserHomeDir()
 
 	env := &Environment{
 		Machine:       machine,

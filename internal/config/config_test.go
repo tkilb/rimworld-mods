@@ -7,6 +7,14 @@ import (
 )
 
 func TestLoadEnvironment(t *testing.T) {
+	origMachine := os.Getenv("MACHINE")
+	os.Unsetenv("MACHINE")
+	defer func() {
+		if origMachine != "" {
+			_ = os.Setenv("MACHINE", origMachine)
+		}
+	}()
+
 	tmpDir := t.TempDir()
 	configDir := filepath.Join(tmpDir, "config")
 	if err := os.MkdirAll(configDir, 0755); err != nil {
