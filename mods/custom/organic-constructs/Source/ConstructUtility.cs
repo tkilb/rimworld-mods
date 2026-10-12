@@ -1,4 +1,5 @@
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace OrganicConstructs
@@ -8,6 +9,11 @@ namespace OrganicConstructs
         public static bool IsConstruct(Pawn pawn)
         {
             if (pawn == null) return false;
+
+            if (pawn.kindDef?.defName == "Construct_Colonist" || pawn.kindDef?.defName == "Construct_CrewMember")
+            {
+                return true;
+            }
 
             if (pawn.story != null)
             {
@@ -92,18 +98,21 @@ namespace OrganicConstructs
                 }
             }
 
-            if (pawn.story.traits != null)
+            if (pawn.story?.traits != null)
             {
+                // Clear any randomly rolled human personality traits so they don't introduce unwanted stat/skill modifiers
+                pawn.story.traits.allTraits.Clear();
+
                 TraitDef traitAsset = ConstructDefOf.Trait_ConstructAsset 
                     ?? NeuralImprintDefOf.Trait_ConstructAsset 
                     ?? DefDatabase<TraitDef>.GetNamedSilentFail("Trait_ConstructAsset");
-                if (traitAsset != null && !pawn.story.traits.HasTrait(traitAsset))
+                if (traitAsset != null)
                 {
                     pawn.story.traits.GainTrait(new Trait(traitAsset));
                 }
 
                 TraitDef psychopathDef = TraitDefOf.Psychopath;
-                if (psychopathDef != null && !pawn.story.traits.HasTrait(psychopathDef))
+                if (psychopathDef != null)
                 {
                     pawn.story.traits.GainTrait(new Trait(psychopathDef));
                 }
@@ -144,6 +153,14 @@ namespace OrganicConstructs
                 {
                     pawn.story.bodyType = BodyTypeDefOf.Thin;
                 }
+                // Uniform light brown (latino) synthetic dermal tone
+                pawn.story.skinColorOverride = new Color(205f / 255f, 155f / 255f, 115f / 255f);
+
+                HeadTypeDef neutralHead = DefDatabase<HeadTypeDef>.GetNamedSilentFail("Male_AverageNormal");
+                if (neutralHead != null)
+                {
+                    pawn.story.headType = neutralHead;
+                }
             }
 
             if (pawn.style != null && !hasCustomBeardGene)
@@ -157,9 +174,24 @@ namespace OrganicConstructs
             if (pawn.genes != null)
             {
                 XenotypeDef constructXenotype = DefDatabase<XenotypeDef>.GetNamedSilentFail("Construct_Base");
-                if (constructXenotype != null && (pawn.genes.Xenotype == null || pawn.genes.Xenotype == XenotypeDefOf.Baseliner))
+                if (constructXenotype != null)
                 {
-                    pawn.genes.SetXenotypeDirect(constructXenotype);
+                    if (pawn.genes.Xenotype != constructXenotype)
+                    {
+                        pawn.genes.SetXenotype(constructXenotype);
+                    }
+
+                    GeneDef thinGene = DefDatabase<GeneDef>.GetNamedSilentFail("Body_Thin");
+                    if (thinGene != null && !pawn.genes.HasActiveGene(thinGene))
+                    {
+                        pawn.genes.AddGene(thinGene, xenogene: false);
+                    }
+
+                    GeneDef skinGene = DefDatabase<GeneDef>.GetNamedSilentFail("Skin_ConstructTan");
+                    if (skinGene != null && !pawn.genes.HasActiveGene(skinGene))
+                    {
+                        pawn.genes.AddGene(skinGene, xenogene: false);
+                    }
                 }
             }
 

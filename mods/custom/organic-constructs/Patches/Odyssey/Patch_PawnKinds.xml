@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Odyssey Gravship Crew PawnKinds: Space-rated with Vacsuit
+       Conditionally loaded only when Ludeon.RimWorld.Odyssey is active.
+       ════════════════════════════════════════════════════════════════════════ -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Ludeon.RimWorld.Odyssey</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs</xpath>
+          <value>
+            <!-- 1. Space-rated Construct Crew Member -->
+            <PawnKindDef ParentName="Construct_Colonist">
+              <defName>Construct_CrewMember</defName>
+              <label>construct</label>
+              <defaultFactionDef>GravshipCrew</defaultFactionDef>
+              <apparelColor>(255,255,255)</apparelColor>
+              <apparelTags Inherit="False">
+                <li>Vacsuit</li>
+              </apparelTags>
+              <ignoreApparelAllowChance>true</ignoreApparelAllowChance>
+              <apparelAllowHeadgearChance>1</apparelAllowHeadgearChance>
+              <specificApparelRequirements>
+                <li>
+                  <bodyPartGroup>FullHead</bodyPartGroup>
+                  <requiredTag>Vacsuit</requiredTag>
+                </li>
+                <li>
+                  <bodyPartGroup>Torso</bodyPartGroup>
+                  <requiredTag>Vacsuit</requiredTag>
+                </li>
+              </specificApparelRequirements>
+              <apparelMoney>1500~2000</apparelMoney>
+            </PawnKindDef>
+
+            <!-- 2. Gravship Captain (Female Officer: High Intellectual, Medicine, Social, Crafting) -->
+            <PawnKindDef ParentName="CrewMember">
+              <defName>Gravship_Captain</defName>
+              <label>gravship captain</label>
+              <fixedGender>Female</fixedGender>
+              <skills>
+                <li>
+                  <skill>Intellectual</skill>
+                  <range>8~15</range>
+                </li>
+                <li>
+                  <skill>Medicine</skill>
+                  <range>7~14</range>
+                </li>
+                <li>
+                  <skill>Social</skill>
+                  <range>7~14</range>
+                </li>
+                <li>
+                  <skill>Crafting</skill>
+                  <range>6~12</range>
+                </li>
+              </skills>
+            </PawnKindDef>
+
+            <!-- 3. Gravship Specialist (Male Officer: High Mining, Construction, Crafting, Shooting) -->
+            <PawnKindDef ParentName="CrewMember">
+              <defName>Gravship_Specialist</defName>
+              <label>gravship specialist</label>
+              <fixedGender>Male</fixedGender>
+              <skills>
+                <li>
+                  <skill>Mining</skill>
+                  <range>7~15</range>
+                </li>
+                <li>
+                  <skill>Construction</skill>
+                  <range>8~16</range>
+                </li>
+                <li>
+                  <skill>Crafting</skill>
+                  <range>6~14</range>
+                </li>
+                <li>
+                  <skill>Shooting</skill>
+                  <range>7~14</range>
+                </li>
+              </skills>
+            </PawnKindDef>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
+</Patch>

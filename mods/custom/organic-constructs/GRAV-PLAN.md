@@ -146,7 +146,7 @@ _Your gravship prototype sits docked at the orbital relay. As your crew begins s
 - **Vessel & Location:**
   - Docked at the Orbital Relay with an intact Gravship (`ScenPart_PlayerPawnsArriveMethod: Gravship`).
   - Active Mechanoid Pursuit (`ScenPart_PursuingMechanoids`) and disabled signal beacon quest.
-- **Pre-Researched Tech:** `BasicGravtech`, `BiofuelRefining`, and Tier 1 `Construct_FieldBioproduction`.
+- **Pre-Researched Tech:** `BasicGravtech`, `BiofuelRefining`, `GrowthVats`, and Tier 1 `Construct_FieldBioproduction`.
 - **Starting Consumables & Supplies:**
   - 150x Chemfuel, 250x Wood, 60x Survival Meals, 30x Industrial Meds, 20x Herbal Meds.
   - 15x Neutroamine, 1x `NeuralBlueprintDisk`.

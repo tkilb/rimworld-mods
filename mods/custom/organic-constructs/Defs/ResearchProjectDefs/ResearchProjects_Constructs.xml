@@ -9,11 +9,13 @@
     <label>field bioproduction</label>
     <description>Assemble basic biological synthesis equipment to culture un-spliced Base Construct embryos directly from raw biological matter and stabilizing reagents.</description>
     <baseCost>600</baseCost>
-    <techLevel>Industrial</techLevel>
+    <techLevel>Spacer</techLevel>
     <prerequisites>
       <li>Electricity</li>
+      <li>GrowthVats</li>
     </prerequisites>
-    <researchViewX>7.5</researchViewX>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>13.0</researchViewX>
     <researchViewY>3.5</researchViewY>
   </ResearchProjectDef>
 

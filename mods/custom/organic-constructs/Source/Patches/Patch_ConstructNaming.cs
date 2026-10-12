@@ -14,7 +14,7 @@ namespace OrganicConstructs
             if (__result != null && ConstructUtility.IsConstruct(__result))
             {
                 ConstructUtility.ApplyConstructPhysiology(__result);
-                if (__result.Faction == Faction.OfPlayer || __result.kindDef?.defName == "Construct_Colonist")
+                if (__result.Faction == Faction.OfPlayer || __result.kindDef?.defName == "Construct_Colonist" || __result.kindDef?.defName == "Construct_CrewMember")
                 {
                     CompGrowthVatImprinter.ApplyBaselineSkills(__result);
                     CompGrowthVatImprinter.WipePassions(__result);

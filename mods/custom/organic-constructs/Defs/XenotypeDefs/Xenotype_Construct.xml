@@ -29,6 +29,8 @@
       <li>Learning_Slow</li>
       <li>Hair_BaldOnly</li>
       <li>Beard_NoBeardOnly</li>
+      <li>Body_Thin</li>
+      <li>Skin_ConstructTan</li>
     </genes>
   </XenotypeDef>
 

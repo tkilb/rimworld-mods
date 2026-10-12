@@ -163,6 +163,26 @@ namespace OrganicConstructs
                         embryo.GeneSet.AddGene(noBeard);
                     }
                 }
+
+                bool hasBodyGene = embryo.GeneSet.GenesListForReading.Any(g => g.bodyType != null);
+                if (!hasBodyGene)
+                {
+                    GeneDef thin = DefDatabase<GeneDef>.GetNamedSilentFail("Body_Thin");
+                    if (thin != null && !embryo.GeneSet.GenesListForReading.Contains(thin))
+                    {
+                        embryo.GeneSet.AddGene(thin);
+                    }
+                }
+
+                bool hasSkinGene = embryo.GeneSet.GenesListForReading.Any(g => g.skinColorOverride != null);
+                if (!hasSkinGene)
+                {
+                    GeneDef skin = DefDatabase<GeneDef>.GetNamedSilentFail("Skin_ConstructTan");
+                    if (skin != null && !embryo.GeneSet.GenesListForReading.Contains(skin))
+                    {
+                        embryo.GeneSet.AddGene(skin);
+                    }
+                }
             }
 
             if (map != null && dropLoc.IsValid)

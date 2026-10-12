@@ -33,31 +33,31 @@
           <closeSound>GameStartSting</closeSound>
         </li>
 
-        <!-- Config pages: 2 Human Officers + 2 Base Constructs -->
-        <li Class="ScenPart_ConfigPage_ConfigureStartingPawns_Xenotypes">
-          <def>ConfigurePawnsXenotypes</def>
+        <!-- Config pages: Captain, Specialist, and 2 Base Constructs -->
+        <li Class="ScenPart_ConfigPage_ConfigureStartingPawns_KindDefs">
+          <def>ConfigurePawnsKindDefs</def>
           <pawnChoiceCount>8</pawnChoiceCount>
-          <customSummary>Start with 2 natural human officers and 2 base constructs.</customSummary>
-          <overrideKinds>
+          <customSummary>Start with 2 human officers (Female Captain and Male Specialist) and 2 base constructs.</customSummary>
+          <kindCounts>
             <li>
-              <xenotype>Construct_Base</xenotype>
-              <pawnKind>Construct_Colonist</pawnKind>
-            </li>
-          </overrideKinds>
-          <xenotypeCounts>
-            <li>
-              <xenotype>Baseliner</xenotype>
-              <count>2</count>
-              <description>biological officers</description>
+              <kindDef>Gravship_Captain</kindDef>
+              <count>1</count>
               <requiredAtStart>true</requiredAtStart>
+              <description>captain (female, high intellectual, medicine, social, crafting)</description>
             </li>
             <li>
-              <xenotype>Construct_Base</xenotype>
-              <count>2</count>
-              <description>synthetic labor units (Base Constructs)</description>
+              <kindDef>Gravship_Specialist</kindDef>
+              <count>1</count>
               <requiredAtStart>true</requiredAtStart>
+              <description>specialist (male, high mining, construction, crafting, shooting)</description>
             </li>
-          </xenotypeCounts>
+            <li>
+              <kindDef>Construct_CrewMember</kindDef>
+              <count>2</count>
+              <requiredAtStart>true</requiredAtStart>
+              <description>base constructs (synthetic labor units)</description>
+            </li>
+          </kindCounts>
         </li>
 
         <!-- Forced Map: Orbital Relay -->
@@ -83,7 +83,7 @@
           <questDef>MechanoidSignal</questDef>
         </li>
 
-        <!-- Starting Research: Gravtech, Biofuel Refining, and Field Bioproduction -->
+        <!-- Starting Research: Gravtech, Biofuel Refining, Growth Vats, and Field Bioproduction -->
         <li Class="ScenPart_StartingResearch">
           <def>StartingResearch</def>
           <project>BasicGravtech</project>
@@ -91,6 +91,10 @@
         <li Class="ScenPart_StartingResearch">
           <def>StartingResearch</def>
           <project>BiofuelRefining</project>
+        </li>
+        <li Class="ScenPart_StartingResearch">
+          <def>StartingResearch</def>
+          <project>GrowthVats</project>
         </li>
         <li Class="ScenPart_StartingResearch">
           <def>StartingResearch</def>

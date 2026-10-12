@@ -27,7 +27,9 @@ namespace OrganicConstructs
             "LowSleep",
             "Learning_Slow",
             "Hair_BaldOnly",
-            "Beard_NoBeardOnly"
+            "Beard_NoBeardOnly",
+            "Body_Thin",
+            "Skin_ConstructTan"
         };
 
         public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)

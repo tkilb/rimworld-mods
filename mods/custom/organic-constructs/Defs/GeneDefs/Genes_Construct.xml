@@ -51,4 +51,16 @@
     </customEffectDescriptions>
   </GeneDef>
 
+  <GeneDef ParentName="GeneSkinColorOverride">
+    <defName>Skin_ConstructTan</defName>
+    <label>construct complexion</label>
+    <description>Uniform synthetic dermal pigmentation engineered for constructs, providing a consistent light brown complexion.</description>
+    <skinColorOverride>(205, 155, 115)</skinColorOverride>
+    <randomBrightnessFactor>0</randomBrightnessFactor>
+    <biostatCpx>0</biostatCpx>
+    <biostatMet>0</biostatMet>
+    <displayCategory>Construct_GeneCategory</displayCategory>
+    <displayOrderInCategory>15</displayOrderInCategory>
+  </GeneDef>
+
 </Defs>
