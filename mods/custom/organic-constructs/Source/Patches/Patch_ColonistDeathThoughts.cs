@@ -79,12 +79,44 @@ namespace OrganicConstructs
     }
 
     /// <summary>
-    /// Constructs are 100% synthetic biological humans devoid of sentimentality and social disgust.
-    /// Suppresses all cannibalism, human meat consumption, and humanlike butchering mood debuffs.
+    /// Constructs are 100% synthetic biological humans devoid of sentimentality, social disgust, and emotional frailty.
+    /// Suppresses all cannibalism, butchering, corpse observation, and witnessing death mood debuffs.
     /// </summary>
     [HarmonyPatch(typeof(MemoryThoughtHandler), nameof(MemoryThoughtHandler.TryGainMemory), new[] { typeof(Thought_Memory), typeof(Pawn) })]
-    public static class Patch_MemoryThoughtHandler_ConstructCannibalism
+    public static class Patch_MemoryThoughtHandler_ConstructMemories
     {
+        private static readonly HashSet<string> SuppressedThoughts = new HashSet<string>
+        {
+            // Cannibalism & Butchering
+            "AteHumanlikeMeatDirect",
+            "AteHumanlikeMeatAsIngredient",
+            "AteRawHumanlikeMeat",
+            "ButcheredHumanlikeCorpse",
+            "KnowButcheredHumanlikeCorpse",
+
+            // Corpse Observation
+            "ObservedLayingCorpse",
+            "ObservedLayingRottingCorpse",
+            "ObservedGibbetCage",
+            "ObservedSkullspike",
+
+            // Witnessing Death
+            "WitnessedDeathAlly",
+            "WitnessedDeathNonAlly",
+            "WitnessedDeathFamily",
+
+            // Insect Meat
+            "AteInsectMeatDirect",
+            "AteInsectMeatAsIngredient",
+
+            // Bedroom & Sleeping Arrangements
+            "SleptInBedroom",
+            "SleptInBarracks",
+            "SleepDisturbed",
+            "SleptOutside",
+            "SleptOnGround"
+        };
+
         [HarmonyPrefix]
         public static bool Prefix(MemoryThoughtHandler __instance, Thought_Memory newThought)
         {
@@ -92,12 +124,7 @@ namespace OrganicConstructs
             {
                 if (ConstructUtility.IsConstruct(__instance.pawn))
                 {
-                    string defName = newThought.def.defName;
-                    if (defName == "AteHumanlikeMeatDirect" ||
-                        defName == "AteHumanlikeMeatAsIngredient" ||
-                        defName == "AteRawHumanlikeMeat" ||
-                        defName == "ButcheredHumanlikeCorpse" ||
-                        defName == "KnowButcheredHumanlikeCorpse")
+                    if (SuppressedThoughts.Contains(newThought.def.defName))
                     {
                         return false;
                     }

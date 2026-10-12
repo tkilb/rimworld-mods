@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Construct Asset Trait Nullification: Corpse Observation & Witnessing Death
+       Nullifies observed corpses and death witnessing thoughts for constructs.
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Add Trait_ConstructAsset to nullifyingTraits for Core corpse observation and death witnessing -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThoughtDef[defName="ObservedLayingCorpse" or defName="ObservedLayingRottingCorpse" or defName="WitnessedDeathAlly" or defName="WitnessedDeathNonAlly" or defName="WitnessedDeathFamily"]/nullifyingTraits</xpath>
+    <value>
+      <li>Trait_ConstructAsset</li>
+    </value>
+  </Operation>
+
+  <!-- Ideology: Nullify observed gibbet cage and skullspike -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Ludeon.RimWorld.Ideology</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <!-- ObservedGibbetCage -->
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThoughtDef[defName="ObservedGibbetCage"]/nullifyingTraits</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>/Defs/ThoughtDef[defName="ObservedGibbetCage"]/nullifyingTraits</xpath>
+            <value>
+              <li>Trait_ConstructAsset</li>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThoughtDef[defName="ObservedGibbetCage"]</xpath>
+            <value>
+              <nullifyingTraits>
+                <li>Trait_ConstructAsset</li>
+              </nullifyingTraits>
+            </value>
+          </nomatch>
+        </li>
+
+        <!-- ObservedSkullspike -->
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThoughtDef[defName="ObservedSkullspike"]/nullifyingTraits</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>/Defs/ThoughtDef[defName="ObservedSkullspike"]/nullifyingTraits</xpath>
+            <value>
+              <li>Trait_ConstructAsset</li>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThoughtDef[defName="ObservedSkullspike"]</xpath>
+            <value>
+              <nullifyingTraits>
+                <li>Trait_ConstructAsset</li>
+              </nullifyingTraits>
+            </value>
+          </nomatch>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
+  <!-- Core: Nullify insect meat eating thoughts -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <!-- Core: Nullify bedroom and sleeping arrangement thoughts -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="SleptInBedroom"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptInBedroom"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptInBedroom"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="SleptInBarracks"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptInBarracks"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptInBarracks"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="SleepDisturbed"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleepDisturbed"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleepDisturbed"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="SleptOutside"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptOutside"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptOutside"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="SleptOnGround"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptOnGround"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="SleptOnGround"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

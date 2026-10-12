@@ -13,6 +13,13 @@ dlcs:
   odyssey: true
 
 mods:
+  launchsitesexpire:
+    name: "Launch Sites Expire"
+    source: steam_workshop
+    workshop_id: "3525571078"
+    package_id: "cass.LaunchSitesExpire"
+    enabled: true
+    description: "A small mod that allows gravship launch sites to expire after a time, preventing them from cluttering the map forever.  By default functions in the same way as abandoned camps, only removing sites that aren't located on a landmark. This can be configured, as well as the number of days launch sites p"
   vanillabionicsexpansion:
     name: "[FSF] Vanilla Bionics Expansion"
     source: steam_workshop
@@ -26,7 +33,7 @@ mods:
     source: steam_workshop
     workshop_id: "3014906877"
     package_id: "OskarPotocki.VanillaVehiclesExpanded"
-    enabled: true
+    enabled: false
     description: "Vanilla Vehicles Expanded is a long awaited mod utilising Smash Phil’s Vehicles framework. The main purpose of the mod is to add realistic and engaging mechanics surrounding vehicles of all kinds into the game. Not just the cars, but boats and airplanes too, this mod comes packed full of content and"
 
   simplesidearms:
@@ -50,7 +57,7 @@ mods:
     source: steam_workshop
     workshop_id: "3014915404"
     package_id: "SmashPhil.VehicleFramework"
-    enabled: true
+    enabled: false
     description: "Framework which allows the creation of vehicles in RimWorld."
 
   vanillafactionsexpandedcore:
@@ -116,6 +123,14 @@ mods:
     enabled: true
     description: "Allows minifying and reinstalling nearly all buildings and furniture."
 
+  charactereditor:
+    name: "Character Editor"
+    source: steam_workshop
+    workshop_id: "1874644848"
+    package_id: "void.charactereditor"
+    enabled: true
+    description: "Allows full in-game editing of humanlike pawns including appearance, skills, and traits."
+
   # Custom Authoring Mods
   gene-splicer:
     name: "Gene Splicer"
@@ -130,4 +145,3 @@ mods:
     package_id: "tyler.organicconstructs"
     enabled: true
     description: "Manufacture 100% biological artificial humans from living tissue."
-

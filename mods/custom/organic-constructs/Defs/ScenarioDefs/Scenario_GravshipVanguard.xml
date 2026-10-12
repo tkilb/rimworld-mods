@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ScenarioDef ParentName="ScenarioBase">
+  <ScenarioDef ParentName="ScenarioBase" MayRequire="Ludeon.RimWorld.Odyssey">
     <defName>GravshipVanguard</defName>
     <label>The Gravship Vanguard</label>
     <description>Your gravship prototype sits docked at the orbital relay. As your crew begins salvaging operations, you trigger a mechanoid war beacon. A distant mechhive is hunting you now, and they will eventually find you wherever you go. With two biological officers and two synthetic labor units, you must flee the relay, establish surface operations, and keep your construct workforce alive.\n\nNote: Constructs age rapidly and require periodic stasis hibernation, but eliminate social disputes and do not trigger colonist grief when lost.</description>
@@ -37,25 +37,21 @@
         <li Class="ScenPart_ConfigPage_ConfigureStartingPawns_KindDefs">
           <def>ConfigurePawnsKindDefs</def>
           <pawnChoiceCount>8</pawnChoiceCount>
-          <customSummary>Start with 2 human officers (Female Captain and Male Specialist) and 2 base constructs.</customSummary>
           <kindCounts>
             <li>
               <kindDef>Gravship_Captain</kindDef>
               <count>1</count>
               <requiredAtStart>true</requiredAtStart>
-              <description>captain (female, high intellectual, medicine, social, crafting)</description>
             </li>
             <li>
               <kindDef>Gravship_Specialist</kindDef>
               <count>1</count>
               <requiredAtStart>true</requiredAtStart>
-              <description>specialist (male, high mining, construction, crafting, shooting)</description>
             </li>
             <li>
               <kindDef>Construct_CrewMember</kindDef>
               <count>2</count>
               <requiredAtStart>true</requiredAtStart>
-              <description>base constructs (synthetic labor units)</description>
             </li>
           </kindCounts>
         </li>

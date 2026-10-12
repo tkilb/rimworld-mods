@@ -21,7 +21,7 @@ namespace OrganicConstructs
         {
             get
             {
-                if (!Spawned) return false;
+                if (!Spawned || Map == null) return false;
                 for (int i = 0; i < SleepingSlotsCount; i++)
                 {
                     if (GetCurOccupant(i) != null)
@@ -35,7 +35,7 @@ namespace OrganicConstructs
         {
             get
             {
-                if (activeGraphicInt == null && def.graphicData != null)
+                if (activeGraphicInt == null && def?.graphicData != null)
                 {
                     string activePath = def.graphicData.texPath + "_active";
                     activeGraphicInt = GraphicDatabase.Get<Graphic_Multi>(
@@ -54,7 +54,7 @@ namespace OrganicConstructs
         {
             get
             {
-                if (IsOccupied)
+                if (Spawned && IsOccupied)
                 {
                     Graphic g = ActiveGraphic;
                     if (g != null) return g;

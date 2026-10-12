@@ -119,6 +119,7 @@
     <designationCategory>Biotech</designationCategory>
     <uiOrder>2605</uiOrder>
     <hasInteractionCell>false</hasInteractionCell>
+    <placeWorkers Inherit="False" />
     <researchPrerequisites>
       <li>Construct_FieldBioproduction</li>
     </researchPrerequisites>
