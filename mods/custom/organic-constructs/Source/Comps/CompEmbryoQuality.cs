@@ -12,7 +12,6 @@ namespace OrganicConstructs
 
         public int editCount = 0;
         public bool isConstruct = false;
-        public bool designatedForRecycling = false;
         public string blueprintLabel = null;
 
         public override void PostExposeData()
@@ -20,7 +19,6 @@ namespace OrganicConstructs
             base.PostExposeData();
             Scribe_Values.Look(ref editCount, "editCount", 0);
             Scribe_Values.Look(ref isConstruct, "isConstruct", false);
-            Scribe_Values.Look(ref designatedForRecycling, "designatedForRecycling", false);
             Scribe_Values.Look(ref blueprintLabel, "blueprintLabel");
         }
 
@@ -53,11 +51,6 @@ namespace OrganicConstructs
             if (editCount > 0)
             {
                 sb.AppendLine($"Genome Imprints: {editCount} / 2");
-            }
-
-            if (designatedForRecycling)
-            {
-                sb.Append("[Designated for Biomass Recycling]");
             }
 
             return sb.ToString().TrimEndNewlines();
@@ -99,16 +92,6 @@ namespace OrganicConstructs
                     }
                 };
             }
-
-            // Manual recycle designation toggle
-            yield return new Command_Toggle
-            {
-                defaultLabel = designatedForRecycling ? "Cancel Recycle Order" : "Designate for Recycling",
-                defaultDesc = "Toggle manual designation for biomass liquefaction into Genetic Nutrient Paste.",
-                icon = parent?.def?.uiIcon,
-                isActive = () => designatedForRecycling,
-                toggleAction = () => designatedForRecycling = !designatedForRecycling
-            };
         }
     }
 }

@@ -88,7 +88,6 @@ Every construct in the colony is defined by three distinct, layered systems:
 | **Medical Bioware Package** | `Construct_MedicalPackage_*` | Bioware suite enhancing medical tend quality, surgery success, and immunity gain speed. |
 | **Industrial Bioware Package** | `Construct_IndustrialPackage_*` | Heavy-duty bioware suite boosting mining yield, construction speed, and toxic resistance. |
 | **Laborer Bioware Package** | `Construct_LaborerPackage_*` | Endurance bioware suite boosting work speed, movement, and general hauling capacity. |
-| **Genetic Nutrient Paste** | `GeneticNutrientPaste` | High-purity recycled biomass slurry recovered from discarded or collapsed embryos, used to synthesize fresh matrices. |
 
 ---
 

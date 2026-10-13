@@ -56,4 +56,62 @@ namespace OrganicConstructs
             }
         }
     }
+
+    /// <summary>
+    /// Intercepts apparel graphic lookup to guarantee constructs never resolve with Baby bodyType,
+    /// preventing missing texture red X artifacts on torso (e.g. Parka_Baby).
+    /// </summary>
+    [HarmonyPatch(typeof(ApparelGraphicRecordGetter), nameof(ApparelGraphicRecordGetter.TryGetGraphicApparel))]
+    public static class Patch_ApparelGraphicRecordGetter_TryGetGraphicApparel
+    {
+        [HarmonyPrefix]
+        public static void Prefix(Apparel apparel, ref BodyTypeDef bodyType)
+        {
+            if (bodyType == BodyTypeDefOf.Baby)
+            {
+                Pawn wearer = apparel?.Wearer;
+                if (wearer != null && ConstructUtility.IsConstruct(wearer))
+                {
+                    bodyType = BodyTypeDefOf.Thin;
+                    ConstructUtility.SanitizeConstructPhysiology(wearer);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sanitizes construct body type and visuals upon spawning or reloading from a saved game.
+    /// </summary>
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.SpawnSetup))]
+    public static class Patch_Pawn_SpawnSetup
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn __instance)
+        {
+            if (__instance != null && ConstructUtility.IsConstruct(__instance))
+            {
+                ConstructUtility.SanitizeConstructPhysiology(__instance);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Automatically corrects stale Baby body types serialized in older save games when loading.
+    /// </summary>
+    [HarmonyPatch(typeof(Pawn_StoryTracker), nameof(Pawn_StoryTracker.ExposeData))]
+    public static class Patch_Pawn_StoryTracker_ExposeData
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn_StoryTracker __instance)
+        {
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
+                if (pawn != null && ConstructUtility.IsConstruct(pawn))
+                {
+                    ConstructUtility.SanitizeConstructPhysiology(pawn);
+                }
+            }
+        }
+    }
 }

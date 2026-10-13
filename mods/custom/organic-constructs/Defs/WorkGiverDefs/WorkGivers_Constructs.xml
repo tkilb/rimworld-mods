@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <!-- ════════════════════════════════════════════════════════════════════════
-       WorkGiver: Embryo Biomass Liquefaction
-       Assigned to Doctors work type. Auto-queues for screen/recycled embryos.
-       ════════════════════════════════════════════════════════════════════════ -->
-  <WorkGiverDef>
-    <defName>Construct_RecycleEmbryo</defName>
-    <label>liquefy embryo biomass</label>
-    <giverClass>OrganicConstructs.WorkGiver_RecycleEmbryo</giverClass>
-    <workType>Doctor</workType>
-    <priorityInType>40</priorityInType>
-    <verb>liquefy</verb>
-    <gerund>liquefying embryo biomass</gerund>
-    <requiredCapacities>
-      <li>Manipulation</li>
-    </requiredCapacities>
-  </WorkGiverDef>
 
   <!-- ════════════════════════════════════════════════════════════════════════
        WorkGiver: Do Bills at Construct Synthesizer (Research / Intellectual)

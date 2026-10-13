@@ -71,6 +71,7 @@ As defined in [`GEMINI.md`](file:///home/tylerkilburn/Git/rimworld-mods/GEMINI.m
 - **Never Commit Code:** Do not run `git commit` or suggest committing automatically; the user manages git commits manually.
 - **No Remote Network Mutations:** Do not run mutating remote operations (e.g., `git push`, external cloud API state mutations) without explicit user authorization.
 - **Steam Deck Sync Confirmation:** Modifying files on the remote Steam Deck (`make sync-deck`) mutates remote target state. Run dry-runs (`make sync-deck-dry-run`) first or confirm before running mutating syncs.
+- **No DLL Crawling / Decompilation:** Never crawl, disassemble, inspect IL tokens of, or reflect into compiled binary DLLs (e.g. `Assembly-CSharp.dll`, engine assemblies). All modding decisions, logic, and debugging must be derived from mod source code, game XML definitions, documentation, and observable mod state. If internal game engine behavior is uncertain, state the hypothesis directly and ask or test via normal mod logic rather than launching disassembly scripts.
 
 ---
 
@@ -93,7 +94,7 @@ As defined in [`GEMINI.md`](file:///home/tylerkilburn/Git/rimworld-mods/GEMINI.m
 
 ### RimWorld Custom Mod Development
 - **XML-Driven Configuration:** Custom genes, numerical balance values, skill gates, time intervals, and tuning factors must be defined in XML (standard Def fields, `DefModExtension`s, or custom `Def` classes) rather than hardcoded in C# logic.
-- **Target Framework:** C# mod projects target `.NET Framework 4.7.2` using RimWorld's public assemblies (`Assembly-CSharp.dll`) and `0Harmony.dll`.
+- **Target Framework & Game Version:** C# mod projects target `RimWorld 1.6` (`.NET Framework 4.7.2`) using RimWorld's public assemblies (`Assembly-CSharp.dll`) and `0Harmony.dll`.
 
 ### Documentation Maintenance
 - Maintain documentation integrity: root [`README.md`](file:///home/tylerkilburn/Git/rimworld-mods/README.md) is strictly for high-level overview and quickstart commands.

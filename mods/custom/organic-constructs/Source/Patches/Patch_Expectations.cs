@@ -42,4 +42,17 @@ namespace OrganicConstructs
             }
         }
     }
+
+    [HarmonyPatch(typeof(ThoughtWorker_NeedBeauty), "CurrentStateInternal")]
+    public static class Patch_ThoughtWorker_NeedBeauty
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn p, ref ThoughtState __result)
+        {
+            if (p != null && ConstructUtility.IsConstruct(p))
+            {
+                __result = ThoughtState.Inactive;
+            }
+        }
+    }
 }

@@ -10,10 +10,12 @@ namespace OrganicConstructs
         [HarmonyPrefix]
         public static bool Prefix(Pawn pawn)
         {
-            if (ConstructUtility.IsConstruct(pawn))
+            if (Scribe.mode != LoadSaveMode.Inactive) return false;
+            if (pawn != null && ConstructUtility.IsConstruct(pawn))
             {
-                pawn.health.capacities.Notify_CapacityLevelsDirty();
+                pawn.health?.capacities?.Notify_CapacityLevelsDirty();
                 ConstructUtility.AssignConstructBackstories(pawn);
+                ConstructUtility.SanitizeConstructPhysiology(pawn);
                 pawn.Notify_DisabledWorkTypesChanged();
                 return false;
             }
@@ -27,10 +29,12 @@ namespace OrganicConstructs
         [HarmonyPrefix]
         public static bool Prefix(Pawn pawn)
         {
-            if (ConstructUtility.IsConstruct(pawn))
+            if (Scribe.mode != LoadSaveMode.Inactive) return false;
+            if (pawn != null && ConstructUtility.IsConstruct(pawn))
             {
-                pawn.health.capacities.Notify_CapacityLevelsDirty();
+                pawn.health?.capacities?.Notify_CapacityLevelsDirty();
                 ConstructUtility.AssignConstructBackstories(pawn);
+                ConstructUtility.SanitizeConstructPhysiology(pawn);
                 pawn.Notify_DisabledWorkTypesChanged();
                 return false;
             }

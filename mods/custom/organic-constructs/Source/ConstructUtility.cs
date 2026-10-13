@@ -79,11 +79,12 @@ namespace OrganicConstructs
 
         public static void AssignConstructBackstories(Pawn pawn)
         {
+            if (Scribe.mode != LoadSaveMode.Inactive) return;
             if (pawn?.story == null) return;
 
             BackstoryDef childDef = ConstructDefOf.Construct_Childhood 
                 ?? DefDatabase<BackstoryDef>.GetNamedSilentFail("Construct_Childhood");
-            if (childDef != null)
+            if (childDef != null && pawn.story.Childhood != childDef)
             {
                 pawn.story.Childhood = childDef;
             }
@@ -92,29 +93,58 @@ namespace OrganicConstructs
             {
                 BackstoryDef adultDef = ConstructDefOf.Construct_Adulthood 
                     ?? DefDatabase<BackstoryDef>.GetNamedSilentFail("Construct_Adulthood");
-                if (adultDef != null)
+                if (adultDef != null && pawn.story.Adulthood != adultDef)
                 {
                     pawn.story.Adulthood = adultDef;
                 }
             }
 
-            if (pawn.story?.traits != null)
+            if (pawn.story.traits != null)
             {
-                // Clear any randomly rolled human personality traits so they don't introduce unwanted stat/skill modifiers
-                pawn.story.traits.allTraits.Clear();
-
                 TraitDef traitAsset = ConstructDefOf.Trait_ConstructAsset 
                     ?? NeuralImprintDefOf.Trait_ConstructAsset 
                     ?? DefDatabase<TraitDef>.GetNamedSilentFail("Trait_ConstructAsset");
-                if (traitAsset != null)
+                if (traitAsset != null && !pawn.story.traits.HasTrait(traitAsset))
                 {
                     pawn.story.traits.GainTrait(new Trait(traitAsset));
                 }
 
                 TraitDef psychopathDef = TraitDefOf.Psychopath;
-                if (psychopathDef != null)
+                if (psychopathDef != null && !pawn.story.traits.HasTrait(psychopathDef))
                 {
                     pawn.story.traits.GainTrait(new Trait(psychopathDef));
+                }
+            }
+
+            SanitizeConstructPhysiology(pawn);
+        }
+
+        public static void SanitizeConstructPhysiology(Pawn pawn)
+        {
+            if (pawn?.story == null) return;
+            if (!IsConstruct(pawn)) return;
+
+            bool hasCustomBodyGene = false;
+            if (pawn.genes != null)
+            {
+                foreach (Gene g in pawn.genes.GenesListForReading)
+                {
+                    if (g.def != null && g.Active && g.def.bodyType != null)
+                    {
+                        hasCustomBodyGene = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!hasCustomBodyGene)
+            {
+                if (pawn.story.bodyType == BodyTypeDefOf.Baby || 
+                    pawn.story.bodyType == null || 
+                    (pawn.ageTracker != null && pawn.ageTracker.AgeBiologicalYears >= 13 && pawn.story.bodyType == BodyTypeDefOf.Child))
+                {
+                    pawn.story.bodyType = BodyTypeDefOf.Thin;
+                    pawn.Drawer?.renderer?.SetAllGraphicsDirty();
                 }
             }
         }

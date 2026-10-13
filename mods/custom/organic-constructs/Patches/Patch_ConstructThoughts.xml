@@ -190,4 +190,23 @@
     </nomatch>
   </Operation>
 
+  <!-- Core: Nullify beauty environment thoughts (ugly, hideous, unsightly) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThoughtDef[defName="NeedBeauty"]/nullifyingTraits</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="NeedBeauty"]/nullifyingTraits</xpath>
+      <value>
+        <li>Trait_ConstructAsset</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThoughtDef[defName="NeedBeauty"]</xpath>
+      <value>
+        <nullifyingTraits>
+          <li>Trait_ConstructAsset</li>
+        </nullifyingTraits>
+      </value>
+    </nomatch>
+  </Operation>
+
 </Patch>

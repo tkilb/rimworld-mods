@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       Deprecated Items (Retained temporarily for safe save-game migration)
+       ════════════════════════════════════════════════════════════════════════ -->
+  <ThingDef ParentName="MealBase">
+    <defName>GeneticNutrientPaste</defName>
+    <label>genetic nutrient paste (deprecated)</label>
+    <description>Deprecated biomass item retained temporarily for save-game compatibility. Automatically converted to standard nutrient paste and purged from filters on map load.</description>
+    <tradeability>None</tradeability>
+    <destroyOnDrop>true</destroyOnDrop>
+    <generateCommonality>0</generateCommonality>
+    <thingCategories />
+    <graphicData>
+      <texPath>Things/Item/Meal/NutrientPaste</texPath>
+      <graphicClass>Graphic_MealVariants</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>12</MarketValue>
+      <Nutrition>0.9</Nutrition>
+      <Mass>0.3</Mass>
+    </statBases>
+    <ingestible>
+      <preferability>MealAwful</preferability>
+      <ateEvent>AteNutrientPaste</ateEvent>
+      <foodType>Meal, Processed</foodType>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>14</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

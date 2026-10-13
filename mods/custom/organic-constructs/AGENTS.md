@@ -25,9 +25,8 @@
 2. **Embryo Synthesis:**
    - [Building_ConstructSynthesizer.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Buildings/Building_ConstructSynthesizer.cs): Synthesis bench with a single-slot container for a master `GenomeBlueprintDisk`.
    - [Recipe_SynthesizeBaseEmbryo.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Recipes/Recipe_SynthesizeBaseEmbryo.cs): 1-step direct synthesis of standard Base Construct embryos. Requires no disc.
-   - [Recipe_SynthesizeComplexEmbryo.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Recipes/Recipe_SynthesizeComplexEmbryo.cs): 1-step direct synthesis of Complex Construct embryos carrying the loaded disc's genome. Factored by stability collapse roll (yielding `GeneticNutrientPaste` on botch).
+   - [Recipe_SynthesizeComplexEmbryo.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Recipes/Recipe_SynthesizeComplexEmbryo.cs): 1-step direct synthesis of Complex Construct embryos carrying the loaded disc's genome, factored by stability collapse roll.
    - [Patch_WorkGiver_DoBill.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_WorkGiver_DoBill.cs): Blocks dispatching Complex Embryo bills if no disc is loaded.
-   - [Recipe_BatchRecycleEmbryo.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Recipes/Recipe_BatchRecycleEmbryo.cs): Recycles discarded embryos into Genetic Nutrient Paste.
 
 3. **Neural Scanning & Vat Imprinting:**
    - [Building_NeuralScanner.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Buildings/Building_NeuralScanner.cs): Casket scanning natural humans onto a [NeuralBlueprintDisk](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_Blueprints.xml) (50% skills, 0 passions, lossy). Constructs cannot enter. Donor suffers `Construct_NeuralFatigue`.
@@ -68,6 +67,7 @@
 | [Patches/Patch_ColonistDeathThoughts.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_ColonistDeathThoughts.cs) | Suppresses colonist grief memories when a construct dies. |
 | [Genes/Gene_ConstructHibernation.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Genes/Gene_ConstructHibernation.cs) | Ticking gene tracking 30-day operation cycles, stasis jobs, and social need suppression. |
 | [Patches/Patch_ConstructBackstories.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_ConstructBackstories.cs) | Harmony patch overriding vanilla colony child and colonist with construct backstories. |
+| [Patches/Patch_StasisSleep.cs](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Source/Patches/Patch_StasisSleep.cs) | Stasis sleep Deathrest pipeline, head normalization, and 4-way pod aperture rendering. See [SLEEP_POSITION.md](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/SLEEP_POSITION.md). |
 
 ### XML Definitions (`Defs/` & `Patches/`)
 | Path | Purpose |
@@ -77,7 +77,6 @@
 | [Buildings_GenomeArchitect.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Buildings/Buildings_GenomeArchitect.xml) | `ConstructGenomeArchitect` building Def. |
 | [Items_Blueprints.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_Blueprints.xml) | `GenomeBlueprintDisk` and `NeuralBlueprintDisk` item Defs. |
 | [Items_ConstructAugments.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_ConstructAugments.xml) | Bioware augment item Defs. |
-| [Items_Biomass.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThingDefs_Items/Items_Biomass.xml) | `GeneticNutrientPaste` item Def. |
 | [Genes_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/GeneDefs/Genes_Construct.xml) | Core construct genes (`Gene_ConstructHibernation`, `Gene_MandatorySterility`). |
 | [Traits_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/TraitDefs/Traits_Construct.xml) | `Trait_ConstructAsset` Def. |
 | [Thoughts_Construct.xml](file:///home/tylerkilburn/Git/rimworld-mods/mods/custom/organic-constructs/Defs/ThoughtDefs/Thoughts_Construct.xml) | `Construct_KindPity` thought for Kind colonist construct mourning. |
@@ -107,6 +106,7 @@ When instructed to **"fix bugs"**, follow [qa/bugs/AGENTS.md](file:///home/tyler
 ```bash
 dotnet build Source/OrganicConstructs.csproj
 ```
+- **Target Game Version:** `RimWorld 1.6` (1.6.4871+ rev600)
 - **Target Framework:** `.NET Framework 4.7.2`
 - **Output:** `Assemblies/OrganicConstructs.dll`
 - **Standard:** 0 Errors, 0 Warnings required.

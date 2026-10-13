@@ -12,6 +12,7 @@
 - [TC-08: Genome Architect & Disc Burning](tc-08-genome-architect-and-disc-burning.md)
 - [TC-09: Complex Embryo Synthesis & Stability](tc-09-complex-embryo-synthesis-and-stability.md)
 - [TC-10: Bioware Augment Salvage & Storage Category](tc-10-bioware-augment-salvage-and-storage.md)
+- [TC-11: Construct Sleep Posture & Stasis Pod Visuals](tc-11-construct-sleep-posture-and-stasis-pod-visuals.md)
 
 ---
 

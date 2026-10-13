@@ -94,6 +94,8 @@ namespace OrganicConstructs
                 {
                     bool existsStasis = false;
                     bool existsCarry = false;
+                    bool existsRest = false;
+                    bool existsReject = false;
                     foreach (var item in list)
                     {
                         if (item is FloatMenuOptionProvider_ConstructStasis)
@@ -104,6 +106,14 @@ namespace OrganicConstructs
                         {
                             existsCarry = true;
                         }
+                        else if (item is FloatMenuOptionProvider_ConstructRestUntilHealed)
+                        {
+                            existsRest = true;
+                        }
+                        else if (item is FloatMenuOptionProvider_NonConstructStasisPodReject)
+                        {
+                            existsReject = true;
+                        }
                     }
                     if (!existsStasis)
                     {
@@ -112,6 +122,14 @@ namespace OrganicConstructs
                     if (!existsCarry)
                     {
                         list.Add(new FloatMenuOptionProvider_CarryConstructToBed());
+                    }
+                    if (!existsRest)
+                    {
+                        list.Add(new FloatMenuOptionProvider_ConstructRestUntilHealed());
+                    }
+                    if (!existsReject)
+                    {
+                        list.Add(new FloatMenuOptionProvider_NonConstructStasisPodReject());
                     }
                 }
             }

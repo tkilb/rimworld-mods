@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace OrganicConstructs
 {
@@ -12,88 +13,76 @@ namespace OrganicConstructs
     public class Building_ConstructStasisPod : Building_Bed
     {
         private CompPowerTrader powerComp;
-        private CompGlower glowerComp;
-        private Graphic activeGraphicInt;
 
         public bool IsPowered => (powerComp == null || powerComp.PowerOn);
 
-        public bool IsOccupied
+        public Pawn PrimaryOccupant
         {
             get
             {
-                if (!Spawned || Map == null) return false;
+                if (!Spawned || Map == null) return null;
                 for (int i = 0; i < SleepingSlotsCount; i++)
                 {
-                    if (GetCurOccupant(i) != null)
-                        return true;
+                    Pawn occupant = GetCurOccupant(i);
+                    if (occupant != null)
+                        return occupant;
                 }
-                return false;
+                return null;
             }
         }
 
-        public Graphic ActiveGraphic
+        public bool IsOccupied => PrimaryOccupant != null;
+
+        public bool IsInActiveStasis
         {
             get
             {
-                if (activeGraphicInt == null && def?.graphicData != null)
-                {
-                    string activePath = def.graphicData.texPath + "_active";
-                    activeGraphicInt = GraphicDatabase.Get<Graphic_Multi>(
-                        activePath,
-                        def.graphicData.shaderType?.Shader ?? ShaderDatabase.Cutout,
-                        def.graphicData.drawSize,
-                        DrawColor,
-                        DrawColorTwo
-                    );
-                }
-                return activeGraphicInt;
+                Pawn occupant = PrimaryOccupant;
+                if (occupant == null) return false;
+
+                var gene = occupant.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
+                return (gene != null && gene.inStasis)
+                    || occupant.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis)
+                    || occupant.CurJobDef == ConstructDefOf.Construct_EnterConstructStasis;
             }
         }
 
-        public override Graphic Graphic
-        {
-            get
-            {
-                if (Spawned && IsOccupied)
-                {
-                    Graphic g = ActiveGraphic;
-                    if (g != null) return g;
-                }
-                return base.Graphic;
-            }
-        }
+        public const float PowerConsumptionActiveStasis = 100f;
+        public const float PowerConsumptionStandby = 10f;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
             powerComp = GetComp<CompPowerTrader>();
-            glowerComp = GetComp<CompGlower>();
-            UpdateGlowerState();
+            UpdatePowerState();
         }
 
         protected override void Tick()
         {
             base.Tick();
-            if (this.IsHashIntervalTick(60))
+            if (this.IsHashIntervalTick(30))
             {
-                UpdateGlowerState();
+                Pawn occupant = PrimaryOccupant;
+                if (occupant != null && !ConstructUtility.IsConstruct(occupant))
+                {
+                    occupant.jobs?.EndCurrentJob(JobCondition.Incompletable);
+                }
+                UpdatePowerState();
             }
         }
 
-        public void UpdateGlowerState()
+        public void UpdatePowerState()
         {
-            if (glowerComp == null || !Spawned) return;
+            if (!Spawned) return;
 
-            bool shouldGlow = IsOccupied && IsPowered;
-            if (Map != null)
+            bool inActiveStasis = IsInActiveStasis;
+
+            if (powerComp != null)
             {
-                if (shouldGlow)
+                float targetPowerOutput = inActiveStasis ? -PowerConsumptionActiveStasis : -PowerConsumptionStandby;
+                if (powerComp.PowerOutput != targetPowerOutput)
                 {
-                    Map.glowGrid.RegisterGlower(glowerComp);
-                }
-                else
-                {
-                    Map.glowGrid.DeRegisterGlower(glowerComp);
+                    powerComp.PowerOutput = targetPowerOutput;
                 }
             }
         }
@@ -101,17 +90,30 @@ namespace OrganicConstructs
         public override string GetInspectString()
         {
             string s = base.GetInspectString();
-            if (IsPowered)
+            if (IsInActiveStasis)
             {
-                s += "\n" + "Stasis purge rate: 133% (36h cycle, buffered shock dampening)";
+                s += "\n" + "Status: Active construct stasis cycle (Synaptic defragmentation in progress)";
+                s += "\n" + (IsPowered 
+                    ? "Stasis purge rate: 133% (Powered: 36h cycle, buffered shock dampening)" 
+                    : "Stasis purge rate: 100% (Unpowered: 48h cycle, standard shock)");
+            }
+            else if (IsOccupied)
+            {
+                Pawn occupant = PrimaryOccupant;
+                if (occupant?.CurJob != null && occupant.CurJob.restUntilHealed)
+                {
+                    s += "\n" + "Status: Medical rest (Bio-monitoring & accelerated recovery active)";
+                }
+                else
+                {
+                    s += "\n" + "Status: Routine sleep (Standby: 10 W power drain)";
+                }
             }
             else
             {
-                s += "\n" + "Stasis purge rate: 100% (Unpowered: 48h cycle, standard shock)";
-            }
-            if (IsOccupied)
-            {
-                s += "\n" + "Status: Active construct stasis cycle (Synaptic defragmentation in progress)";
+                s += "\n" + (IsPowered 
+                    ? "Standby: 10 W power drain (Consumes 100 W during active stasis)" 
+                    : "Unpowered: Connect to power grid to enable accelerated 36h stasis cycles");
             }
             return s;
         }

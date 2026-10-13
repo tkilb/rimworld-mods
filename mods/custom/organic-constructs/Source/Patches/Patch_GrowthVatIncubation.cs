@@ -200,6 +200,19 @@ namespace OrganicConstructs
         }
     }
 
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.DevelopmentalStage), MethodType.Getter)]
+    public static class Patch_Pawn_DevelopmentalStage
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn __instance, ref DevelopmentalStage __result)
+        {
+            if (__instance != null && ConstructUtility.IsConstruct(__instance))
+            {
+                __result = DevelopmentalStage.Adult;
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(Building_GrowthVat), "GetInspectString")]
     public static class Patch_GrowthVat_GetInspectString
     {

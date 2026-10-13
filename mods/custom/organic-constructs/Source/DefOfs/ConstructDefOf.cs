@@ -8,23 +8,18 @@ namespace OrganicConstructs
     {
         // ── Jobs ──────────────────────────────────────────────────────────────────
         public static JobDef Construct_ScanNeuralProfile;
-        public static JobDef Construct_RecycleEmbryo;
         public static JobDef Construct_HaulDiscToContainer;
         public static JobDef Construct_EnterConstructStasis;
 
         // ── Items ─────────────────────────────────────────────────────────────────
         public static ThingDef NeuralBlueprintDisk;
         public static ThingDef GenomeBlueprintDisk;
-        public static ThingDef GeneticNutrientPaste;
 
         // ── Buildings ─────────────────────────────────────────────────────────────
         public static ThingDef NeuralScanner;
         public static ThingDef ConstructSynthesizer;
         public static ThingDef ConstructGenomeArchitect;
         public static ThingDef ConstructStasisPod;
-
-        // ── Recipes ───────────────────────────────────────────────────────────────
-        public static RecipeDef Construct_BatchRecycleEmbryo;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef Construct_NeuralFatigue;

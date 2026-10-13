@@ -20,4 +20,4 @@
   - At Day 15 (Age 13), inspect string displays `Neural Maturity Reached (Age 13) - Ready to decant` and positive notification fires.
   - Decanted construct can immediately perform Doctoring, Construction, Smithing, Research, Mining, and combat.
   - Decanted construct inherits mentor skills (or baseline reflexes if no disc) with zero passions.
-  - The **Reclaim Biomass** gizmo terminates gestation with confirmation, dissolving the construct and spawning a stack of `GeneticNutrientPaste` returning $\sim 75\%$ of all nutrition invested to date.
+  - The **Reclaim Biomass** gizmo terminates gestation with confirmation, dissolving the construct and returning invested nutrition.

@@ -1,7 +1,13 @@
 version: 1
-generated_at: "2026-10-11T01:57:27Z"
-machine: linux-book
+generated_at: "2026-10-13T22:49:36Z"
+machine: linux-box
 mods:
+    charactereditor:
+        source: steam_workshop
+        workshop_id: "1874644848"
+        workshop_time_updated: 1753113100
+        workshop_title: Character Editor
+        download_path: mods/vendor/charactereditor
     colonymanagerredux:
         source: steam_workshop
         workshop_id: "3310027356"
@@ -11,7 +17,7 @@ mods:
     dubspaintshop:
         source: steam_workshop
         workshop_id: "1579516669"
-        workshop_time_updated: 1790096443
+        workshop_time_updated: 1791924486
         workshop_title: Dub's Paint Shop
         download_path: mods/vendor/dubspaintshop
     genebankplus:
@@ -29,7 +35,7 @@ mods:
     harmony:
         source: steam_workshop
         workshop_id: "2009463077"
-        workshop_time_updated: 1756914561
+        workshop_time_updated: 1791825433
         workshop_title: Harmony
         download_path: mods/vendor/harmony
     laboratory:
@@ -38,6 +44,12 @@ mods:
         workshop_time_updated: 1789312967
         workshop_title: ilyvion's Laboratory
         download_path: mods/vendor/laboratory
+    launchsitesexpire:
+        source: steam_workshop
+        workshop_id: "3525571078"
+        workshop_time_updated: 1752821222
+        workshop_title: Launch Sites Expire
+        download_path: mods/vendor/launchsitesexpire
     minifyeverything:
         source: steam_workshop
         workshop_id: "872762753"
@@ -50,6 +62,12 @@ mods:
         workshop_time_updated: 1757700442
         workshop_title: Recycle This (Continued)
         download_path: mods/vendor/recyclethis
+    scarremovalplus:
+        source: steam_workshop
+        workshop_id: "3247467735"
+        workshop_time_updated: 1752890812
+        workshop_title: Scar Removal Plus
+        download_path: mods/vendor/scarremovalplus
     simplesidearms:
         source: steam_workshop
         workshop_id: "927155256"
@@ -59,13 +77,13 @@ mods:
     vanillabionicsexpansion:
         source: steam_workshop
         workshop_id: "1419675146"
-        workshop_time_updated: 1783227122
+        workshop_time_updated: 1791845219
         workshop_title: '[FSF] Vanilla Bionics Expansion'
         download_path: mods/vendor/vanillabionicsexpansion
     vanillafactionsexpandedcore:
         source: steam_workshop
         workshop_id: "2023507013"
-        workshop_time_updated: 1791216658
+        workshop_time_updated: 1791893892
         workshop_title: Vanilla Expanded Framework
         download_path: mods/vendor/vanillafactionsexpandedcore
     vanillavehiclesexpanded:

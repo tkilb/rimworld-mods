@@ -45,7 +45,6 @@
     <techLevel>Ultra</techLevel>
     <prerequisites>
       <li>Construct_Foundations</li>
-      <li>GrowthVats</li>
     </prerequisites>
     <researchViewX>15.5</researchViewX>
     <researchViewY>4.5</researchViewY>
@@ -59,12 +58,12 @@
     <defName>Construct_BiowareBasic</defName>
     <label>basic bioware</label>
     <description>Synthesize entry-tier biological neural packages and reflexes to interface with construct biological buses, boosting physical and cognitive functions.</description>
-    <baseCost>1000</baseCost>
-    <techLevel>Ultra</techLevel>
+    <baseCost>700</baseCost>
+    <techLevel>Spacer</techLevel>
     <prerequisites>
-      <li>Construct_Foundations</li>
+      <li>Construct_FieldBioproduction</li>
     </prerequisites>
-    <researchViewX>15.5</researchViewX>
+    <researchViewX>14.0</researchViewX>
     <researchViewY>2.5</researchViewY>
   </ResearchProjectDef>
 

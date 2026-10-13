@@ -159,6 +159,12 @@ namespace OrganicConstructs
         {
             if (__state != null)
             {
+                if (ConstructUtility.IsConstruct(__state))
+                {
+                    ConstructUtility.ApplyConstructPhysiology(__state);
+                    ConstructUtility.SanitizeConstructPhysiology(__state);
+                }
+
                 CompGrowthVatImprinter imprinter = __instance.GetComp<CompGrowthVatImprinter>();
                 if (imprinter != null)
                 {

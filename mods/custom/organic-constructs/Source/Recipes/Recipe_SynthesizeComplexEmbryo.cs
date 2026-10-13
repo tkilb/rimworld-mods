@@ -75,15 +75,8 @@ namespace OrganicConstructs
 
             if (Rand.Chance(failureChance))
             {
-                if (map != null && dropLoc.IsValid)
-                {
-                    Thing paste = ThingMaker.MakeThing(ConstructDefOf.GeneticNutrientPaste);
-                    paste.stackCount = 1;
-                    GenPlace.TryPlaceThing(paste, dropLoc, map, ThingPlaceMode.Near);
-                }
-
                 Messages.Message(
-                    $"Synthesis botched! Genetic instability caused embryo structure to collapse. 1x Genetic Nutrient Paste reclaimed (Failure chance was {failureChance:P0}).",
+                    $"Synthesis botched! Genetic instability caused embryo structure to collapse (Failure chance was {failureChance:P0}).",
                     new TargetInfo(dropLoc, map),
                     MessageTypeDefOf.NegativeEvent);
                 return;

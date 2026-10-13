@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using RimWorld;
@@ -232,6 +233,10 @@ namespace OrganicConstructs
                 var gene = __instance.pawn.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
                 if (gene != null && gene.inStasis)
                 {
+                    if (newThought.pawn == null)
+                    {
+                        newThought.pawn = __instance.pawn;
+                    }
                     if (newThought.MoodOffset() < 0f)
                     {
                         return false;
@@ -306,8 +311,15 @@ namespace OrganicConstructs
                 var gene = p.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
                 if (gene != null && (gene.inStasis || p.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis) || p.CurJobDef == ConstructDefOf.Construct_EnterConstructStasis))
                 {
-                    __result = (p.CurJob?.GetTarget(TargetIndex.A).Thing as Building_Bed)
-                               ?? p.Position.GetThingList(p.Map).OfType<Building_Bed>().FirstOrDefault();
+                    Building_Bed bed = p.CurJob?.GetTarget(TargetIndex.A).Thing as Building_Bed;
+                    if (bed != null && bed.OccupiedRect().Contains(p.Position))
+                    {
+                        __result = bed;
+                    }
+                    else
+                    {
+                        __result = p.Position.GetThingList(p.Map).OfType<Building_Bed>().FirstOrDefault();
+                    }
                 }
             }
         }
@@ -324,8 +336,15 @@ namespace OrganicConstructs
                 var gene = p.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
                 if (gene != null && (gene.inStasis || p.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis) || p.CurJobDef == ConstructDefOf.Construct_EnterConstructStasis))
                 {
-                    Building_Bed bed = (p.CurJob?.GetTarget(TargetIndex.A).Thing as Building_Bed)
-                                       ?? p.Position.GetThingList(p.Map).OfType<Building_Bed>().FirstOrDefault();
+                    Building_Bed bed = p.CurJob?.GetTarget(TargetIndex.A).Thing as Building_Bed;
+                    if (bed != null && !bed.OccupiedRect().Contains(p.Position))
+                    {
+                        bed = null;
+                    }
+                    if (bed == null)
+                    {
+                        bed = p.Position.GetThingList(p.Map).OfType<Building_Bed>().FirstOrDefault();
+                    }
                     if (bed != null)
                     {
                         __result = bed;
@@ -355,7 +374,7 @@ namespace OrganicConstructs
         {
             if (__result || p == null || !p.Spawned) return;
             var gene = p.genes?.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation;
-            if (gene != null && (gene.inStasis || p.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis) || p.CurJobDef == ConstructDefOf.Construct_EnterConstructStasis))
+            if (gene != null && (gene.inStasis || p.health.hediffSet.HasHediff(ConstructDefOf.Construct_InStasis)))
             {
                 if (p.CurrentBed() != null || p.Position.GetThingList(p.Map).Any(t => t is Building_Bed))
                 {
@@ -382,6 +401,31 @@ namespace OrganicConstructs
                 if (pawn.InBed() || pawn.CurrentBed() != null || pawn.Position.GetThingList(pawn.Map).Any(t => t is Building_Bed))
                 {
                     __result = false;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ensures constructs seek medical rest when they have any untreated or healing injuries,
+    /// tendable conditions, or missing health, even if their reduced pain and superclotting
+    /// would otherwise cause vanilla's pain/bleed thresholds to evaluate to false.
+    /// </summary>
+    [HarmonyPatch(typeof(HealthAIUtility), nameof(HealthAIUtility.ShouldSeekMedicalRest))]
+    public static class Patch_HealthAIUtility_ShouldSeekMedicalRest
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn pawn, ref bool __result)
+        {
+            if (__result || pawn == null) return;
+            if (ConstructUtility.IsConstruct(pawn))
+            {
+                if (pawn.health.hediffSet.HasTendableHediff()
+                    || pawn.health.hediffSet.BleedRateTotal > 0.001f
+                    || pawn.health.summaryHealth.SummaryHealthPercent < 0.999f
+                    || pawn.health.hediffSet.hediffs.Any(h => h is Hediff_Injury injury && injury.CanHealNaturally()))
+                {
+                    __result = true;
                 }
             }
         }
@@ -533,4 +577,175 @@ namespace OrganicConstructs
             }
         }
     }
+
+    /// <summary>
+    /// Restricts candidate assignment list for ConstructStasisPod so only biological constructs can be selected.
+    /// </summary>
+    [HarmonyPatch(typeof(CompAssignableToPawn_Bed), nameof(CompAssignableToPawn_Bed.AssigningCandidates), MethodType.Getter)]
+    public static class Patch_CompAssignableToPawn_Bed_AssigningCandidates
+    {
+        [HarmonyPostfix]
+        public static void Postfix(CompAssignableToPawn_Bed __instance, ref IEnumerable<Pawn> __result)
+        {
+            if (__result != null && __instance?.parent?.def?.defName == "ConstructStasisPod")
+            {
+                __result = __result.Where(ConstructUtility.IsConstruct);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Explicitly rejects assigning any non-construct pawn to a ConstructStasisPod.
+    /// </summary>
+    [HarmonyPatch(typeof(CompAssignableToPawn_Bed), nameof(CompAssignableToPawn_Bed.CanAssignTo))]
+    public static class Patch_CompAssignableToPawn_Bed_CanAssignTo
+    {
+        [HarmonyPostfix]
+        public static void Postfix(CompAssignableToPawn_Bed __instance, Pawn pawn, ref AcceptanceReport __result)
+        {
+            if (__instance?.parent?.def?.defName == "ConstructStasisPod")
+            {
+                if (!ConstructUtility.IsConstruct(pawn))
+                {
+                    __result = new AcceptanceReport("Only biological constructs may use stasis pods.");
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ensures ConstructStasisPod is never considered a valid bed for non-construct pawns (medical, rescue, or sleep).
+    /// </summary>
+    [HarmonyPatch(typeof(RestUtility), nameof(RestUtility.IsValidBedFor), new[] { typeof(Thing), typeof(Pawn), typeof(Pawn), typeof(bool), typeof(bool), typeof(bool), typeof(GuestStatus?) })]
+    public static class Patch_RestUtility_IsValidBedFor
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Thing bedThing, Pawn sleeper, ref bool __result)
+        {
+            if (__result && bedThing?.def?.defName == "ConstructStasisPod")
+            {
+                if (!ConstructUtility.IsConstruct(sleeper))
+                {
+                    __result = false;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ensures constructs always sleep on their back (PawnPosture.FaceUpMask) whenever laying down.
+    /// Prevents alternating onto sides (East/West) during regular sleep and stasis.
+    /// </summary>
+    [HarmonyPatch(typeof(PawnUtility), nameof(PawnUtility.GetPosture))]
+    public static class Patch_PawnUtility_GetPosture
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn p, ref PawnPosture __result)
+        {
+            if (p != null && __result != PawnPosture.Standing && ConstructUtility.IsConstruct(p))
+            {
+                __result |= PawnPosture.FaceUpMask;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ensures laying constructs always face South (on their back) rather than sideways.
+    /// If in a Building_ConstructStasisPod, also ensures head orientation respects the pod.
+    /// </summary>
+    [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.LayingFacing))]
+    public static class Patch_PawnRenderer_LayingFacing
+    {
+        [HarmonyPostfix]
+        public static void Postfix(PawnRenderer __instance, ref Rot4 __result)
+        {
+            Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
+            if (pawn != null && ConstructUtility.IsConstruct(pawn))
+            {
+                var tree = pawn.Drawer?.renderer?.renderTree;
+                if (tree != null)
+                {
+                    PawnDrawParms parms = Traverse.Create(tree).Field("currentParms").GetValue<PawnDrawParms>();
+                    if (parms.Portrait || (parms.flags & PawnRenderFlags.Portrait) != 0 || (parms.flags & PawnRenderFlags.Cache) != 0) return;
+                }
+                __result = Rot4.South;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Shifts the root render matrix when resting in directional stasis pods to align with the glass aperture.
+    /// In RimWorld 1.6, PawnRenderTree.ParallelPreDraw applies the root PawnDrawParms.matrix to all render nodes.
+    /// Uses a single symmetrical distance D for all 4 orientations.
+    /// </summary>
+    [HarmonyPatch(typeof(PawnRenderTree), nameof(PawnRenderTree.ParallelPreDraw))]
+    public static class Patch_PawnRenderTree_ParallelPreDraw_StasisPod
+    {
+        // Symmetrical distance from center of 1x1 pod tile to the glass aperture
+        public const float PodWindowOffset = 0.20f;
+
+        [HarmonyPrefix]
+        public static void Prefix(ref PawnDrawParms parms)
+        {
+            if (parms.Portrait || (parms.flags & PawnRenderFlags.Portrait) != 0 || (parms.flags & PawnRenderFlags.Cache) != 0) return;
+
+            Pawn pawn = parms.pawn;
+            if (pawn == null || !pawn.Spawned) return;
+
+            Building_Bed bed = pawn.CurrentBed();
+            if (bed is Building_ConstructStasisPod pod)
+            {
+                float scale = pawn.ageTracker?.CurLifeStage?.bodySizeFactor ?? 1f;
+                float offset = (scale < 0.95f) ? 0.12f : PodWindowOffset;
+
+                if (pod.Rotation == Rot4.North)
+                {
+                    parms.matrix.m23 -= offset;
+                }
+                else if (pod.Rotation == Rot4.South)
+                {
+                    parms.matrix.m23 += offset;
+                }
+                else if (pod.Rotation == Rot4.East)
+                {
+                    parms.matrix.m03 -= offset;
+                }
+                else if (pod.Rotation == Rot4.West)
+                {
+                    parms.matrix.m03 += offset;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Normalizes head offset to Vector3.zero across all body types, body sizes, and life stages
+    /// while inside a ConstructStasisPod, ensuring every construct centers identically at (0,0)
+    /// before applying the symmetrical aperture offset.
+    /// </summary>
+    [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.BaseHeadOffsetAt))]
+    public static class Patch_PawnRenderer_BaseHeadOffsetAt_StasisPod
+    {
+        [HarmonyPostfix]
+        public static void Postfix(PawnRenderer __instance, ref Vector3 __result)
+        {
+            Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
+            if (pawn == null || !pawn.Spawned) return;
+
+            PawnDrawParms parms = default;
+            var tree = pawn.Drawer?.renderer?.renderTree;
+            if (tree != null)
+            {
+                parms = Traverse.Create(tree).Field("currentParms").GetValue<PawnDrawParms>();
+            }
+            if (parms.Portrait || (parms.flags & PawnRenderFlags.Portrait) != 0 || (parms.flags & PawnRenderFlags.Cache) != 0) return;
+
+            Building_Bed bed = pawn.CurrentBed();
+            if (bed is Building_ConstructStasisPod)
+            {
+                __result = Vector3.zero;
+            }
+        }
+    }
 }
+

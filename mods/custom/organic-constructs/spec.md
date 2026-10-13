@@ -43,15 +43,14 @@ Construct design is governed by three distinct, modular layers:
 - **Gameplay Consequences:**
   - **Synthesis Botch Roll:** Volatile genomes dramatically increase synthesis failure chance at the synthesizer:
     $$\text{BaseCollapse} = (1.0 - \text{Stability}) \times 0.5$$
-    Factored against doctor skill and room cleanliness. On botch, the embryo collapses into 1x `GeneticNutrientPaste`.
+    Factored against doctor skill and room cleanliness. On botch, the embryonic structure collapses and ingredients are lost.
   - **Decant Cellular Defects:** Volatile embryos (< 60% stability) decanting from a Growth Vat carry a $15\%$ risk of developing cellular defects (`Construct_Assimilation` coma or `CryptosleepSickness`).
 
 ### 2.3 Embryo Synthesis: `Building_ConstructSynthesizer`
-- **Role:** Heavy biochemical workstation (600 W) for single-step embryo synthesis and biomass recycling.
+- **Role:** Heavy biochemical workstation (600 W) for single-step embryo synthesis.
 - **Direct Synthesis Bills:**
-  - `Synthesize Base Construct Embryo (Fresh Organics / Recycled Biomass)`: Synthesizes a parentless construct embryo carrying the standard baseline construct genome. Requires no disc.
-  - `Synthesize Complex Construct Embryo (Fresh Organics / Recycled Biomass)`: Synthesizes a parentless construct embryo carrying the loaded master blueprint's genes. Requires a burned `GenomeBlueprintDisk`. Blocked at bill dispatch if no disc is present (`Patch_WorkGiver_DoBill`).
-  - `Liquefy Embryo Biomass`: Recycles discarded embryos into `GeneticNutrientPaste`.
+  - `Synthesize Base Construct Embryo`: Synthesizes a parentless construct embryo carrying the standard baseline construct genome. Requires no disc.
+  - `Synthesize Complex Construct Embryo`: Synthesizes a parentless construct embryo carrying the loaded master blueprint's genes. Requires a burned `GenomeBlueprintDisk`. Blocked at bill dispatch if no disc is present (`Patch_WorkGiver_DoBill`).
 
 ### 2.4 Data Storage: Blueprint Discs
 - **`GenomeBlueprintDisk`:** High-capacity optical disc (`CompGenomeBlueprint`). Fabricated blank at `TableFabrication` (`Craft_BlankGenomeDisc`). Burned into a permanent master template at the `ConstructGenomeArchitect`. Reusable during synthesis.
