@@ -422,7 +422,6 @@ namespace OrganicConstructs
             {
                 if (pawn.health.hediffSet.HasTendableHediff()
                     || pawn.health.hediffSet.BleedRateTotal > 0.001f
-                    || pawn.health.summaryHealth.SummaryHealthPercent < 0.999f
                     || pawn.health.hediffSet.hediffs.Any(h => h is Hediff_Injury injury && injury.CanHealNaturally()))
                 {
                     __result = true;

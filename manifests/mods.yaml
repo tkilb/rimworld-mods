@@ -147,6 +147,14 @@ mods:
     enabled: true
     description: "Move existing buildings and rooms to another location without deconstructing."
 
+  turnitonandoffrepowered:
+    name: "Turn It On and Off - RePowered"
+    source: steam_workshop
+    workshop_id: "2228219259"
+    package_id: "Mlie.TurnItOnAndOffRePowered"
+    enabled: true
+    description: "Makes electrical machines use minimal power when idle and higher power when actively operating."
+
   # Custom Authoring Mods
   gene-splicer:
     name: "Gene Splicer"

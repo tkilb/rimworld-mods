@@ -47,6 +47,52 @@ namespace OrganicConstructs
             }
         }
 
+        public bool IsOccupantHealing
+        {
+            get
+            {
+                Pawn occupant = PrimaryOccupant;
+                if (occupant == null || occupant.Dead) return false;
+
+                // Explicit medical rest job
+                if (occupant.CurJob != null && occupant.CurJob.restUntilHealed)
+                {
+                    return true;
+                }
+
+                var hediffSet = occupant.health?.hediffSet;
+                if (hediffSet == null) return false;
+
+                // Active bleeding or untended wounds/diseases
+                if (hediffSet.HasTendableHediff() || hediffSet.BleedRateTotal > 0.001f)
+                {
+                    return true;
+                }
+
+                // Active injuries capable of naturally healing, or active immunizable diseases
+                for (int i = 0; i < hediffSet.hediffs.Count; i++)
+                {
+                    var h = hediffSet.hediffs[i];
+                    if (h is Hediff_Injury injury && injury.CanHealNaturally())
+                    {
+                        return true;
+                    }
+                    if (!h.IsPermanent() && h.TryGetComp<HediffComp_Immunizable>() is HediffComp_Immunizable imm && !imm.FullyImmune)
+                    {
+                        return true;
+                    }
+                }
+
+                // Any other active condition requiring medical rest
+                if (HealthAIUtility.ShouldSeekMedicalRest(occupant))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         public const float PowerConsumptionActiveStasis = 100f;
         public const float PowerConsumptionStandby = 10f;
 
@@ -75,11 +121,11 @@ namespace OrganicConstructs
         {
             if (!Spawned) return;
 
-            bool inActiveStasis = IsInActiveStasis;
+            bool consumesHighPower = IsInActiveStasis || IsOccupantHealing;
 
             if (powerComp != null)
             {
-                float targetPowerOutput = inActiveStasis ? -PowerConsumptionActiveStasis : -PowerConsumptionStandby;
+                float targetPowerOutput = consumesHighPower ? -PowerConsumptionActiveStasis : -PowerConsumptionStandby;
                 if (powerComp.PowerOutput != targetPowerOutput)
                 {
                     powerComp.PowerOutput = targetPowerOutput;
@@ -100,20 +146,20 @@ namespace OrganicConstructs
             else if (IsOccupied)
             {
                 Pawn occupant = PrimaryOccupant;
-                if (occupant?.CurJob != null && occupant.CurJob.restUntilHealed)
+                if (IsOccupantHealing)
                 {
-                    s += "\n" + "Status: Medical rest (Bio-monitoring & accelerated recovery active)";
+                    s += "\n" + "Status: Medical rest (Accelerated recovery: 100 W power drain)";
                 }
                 else
                 {
-                    s += "\n" + "Status: Routine sleep (Standby: 10 W power drain)";
+                    s += "\n" + "Status: Routine sleep (Healthy: 10 W power drain)";
                 }
             }
             else
             {
                 s += "\n" + (IsPowered 
-                    ? "Standby: 10 W power drain (Consumes 100 W during active stasis)" 
-                    : "Unpowered: Connect to power grid to enable accelerated 36h stasis cycles");
+                    ? "Standby: 10 W power drain (Consumes 100 W during active stasis or healing)" 
+                    : "Unpowered: Connect to power grid to enable accelerated 36h stasis and medical recovery");
             }
             return s;
         }

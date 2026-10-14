@@ -68,9 +68,10 @@
   <ThingDef ParentName="BedBase">
     <defName>ConstructStasisPod</defName>
     <label>construct stasis pod</label>
-    <description>A compact 1x1 vertical hibernation alcove designed exclusively for biological constructs. Equipped with integrated bio-monitoring and medical stabilization systems equivalent to a hospital bed combined with a vitals monitor, accelerating natural wound healing (10 HP/day), immunity gain, tend quality, and surgical success. When occupied by a construct in active stasis and supplied with 100 W of power, cryo-neuro flushes defragment construct synaptic pathways at an accelerated rate, completing a full stasis cycle in 36 hours (down from 48 hours in a basic bed). Consumes 10 W while on standby or during routine sleep and medical rest. In addition, its internal shock-dampening buffer mitigates the cognitive trauma of premature awakening.</description>
+    <description>A compact 1x1 vertical hibernation alcove designed exclusively for biological constructs. Equipped with integrated bio-monitoring and medical stabilization systems equivalent to a hospital bed combined with a vitals monitor, accelerating natural wound healing (10 HP/day), immunity gain, tend quality, and surgical success. When occupied by a construct in active stasis or undergoing medical healing and supplied with 100 W of power, cryo-neuro flushes defragment construct synaptic pathways and bio-monitoring accelerates physical recovery. Consumes 10 W while on standby or during routine healthy sleep. In addition, its internal shock-dampening buffer mitigates the cognitive trauma of premature awakening.</description>
     <thingClass>OrganicConstructs.Building_ConstructStasisPod</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Things/Building/ConstructStasisPod/ConstructStasisPod</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
