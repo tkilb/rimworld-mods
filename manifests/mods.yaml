@@ -155,6 +155,14 @@ mods:
     enabled: true
     description: "Makes electrical machines use minimal power when idle and higher power when actively operating."
 
+  wastepackmanagement:
+    name: "Wastepack Management"
+    source: steam_workshop
+    workshop_id: "3323592024"
+    package_id: "WPM.Jerry"
+    enabled: true
+    description: "Pack toxic wastepacks into compact drums or bales to save freezer storage space."
+
   # Custom Authoring Mods
   gene-splicer:
     name: "Gene Splicer"

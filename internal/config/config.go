@@ -90,8 +90,8 @@ func LoadEnvironment(repoRoot string) (*Environment, error) {
 
 	home, _ := os.UserHomeDir()
 
-	// Helper to resolve with priority: process environment > local.env > fallback
-	getVal := func(key, fallback string) string {
+	// Helper to resolve raw values without local expansion
+	getValRaw := func(key, fallback string) string {
 		val := fallback
 		if v, ok := envVars[key]; ok && v != "" {
 			val = v
@@ -99,6 +99,12 @@ func LoadEnvironment(repoRoot string) (*Environment, error) {
 		if v := os.Getenv(key); v != "" {
 			val = v
 		}
+		return strings.Trim(val, `"'`)
+	}
+
+	// Helper to resolve with priority: process environment > local.env > fallback
+	getVal := func(key, fallback string) string {
+		val := getValRaw(key, fallback)
 		// Expand environment variables and tilde
 		val = os.ExpandEnv(val)
 		if home != "" && (val == "~" || strings.HasPrefix(val, "~/")) {
@@ -112,8 +118,8 @@ func LoadEnvironment(repoRoot string) (*Environment, error) {
 	env := &Environment{
 		Machine:       machine,
 		RepoRoot:      repoRoot,
-		DeckHost:      getVal("DECK_HOST", "steamdeck"),
-		DeckRemoteDir: getVal("DECK_REMOTE_DIR", "~/.local/share/rimworld-mods"),
+		DeckHost:      getValRaw("DECK_HOST", "steamdeck"),
+		DeckRemoteDir: getValRaw("DECK_REMOTE_DIR", "~/.local/share/rimworld-mods"),
 		SteamCMDBin:   getVal("STEAMCMD_BIN", "steamcmd"),
 	}
 
