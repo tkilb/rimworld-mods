@@ -1,6 +1,6 @@
 version: 1
-generated_at: "2026-10-13T22:49:36Z"
-machine: linux-box
+generated_at: "2026-10-14T03:54:45Z"
+machine: linux-book
 mods:
     charactereditor:
         source: steam_workshop
@@ -38,6 +38,12 @@ mods:
         workshop_time_updated: 1791825433
         workshop_title: Harmony
         download_path: mods/vendor/harmony
+    homemover:
+        source: steam_workshop
+        workshop_id: "2569949146"
+        workshop_time_updated: 1777434731
+        workshop_title: Home Mover
+        download_path: mods/vendor/homemover
     laboratory:
         source: steam_workshop
         workshop_id: "3296362231"

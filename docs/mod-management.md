@@ -68,46 +68,23 @@ Monorepo mods (`mods/vendor/` and authoring mods in `mods/custom/`) are deployed
 
 #### Link All Mods
 ```bash
-make link-dry-run   # Preview symlink creation
-make link           # Deploy symlinks and sync ModsConfig.xml
-```
-
-#### Link a Specific Mod
-Deploy or update the symlink for a single mod (matches the manifest identifier or custom mod folder name, e.g. `harmony`, `my-mod`):
-```bash
-# Preview linking a specific mod
-make link-dry-run MOD=harmony
-
-# Link a specific mod and synchronize load order
-make link MOD=harmony
-
-# Call script directly (optional --skip-config avoids re-generating ModsConfig.xml)
-bash ./scripts/link-mods.sh --link harmony
-bash ./scripts/link-mods.sh --link harmony --skip-config
+rimmod apply --dry-run   # Preview local reconciliation
+rimmod apply             # Deploy symlinks, sort dependencies, and sync ModsConfig.xml
 ```
 
 ### Removing / Unlinking Mods
 
-#### Unlink All Mods
+To disable or remove a mod, set `enabled: false` (or delete its entry) in `manifests/mods.yaml`, then run:
 ```bash
-make unlink-dry-run   # Preview links to remove
-make unlink           # Remove all monorepo symlinks safely
+rimmod apply
 ```
+`rimmod` automatically detects unmanaged or disabled mods, removes their symlinks, and recalculates `ModsConfig.xml`.
 
-#### Unlink a Specific Mod
-Remove the symlink for a single mod without affecting other linked mods:
+To prune unreferenced cached vendor folders or lockfile entries:
 ```bash
-# Preview unlinking a specific mod
-make unlink-dry-run MOD=harmony
-
-# Unlink a specific mod
-make unlink MOD=harmony
-
-# Alternatively, call the script directly
-bash ./scripts/link-mods.sh --unlink harmony
+rimmod tidy --dry-run    # Preview pruning
+rimmod tidy              # Remove dead cache and unreferenced entries
 ```
-
-> **Safety Guarantee:** The linker guards official DLC/core directories (`Core`, `Royalty`, `Ideology`, `Biotech`, `Anomaly`, `Odyssey`) and will never overwrite pre-existing regular directories in your `Mods` folder.
 
 ---
 
@@ -117,66 +94,38 @@ To check upstream sources for updates and re-synchronize `manifests/mods.lock.ya
 
 ```bash
 # Preview updates without modifying lockfile or downloading
-make update-mods-dry-run
+rimmod update --dry-run
 
-# Update all mods to latest resolved upstream version
-make update-mods
+# Update all mods to latest resolved upstream version and re-apply
+rimmod update
 
-# Update a single mod (call script directly)
-bash ./scripts/update-mods.sh harmony
+# Update a single mod
+rimmod update --mod <mod_id>
 ```
 
 ---
 
-## 5. Version Rollback Workflow
+## 5. Mod Load Order & `ModsConfig.xml` Synchronization
 
-If an updated mod causes game crashes, save-game incompatibilities, or breaking bugs, you can roll back to a specific previous release, tag, or version:
-
-### Preview Rollback (Dry-Run)
-```bash
-make rollback-dry-run MOD=hugslib VERSION=v11.0.0
-```
-
-### Execute Rollback
-```bash
-make rollback MOD=hugslib VERSION=v11.0.0
-```
-
-### How Rollback Works:
-1. **Manifest Pinning:** The mod's tag or version pin in `manifests/mods.yaml` is updated to the targeted version.
-2. **Deterministic Fetch:** `scripts/fetch-mods.sh` downloads and extracts the exact targeted archive into `mods/vendor/<mod_id>`.
-3. **Lockfile Synchronization:** `manifests/mods.lock.yaml` records the resolved rollback version and timestamp.
-4. **Active Deployment:** Since the mod is symlinked, the updated vendor folder is immediately live in RimWorld without needing to recreate symlinks (or verify via `make link`).
-
----
-
-## 6. Mod Load Order & `ModsConfig.xml` Synchronization
-
-The monorepo includes an automated topological load order resolver and `ModsConfig.xml` generator inspired by RimSort and RimPy. It resolves dependencies and ordering constraints from mod `About.xml` metadata, manifest priority/after/before rules, and strict canonical tiers:
+The monorepo includes an automated topological load order resolver and `ModsConfig.xml` generator. It resolves dependencies and ordering constraints from mod `About.xml` metadata, manifest priority/after/before rules, and strict canonical tiers:
 1. **Harmony** (`brrainz.harmony`)
 2. **Core** (`ludeon.rimworld`)
 3. **Official DLCs** (`royalty`, `ideology`, `biotech`, `anomaly`, `odyssey`)
 4. **Standard Mods** (topologically sorted via Kahn's DAG algorithm)
 5. **Trailing Mods** (e.g. `RocketMan`)
 
-### Preview Computed Load Order
+### Inspect Computed Load Order
 ```bash
-make order-mods-dry-run
+rimmod order
 ```
 
-### Preview `ModsConfig.xml` Generation
+### Reconcile & Deploy `ModsConfig.xml`
 ```bash
-make sync-config-dry-run
+rimmod apply --dry-run   # Preview
+rimmod apply             # Execute
 ```
 
-### Generate & Deploy `ModsConfig.xml`
-```bash
-make sync-config
-```
-
-> **Automated Integration:** `make link` automatically triggers `sync-config`, deploying both the symlinks and the updated `ModsConfig.xml` in a single command. If you only want to symlink without touching `ModsConfig.xml`, pass `--skip-config` directly to `scripts/link-mods.sh`.
->
-> **Automatic Backup:** When `sync-config` runs, any existing `ModsConfig.xml` at the target path is automatically backed up to `ModsConfig.xml.bak` before atomic replacement, and the game version tag (e.g., `<version>1.6.4871 rev600</version>`) is preserved.
+> **Automatic Backup:** When `rimmod apply` runs, any existing `ModsConfig.xml` at the target path is automatically backed up to `ModsConfig.xml.bak` before atomic replacement, and the game version tag (e.g., `<version>1.6.4871 rev600</version>`) is preserved.
 
 ---
 

@@ -1,84 +1,67 @@
 # RimWorld Monorepo
 
-Centralized control center for managing custom RimWorld setups across Linux machines (**Arch Linux Desktop** and **Steam Deck**).
+Centralized control center for managing custom RimWorld setups across Linux machines (**Arch Linux Desktop**, **Laptop**, and **Steam Deck**).
 
 This monorepo allows you to:
-- Bypass Steam Workshop client lock-in and manage community mods independently via CLI.
+- Bypass Steam Workshop client lock-in and manage community mods independently via the native `rimmod` CLI.
 - Explicitly pin and lock mod versions (`manifests/mods.yaml` & `manifests/mods.lock.yaml`) with deterministic rollback capabilities.
 - Safely deploy mods via idempotent symlinking into RimWorld's `Mods` directory without overwriting core game files.
 - Author and test personal custom mods in `mods/custom/` alongside 3rd-party vendor mods.
+- Reconcile local and remote (Steam Deck) setups in a single command.
 
 ---
 
 ## Quickstart & Daily Usage
 
-All common operations are orchestrated through `make`. Run `make help` at any time to list available targets.
+All daily operations are performed directly through the `rimmod` CLI.
 
-### 1. Check System Dependencies
-Verify tools (`steamcmd`, `jq`, `yq`, `rsync`, `curl`):
 ```bash
-make check-deps
+# Verify monorepo health, active mods, symlinks, and target environment
+rimmod status
+
+# Reconcile local RimWorld installation (fetch missing, link, sort, deploy ModsConfig.xml)
+rimmod apply
+
+# Preview reconciliation without modifying files
+rimmod apply --dry-run
+
+# Check upstream sources for updates, sync lockfile, and re-apply
+rimmod update
+rimmod update --mod <mod_id>
+
+# Prune unreferenced vendor downloads, lockfile entries, and dead symlinks
+rimmod tidy
+
+# Inspect computed topological mod load order and dependencies
+rimmod order
+
+# Compile a custom C# mod and automatically re-apply
+rimmod dev build <mod_name>
+
+# Scaffold a new starter template for an XML or C# mod
+rimmod dev scaffold <mod_name> --type csharp
+
+# Synchronize manifests, mods, and load order to Steam Deck over SSH/rsync
+rimmod deck push --check       # Test SSH connectivity
+rimmod deck push --dry-run     # Preview remote transfer and reconciliation
+rimmod deck push               # Sync and reconcile Steam Deck
+
+# Interactive TUI to cherry-pick Steam Workshop subscriptions from Steam Deck
+rimmod deck pull
 ```
 
-### 2. Inspect Mod & Deployment Status
-Check declared mods, cached downloads, locked versions, and active symlinks:
+---
+
+## Installation & Build
+
+Build and install `rimmod` into `~/bin/` (or custom `$BINDIR`):
+
 ```bash
-make status
-```
+# Compile and install to ~/bin/rimmod
+make install
 
-### 3. Fetch Declared Mods
-Download community mods declared in `manifests/mods.yaml`:
-```bash
-# Preview what would be fetched
-bash ./scripts/fetch-mods.sh --dry-run
-
-# Fetch all enabled mods
-make fetch-mods
-
-# Fetch a single mod
-bash ./scripts/fetch-mods.sh hugslib
-```
-
-### 4. Deploy Mods to RimWorld (Symlinking)
-Deploy vendor and custom mods into RimWorld's active `Mods` folder:
-```bash
-# Preview links before applying
-make link-dry-run
-
-# Deploy symlinks
-make link
-
-# Remove monorepo symlinks
-make unlink-dry-run
-make unlink
-```
-
-### 5. Update Mods & Synchronize Lockfile
-Check upstream sources for updates and re-sync `manifests/mods.lock.yaml`:
-```bash
-# Preview updates without modifying files
-make update-mods-dry-run
-
-# Update and re-fetch all mods
-make update-mods
-```
-
-### 6. Roll Back a Mod Version
-Roll back an individual mod to a specific version or tag:
-```bash
-# Preview rollback
-make rollback-dry-run MOD=hugslib VERSION=v11.0.0
-
-# Execute rollback
-make rollback MOD=hugslib VERSION=v11.0.0
-```
-
-### 7. Sync to Steam Deck
-Transfer mods, deploy symlinks, and update `ModsConfig.xml` on your Steam Deck in one command:
-```bash
-make sync-deck-check          # Test SSH connectivity
-make sync-deck-dry-run        # Preview sync, symlink, and config actions
-make sync-deck                # Sync files and deploy to Steam Deck
+# Run test suite
+make test
 ```
 
 ---
@@ -87,24 +70,25 @@ make sync-deck                # Sync files and deploy to Steam Deck
 
 ```text
 .
-├── Makefile                     # Top-level task runner
+├── Makefile                     # Build & installation runner for rimmod CLI
+├── bin/                         # Compiled binaries (rimmod)
+├── cmd/rimmod/                  # Cobra CLI entrypoint and commands
 ├── config/                      # Host-specific environment configuration
+├── docs/                        # Detailed guides and deep-dive documentation
+├── internal/                    # Core Go packages (linker, fetcher, order, updater, etc.)
 ├── manifests/
 │   ├── mods.yaml                # Declared 3rd-party mods and desired versions/sources
 │   └── mods.lock.yaml           # Resolved versions, asset tags, and timestamps
 ├── mods/
 │   ├── vendor/                  # Cached 3rd-party downloaded mods (git-ignored)
 │   └── custom/                  # Personal private mods under authoring
-├── scripts/                     # Idempotent operational bash & python automation scripts
-└── docs/                        # Detailed guides and deep-dive documentation
+├── templates/                   # Starter templates for custom mod scaffolding
+└── tools/                       # Ancillary tooling (import-deck.py, load-order)
 ```
 
 ---
 
 ## Detailed Documentation (`/docs`)
 
-For detailed step-by-step guides, refer to the documentation in [`docs/`](docs/):
-
-- [**Mod Management Guide**](docs/mod-management.md): In-depth guide for declaring new mods, source schemas (Workshop, GitHub releases, Git), updating lockfiles, rollback mechanics, and troubleshooting.
-- [**Makefile & Task Runner Guide**](docs/makefile-guide.md): Comprehensive guide to commands, arguments, dry-run safety flags, and monorepo lifecycle workflows.
-- [**Steam Deck Setup**](docs/steamdeck-setup.md): Remote synchronization, SSH setup, storage path detection, and running monorepo tools natively on SteamOS.
+- [**Mod Management Guide**](docs/mod-management.md): In-depth guide for declaring new mods, source schemas (Workshop, GitHub releases, Git), updating lockfiles, and lifecycle workflows.
+- [**Steam Deck Setup**](docs/steamdeck-setup.md): Remote synchronization, SSH setup, storage path detection, and running `rimmod` on SteamOS.

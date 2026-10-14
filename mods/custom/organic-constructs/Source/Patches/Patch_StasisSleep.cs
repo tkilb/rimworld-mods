@@ -633,47 +633,6 @@ namespace OrganicConstructs
     }
 
     /// <summary>
-    /// Ensures constructs always sleep on their back (PawnPosture.FaceUpMask) whenever laying down.
-    /// Prevents alternating onto sides (East/West) during regular sleep and stasis.
-    /// </summary>
-    [HarmonyPatch(typeof(PawnUtility), nameof(PawnUtility.GetPosture))]
-    public static class Patch_PawnUtility_GetPosture
-    {
-        [HarmonyPostfix]
-        public static void Postfix(Pawn p, ref PawnPosture __result)
-        {
-            if (p != null && __result != PawnPosture.Standing && ConstructUtility.IsConstruct(p))
-            {
-                __result |= PawnPosture.FaceUpMask;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Ensures laying constructs always face South (on their back) rather than sideways.
-    /// If in a Building_ConstructStasisPod, also ensures head orientation respects the pod.
-    /// </summary>
-    [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.LayingFacing))]
-    public static class Patch_PawnRenderer_LayingFacing
-    {
-        [HarmonyPostfix]
-        public static void Postfix(PawnRenderer __instance, ref Rot4 __result)
-        {
-            Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
-            if (pawn != null && ConstructUtility.IsConstruct(pawn))
-            {
-                var tree = pawn.Drawer?.renderer?.renderTree;
-                if (tree != null)
-                {
-                    PawnDrawParms parms = Traverse.Create(tree).Field("currentParms").GetValue<PawnDrawParms>();
-                    if (parms.Portrait || (parms.flags & PawnRenderFlags.Portrait) != 0 || (parms.flags & PawnRenderFlags.Cache) != 0) return;
-                }
-                __result = Rot4.South;
-            }
-        }
-    }
-
-    /// <summary>
     /// Shifts the root render matrix when resting in directional stasis pods to align with the glass aperture.
     /// In RimWorld 1.6, PawnRenderTree.ParallelPreDraw applies the root PawnDrawParms.matrix to all render nodes.
     /// Uses a single symmetrical distance D for all 4 orientations.
@@ -720,8 +679,9 @@ namespace OrganicConstructs
 
     /// <summary>
     /// Normalizes head offset to Vector3.zero across all body types, body sizes, and life stages
-    /// while inside a ConstructStasisPod, ensuring every construct centers identically at (0,0)
+    /// while inside a ConstructStasisPod on the map, ensuring every construct centers identically at (0,0)
     /// before applying the symmetrical aperture offset.
+    /// Excludes portrait rendering.
     /// </summary>
     [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.BaseHeadOffsetAt))]
     public static class Patch_PawnRenderer_BaseHeadOffsetAt_StasisPod
@@ -731,14 +691,6 @@ namespace OrganicConstructs
         {
             Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
             if (pawn == null || !pawn.Spawned) return;
-
-            PawnDrawParms parms = default;
-            var tree = pawn.Drawer?.renderer?.renderTree;
-            if (tree != null)
-            {
-                parms = Traverse.Create(tree).Field("currentParms").GetValue<PawnDrawParms>();
-            }
-            if (parms.Portrait || (parms.flags & PawnRenderFlags.Portrait) != 0 || (parms.flags & PawnRenderFlags.Cache) != 0) return;
 
             Building_Bed bed = pawn.CurrentBed();
             if (bed is Building_ConstructStasisPod)

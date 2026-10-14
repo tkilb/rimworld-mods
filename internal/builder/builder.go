@@ -55,23 +55,3 @@ func BuildMod(env *config.Environment, modName string, configuration string, dry
 
 	return nil
 }
-
-// ScaffoldMod invokes scripts/scaffold-mod.sh.
-func ScaffoldMod(env *config.Environment, name string, modType string, dryRun bool) error {
-	scriptPath := filepath.Join(env.RepoRoot, "scripts", "scaffold-mod.sh")
-	args := []string{scriptPath, "--name", name}
-	if modType != "" {
-		args = append(args, "--type", modType)
-	}
-	if dryRun {
-		args = append(args, "--dry-run")
-	}
-
-	cmd := exec.Command("bash", args...)
-	cmd.Dir = env.RepoRoot
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	cmd.Env = os.Environ()
-
-	return cmd.Run()
-}

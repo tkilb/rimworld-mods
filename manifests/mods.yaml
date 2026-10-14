@@ -139,6 +139,14 @@ mods:
     enabled: true
     description: "Allows surgical removal of scars, missing physical parts, and brain/age ailments."
 
+  homemover:
+    name: "Home Mover"
+    source: steam_workshop
+    workshop_id: "2569949146"
+    package_id: "NotooShabby.HomeMover"
+    enabled: true
+    description: "Move existing buildings and rooms to another location without deconstructing."
+
   # Custom Authoring Mods
   gene-splicer:
     name: "Gene Splicer"

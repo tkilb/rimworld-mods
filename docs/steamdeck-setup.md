@@ -57,11 +57,11 @@ The correct `RIMWORLD_MODS_DIR` and `RIMWORLD_CONFIG_DIR` depend on whether RimW
 | Config Directory | Proton Prefix (Default) | `~/.local/share/Steam/steamapps/compatdata/294100/pfx/drive_c/users/steamuser/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Config` |
 | Config Directory | Native Linux | `~/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Config` |
 
-The `steam-deck` machine profile in `scripts/common.sh` detects the Proton configuration path automatically and falls back to native Linux if Proton is not present. If you need custom paths, create `config/local.env` **on the Deck**:
+The `steam-deck` machine profile in `internal/config` detects the Proton configuration path automatically and falls back to native Linux if Proton is not present. If you need custom paths, create `config/local.env` **on the Deck**:
 
 ```bash
 # On the Deck, after syncing the repo
-cat << 'EOF' > ~/rimworld-mods/config/local.env
+cat << 'EOF' > ~/.local/share/rimworld-mods/config/local.env
 MACHINE="steam-deck"
 RIMWORLD_MODS_DIR="$HOME/.local/share/Steam/steamapps/common/RimWorld/Mods"
 RIMWORLD_CONFIG_DIR="$HOME/.local/share/Steam/steamapps/compatdata/294100/pfx/drive_c/users/steamuser/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Config"
@@ -80,39 +80,41 @@ The only monorepo config needed on the **desktop** is `DECK_HOST` (your SSH alia
 cp config/config.env.example config/local.env
 ```
 
-The defaults are already correct if your SSH alias is `steamdeck` and you want the repo at `~/rimworld-mods` on the Deck.
+The defaults are already correct if your SSH alias is `steamdeck` and you want the repo at `~/.local/share/rimworld-mods` on the Deck.
 
 ---
 
 ## 5. Remote Sync Workflows
 
-All sync commands run from your **desktop**.
+All sync commands run from your workstation via `rimmod`:
 
 ### Test SSH Connectivity
 ```bash
-make sync-deck-check
+rimmod deck push --check
 ```
 
 ### Preview Sync (Dry-Run)
 ```bash
-make sync-deck-dry-run
+rimmod deck push --dry-run
 ```
 
 ### Sync & Deploy to Steam Deck
-Transfers all mods, manifests, and scripts via `rsync`, automatically creates/updates symlinks in RimWorld's `Mods/` directory, and resolves/writes `ModsConfig.xml` on the Steam Deck in one command:
+Transfers all mods, manifests, and the `rimmod` binary via `rsync`, automatically creates/updates symlinks in RimWorld's `Mods/` directory, and resolves/writes `ModsConfig.xml` on the Steam Deck in one command:
 ```bash
-make sync-deck
+rimmod deck push
 ```
-
-> **Note:** If you ever want to transfer files without touching symlinks or config on the Deck, run `bash ./scripts/sync-deck.sh --no-link`.
 
 ---
 
 ## 6. Running Monorepo Commands Directly on the Deck
 
-After syncing, you can SSH in and run any `make` target natively:
+After syncing, you can SSH in and run `rimmod` natively:
 
 ```bash
+ssh steamdeck
+cd ~/.local/share/rimworld-mods
+./bin/rimmod status
+./bin/rimmod apply
 ssh steamdeck
 cd ~/rimworld-mods
 

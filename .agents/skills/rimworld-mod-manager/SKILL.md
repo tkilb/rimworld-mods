@@ -10,50 +10,71 @@ description: >-
 
 ## Overview
 
-This repository acts as a centralized monorepo for managing, versioning, authoring, and deploying custom RimWorld setups across Linux machines (desktop, laptop, and Steam Deck) without Steam client lock-in.
+This repository acts as a centralized monorepo for managing, versioning, authoring, and deploying custom RimWorld setups across Linux machines (desktop, laptop, and Steam Deck) without Steam client lock-in, powered by the unified `rimmod` CLI.
 
 ## Key Capabilities & Procedures
 
-### 1. Cherry-Picking Workshop Mods from Steam Deck
+### 1. Inspecting Monorepo Status
+```bash
+rimmod status
+```
+Displays machine target, RimWorld installation and config paths, declared community mods, official DLC expansions, custom mods, active symlinks, and cache health.
+
+### 2. Cherry-Picking Workshop Mods from Steam Deck
 To bring Steam Workshop mods installed on the Steam Deck into this repository:
 ```bash
 # Preview cherry-picking via interactive TUI
-make import-deck-dry-run
+rimmod deck pull --dry-run
 
 # Run interactive TUI to cherry-pick mods
-make import-deck
+rimmod deck pull
 
 # Copy workshop files directly over SSH (skipping SteamCMD re-download)
-make import-deck COPY=1
+rimmod deck pull --copy
 ```
 - **TUI Features:** Powered by `fzf -m` (toggle selection with `Space`, confirm with `Enter`) with a rich side-preview pane detailing the mod title, package ID, workshop ID, Steam URL, dependencies, and description.
 - **Transitive Dependency Suppression:** Libraries and framework mods depended upon by other installed mods (e.g. *Harmony*, *ilyvion's Laboratory*) are hidden from the primary selection list to reduce clutter.
 - **Auto-Inclusion:** Selecting a top-level mod automatically resolves its dependency DAG and includes required transitive dependencies into `manifests/mods.yaml`.
-- **Pass `--show-all`:** Use `./scripts/import-deck.sh --show-all` if you need to view and select individual leaf libraries directly.
+- **Pass `--all`:** Use `rimmod deck pull --all` if you need to view and select individual leaf libraries directly.
 
-### 2. Mod Lifecycle & Synchronization Workflow
+### 3. Mod Lifecycle & Local Reconciliation
 Once mods are declared in `manifests/mods.yaml`:
-1. **Fetch & Cache:**
-   ```bash
-   make fetch-mods
-   ```
-   Downloads mods via SteamCMD / GitHub releases into `mods/vendor/` and pins commits/versions in `manifests/mods.lock.yaml`.
-2. **Order Load Order:**
-   ```bash
-   make order-mods-dry-run
-   make order-mods
-   ```
-   Uses the Go topological sorting engine (`bin/load-order`) to parse `About.xml` rules (`<loadAfter>`, `<loadBefore>`, etc.) and generate a valid load order.
-3. **Deploy Symlinks & Config:**
-   ```bash
-   make link
-   make sync-config
-   ```
-   Idempotently symlinks mods from `mods/vendor/` and `mods/custom/` into RimWorld's `Mods/` directory and writes `ModsConfig.xml`.
-4. **Deploy to Steam Deck:**
-   ```bash
-   make sync-deck-check
-   make sync-deck-dry-run
-   make sync-deck
-   ```
-   Synchronizes the repository manifests, vendor cache, and load orders to the remote Steam Deck over SSH/rsync.
+```bash
+# Full local reconciliation (offline if cache exists):
+# 1. Fetches missing mods
+# 2. Reconciles symlinks in RimWorld Mods/ directory
+# 3. Topologically sorts load order
+# 4. Deploys generated ModsConfig.xml
+rimmod apply
+
+# Preview reconciliation without modifying files:
+rimmod apply --dry-run
+
+# Check upstream sources for updates, sync lockfile, and re-apply:
+rimmod update
+rimmod update --mod <mod_id>
+
+# Prune unreferenced vendor downloads, lockfile entries, and dead symlinks:
+rimmod tidy
+```
+
+### 4. Deploy to Steam Deck
+```bash
+# Test SSH connectivity:
+rimmod deck push --check
+
+# Preview remote rsync and reconciliation:
+rimmod deck push --dry-run
+
+# Sync repository manifests, vendor cache, and custom mods, then reconcile remotely:
+rimmod deck push
+```
+
+### 5. Private Mod Development
+```bash
+# Compile custom C# mod and auto-apply:
+rimmod dev build <mod_name>
+
+# Scaffold a new custom mod template (XML or C#):
+rimmod dev scaffold <mod_name> --type csharp
+```
