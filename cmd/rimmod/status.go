@@ -93,7 +93,7 @@ func newStatusCmd(env *config.Environment) *cobra.Command {
 				if source == "" {
 					source = "steam_workshop"
 				}
-				if source == "custom" || source == "local" {
+				if m.IsCustom() || m.IsForked() {
 					continue
 				}
 
@@ -236,6 +236,68 @@ func newStatusCmd(env *config.Environment) *cobra.Command {
 				)
 			}
 
+			// 3b. Forked Community Mods
+			forkedDir := filepath.Join(env.RepoRoot, "mods", "forked")
+			fmt.Printf("\n%sForked Community Mods (mods/forked/):%s\n", colorBold, colorReset)
+			fmt.Printf("%s %s %s %s %s\n",
+				pad("MOD ID", 24),
+				pad("ENABLED", 8),
+				pad("UPSTREAM", 28),
+				pad("COMMIT/REF", 16),
+				pad("LINK STATUS", 15),
+			)
+			fmt.Println(strings.Repeat("-", 97))
+
+			forkedModsMap := make(map[string]bool)
+			var forkedMods []string
+			if entries, err := os.ReadDir(forkedDir); err == nil {
+				for _, e := range entries {
+					if e.IsDir() && !strings.HasPrefix(e.Name(), ".") {
+						forkedMods = append(forkedMods, e.Name())
+						forkedModsMap[e.Name()] = true
+					}
+				}
+			}
+			sort.Strings(forkedMods)
+
+			for _, fID := range forkedMods {
+				fPath := filepath.Join(forkedDir, fID)
+				enabled := true
+				upstream := "unknown"
+				commit := "-"
+				if m, ok := mf.Mods[fID]; ok {
+					enabled = m.IsEnabled()
+					if m.UpstreamRepo != "" {
+						upstream = m.UpstreamRepo
+					}
+					if m.UpstreamCommit != "" {
+						commit = m.UpstreamCommit
+						if len(commit) > 7 {
+							commit = commit[:7]
+						}
+					} else if m.UpstreamBranch != "" {
+						commit = m.UpstreamBranch
+					}
+				}
+				enText := "no"
+				enColor := colorGray
+				if enabled {
+					enText = "yes"
+					enColor = colorGreen
+				}
+
+				linkPath := filepath.Join(env.RimWorldModsDir, fID)
+				linkText, linkColor := checkLinkStatus(linkPath, fPath)
+
+				fmt.Printf("%s %s %s %s %s\n",
+					pad(fID, 24),
+					colorPad(enText, 8, enColor),
+					pad(upstream, 28),
+					pad(commit, 16),
+					colorPad(linkText, 15, linkColor),
+				)
+			}
+
 			// 4. Orphaned Monorepo Symlinks Check
 			vendorCanon, _ := filepath.EvalSymlinks(vendorDir)
 			if vendorCanon == "" {
@@ -244,6 +306,10 @@ func newStatusCmd(env *config.Environment) *cobra.Command {
 			customCanon, _ := filepath.EvalSymlinks(customDir)
 			if customCanon == "" {
 				customCanon = filepath.Clean(customDir)
+			}
+			forkedCanon, _ := filepath.EvalSymlinks(forkedDir)
+			if forkedCanon == "" {
+				forkedCanon = filepath.Clean(forkedDir)
 			}
 
 			var orphans []string
@@ -261,8 +327,8 @@ func newStatusCmd(env *config.Environment) *cobra.Command {
 					if err != nil {
 						target, _ = os.Readlink(fp)
 					}
-					if strings.HasPrefix(target, vendorCanon) || strings.HasPrefix(target, customCanon) {
-						if _, inManifest := mf.Mods[e.Name()]; !inManifest && !customModsMap[e.Name()] {
+					if strings.HasPrefix(target, vendorCanon) || strings.HasPrefix(target, customCanon) || strings.HasPrefix(target, forkedCanon) {
+						if _, inManifest := mf.Mods[e.Name()]; !inManifest && !customModsMap[e.Name()] && !forkedModsMap[e.Name()] {
 							orphans = append(orphans, e.Name())
 						}
 					}
@@ -277,8 +343,8 @@ func newStatusCmd(env *config.Environment) *cobra.Command {
 			}
 
 			// 5. Summary / Deck
-			fmt.Printf("\n%sSummary:%s %d declared (%d enabled), %d cached, %d custom, %d active links\n",
-				colorBold, colorReset, len(mf.Mods), enabledCount, downloadedCount, len(customMods), linkedCount)
+			fmt.Printf("\n%sSummary:%s %d declared (%d enabled), %d cached, %d custom, %d forked, %d active links\n",
+				colorBold, colorReset, len(mf.Mods), enabledCount, downloadedCount, len(customMods), len(forkedMods), linkedCount)
 
 			if checkDeck {
 				fmt.Printf("\n%sSteam Deck Reachability (%s):%s\n", colorBold, env.DeckHost, colorReset)

@@ -148,7 +148,7 @@ func UpdateAll(env *config.Environment, targetMod string, dryRun bool) (*UpdateS
 		if !entry.IsEnabled() {
 			continue
 		}
-		if entry.Source == "custom" || entry.Source == "local" {
+		if entry.IsCustom() || entry.IsForked() {
 			continue
 		}
 

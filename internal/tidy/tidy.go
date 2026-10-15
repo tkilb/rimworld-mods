@@ -75,6 +75,7 @@ func RunTidy(env *config.Environment, dryRun bool) (*TidyReport, error) {
 		entries, _ := os.ReadDir(env.RimWorldModsDir)
 		repoVendorClean := filepath.Clean(filepath.Join(env.RepoRoot, "mods", "vendor"))
 		repoCustomClean := filepath.Clean(filepath.Join(env.RepoRoot, "mods", "custom"))
+		repoForkedClean := filepath.Clean(filepath.Join(env.RepoRoot, "mods", "forked"))
 
 		for _, e := range entries {
 			name := e.Name()
@@ -100,7 +101,7 @@ func RunTidy(env *config.Environment, dryRun bool) (*TidyReport, error) {
 			}
 
 			// Check if target points to our repo
-			isRepoSymlink := strings.HasPrefix(absTarget, repoVendorClean) || strings.HasPrefix(absTarget, repoCustomClean)
+			isRepoSymlink := strings.HasPrefix(absTarget, repoVendorClean) || strings.HasPrefix(absTarget, repoCustomClean) || strings.HasPrefix(absTarget, repoForkedClean)
 			if !isRepoSymlink {
 				continue
 			}

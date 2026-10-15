@@ -149,7 +149,10 @@ mods:
 
   turnitonandoffrepowered:
     name: "Turn It On and Off - RePowered"
-    source: steam_workshop
+    source: forked
+    upstream_repo: "https://github.com/emipa606/TurnOnOffRePowered"
+    upstream_branch: "main"
+    upstream_commit: "88447b6019dcbb10f0b8719ac91deed942e35eb8"
     workshop_id: "2228219259"
     package_id: "Mlie.TurnItOnAndOffRePowered"
     enabled: true
@@ -162,6 +165,14 @@ mods:
     package_id: "WPM.Jerry"
     enabled: true
     description: "Pack toxic wastepacks into compact drums or bales to save freezer storage space."
+
+  smartworkmode:
+    name: "Smart Work Mode"
+    source: steam_workshop
+    workshop_id: "3461122677"
+    package_id: "smartworkmode.1trickPwnyta"
+    enabled: true
+    description: "Mechanoids enter self-shutdown to recharge when idle instead of wandering, waking when work appears."
 
   # Custom Authoring Mods
   gene-splicer:

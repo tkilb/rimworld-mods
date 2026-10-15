@@ -16,10 +16,14 @@ func TestLinkerWorkflow(t *testing.T) {
 
 	vendorDir := filepath.Join(repoRoot, "mods", "vendor")
 	customDir := filepath.Join(repoRoot, "mods", "custom")
+	forkedDir := filepath.Join(repoRoot, "mods", "forked")
 	if err := os.MkdirAll(vendorDir, 0755); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.MkdirAll(customDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(forkedDir, 0755); err != nil {
 		t.Fatal(err)
 	}
 
@@ -38,6 +42,15 @@ func TestLinkerWorkflow(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// Create a dummy forked mod
+	modCPath := filepath.Join(forkedDir, "modC", "About")
+	if err := os.MkdirAll(modCPath, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(modCPath, "About.xml"), []byte("<ModMetaData><name>C</name></ModMetaData>"), 0644); err != nil {
+		t.Fatal(err)
+	}
+
 	env := &config.Environment{
 		RepoRoot:        repoRoot,
 		RimWorldModsDir: modsDir,
@@ -47,6 +60,7 @@ func TestLinkerWorkflow(t *testing.T) {
 		Mods: map[string]manifest.ModEntry{
 			"modA": {Name: "Mod A", Source: "steam_workshop"},
 			"modB": {Name: "Mod B", Source: "custom"},
+			"modC": {Name: "Mod C", Source: "forked"},
 		},
 	}
 
@@ -57,8 +71,8 @@ func TestLinkerWorkflow(t *testing.T) {
 	if err != nil {
 		t.Fatalf("dry run LinkAll failed: %v", err)
 	}
-	if len(results) != 2 {
-		t.Errorf("expected 2 results, got %d", len(results))
+	if len(results) != 3 {
+		t.Errorf("expected 3 results, got %d", len(results))
 	}
 	if _, err := os.Stat(filepath.Join(modsDir, "modA")); !os.IsNotExist(err) {
 		t.Errorf("dry run created symlink!")
@@ -69,12 +83,12 @@ func TestLinkerWorkflow(t *testing.T) {
 	if err != nil {
 		t.Fatalf("real LinkAll failed: %v", err)
 	}
-	if len(results) != 2 {
-		t.Errorf("expected 2 results, got %d", len(results))
+	if len(results) != 3 {
+		t.Errorf("expected 3 results, got %d", len(results))
 	}
 
 	// Verify symlinks exist
-	for _, id := range []string{"modA", "modB"} {
+	for _, id := range []string{"modA", "modB", "modC"} {
 		dest := filepath.Join(modsDir, id)
 		fi, err := os.Lstat(dest)
 		if err != nil || (fi.Mode()&os.ModeSymlink) == 0 {
@@ -98,11 +112,11 @@ func TestLinkerWorkflow(t *testing.T) {
 	if err != nil {
 		t.Fatalf("UnlinkAll failed: %v", err)
 	}
-	if len(unlinked) != 2 {
-		t.Errorf("expected 2 unlinked mods, got %d", len(unlinked))
+	if len(unlinked) != 3 {
+		t.Errorf("expected 3 unlinked mods, got %d", len(unlinked))
 	}
 
-	for _, id := range []string{"modA", "modB"} {
+	for _, id := range []string{"modA", "modB", "modC"} {
 		dest := filepath.Join(modsDir, id)
 		if _, err := os.Lstat(dest); !os.IsNotExist(err) {
 			t.Errorf("symlink still exists at %s", dest)

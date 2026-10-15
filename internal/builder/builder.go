@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"rimworld-mods/internal/config"
 )
@@ -17,20 +18,35 @@ func BuildMod(env *config.Environment, modName string, configuration string, dry
 
 	modDir := filepath.Join(env.RepoRoot, "mods", "custom", modName)
 	if fi, err := os.Stat(modDir); err != nil || !fi.IsDir() {
-		return fmt.Errorf("custom mod directory not found: %s", modDir)
+		forkedDir := filepath.Join(env.RepoRoot, "mods", "forked", modName)
+		if ffi, ferr := os.Stat(forkedDir); ferr == nil && ffi.IsDir() {
+			modDir = forkedDir
+		} else {
+			return fmt.Errorf("mod directory not found in mods/custom/ or mods/forked/: %s", modName)
+		}
 	}
 
 	// Find .csproj in mod directory or Source/
-	var csprojPath string
-	matches, _ := filepath.Glob(filepath.Join(modDir, "*.csproj"))
-	if len(matches) > 0 {
-		csprojPath = matches[0]
-	} else {
-		matches, _ = filepath.Glob(filepath.Join(modDir, "Source", "*.csproj"))
-		if len(matches) > 0 {
-			csprojPath = matches[0]
+	findCsproj := func() string {
+		searchGlobs := [][]string{
+			{modDir, "*.csproj"},
+			{modDir, "Source", "*.csproj"},
+			{modDir, "Source", "*", "*.csproj"},
 		}
+		for _, g := range searchGlobs {
+			matches, _ := filepath.Glob(filepath.Join(g...))
+			for _, m := range matches {
+				base := filepath.Base(m)
+				if strings.Contains(base, "Backup") || strings.Contains(base, "old") {
+					continue
+				}
+				return m
+			}
+		}
+		return ""
 	}
+
+	csprojPath := findCsproj()
 
 	if csprojPath == "" {
 		return fmt.Errorf("no .csproj file found in %s or %s/Source", modDir, modDir)

@@ -71,7 +71,7 @@ func FindMissingMods(env *config.Environment, mf *manifest.Manifest) []string {
 		if !entry.IsEnabled() {
 			continue
 		}
-		if entry.Source == "custom" || entry.Source == "local" {
+		if entry.IsCustom() || entry.IsForked() {
 			continue
 		}
 
@@ -112,7 +112,7 @@ func FetchMod(env *config.Environment, modID string, entry manifest.ModEntry, dr
 		}
 		return FetchGitRepo(modID, entry.URL, entry.Branch, destDir, dryRun)
 
-	case "custom", "local":
+	case "custom", "local", "fork", "forked":
 		return nil
 
 	default:

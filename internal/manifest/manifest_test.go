@@ -66,6 +66,19 @@ mods:
 	if tm.IsEnabled() {
 		t.Errorf("expected test_mod to be disabled")
 	}
+
+	forked := ModEntry{
+		Name:           "Forked Mod",
+		Source:         "forked",
+		UpstreamRepo:   "https://github.com/example/repo",
+		UpstreamBranch: "main",
+	}
+	if !forked.IsForked() {
+		t.Errorf("expected forked mod to return IsForked == true")
+	}
+	if forked.IsCustom() {
+		t.Errorf("expected forked mod to return IsCustom == false")
+	}
 }
 
 func TestLockfileRoundTrip(t *testing.T) {

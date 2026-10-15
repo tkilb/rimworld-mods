@@ -1,0 +1,137 @@
+# Changelog for TurnOnOffRePowered
+
+1.6.8 - Safer map-fetching due to vanilla code limitations
+
+
+1.6.7 - Added support for Garage Doors from [url=https://steamcommunity.com/workshop/filedetails/?id=3014906877]Vanilla Vehicles Expanded[/url]
+
+
+1.6.6 - Added mod-options to modify separate values, based on pr by An-on-im
+Used DeepL to update translations for ChineseSimplified, French, German, Russian
+
+
+1.6.5 - Performance update by SIGSEGV111
+Cache CompPowerTrader references and configured idle/active power values.
+Update PowerOutput only when a building changes between active and idle states.
+Periodically reconcile cached power states to remain compatible with other mods that modify power output.
+Evaluate different building categories at appropriate intervals instead of polling every building every tick.
+Reduce expensive RimFactory status checks to a lower polling frequency.
+Clear stale cached references when buildings or maps change.
+Reuse cached power components in power-availability checks.
+Preserve per-tick handling where immediate updates are required, such as Harmony-reported worktable and recreation usage
+
+
+1.6.4 - Fixed hugslib import
+
+
+1.6.3 - Fixed compatibility with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2033979700]Project RimFactory Revived[/url]
+
+
+1.6.2 - Ignore server rack, fixed typo
+
+
+1.6.1 - Removed HugsLib requirement, thanks Zaljerem!
+Used DeepL to update translations for ChineseSimplified, French, German, Russian
+
+
+1.6.0 - Mod updated for 1.6 and passed autotests
+
+
+1.5.2 - Restructured the code a bit
+
+
+1.5.1 - Fixed mech gestator inverted powercomp
+
+
+1.5.0 - Mod updated for 1.5 and passed autotests
+
+
+1.4.5 - Updated russian translation by Reiquard.
+Used DeepL to update translations for Russian
+
+
+1.4.4 - No error when abandoning the only settlemet
+
+
+1.4.3 - Replaced the info-patch, latest rimworld-update broke it
+
+
+1.4.2 - Removed unnecessary reflection for autodoors, thanks Taranchuk
+
+
+1.4.1 - Mod updated for 1.4 and passed autotests.
+Used DeepL to update translations for ChineseSimplified, German
+
+
+1.3.8 - Added support for the automatic assemblers in RimFactory
+
+
+1.3.7 - Added ignorelist and added some items to it..
+Used DeepL to update translations for French, Russian
+
+
+1.3.6 - Added setting for blocking work if power is low
+
+
+1.3.5 - Fix for the autodoor change that caused issues in SOS2
+
+
+1.3.4 - Autodoors should no longer draw max power when set to hold open
+
+
+1.3.3 - Autodoors now have a setting for power-draw.
+
+
+1.3.2 - More unique defname for the HugLib-news base-definition, to avoid conflicts with other mods.
+
+
+1.3.1 - Added support for all buildings that uses the Scanner-comp. In vanilla for example the deep mineral scanner and the long range scanner
+
+
+1.0.15.0 - Updated Russian translation and translation-support for power-units. Via Reiquard.
+
+
+1.0.14.0 - Excluded the AI manager from Fluffys Colony Manager since its always active
+
+
+1.0.13.0 - Mod updated for 1.3 and passed autotests
+
+
+1.0.12.0 - Caching of mod-info, thanks Taranchuk
+
+
+1.0.11.0 - Fixed to work with sos2
+
+
+1.0.10.0 - French translation added, thanks qux!
+
+
+1.0.9.0 - Added support for Project RimFactory Revived
+
+
+1.0.8.0 - Support for more doors, logging setting added
+
+
+1.0.7.0 - Added support for turrets
+
+
+1.0.6.0 - Should now ignore hydroponics if Self Lit Hydroponics is loaded
+
+
+1.0.5.0 - Added info on power-need when active to description-box
+
+
+1.0.4.0 - Now all tvs should be added automatically, even if modded
+
+
+1.0.3.0 - Added setting to apply the repower-mod default settings
+
+
+1.0.2.0 - Removed sunlamp as it did not work, not sure how it was intended to work
+
+
+1.0.1.0 - Fixed the original repower-settings that were missing from the mod.
+
+
+1.0.0.0 - First publish
+

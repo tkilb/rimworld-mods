@@ -40,6 +40,7 @@ This repository is a centralized monorepo for managing, versioning, authoring, a
 │   └── mods.lock.yaml           # Resolved versions, asset tags, commit hashes, timestamps
 ├── mods/
 │   ├── vendor/                  # Downloaded 3rd-party mods (git-ignored)
+│   ├── forked/                  # Forked & fine-tuned 3rd-party mods under monorepo git control
 │   └── custom/                  # Personal private mods under active development
 ├── templates/                   # Starter templates for custom mod scaffolding
 └── tools/                       # Ancillary tooling (import-deck.py, load-order)

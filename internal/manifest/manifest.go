@@ -78,8 +78,11 @@ type ModEntry struct {
 	Repo        string   `yaml:"repo,omitempty"`
 	Tag         string   `yaml:"tag,omitempty"`
 	Asset       string   `yaml:"asset,omitempty"`
-	URL         string   `yaml:"url,omitempty"`
-	Branch      string   `yaml:"branch,omitempty"`
+	URL            string   `yaml:"url,omitempty"`
+	Branch         string   `yaml:"branch,omitempty"`
+	UpstreamRepo   string   `yaml:"upstream_repo,omitempty"`
+	UpstreamBranch string   `yaml:"upstream_branch,omitempty"`
+	UpstreamCommit string   `yaml:"upstream_commit,omitempty"`
 }
 
 // IsEnabled returns true if Enabled is nil or true.
@@ -88,6 +91,16 @@ func (m *ModEntry) IsEnabled() bool {
 		return true
 	}
 	return *m.Enabled
+}
+
+// IsCustom returns true if the mod is authored directly in mods/custom/.
+func (m *ModEntry) IsCustom() bool {
+	return m.Source == "custom" || m.Source == "local"
+}
+
+// IsForked returns true if the mod is a forked third-party mod in mods/forked/.
+func (m *ModEntry) IsForked() bool {
+	return m.Source == "fork" || m.Source == "forked"
 }
 
 // LoadManifest reads and unmarshals the manifest at the given path.

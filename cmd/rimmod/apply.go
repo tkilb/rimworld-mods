@@ -96,10 +96,11 @@ func newApplyCmd(env *config.Environment) *cobra.Command {
 			sorter := order.NewSorter()
 			vendorDir := filepath.Join(env.RepoRoot, "mods", "vendor")
 			customDir := filepath.Join(env.RepoRoot, "mods", "custom")
+			forkedDir := filepath.Join(env.RepoRoot, "mods", "forked")
 
 			// Add declared vendor mods
 			for modID, entry := range mf.Mods {
-				if !entry.IsEnabled() || entry.Source == "custom" || entry.Source == "local" {
+				if !entry.IsEnabled() || entry.IsCustom() || entry.IsForked() {
 					continue
 				}
 				modDirPath := filepath.Join(vendorDir, modID)
@@ -139,6 +140,35 @@ func newApplyCmd(env *config.Environment) *cobra.Command {
 						entry = existing
 					}
 					node := order.BuildModNode(customID, entry, meta, cDir, true)
+					sorter.AddNode(node)
+				}
+			}
+
+			// Auto-discover forked mods
+			if fi, err := os.Stat(forkedDir); err == nil && fi.IsDir() {
+				entries, _ := os.ReadDir(forkedDir)
+				for _, e := range entries {
+					if !e.IsDir() || strings.HasPrefix(e.Name(), ".") {
+						continue
+					}
+					forkedID := e.Name()
+					if entry, ok := mf.Mods[forkedID]; ok && !entry.IsEnabled() {
+						continue
+					}
+					fDir := filepath.Join(forkedDir, forkedID)
+					var meta *order.ModMetaData
+					if aboutPath, err := order.FindAboutXML(fDir); err == nil {
+						if parsed, err := order.ParseAboutXML(aboutPath); err == nil {
+							meta = parsed
+						}
+					}
+					var entry manifest.ModEntry
+					if existing, ok := mf.Mods[forkedID]; ok {
+						entry = existing
+					} else {
+						entry.Source = "forked"
+					}
+					node := order.BuildModNode(forkedID, entry, meta, fDir, false)
 					sorter.AddNode(node)
 				}
 			}

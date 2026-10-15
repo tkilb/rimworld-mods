@@ -67,6 +67,7 @@ func (l *Linker) DiscoverCandidates() (map[string]string, error) {
 	candidates := make(map[string]string)
 	vendorDir := filepath.Join(l.Env.RepoRoot, "mods", "vendor")
 	customDir := filepath.Join(l.Env.RepoRoot, "mods", "custom")
+	forkedDir := filepath.Join(l.Env.RepoRoot, "mods", "forked")
 
 	disabled := make(map[string]bool)
 
@@ -79,8 +80,10 @@ func (l *Linker) DiscoverCandidates() (map[string]string, error) {
 			}
 
 			var candidatePath string
-			if entry.Source == "custom" || entry.Source == "local" {
+			if entry.IsCustom() {
 				candidatePath = filepath.Join(customDir, modID)
+			} else if entry.IsForked() {
+				candidatePath = filepath.Join(forkedDir, modID)
 			} else {
 				candidatePath = filepath.Join(vendorDir, modID)
 			}
@@ -105,6 +108,24 @@ func (l *Linker) DiscoverCandidates() (map[string]string, error) {
 			modPath := filepath.Join(customDir, customID)
 			if _, err := order.FindAboutXML(modPath); err == nil {
 				candidates[customID] = modPath
+			}
+		}
+	}
+
+	// 3. Auto-discover forked mods with About/About.xml in mods/forked/
+	if fi, err := os.Stat(forkedDir); err == nil && fi.IsDir() {
+		entries, _ := os.ReadDir(forkedDir)
+		for _, e := range entries {
+			if !e.IsDir() || strings.HasPrefix(e.Name(), ".") {
+				continue
+			}
+			forkedID := e.Name()
+			if disabled[forkedID] {
+				continue
+			}
+			modPath := filepath.Join(forkedDir, forkedID)
+			if _, err := order.FindAboutXML(modPath); err == nil {
+				candidates[forkedID] = modPath
 			}
 		}
 	}
@@ -190,6 +211,7 @@ func (l *Linker) UnlinkAll(dryRun bool) ([]LinkResult, error) {
 
 	repoVendor := filepath.Join(l.Env.RepoRoot, "mods", "vendor")
 	repoCustom := filepath.Join(l.Env.RepoRoot, "mods", "custom")
+	repoForked := filepath.Join(l.Env.RepoRoot, "mods", "forked")
 
 	var results []LinkResult
 
@@ -219,9 +241,10 @@ func (l *Linker) UnlinkAll(dryRun bool) ([]LinkResult, error) {
 
 		repoVendorClean := filepath.Clean(repoVendor)
 		repoCustomClean := filepath.Clean(repoCustom)
+		repoForkedClean := filepath.Clean(repoForked)
 
-		// Only remove if it targets our repository vendor or custom dir
-		if strings.HasPrefix(absTarget, repoVendorClean) || strings.HasPrefix(absTarget, repoCustomClean) {
+		// Only remove if it targets our repository vendor, custom, or forked dir
+		if strings.HasPrefix(absTarget, repoVendorClean) || strings.HasPrefix(absTarget, repoCustomClean) || strings.HasPrefix(absTarget, repoForkedClean) {
 			if dryRun {
 				results = append(results, LinkResult{
 					ModID:      name,

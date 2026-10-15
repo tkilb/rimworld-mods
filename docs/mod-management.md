@@ -40,6 +40,21 @@ mods:
     enabled: true
 ```
 
+### Forked Community Mods
+When maintaining customized, patched, or fine-tuned versions of open-source 3rd-party mods, house their source tree directly in `mods/forked/<mod-id>` and declare them with `source: forked`:
+```yaml
+mods:
+  turnitonandoffrepowered:
+    name: "Turn It On and Off - RePowered"
+    source: forked
+    upstream_repo: "https://github.com/emipa606/TurnOnOffRePowered"
+    upstream_branch: "main"
+    upstream_commit: "75d5341"
+    package_id: "Mlie.TurnItOnAndOffRePowered"
+    enabled: true
+```
+Forked mods are tracked directly in monorepo git history, compiled with `rimmod dev build <mod-id>`, and symlinked directly via `rimmod apply`.
+
 ---
 
 ## 2. Inspecting Monorepo & Deployment Status
