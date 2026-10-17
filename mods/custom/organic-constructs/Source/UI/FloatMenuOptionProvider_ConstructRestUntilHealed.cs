@@ -29,7 +29,7 @@ namespace OrganicConstructs
 
         protected override FloatMenuOption GetSingleOptionFor(Thing clickedThing, FloatMenuContext context)
         {
-            if (!(clickedThing is Building_Bed bed) || !bed.def.building.bed_humanlike)
+            if (!(clickedThing is Building_ConstructStasisPod pod))
             {
                 return null;
             }
@@ -40,42 +40,35 @@ namespace OrganicConstructs
                 return null;
             }
 
-            // If the bed is already a vanilla medical bed and pawn is undrafted, vanilla FloatMenuMakerMap
-            // will natively provide the option via Patch_HealthAIUtility_ShouldSeekMedicalRest.
-            if (bed.Medical && !pawn.Drafted)
-            {
-                return null;
-            }
-
-            if (!pawn.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            if (!pawn.CanReach(pod, PathEndMode.OnCell, Danger.Deadly))
             {
                 return new FloatMenuOption("CannotUseNoPath".Translate(), null);
             }
 
-            if (bed.IsForbidden(pawn))
+            if (pod.IsForbidden(pawn))
             {
-                return new FloatMenuOption("CannotPrioritizeForbidden".Translate(bed.Label), null);
+                return new FloatMenuOption("CannotPrioritizeForbidden".Translate(pod.Label), null);
             }
 
-            if (bed.CompAssignableToPawn != null)
+            if (pod.CompAssignableToPawn != null)
             {
-                if (!bed.CompAssignableToPawn.CanAssignTo(pawn))
+                if (!pod.CompAssignableToPawn.CanAssignTo(pawn))
                 {
-                    return new FloatMenuOption("CannotUseReason".Translate(bed.CompAssignableToPawn.CanAssignTo(pawn).Reason), null);
+                    return new FloatMenuOption("CannotUseReason".Translate(pod.CompAssignableToPawn.CanAssignTo(pawn).Reason), null);
                 }
 
-                if (!bed.CompAssignableToPawn.HasFreeSlot && !RestUtility.BedOwnerWillShare(bed, pawn, pawn.guest?.GuestStatus) && !bed.IsOwner(pawn))
+                if (!pod.CompAssignableToPawn.HasFreeSlot && !RestUtility.BedOwnerWillShare(pod, pawn, pawn.guest?.GuestStatus) && !pod.IsOwner(pawn))
                 {
-                    return new FloatMenuOption("CannotUseReason".Translate("SomeoneElseSleeping".Translate(bed.OwnersForReading.Select(p => p.LabelShort).ToCommaList())), null);
+                    return new FloatMenuOption("CannotUseReason".Translate("SomeoneElseSleeping".Translate(pod.OwnersForReading.Select(p => p.LabelShort).ToCommaList())), null);
                 }
             }
 
-            if (!bed.Medical && !bed.IsOwner(pawn) && bed.CompAssignableToPawn != null && !bed.CompAssignableToPawn.HasFreeSlot)
+            if (!pod.IsOwner(pawn) && pod.CompAssignableToPawn != null && !pod.CompAssignableToPawn.HasFreeSlot)
             {
-                return new FloatMenuOption("CannotUseReason".Translate("SomeoneElseSleeping".Translate(bed.OwnersForReading.Select(p => p.LabelShort).ToCommaList())), null);
+                return new FloatMenuOption("CannotUseReason".Translate("SomeoneElseSleeping".Translate(pod.OwnersForReading.Select(p => p.LabelShort).ToCommaList())), null);
             }
 
-            if (!RestUtility.IsValidBedFor(bed, pawn, pawn, checkSocialProperness: false))
+            if (!RestUtility.IsValidBedFor(pod, pawn, pawn, checkSocialProperness: false))
             {
                 return new FloatMenuOption("Inaccessible".Translate(), null);
             }
@@ -96,7 +89,7 @@ namespace OrganicConstructs
                 {
                     pawn.drafter.Drafted = false;
                 }
-                Job job = JobMaker.MakeJob(JobDefOf.LayDown, bed);
+                Job job = JobMaker.MakeJob(JobDefOf.LayDown, pod);
                 job.restUntilHealed = true;
                 pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
             });

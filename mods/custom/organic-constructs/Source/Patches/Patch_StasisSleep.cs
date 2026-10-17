@@ -501,6 +501,30 @@ namespace OrganicConstructs
     }
 
     /// <summary>
+    /// When an injured construct seeks medical rest or is taken to a bed to heal, route them to their
+    /// assigned ConstructStasisPod.
+    /// </summary>
+    [HarmonyPatch(typeof(RestUtility), nameof(RestUtility.FindBedFor), new[] { typeof(Pawn), typeof(Pawn), typeof(bool), typeof(bool), typeof(GuestStatus?) })]
+    public static class Patch_RestUtility_FindBedFor
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn sleeper, Pawn traveler, bool checkSocialProperness, ref Building_Bed __result)
+        {
+            if (sleeper != null && ConstructUtility.IsConstruct(sleeper))
+            {
+                Building_Bed ownedBed = sleeper.ownership?.OwnedBed;
+                if (ownedBed is Building_ConstructStasisPod pod && RestUtility.IsValidBedFor(pod, sleeper, traveler, checkSocialProperness: false))
+                {
+                    if (HealthAIUtility.ShouldSeekMedicalRest(sleeper))
+                    {
+                        __result = pod;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Dynamically regenerates rest need during hibernation stasis at standard bed rest rate
     /// until full (100%), and prevents rest decay or exhaustion while in stasis.
     /// </summary>
