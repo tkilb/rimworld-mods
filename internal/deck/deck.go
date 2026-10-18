@@ -50,16 +50,14 @@ func Push(env *config.Environment, dryRun bool, checkOnly bool) error {
 		return nil
 	}
 
-	// Ensure bin/rimmod binary exists before sync
+	// Ensure bin/rimmod binary is freshly compiled for target architecture before sync
 	binPath := filepath.Join(env.RepoRoot, "bin", "rimmod")
-	if _, err := os.Stat(binPath); err != nil {
-		fmt.Println("Compiling rimmod binary before sync...")
-		buildCmd := exec.Command("go", "build", "-o", binPath, "./cmd/rimmod")
-		buildCmd.Dir = env.RepoRoot
-		buildCmd.Env = append(os.Environ(), "GOOS=linux", "GOARCH=amd64")
-		if err := buildCmd.Run(); err != nil {
-			return fmt.Errorf("failed compiling rimmod for target: %w", err)
-		}
+	fmt.Println("Compiling rimmod binary before sync...")
+	buildCmd := exec.Command("go", "build", "-o", binPath, "./cmd/rimmod")
+	buildCmd.Dir = env.RepoRoot
+	buildCmd.Env = append(os.Environ(), "GOOS=linux", "GOARCH=amd64")
+	if err := buildCmd.Run(); err != nil {
+		return fmt.Errorf("failed compiling rimmod for target: %w", err)
 	}
 
 	if dryRun {
@@ -128,42 +126,3 @@ func Push(env *config.Environment, dryRun bool, checkOnly bool) error {
 	return nil
 }
 
-// Pull launches the interactive Steam Workshop cherry-pick importer (tools/import-deck.py).
-func Pull(env *config.Environment, dryRun bool, copyFiles bool, showAll bool) error {
-	deckHost := env.DeckHost
-	if deckHost == "" {
-		deckHost = "steamdeck"
-	}
-
-	pythonScript := filepath.Join(env.RepoRoot, "tools", "import-deck.py")
-	if _, err := os.Stat(pythonScript); err != nil {
-		return fmt.Errorf("import tool not found: %s", pythonScript)
-	}
-
-	args := []string{
-		pythonScript,
-		"--repo-root", env.RepoRoot,
-		"--deck-host", deckHost,
-	}
-	if dryRun {
-		args = append(args, "--dry-run")
-	}
-	if copyFiles {
-		args = append(args, "--copy-files")
-	}
-	if showAll {
-		args = append(args, "--show-all")
-	}
-
-	cmd := exec.Command("python3", args...)
-	cmd.Dir = env.RepoRoot
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	cmd.Env = os.Environ()
-
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("deck pull failed: %w", err)
-	}
-	return nil
-}

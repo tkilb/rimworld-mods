@@ -1,5 +1,5 @@
 version: 1
-generated_at: "2026-10-14T03:54:45Z"
+generated_at: "2026-10-18T22:03:37Z"
 machine: linux-book
 mods:
     charactereditor:
@@ -20,6 +20,12 @@ mods:
         workshop_time_updated: 1791924486
         workshop_title: Dub's Paint Shop
         download_path: mods/vendor/dubspaintshop
+    fasterbiosculpterpod:
+        source: steam_workshop
+        workshop_id: "2576257954"
+        workshop_time_updated: 1751939607
+        workshop_title: Faster Biosculpter Pod
+        download_path: mods/vendor/fasterbiosculpterpod
     genebankplus:
         source: steam_workshop
         workshop_id: "2889919154"
@@ -35,7 +41,7 @@ mods:
     harmony:
         source: steam_workshop
         workshop_id: "2009463077"
-        workshop_time_updated: 1791825433
+        workshop_time_updated: 1792065891
         workshop_title: Harmony
         download_path: mods/vendor/harmony
     homemover:
@@ -47,7 +53,7 @@ mods:
     laboratory:
         source: steam_workshop
         workshop_id: "3296362231"
-        workshop_time_updated: 1789312967
+        workshop_time_updated: 1791978897
         workshop_title: ilyvion's Laboratory
         download_path: mods/vendor/laboratory
     launchsitesexpire:
@@ -59,9 +65,15 @@ mods:
     minifyeverything:
         source: steam_workshop
         workshop_id: "872762753"
-        workshop_time_updated: 1755347385
+        workshop_time_updated: 1792194482
         workshop_title: MinifyEverything
         download_path: mods/vendor/minifyeverything
+    moremechanoidsworkmodes:
+        source: steam_workshop
+        workshop_id: "2888380373"
+        workshop_time_updated: 1791999658
+        workshop_title: WVC - Work Modes
+        download_path: mods/vendor/moremechanoidsworkmodes
     recyclethis:
         source: steam_workshop
         workshop_id: "3253550009"
@@ -80,6 +92,18 @@ mods:
         workshop_time_updated: 1755068836
         workshop_title: Simple sidearms
         download_path: mods/vendor/simplesidearms
+    turnitonandoffrepowered:
+        source: steam_workshop
+        workshop_id: "2228219259"
+        workshop_time_updated: 1788807045
+        workshop_title: Turn It On and Off - RePowered
+        download_path: mods/vendor/turnitonandoffrepowered
+    universalmechcharger:
+        source: steam_workshop
+        workshop_id: "3330287994"
+        workshop_time_updated: 1792064275
+        workshop_title: Universal Mech Charger
+        download_path: mods/vendor/universalmechcharger
     vanillabionicsexpansion:
         source: steam_workshop
         workshop_id: "1419675146"
@@ -104,3 +128,15 @@ mods:
         workshop_time_updated: 1761014012
         workshop_title: Vehicle Framework
         download_path: mods/vendor/vehicleframework
+    wallmountedturretsversiontwo:
+        source: steam_workshop
+        workshop_id: "3525168205"
+        workshop_time_updated: 1791858310
+        workshop_title: '[1.7] Wall Mounted Turrets Version 2'
+        download_path: mods/vendor/wallmountedturretsversiontwo
+    wastepackmanagement:
+        source: steam_workshop
+        workshop_id: "3323592024"
+        workshop_time_updated: 1749754146
+        workshop_title: Wastepack Management
+        download_path: mods/vendor/wastepackmanagement

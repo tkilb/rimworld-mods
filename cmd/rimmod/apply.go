@@ -37,17 +37,26 @@ func newApplyCmd(env *config.Environment) *cobra.Command {
   3. Topologically sorts active mods from About.xml rules
   4. Deploys generated ModsConfig.xml directly to RimWorld config directory`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if dryRun {
-				fmt.Printf("%s[DRY-RUN]%s Previewing full local reconciliation...\n\n", colorCyan, colorReset)
-			}
+			return runApply(env, dryRun)
+		},
+	}
 
-			manifestPath := filepath.Join(env.RepoRoot, "manifests", "mods.yaml")
-			mf, err := manifest.LoadManifest(manifestPath)
-			if err != nil {
-				return fmt.Errorf("failed to read manifest %s: %w", manifestPath, err)
-			}
+	cmd.Flags().BoolVarP(&dryRun, "dry-run", "n", false, "Preview actions without modifying files")
+	return cmd
+}
 
-			// Step 1: Ensure missing mods exist (Offline-by-default)
+func runApply(env *config.Environment, dryRun bool) error {
+	if dryRun {
+		fmt.Printf("%s[DRY-RUN]%s Previewing full local reconciliation...\n\n", colorCyan, colorReset)
+	}
+
+	manifestPath := filepath.Join(env.RepoRoot, "manifests", "mods.yaml")
+	mf, err := manifest.LoadManifest(manifestPath)
+	if err != nil {
+		return fmt.Errorf("failed to read manifest %s: %w", manifestPath, err)
+	}
+
+	// Step 1: Ensure missing mods exist (Offline-by-default)
 			fmt.Printf("%s==> Step 1: Checking mod cache...%s\n", colorBold, colorReset)
 			missing := fetcher.FindMissingMods(env, mf)
 			if len(missing) > 0 {
@@ -222,11 +231,6 @@ func newApplyCmd(env *config.Environment) *cobra.Command {
 				fmt.Printf("  %sSuccessfully deployed %d active mods to:%s %s\n", colorGreen, len(activePkgs), colorReset, configPath)
 			}
 
-			fmt.Printf("\n%s[OK] Local reconciliation complete.%s\n", colorGreen, colorReset)
-			return nil
-		},
-	}
-
-	cmd.Flags().BoolVarP(&dryRun, "dry-run", "n", false, "Preview actions without modifying files")
-	return cmd
+	fmt.Printf("\n%s[OK] Local reconciliation complete.%s\n", colorGreen, colorReset)
+	return nil
 }

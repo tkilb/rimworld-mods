@@ -29,6 +29,7 @@ synchronizing RimWorld mods across Arch Linux workstations and Steam Deck.`,
 	// Register subcommands
 	rootCmd.AddCommand(
 		newApplyCmd(env),
+		newImportCmd(env),
 		newTidyCmd(env),
 		newUpdateCmd(env),
 		newOrderCmd(env),

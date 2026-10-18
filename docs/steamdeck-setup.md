@@ -113,12 +113,7 @@ After syncing, you can SSH in and run `rimmod` natively:
 ```bash
 ssh steamdeck
 cd ~/.local/share/rimworld-mods
-./bin/rimmod status
-./bin/rimmod apply
-ssh steamdeck
-cd ~/rimworld-mods
-
-make status    # Inspect mod/symlink status
-make link      # Deploy symlinks into RimWorld Mods directory
-make unlink    # Remove monorepo symlinks safely
+./bin/rimmod status    # Inspect mod/symlink status on Deck
+./bin/rimmod apply     # Reconcile symlinks and load order
+./bin/rimmod tidy      # Prune orphaned links and cache
 ```

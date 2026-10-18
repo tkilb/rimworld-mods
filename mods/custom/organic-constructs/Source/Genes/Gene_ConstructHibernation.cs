@@ -95,6 +95,11 @@ namespace OrganicConstructs
         {
             base.Tick();
 
+            if (!Active)
+            {
+                return;
+            }
+
             if (inStasis)
             {
                 UpdateStasisTicks();
@@ -317,6 +322,11 @@ namespace OrganicConstructs
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
+            if (!Active)
+            {
+                yield break;
+            }
+
             if (pawn.Faction == Faction.OfPlayer)
             {
                 if (Find.Selector != null && Find.Selector.SelectedPawns.Count == 1)

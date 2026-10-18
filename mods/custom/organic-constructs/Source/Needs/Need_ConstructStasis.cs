@@ -15,9 +15,12 @@ namespace OrganicConstructs
         {
             get
             {
-                if (cachedHibernationGene == null && pawn?.genes != null)
+                if ((cachedHibernationGene == null || !cachedHibernationGene.Active) && pawn?.genes != null)
                 {
-                    cachedHibernationGene = pawn.genes.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation
+                    cachedHibernationGene = pawn.genes.GenesListForReading
+                        .OfType<Gene_ConstructHibernation>()
+                        .FirstOrDefault(g => g.Active)
+                        ?? pawn.genes.GetGene(ConstructDefOf.Gene_ConstructHibernation) as Gene_ConstructHibernation
                         ?? pawn.genes.GenesListForReading.OfType<Gene_ConstructHibernation>().FirstOrDefault();
                 }
                 return cachedHibernationGene;

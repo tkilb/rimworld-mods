@@ -57,12 +57,42 @@ Forked mods are tracked directly in monorepo git history, compiled with `rimmod 
 
 ---
 
-## 2. Inspecting Monorepo & Deployment Status
+## 2. Importing Mods via URL (`rimmod import`)
+
+You can import mods directly from URLs without manually crafting YAML entries. Supported sources include Steam Workshop URLs (or raw Workshop IDs), GitHub releases, and Git repositories:
+
+```bash
+# Preview importing a Steam Workshop mod
+rimmod import --dry-run "https://steamcommunity.com/sharedfiles/filedetails/?id=3525571078"
+
+# Import mod, download via steamcmd, inspect About.xml, and add kebab-cased slug to manifests/mods.yaml
+rimmod import "https://steamcommunity.com/sharedfiles/filedetails/?id=3525571078"
+
+# Import with a custom slug and immediately apply/sort load order
+rimmod import "https://steamcommunity.com/sharedfiles/filedetails/?id=3525571078" --slug launch-sites-expire --apply
+
+# Or import by raw Workshop ID
+rimmod import 3525571078
+
+# Import a GitHub mod
+rimmod import "https://github.com/UnlimitedHugs/RimworldHugsLib"
+```
+
+The importer:
+1. Downloads the mod into staging.
+2. Locates and inspects `About/About.xml` to discover the exact `packageId`, canonical mod name, and description.
+3. Automatically derives a kebab-case slug (e.g. `launch-sites-expire`), avoiding collisions.
+4. Moves the files into `mods/vendor/<slug>`.
+5. Appends the entry to `manifests/mods.yaml` while preserving all comments and structure.
+
+---
+
+## 3. Inspecting Monorepo & Deployment Status
 
 To view the current status of all declared and custom mods:
 
 ```bash
-make status
+rimmod status
 ```
 
 This outputs a clear matrix displaying:
@@ -75,7 +105,7 @@ This outputs a clear matrix displaying:
 
 ---
 
-## 3. Deploying & Symlinking Mods
+## 4. Deploying & Symlinking Mods
 
 Monorepo mods (`mods/vendor/` and authoring mods in `mods/custom/`) are deployed into RimWorld's active `Mods` directory via idempotent symlinks.
 
@@ -103,7 +133,7 @@ rimmod tidy              # Remove dead cache and unreferenced entries
 
 ---
 
-## 4. Updating Mods & Lockfile
+## 5. Updating Mods & Lockfile
 
 To check upstream sources for updates and re-synchronize `manifests/mods.lock.yaml`:
 
@@ -120,7 +150,7 @@ rimmod update --mod <mod_id>
 
 ---
 
-## 5. Mod Load Order & `ModsConfig.xml` Synchronization
+## 6. Mod Load Order & `ModsConfig.xml` Synchronization
 
 The monorepo includes an automated topological load order resolver and `ModsConfig.xml` generator. It resolves dependencies and ordering constraints from mod `About.xml` metadata, manifest priority/after/before rules, and strict canonical tiers:
 1. **Harmony** (`brrainz.harmony`)
@@ -146,27 +176,22 @@ rimmod apply             # Execute
 
 ## 7. Remote Deployment to Steam Deck
 
-Sync the monorepo (vendor mods, manifests, lockfile, scripts) to a remote Steam Deck via SSH/rsync.
+Sync the monorepo (vendor mods, manifests, lockfile, custom mods) to a remote Steam Deck via SSH/rsync and automatically apply remotely.
 
 ### Test SSH Connectivity
 ```bash
-make sync-deck-check
+rimmod deck push --check
 ```
 
 ### Preview Sync (Dry-Run)
 ```bash
-make sync-deck-dry-run
+rimmod deck push --dry-run
 ```
 
-### Sync Repository to Steam Deck
+### Sync Repository and Automatically Reconcile on Deck
+Syncs all files and triggers remote reconciliation in one step:
 ```bash
-make sync-deck
-```
-
-### Sync and Automatically Deploy Symlinks on Deck
-Sync files and immediately run `make link` on the Steam Deck in one step:
-```bash
-make sync-deck-link
+rimmod deck push
 ```
 
 > For complete setup instructions (enabling SSH on SteamOS, key-based auth, storage path detection for internal SSD vs MicroSD), see [Steam Deck Setup Guide](steamdeck-setup.md).
@@ -183,17 +208,17 @@ To scaffold a new mod:
 
 ```bash
 # Preview scaffolding (dry-run)
-make scaffold-mod-dry-run MOD=my-mod TYPE=xml
-make scaffold-mod-dry-run MOD=my-mod TYPE=csharp
+rimmod dev scaffold my-mod --type xml --dry-run
+rimmod dev scaffold my-mod --type csharp --dry-run
 
 # Scaffold an XML mod (default)
-make scaffold-mod MOD=my-mod
+rimmod dev scaffold my-mod
 
 # Scaffold a C# mod with project files and assembly references
-make scaffold-mod MOD=my-mod TYPE=csharp
+rimmod dev scaffold my-mod --type csharp
 ```
 
-The scaffolding script creates standard RimWorld layouts in `mods/custom/<mod_name>`:
+The scaffolding command creates standard RimWorld layouts in `mods/custom/<mod_name>`:
 - `About/About.xml`: Valid metadata, `supportedVersions` (1.5, 1.6), and load dependencies.
 - `Defs/`: Sample XML definitions.
 - `Source/`: (C# mods) SDK-style `.csproj` configured for `net472` with dynamic references to RimWorld's `RimWorldLinux_Data/Managed/` game assemblies.
@@ -201,27 +226,24 @@ The scaffolding script creates standard RimWorld layouts in `mods/custom/<mod_na
 
 ### Building C# Mods
 
-To compile assemblies for a custom C# mod:
+To compile assemblies for a custom C# mod and automatically reconcile into RimWorld:
 
 ```bash
 # Preview compilation command
-make build-mod-dry-run MOD=my-mod
+rimmod dev build my-mod --dry-run
 
-# Compile assembly to mods/custom/<mod_name>/Assemblies/
-make build-mod MOD=my-mod
+# Compile assembly to mods/custom/<mod_name>/Assemblies/ and auto-apply
+rimmod dev build my-mod
 ```
 
 *Note:* Compiling C# mods requires the .NET SDK (`sudo pacman -S dotnet-sdk` on Arch Linux).
 
 ### Deploying & Testing
 
-Custom mods with a valid `About/About.xml` are automatically recognized by `make link`, `make status`, and `make order-mods`. To activate them in RimWorld:
+Custom mods with a valid `About/About.xml` are automatically recognized by `rimmod apply`, `rimmod status`, and `rimmod order`. To activate them in RimWorld:
 
 ```bash
-# Link all mods
-make link
-
-# Or link only this specific custom mod
-make link MOD=my-mod
+# Reconcile all mods (symlinks and load order)
+rimmod apply
 ```
 

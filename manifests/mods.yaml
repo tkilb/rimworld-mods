@@ -13,6 +13,28 @@ dlcs:
   odyssey: true
 
 mods:
+  wallmountedturretsversiontwo:
+    name: "Wall Mounted Turrets Version 2"
+    source: steam_workshop
+    workshop_id: "3525168205"
+    package_id: "HoneyBadger.WallMountedTurretsVersionTwo"
+    enabled: true
+    description: "V1.7    A recreation of a mod I created in 2019. Wall Mounted Turrets: VERSION 2.0!     This mod has turrets that mount adjacent to the wall. These turrets are designed for indoor use, unlike their bigger, more deadly counteparts, these turrets are built with mindfulness to indoor defence, as such t"
+  universalmechcharger:
+    name: "Universal Mech Charger"
+    source: steam_workshop
+    workshop_id: "3330287994"
+    package_id: "AzzyH.UniversalMechCharger"
+    enabled: true
+    description: "Universal Mech Charger - Adds 3 new buildings - No incompatible mod known at the moment"
+
+  moremechanoidsworkmodes:
+    name: "WVC - Work Modes"
+    source: steam_workshop
+    workshop_id: "2888380373"
+    package_id: "wvc.sergkart.biotech.MoreMechanoidsWorkModes"
+    enabled: true
+    description: "Warning: If you have the Odyssey DLC, the Harmony mod is required!  Adds 10 new work mods for mechanoids:  Find and destroy - Mechanoids, regardless of their type, will look for enemies and try to destroy them.  Work and recharge - Work autonomously according to mechanoid type. If the mechanoid cann"
   launchsitesexpire:
     name: "Launch Sites Expire"
     source: steam_workshop
@@ -166,13 +188,14 @@ mods:
     enabled: true
     description: "Pack toxic wastepacks into compact drums or bales to save freezer storage space."
 
-  smartworkmode:
-    name: "Smart Work Mode"
+
+  fasterbiosculpterpod:
+    name: "Faster Biosculpter Pod"
     source: steam_workshop
-    workshop_id: "3461122677"
-    package_id: "smartworkmode.1trickPwnyta"
+    workshop_id: "2576257954"
+    package_id: "Inglix.FasterBiosculptingPod"
     enabled: true
-    description: "Mechanoids enter self-shutdown to recharge when idle instead of wandering, waking when work appears."
+    description: "Allows customization of the cycle duration, required nutrition, biotuning duration, and power consumption of the biosculpting pod."
 
   # Custom Authoring Mods
   gene-splicer:

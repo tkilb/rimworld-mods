@@ -6,7 +6,7 @@ INSTALL_BIN := $(BINDIR)/rimmod
 BIN := ./bin/rimmod
 
 .PHONY: help build test status apply apply-dry-run update update-dry-run \
-        tidy tidy-dry-run order deck-push deck-push-dry-run deck-check \
+        tidy tidy-dry-run import import-dry-run order deck-push deck-push-dry-run deck-check \
         deck-pull deck-pull-dry-run dev dev-dry-run \
         install install-dry-run uninstall uninstall-dry-run \
         sync-deck sync-deck-dry-run sync-deck-check import-deck import-deck-dry-run \
@@ -65,6 +65,12 @@ tidy: $(BIN) ## Prune unreferenced lock entries, vendor cache, and dead symlinks
 
 tidy-dry-run: $(BIN) ## Preview tidy cleanup without deleting files
 	@$(BIN) tidy --dry-run
+
+import: $(BIN) ## Import a new mod by URL (e.g. make import URL="https://...")
+	@$(BIN) import $(URL) $(if $(SLUG),--slug $(SLUG),) $(if $(APPLY),--apply,) $(if $(findstring n,$(firstword -$(MAKEFLAGS))),--dry-run,)
+
+import-dry-run: $(BIN) ## Preview importing a new mod by URL
+	@$(BIN) import $(URL) $(if $(SLUG),--slug $(SLUG),) --dry-run
 
 ##@ Steam Deck Sync
 deck-push: $(BIN) ## Rsync manifests/mods to Steam Deck and apply remotely

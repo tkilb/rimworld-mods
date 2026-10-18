@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -127,6 +129,45 @@ namespace OrganicConstructs
             bool hasCustomBodyGene = false;
             if (pawn.genes != null)
             {
+                GeneDef hiberDef = ConstructDefOf.Gene_ConstructHibernation 
+                    ?? DefDatabase<GeneDef>.GetNamedSilentFail("Gene_ConstructHibernation");
+                if (hiberDef != null)
+                {
+                    List<Gene> hiberGenes = new List<Gene>();
+                    foreach (Gene g in pawn.genes.GenesListForReading)
+                    {
+                        if (g.def == hiberDef)
+                        {
+                            hiberGenes.Add(g);
+                        }
+                    }
+
+                    if (hiberGenes.Count > 1)
+                    {
+                        Gene keep = null;
+                        for (int i = 0; i < hiberGenes.Count; i++)
+                        {
+                            if (hiberGenes[i].Active)
+                            {
+                                keep = hiberGenes[i];
+                                break;
+                            }
+                        }
+                        if (keep == null)
+                        {
+                            keep = hiberGenes[0];
+                        }
+
+                        for (int i = 0; i < hiberGenes.Count; i++)
+                        {
+                            if (hiberGenes[i] != keep)
+                            {
+                                pawn.genes.RemoveGene(hiberGenes[i]);
+                            }
+                        }
+                    }
+                }
+
                 foreach (Gene g in pawn.genes.GenesListForReading)
                 {
                     if (g.def != null && g.Active && g.def.bodyType != null)
@@ -208,7 +249,19 @@ namespace OrganicConstructs
                 {
                     if (pawn.genes.Xenotype != constructXenotype)
                     {
-                        pawn.genes.SetXenotype(constructXenotype);
+                        GeneDef hiberDef = ConstructDefOf.Gene_ConstructHibernation 
+                            ?? DefDatabase<GeneDef>.GetNamedSilentFail("Gene_ConstructHibernation");
+                        bool alreadyHasHiber = (hiberDef != null && pawn.genes.HasActiveGene(hiberDef))
+                            || pawn.genes.GenesListForReading.Any(g => g.def == hiberDef);
+
+                        if (alreadyHasHiber)
+                        {
+                            pawn.genes.SetXenotypeDirect(constructXenotype);
+                        }
+                        else
+                        {
+                            pawn.genes.SetXenotype(constructXenotype);
+                        }
                     }
 
                     GeneDef thinGene = DefDatabase<GeneDef>.GetNamedSilentFail("Body_Thin");

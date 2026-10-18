@@ -83,7 +83,7 @@ make test
 │   ├── vendor/                  # Cached 3rd-party downloaded mods (git-ignored)
 │   └── custom/                  # Personal private mods under authoring
 ├── templates/                   # Starter templates for custom mod scaffolding
-└── tools/                       # Ancillary tooling (import-deck.py, load-order)
+└── tools/                       # Ancillary tooling (load-order)
 ```
 
 ---

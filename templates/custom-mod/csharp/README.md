@@ -22,7 +22,7 @@
 Ensure the .NET SDK (`dotnet`) is installed. Build with:
 
 ```bash
-make build-mod MOD={{MOD_NAME_LOWER}}
+rimmod dev build {{MOD_NAME_LOWER}}
 ```
 
 Or build manually inside `Source/`:

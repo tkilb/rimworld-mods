@@ -15,6 +15,7 @@ type ModMetaData struct {
 	Name             string          `xml:"name"`
 	Author           string          `xml:"author"`
 	PackageID        string          `xml:"packageId"`
+	Description      string          `xml:"description"`
 	LoadAfter        []string        `xml:"loadAfter>li"`
 	LoadBefore       []string        `xml:"loadBefore>li"`
 	ForceLoadAfter   []string        `xml:"forceLoadAfter>li"`
@@ -45,6 +46,7 @@ func ParseAboutXML(path string) (*ModMetaData, error) {
 	meta.Name = strings.TrimSpace(meta.Name)
 	meta.Author = strings.TrimSpace(meta.Author)
 	meta.PackageID = strings.TrimSpace(meta.PackageID)
+	meta.Description = strings.TrimSpace(meta.Description)
 
 	cleanList := func(list []string) []string {
 		var out []string

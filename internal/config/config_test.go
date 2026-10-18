@@ -24,6 +24,7 @@ func TestLoadEnvironment(t *testing.T) {
 	localEnv := `
 MACHINE="linux-box"
 DECK_HOST="custom-deck"
+DECK_REMOTE_DIR="~/.local/share/rimworld-mods"
 RIMWORLD_MODS_DIR="/tmp/custom/Mods"
 `
 	if err := os.WriteFile(filepath.Join(configDir, "local.env"), []byte(localEnv), 0644); err != nil {
@@ -40,6 +41,9 @@ RIMWORLD_MODS_DIR="/tmp/custom/Mods"
 	}
 	if env.DeckHost != "custom-deck" {
 		t.Errorf("expected DeckHost 'custom-deck', got '%s'", env.DeckHost)
+	}
+	if env.DeckRemoteDir != "~/.local/share/rimworld-mods" {
+		t.Errorf("expected DeckRemoteDir '~/.local/share/rimworld-mods', got '%s'", env.DeckRemoteDir)
 	}
 	if env.RimWorldModsDir != "/tmp/custom/Mods" {
 		t.Errorf("expected ModsDir '/tmp/custom/Mods', got '%s'", env.RimWorldModsDir)
